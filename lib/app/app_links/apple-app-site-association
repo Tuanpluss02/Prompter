@@ -1,0 +1,23 @@
+{
+    "applinks": {
+        "details": [
+            {
+                "appIDs": [
+                    "ABCDE12345.com.example.app"
+                ],
+                "components": [
+                    {
+                        "/": "/news/*",
+                        "comment": "Matches any URL with a path that starts with /news/."
+                    }
+                ]
+            }
+        ]
+    },
+    "webcredentials": {
+        "apps": []
+    },
+    "appclips": {
+        "apps": []
+    }
+}
