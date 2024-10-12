@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_text_styles.dart';
-import 'package:base/presentation/modules/home/components/gradient_text.dart';
+import 'package:base/presentation/widgets/gradient_text.dart';
+import 'package:flutter/material.dart';
 
 void showBadgeNotification({
   required BuildContext context,
@@ -154,7 +154,7 @@ class _CustomSnackBarState extends State<CustomSnackBarContent>
                       if (widget.content.isNotEmpty) ...[
                         const SizedBox(height: 1),
                         GradientText(
-                          text: widget.content,
+                          widget.content,
                           gradient: const LinearGradient(colors: [
                             AppColors.yellowEAA902,
                             AppColors.purpleBB47FF,

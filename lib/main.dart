@@ -14,7 +14,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:posthog_flutter/posthog_flutter.dart';
 
 import 'firebase_options.dart';
 
@@ -88,22 +87,18 @@ class _MyAppState extends State<MyApp> {
       ),
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      navigatorObservers: [
-        PosthogObserver(),
-      ],
+      // navigatorObservers: [
+      //   PosthogObserver(),
+      // ],
       initialRoute: AppPages.initial,
       getPages: AppPages.appRoutes,
       defaultTransition: Transition.cupertino,
       initialBinding: AppBinding(),
       builder: EasyLoading.init(builder: ((context, widget) {
-        return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: GestureDetector(
-            onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
-            behavior: HitTestBehavior.translucent,
-            child: widget!,
-          ),
+        return GestureDetector(
+          onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
+          behavior: HitTestBehavior.translucent,
+          child: widget!,
         );
       })),
     );

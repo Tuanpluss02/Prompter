@@ -39,8 +39,8 @@ class AppLinksHandler {
   // nếu là gọi để xử lý lần đầu sau khi app được mở bằng link (sau splash screen) thì không cần truyền uri vào
   // nếu là gọi để xử lý lai sau khi bị yêu cầu authen thì cần truyền uri vào
   Future<void> handle({Uri? uri}) async {
-    Uri? tmpUri = uri ?? await _appLinks.getLatestLink();
-    _handleAppLink(tmpUri);
+    Uri? tmpUri = await _appLinks.getLatestLink();
+    _handleAppLink(uri ?? tmpUri ?? Uri.parse(''));
     _isFirstHandleAfterOpen = false;
   }
 
@@ -71,6 +71,7 @@ class AppLinksHandler {
   }
 
   void _handelNewsLink(String slug) {
-    Get.toNamed(AppRoutes.webview, arguments: slug);
+    //TODO: edit route
+    Get.toNamed(AppRoutes.login, arguments: slug);
   }
 }
