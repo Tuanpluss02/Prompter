@@ -9,7 +9,7 @@ class AuthService {
   }
   AuthService._internal();
 
-  // sign in with email and password
+  /// Sign in with email and password
   Future<({UserCredential? userCredential, String? error})>
       signInWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;
@@ -25,7 +25,7 @@ class AuthService {
     return (userCredential: userCredential, error: error);
   }
 
-  //Sign in with Google
+  /// Sign in with Google
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -44,7 +44,7 @@ class AuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  // register with email and password
+  /// Register with email and password
   Future<({UserCredential? userCredential, String? error})>
       registerWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;
@@ -60,45 +60,36 @@ class AuthService {
     return (userCredential: userCredential, error: error);
   }
 
-  // sign out
-  Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  // Sign out
+  Future<void> signOut() async {
+    return await _auth.signOut();
   }
 
-  // reset password
+  /// Reset password
   Future resetPassword(String email) async {
-    try {
-      return await _auth.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+    return await _auth.sendPasswordResetEmail(email: email);
   }
 
-  // get user stream
+  // Get user stream
   Stream<User?> get user {
     return _auth.authStateChanges();
   }
 
-  // get current user
+  // Get current user
   User? get currentUser {
     return _auth.currentUser;
   }
 
-  // get current user id
+  // Get current user id
   String? get currentUserId {
     return _auth.currentUser?.uid;
   }
 
+  /// Get the error message from the Firebase exception
   _getFirebaseExceptionMessage(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':
-        return 'Email or password is incorrect.';
+        return 'No user found for that email.';
       case 'wrong-password':
         return 'Email or password is incorrect.';
       case 'email-already-in-use':
