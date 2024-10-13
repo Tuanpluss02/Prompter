@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static String initial = AppRoutes.welcome;
+  static String initial = AppRoutes.login;
 
   static final appRoutes = [
     GetPage(

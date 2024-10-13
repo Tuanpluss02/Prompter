@@ -1,4 +1,4 @@
-package com.stormx.base
+package com.stormx.prompter
 
 import io.flutter.embedding.android.FlutterActivity
 
