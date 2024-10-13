@@ -2,19 +2,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final AuthService _authService = AuthService._internal();
+  factory AuthService() {
+    return _authService;
+  }
+  AuthService._internal();
 
   // sign in with email and password
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future<({UserCredential? userCredential, String? error})>
+      signInWithEmailAndPassword(String email, String password) async {
+    UserCredential? userCredential;
+    String? error;
     try {
-      final result = await _auth.signInWithEmailAndPassword(
+      userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      User user = result.user as User;
-      return user;
+    } on FirebaseAuthException catch (e) {
+      error = _getFirebaseExceptionMessage(e);
     } catch (e) {
-      print(e.toString());
-      return null;
+      error = e.toString();
     }
+    return (userCredential: userCredential, error: error);
   }
 
   //Sign in with Google
@@ -37,16 +45,19 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future<({UserCredential? userCredential, String? error})>
+      registerWithEmailAndPassword(String email, String password) async {
+    UserCredential? userCredential;
+    String? error;
     try {
-      final result = await _auth.createUserWithEmailAndPassword(
+      userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      User user = result.user as User;
-      return user;
+    } on FirebaseAuthException catch (e) {
+      error = _getFirebaseExceptionMessage(e);
     } catch (e) {
-      print(e.toString());
-      return null;
+      error = e.toString();
     }
+    return (userCredential: userCredential, error: error);
   }
 
   // sign out
@@ -82,5 +93,28 @@ class AuthService {
   // get current user id
   String? get currentUserId {
     return _auth.currentUser?.uid;
+  }
+
+  _getFirebaseExceptionMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return 'Email or password is incorrect.';
+      case 'wrong-password':
+        return 'Email or password is incorrect.';
+      case 'email-already-in-use':
+        return 'The account already exists for that email.';
+      case 'invalid-email':
+        return 'The email is invalid.';
+      case 'user-disabled':
+        return 'The user corresponding to the given email has been disabled.';
+      case 'operation-not-allowed':
+        return 'Email & Password accounts are not enabled.';
+      case 'invalid-credential':
+        return 'Email or password is incorrect.';
+      case 'too-many-requests':
+        return 'You have attempted to sign in too many times. Please try again later.';
+      default:
+        return 'An error occurred. Please try again later.';
+    }
   }
 }

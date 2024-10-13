@@ -20,7 +20,7 @@ class LoginScreen extends BaseScreen<LoginController> {
                 child: const Text('Sign in with Google')),
             ElevatedButton(
                 onPressed: () => controller.registerWithEmailAndPassword(
-                    'tuan@test.com', '123456'),
+                    'tuan1@test.com', '123456'),
                 child: const Text('Register')),
             ElevatedButton(
                 onPressed: () => controller.signInWithEmailAndPassword(

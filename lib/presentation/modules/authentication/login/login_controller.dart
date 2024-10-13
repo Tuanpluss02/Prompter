@@ -13,12 +13,20 @@ class LoginController extends BaseController {
   void registerWithEmailAndPassword(String email, String password) async {
     final result =
         await _authService.registerWithEmailAndPassword(email, password);
-    print(result);
+    if (result.error != null) {
+      Get.snackbar('Fail', result.error!);
+      return;
+    }
+    Get.snackbar('Successfully', 'Register successfully');
   }
 
   void signInWithEmailAndPassword(String email, String password) async {
     final result =
         await _authService.signInWithEmailAndPassword(email, password);
-    print(result);
+    if (result.error != null) {
+      Get.snackbar('Fail', result.error!);
+      return;
+    }
+    Get.snackbar('Successfully', 'Sign in successfully');
   }
 }
