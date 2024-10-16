@@ -7,7 +7,11 @@ class LoginController extends BaseController {
 
   void signInGoogle() async {
     final result = await _authService.signInWithGoogle();
-    print(result);
+    if (result.error != null) {
+      Get.snackbar('Fail', result.error!);
+      return;
+    }
+    Get.snackbar('Successfully', 'Sign in with Google successfully');
   }
 
   void registerWithEmailAndPassword(String email, String password) async {

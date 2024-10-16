@@ -26,22 +26,33 @@ class AuthService {
   }
 
   /// Sign in with Google
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  Future<({UserCredential? userCredential, String? error})>
+      signInWithGoogle() async {
+    UserCredential? userCredential;
+    String? error;
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+      // Once signed in, return the UserCredential
+      userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      error = _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      error = e.toString();
+    }
+    return (userCredential: userCredential, error: error);
   }
 
   /// Register with email and password
@@ -101,9 +112,15 @@ class AuthService {
       case 'operation-not-allowed':
         return 'Email & Password accounts are not enabled.';
       case 'invalid-credential':
-        return 'Email or password is incorrect.';
+        return 'The credential is malformed or has expired.';
       case 'too-many-requests':
         return 'You have attempted to sign in too many times. Please try again later.';
+      case 'account-exists-with-different-credential':
+        return 'There already exists an account with the email address asserted by the credential. Please sign in using one of the returned providers and link the original credential to the user.';
+      case 'invalid-verification-code':
+        return 'The verification code of the credential is not valid.';
+      case 'invalid-verification-id':
+        return 'The verification ID of the credential is not valid.';
       default:
         return 'An error occurred. Please try again later.';
     }
