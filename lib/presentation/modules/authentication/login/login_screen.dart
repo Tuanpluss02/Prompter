@@ -15,17 +15,10 @@ class LoginScreen extends BaseScreen<LoginController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-                onPressed: controller.signInGoogle,
-                child: const Text('Sign in with Google')),
-            ElevatedButton(
-                onPressed: () => controller.registerWithEmailAndPassword(
-                    'tuan1@test.com', '123456'),
-                child: const Text('Register')),
-            ElevatedButton(
-                onPressed: () => controller.signInWithEmailAndPassword(
-                    'tuan@test.com', '123456'),
-                child: const Text('Sign in')),
+            ElevatedButton(onPressed: controller.signInGoogle, child: const Text('Sign in with Google')),
+            ElevatedButton(onPressed: () => controller.registerWithEmailAndPassword('tuan1@test.com', '123456'), child: const Text('Register')),
+            ElevatedButton(onPressed: () => controller.signInWithEmailAndPassword('tuan@test.com', '123456'), child: const Text('Sign in')),
+            ElevatedButton(onPressed: controller.logout, child: const Text('Logout')),
           ],
         ),
       ),

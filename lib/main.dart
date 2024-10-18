@@ -28,9 +28,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Platform.isAndroid ? Brightness.dark : null),
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarIconBrightness: Platform.isAndroid ? Brightness.dark : null),
   );
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -76,14 +74,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'F1 Trading',
+      title: 'Prompter',
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: AppTheme.lightTheme.copyWith(
-        textTheme: AppTheme.lightTheme.textTheme
-            .apply(fontFamily: GoogleFonts.manrope().fontFamily),
+        textTheme: AppTheme.lightTheme.textTheme.apply(fontFamily: GoogleFonts.manrope().fontFamily),
       ),
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
@@ -122,8 +119,6 @@ void configLoading() {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
