@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/localization/locale_keys.g.dart';
 import 'package:base/presentation/widgets/overlay_success_mission.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GetPathDirectory {
@@ -21,21 +19,17 @@ class GetPathDirectory {
   }
 
   static Future<String?> getSavedDir() async {
-    String externalStorageDirPath =
-        (await getApplicationDocumentsDirectory()).path;
+    String externalStorageDirPath = (await getApplicationDocumentsDirectory()).path;
     return externalStorageDirPath;
   }
 
-  static Future<File> downloadFile(
-      {required String image,
-      required BuildContext context,
-      required String title}) async {
+  static Future<File> downloadFile({required String image, required BuildContext context, required String title}) async {
     if (image == '') {
       showBadgeNotification(
-          context: context,
-          title: title,
-          content: tr(LocaleKeys.download_fail),
-          prefixWidget: SvgPicture.asset(SvgPath.icOverlayFail));
+        context: context,
+        title: title,
+        content: tr(LocaleKeys.download_fail),
+      );
     }
     const Base64Codec base64 = Base64Codec();
     final bytes = base64.decode(image);
