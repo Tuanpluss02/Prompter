@@ -1,15 +1,14 @@
+import 'package:base/app/constants/firebase_collection_keys.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class PostService extends GetxService {
-  final postRef = FirebaseFirestore.instance.collection('posts').doc();
-  Future<PostService> init() async {
-    return this;
-  }
+  final _postCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.postsCollection);
+  final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
 
   Future<void> createPost(String userId, String content, {String? imageUrl}) async {
-    await postRef.set({
-      'userId': FirebaseFirestore.instance.collection('users').doc(userId),
+    await _postCollection.doc().set({
+      'userId': _userCollection.doc(userId),
       'content': content,
       'imageUrl': imageUrl ?? '',
       'likes': 0,
@@ -18,37 +17,36 @@ class PostService extends GetxService {
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
-    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    final userRef = _userCollection.doc(userId);
     await userRef.update({
       'postCount': FieldValue.increment(1),
     });
   }
 
   Future<void> likePost(String userId, String postId) async {
-    final likeRef = FirebaseFirestore.instance.collection('posts').doc(postId).collection('likes').doc(userId);
+    final likeRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.likesCollection).doc(userId);
 
     await likeRef.set({
-      'userId': FirebaseFirestore.instance.collection('users').doc(userId),
+      'userId': _userCollection.doc(userId),
       'createdAt': FieldValue.serverTimestamp(),
     });
 
-    final postRef = FirebaseFirestore.instance.collection('posts').doc(postId);
+    final postRef = _postCollection.doc(postId);
     await postRef.update({
       'likes': FieldValue.increment(1),
     });
   }
 
   Future<void> addComment(String userId, String postId, String content) async {
-    final commentRef = FirebaseFirestore.instance.collection('posts').doc(postId).collection('comments').doc();
+    final commentRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.commentsCollection).doc();
 
     await commentRef.set({
-      'userId': FirebaseFirestore.instance.collection('users').doc(userId),
+      'userId': _userCollection.doc(userId),
       'content': content,
       'createdAt': FieldValue.serverTimestamp(),
     });
 
-    // Cập nhật số lượng bình luận cho bài viết
-    final postRef = FirebaseFirestore.instance.collection('posts').doc(postId);
+    final postRef = _postCollection.doc(postId);
     await postRef.update({
       'commentsCount': FieldValue.increment(1),
     });

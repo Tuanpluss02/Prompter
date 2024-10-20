@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
+  static final FirebaseAuth _firebaseInstance = FirebaseAuth.instance;
   static final AuthService _authService = AuthService._internal();
   factory AuthService() {
     return _authService;
@@ -10,13 +10,11 @@ class AuthService {
   AuthService._internal();
 
   /// Sign in with email and password
-  Future<({UserCredential? userCredential, String? error})>
-      signInWithEmailAndPassword(String email, String password) async {
+  Future<({UserCredential? userCredential, String? error})> signInWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;
     String? error;
     try {
-      userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+      userCredential = await _firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
@@ -26,8 +24,7 @@ class AuthService {
   }
 
   /// Sign in with Google
-  Future<({UserCredential? userCredential, String? error})>
-      signInWithGoogle() async {
+  Future<({UserCredential? userCredential, String? error})> signInWithGoogle() async {
     UserCredential? userCredential;
     String? error;
     try {
@@ -35,8 +32,7 @@ class AuthService {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -45,8 +41,7 @@ class AuthService {
       );
 
       // Once signed in, return the UserCredential
-      userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
@@ -56,13 +51,11 @@ class AuthService {
   }
 
   /// Register with email and password
-  Future<({UserCredential? userCredential, String? error})>
-      registerWithEmailAndPassword(String email, String password) async {
+  Future<({UserCredential? userCredential, String? error})> registerWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;
     String? error;
     try {
-      userCredential = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      userCredential = await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
@@ -73,27 +66,27 @@ class AuthService {
 
   // Sign out
   Future<void> signOut() async {
-    return await _auth.signOut();
+    return await _firebaseInstance.signOut();
   }
 
   /// Reset password
   Future resetPassword(String email) async {
-    return await _auth.sendPasswordResetEmail(email: email);
+    return await _firebaseInstance.sendPasswordResetEmail(email: email);
   }
 
   // Get user stream
   Stream<User?> get user {
-    return _auth.authStateChanges();
+    return _firebaseInstance.authStateChanges();
   }
 
   // Get current user
   User? get currentUser {
-    return _auth.currentUser;
+    return _firebaseInstance.currentUser;
   }
 
   // Get current user id
   String? get currentUserId {
-    return _auth.currentUser?.uid;
+    return _firebaseInstance.currentUser?.uid;
   }
 
   /// Get the error message from the Firebase exception
