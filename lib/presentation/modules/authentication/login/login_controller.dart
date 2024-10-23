@@ -1,4 +1,5 @@
 import 'package:base/base/base_controller.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:base/services/user_service.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,8 @@ class LoginController extends BaseController {
       return;
     }
     final user = result.userCredential?.user;
-    _userService.createUser(user!.uid, user.email!.split('@')[0], user.email!);
+    await _userService.createUser(user!.uid, user.email!.split('@')[0], user.email!);
+    Get.toNamed(AppRoutes.root);
     Get.snackbar('Successfully', 'Sign in with Google successfully');
   }
 
@@ -24,6 +26,8 @@ class LoginController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
+    await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
+    Get.toNamed(AppRoutes.root);
     Get.snackbar('Successfully', 'Register successfully');
   }
 
@@ -38,6 +42,7 @@ class LoginController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
+    Get.toNamed(AppRoutes.root);
     Get.snackbar('Successfully', 'Sign in successfully');
   }
 }
