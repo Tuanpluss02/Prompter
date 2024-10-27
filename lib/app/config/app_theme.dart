@@ -38,12 +38,6 @@ class AppTheme {
             color: AppColors.black0D0C0E,
           ),
         ),
-        // schemeSeedColor: AppColors.schemeSeedColor,
-        // accentColor: AppColors.grey737373,
-        // useMaterial3: true,
-        // borderRadius: AppNums.borderRadiusButton,
-        // buttonBackground: AppColors.orangeFFAE58,
-        // divider: AppColors.grey737373,
       );
 
   static ThemeData get darkTheme => themeCustom(

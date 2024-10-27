@@ -17,6 +17,7 @@ class RootController extends BaseController {
     super.onInit();
     _authStateChangesSubscription = _authService.user.listen((User? user) {
       if (user == null) {
+        Get.snackbar('Thông báo', "Đăng xuất thành công");
         Get.offAllNamed(AppRoutes.login);
       }
     });

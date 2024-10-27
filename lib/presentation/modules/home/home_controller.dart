@@ -1,25 +1,11 @@
 import 'package:base/base/base_controller.dart';
+import 'package:base/services/auth_service.dart';
+import 'package:get/get.dart';
 
 class HomeController extends BaseController {
+  final AuthService _authService = Get.find<AuthService>();
 
-  @override
-  void onInit() {
-    super.onInit();
+  void signOut() {
+    _authService.signOut();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
 }

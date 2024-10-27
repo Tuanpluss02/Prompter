@@ -218,7 +218,6 @@ class __$$UserImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
 @JsonSerializable()
 class _$UserImpl implements _User {
   const _$UserImpl(

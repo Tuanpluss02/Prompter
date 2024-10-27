@@ -1,6 +1,6 @@
 # Setup
 
-**Lưu ý**: Project sử dụng flutter phiên bản `3.22.3`. Chạy `flutter pub get` trước khi làm những bước dưới
+**Lưu ý**: Project sử dụng flutter phiên bản `3.24.3`. Chạy `flutter pub get` trước khi làm những bước dưới
 
 ## 1. Chạy build runner để tạo các file json parse support
 
@@ -110,12 +110,12 @@ Coding convention: https://dart.dev/effective-dart/style
 
 7. **Tách hàm với các đoạn code dài (Đặc biệt chú ý file screen)**
 
-8. **Chỉ sử dụng nháy đơn với String:**
+8. **Chỉ sử dụng nháy đơn với String, trừ trường hợp String chứa dấu nháy đơn**
 
    - Đúng: `'Đây là String'`
    - Sai: `"Đây là String"`
 
-9. **Tất cả các String đều phải đặt trong file ngôn ngữ: `app/lang/vi.dart`**
+9. **Tất cả các String đều phải đặt trong file ngôn ngữ: `assets/translations/*.json`**
 
 10. **Tất cả constants phải đặt trong các file thuộc thư mục `app/constants`:**
 
@@ -135,24 +135,24 @@ Coding convention: https://dart.dev/effective-dart/style
 
 12. **Quy ước tiền tố:**
 
-| Loại         | Tiền tố   | Ví dụ            |
-| ------------ | --------- | ---------------- |
-| ảnh, sơ đồ   | `img`     | `imgContact`     |
-| vector       | `svg`     | `svgContact`     |
-| thumbnail    | `thumb`   | `thumbContact`   |
-| banner       | `bn`      | `bnContact`      |
-| button       | `btn`     | `btnContact`     |
-| logo         | `logo`    | `logoContact`    |
-| navi         | `nav`     | `navContact`     |
-| tiêu đề      | `ttl`     | `ttlContact`     |
-| text         | `txt`     | `txtContact`     |
-| icon         | `icon`    | `iconContact`    |
-| Background   | `bg`      | `bgContact`      |
-| mũi tên      | `arrow`   | `arrowContact`   |
-| line         | `line`    | `lineContact`    |
-| pagetop      | `pagetop` | `pagetopContact` |
-| spacer       | `spacer`  | `spacerContact`  |
-| đang loading | `loading` | `loadingContact` |
+| Loại       | Tiền tố   | Ví dụ            |
+| ---------- | --------- | ---------------- |
+| ảnh, sơ đồ | `img`     | `imgContact`     |
+| vector     | `svg`     | `svgContact`     |
+| thumbnail  | `thumb`   | `thumbContact`   |
+| banner     | `bn`      | `bnContact`      |
+| button     | `btn`     | `btnContact`     |
+| logo       | `logo`    | `logoContact`    |
+| navi       | `nav`     | `navContact`     |
+| tiêu đề    | `ttl`     | `ttlContact`     |
+| text       | `txt`     | `txtContact`     |
+| icon       | `icon`    | `iconContact`    |
+| Background | `bg`      | `bgContact`      |
+| mũi tên    | `arrow`   | `arrowContact`   |
+| line       | `line`    | `lineContact`    |
+| pagetop    | `pagetop` | `pagetopContact` |
+| spacer     | `spacer`  | `spacerContact`  |
+| đang load  | `loading` | `loadingContact` |
 
 13. **Chạy fix all trước khi commit**
 
