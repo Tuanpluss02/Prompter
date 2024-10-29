@@ -5,6 +5,7 @@
     "source.organizeImports": "explicit",
     "source.sortImports": "explicit"
   },
+  "editor.accessibilitySupport": "off",
   "dart.lineLength": 200,
   "dart.previewFlutterUiGuides": true,
   "editor.formatOnSave": true,
