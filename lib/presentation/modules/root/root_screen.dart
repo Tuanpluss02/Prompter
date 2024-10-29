@@ -11,7 +11,7 @@ class RootScreen extends BaseScreen<RootController> {
   @override
   Widget buildScreen(BuildContext context) {
     return Obx(() => IndexedStack(
-          index: controller.currentIndex.value,
+          index: controller.currentIndex.value > 2 ? controller.currentIndex.value - 1 : controller.currentIndex.value,
           children: controller.screens,
         ));
   }
@@ -32,7 +32,7 @@ class RootScreen extends BaseScreen<RootController> {
             ),
             Container(
               width: 20,
-              height: 20,
+              height: 30,
               color: Colors.amber,
             ),
             FBottomNavigationBarItem(

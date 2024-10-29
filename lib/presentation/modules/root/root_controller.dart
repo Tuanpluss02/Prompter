@@ -45,6 +45,6 @@ class RootController extends BaseController {
     if (index == 2) {
       return;
     }
-    currentIndex.value = index >= 2 ? index - 1 : index;
+    currentIndex.value = index;
   }
 }
