@@ -24,24 +24,29 @@ class RootScreen extends BaseScreen<RootController> {
           children: [
             FBottomNavigationBarItem(
               icon: FIcon(FAssets.icons.house),
-              label: const Text('Home'),
-            ),
-            FBottomNavigationBarItem(
-              icon: FIcon(FAssets.icons.layoutGrid),
-              label: const Text('Browse'),
-            ),
-            Container(
-              width: 20,
-              height: 30,
-              color: Colors.amber,
-            ),
-            FBottomNavigationBarItem(
-              icon: FIcon(FAssets.icons.libraryBig),
-              label: const Text('Library'),
+              label: SizedBox.shrink(),
             ),
             FBottomNavigationBarItem(
               icon: FIcon(FAssets.icons.search),
-              label: const Text('Search'),
+              label: SizedBox.shrink(),
+            ),
+            Container(
+              height: 45,
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: FIcon(FAssets.icons.plus),
+            ),
+            FBottomNavigationBarItem(
+              icon: FIcon(FAssets.icons.layoutGrid),
+              label: SizedBox.shrink(),
+            ),
+            FBottomNavigationBarItem(
+              icon: FIcon(FAssets.icons.user),
+              label: SizedBox.shrink(),
             ),
           ],
         ));
