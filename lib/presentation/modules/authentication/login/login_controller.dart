@@ -24,7 +24,10 @@ class LoginController extends BaseController {
 
   void signInGoogle() async {
     final result = await _authService.signInWithGoogle();
-    if (result.error != null || result.userCredential == null) {
+    if (result.error == null || result.userCredential == null) {
+      return;
+    }
+    if (result.error != null) {
       Get.snackbar('Fail', result.error!);
       return;
     }
@@ -34,17 +37,6 @@ class LoginController extends BaseController {
     Get.snackbar('Successfully', 'Sign in with Google successfully');
   }
 
-  void registerWithEmailAndPassword(String email, String password) async {
-    final result = await _authService.registerWithEmailAndPassword(email, password);
-    if (result.error != null) {
-      Get.snackbar('Fail', result.error!);
-      return;
-    }
-    await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
-    Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Register successfully');
-  }
-
   void logout() async {
     await _authService.signOut();
     Get.snackbar('Successfully', 'Logout successfully');
@@ -52,33 +44,14 @@ class LoginController extends BaseController {
 
   void signInWithEmailAndPassword(String email, String password) async {
     final result = await _authService.signInWithEmailAndPassword(email, password);
+    if (result.error == null || result.userCredential == null) {
+      return;
+    }
     if (result.error != null) {
       Get.snackbar('Fail', result.error!);
       return;
     }
     Get.toNamed(AppRoutes.root);
     Get.snackbar('Successfully', 'Sign in successfully');
-  }
-}
-
-extension Validator on LoginController {
-  String? emailValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    if (!GetUtils.isEmail(value)) {
-      return 'Please enter a valid email';
-    }
-    return null;
-  }
-
-  String? passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters';
-    }
-    return null;
   }
 }

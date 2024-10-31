@@ -8,11 +8,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:forui/forui.dart';
 import 'package:get/get.dart';
 
-import 'login_controller.dart';
+import 'register_controller.dart';
 
-class LoginScreen extends BaseScreen<LoginController> {
-  const LoginScreen({super.key});
-
+class RegisterScreen extends BaseScreen<RegisterController> {
+  const RegisterScreen({super.key});
   @override
   Color? get screenBackgroundColor => Colors.black;
 
@@ -23,16 +22,7 @@ class LoginScreen extends BaseScreen<LoginController> {
   Widget buildScreen(BuildContext context) {
     return Column(
       children: [
-        Image.asset(ImagePath.logo, height: 150),
-        SizedBox(height: 16),
-        Text(
-          'PROMPTER',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        Image.asset(ImagePath.logo, height: 300),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(
@@ -53,6 +43,12 @@ class LoginScreen extends BaseScreen<LoginController> {
                   validator: passwordValidator,
                 ),
                 SizedBox(height: 16),
+                FTextField.password(
+                  hint: 'Confirm your password',
+                  controller: controller.passwordController,
+                  focusNode: controller.passwordFocus,
+                  validator: passwordValidator,
+                ),
                 GestureDetector(
                   onTap: controller.onSubmit,
                   child: Container(
@@ -95,7 +91,7 @@ class LoginScreen extends BaseScreen<LoginController> {
                 ),
                 SizedBox(height: 16),
                 GestureDetector(
-                  onTap: controller.signInGoogle,
+                  // onTap: controller.signInGoogle,
                   child: Container(
                     height: 50,
                     width: double.infinity,

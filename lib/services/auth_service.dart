@@ -17,9 +17,7 @@ class AuthService {
       userCredential = await _firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      error = e.toString();
-    }
+    } catch (_) {}
     return (userCredential: userCredential, error: error);
   }
 
@@ -44,9 +42,7 @@ class AuthService {
       userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      error = e.toString();
-    }
+    } catch (_) {}
     return (userCredential: userCredential, error: error);
   }
 
@@ -58,9 +54,7 @@ class AuthService {
       userCredential = await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      error = e.toString();
-    }
+    } catch (_) {}
     return (userCredential: userCredential, error: error);
   }
 
