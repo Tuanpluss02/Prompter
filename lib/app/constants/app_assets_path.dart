@@ -1,5 +1,11 @@
-class ImagePath {}
+class ImagePath {
+  static const String imgPath = 'assets/images';
+  static const String logo = '$imgPath/img_logo.png';
+}
 
-class SvgPath {}
+class SvgPath {
+  static const String svgPath = 'assets/svgs';
+  static const String ic_Google = '$svgPath/ic_google.svg';
+}
 
 class LottiePath {}

@@ -101,11 +101,11 @@ class AuthService {
       case 'invalid-email':
         return 'The email is invalid.';
       case 'user-disabled':
-        return 'The user corresponding to the given email has been disabled.';
+        return 'Your account has been banned.';
       case 'operation-not-allowed':
-        return 'Email & Password accounts are not enabled.';
+        return 'Email or password is incorrect..';
       case 'invalid-credential':
-        return 'The credential is malformed or has expired.';
+        return 'Email or password is incorrect.';
       case 'too-many-requests':
         return 'You have attempted to sign in too many times. Please try again later.';
       case 'account-exists-with-different-credential':
