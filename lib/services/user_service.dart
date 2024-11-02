@@ -4,10 +4,17 @@ import 'package:get/get.dart';
 
 class UserService extends GetxService {
   final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
+
+  /// Initializes the UserService
+  /// This method is used to initialize the UserService and perform any necessary setup.
   Future<UserService> init() async {
     return this;
   }
 
+  /// Creates a new user document in the Firestore collection
+  /// [userId] is the unique identifier for the user
+  /// [username] is the username of the user
+  /// [email] is the email address of the user
   Future<void> createUser(String userId, String username, String email) async {
     final userRef = _userCollection.doc(userId);
 
@@ -25,6 +32,9 @@ class UserService extends GetxService {
     });
   }
 
+  /// Follows a user
+  /// [currentUserId] is the ID of the current user
+  /// [targetUserId] is the ID of the user to be followed
   Future<void> followUser(String currentUserId, String targetUserId) async {
     final currentUserRef = _userCollection.doc(currentUserId).collection('following').doc(targetUserId);
 
