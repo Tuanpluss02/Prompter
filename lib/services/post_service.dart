@@ -6,6 +6,11 @@ class PostService extends GetxService {
   final _postCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.postsCollection);
   final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
 
+  /// Create a new post
+  ///
+  /// This method creates a new post with the given userId, content, and optional imageUrl.
+  /// It sets the initial values for the post's userId, content, imageUrl, likes, commentsCount, createdAt, and updatedAt.
+  /// It also increments the postCount of the user who created the post.
   Future<void> createPost(String userId, String content, {String? imageUrl}) async {
     await _postCollection.doc().set({
       'userId': _userCollection.doc(userId),
@@ -23,6 +28,10 @@ class PostService extends GetxService {
     });
   }
 
+  /// Like a post
+  ///
+  /// This method allows a user to like a post.
+  /// It updates the likes collection of the post and increments the likes count of the post.
   Future<void> likePost(String userId, String postId) async {
     final likeRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.likesCollection).doc(userId);
 
@@ -37,6 +46,10 @@ class PostService extends GetxService {
     });
   }
 
+  /// Add a comment to a post
+  ///
+  /// This method allows a user to add a comment to a post.
+  /// It updates the comments collection of the post and increments the comments count of the post.
   Future<void> addComment(String userId, String postId, String content) async {
     final commentRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.commentsCollection).doc();
 

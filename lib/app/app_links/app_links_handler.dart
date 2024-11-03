@@ -6,15 +6,14 @@ import 'package:base/presentation/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// cách xử lý app links khi bị vướng authen
-// mỗi màn hình cần authen để truy cập nên có thêm một biến để đánh dấu rằng nó được mở bằng app link
-// nếu trong màn hình đó xuất hiện logic đẩy người dùng về màn đăng nhập thì sẽ lưu lại app link để đánh dấu
-// tại màn login, sau khi login thành công thì sẽ gọi lại hàm handle app link và truyền lại app link đã lưu
-
+/// Handles app links and deep links for the application.
+/// 
+/// This class is responsible for managing app links and deep links,
+/// including registering listeners, handling the links, and disposing of resources.
 class AppLinksHandler {
   AppLinksHandler();
 
-  // app links intance
+  // app links instance
   final AppLinks _appLinks = AppLinks();
 
   // app links subscription
@@ -38,12 +37,19 @@ class AppLinksHandler {
 
   // nếu là gọi để xử lý lần đầu sau khi app được mở bằng link (sau splash screen) thì không cần truyền uri vào
   // nếu là gọi để xử lý lai sau khi bị yêu cầu authen thì cần truyền uri vào
+  /// Handles the app link.
+  /// 
+  /// This method handles the app link, either by using the provided URI or by getting the latest link.
+  /// It is called manually the first time after the app is opened by a link (after the splash screen).
   Future<void> handle({Uri? uri}) async {
     Uri? tmpUri = await _appLinks.getLatestLink();
     _handleAppLink(uri ?? tmpUri ?? Uri.parse(''));
     _isFirstHandleAfterOpen = false;
   }
 
+  /// Registers the listener for app links.
+  /// 
+  /// This method registers the listener for app links and handles the app link when it is received.
   Future<void> registerListener() async {
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
       if (_isFirstHandleAfterOpen) return;
@@ -51,11 +57,17 @@ class AppLinksHandler {
     });
   }
 
+  /// Disposes of the resources used by the AppLinksHandler.
+  /// 
+  /// This method cancels the app links subscription.
   void dispose() {
     _linkSubscription?.cancel();
   }
 
   // chỉ sử dưới này khi cần xử lý thêm app links
+  /// Handles the app link.
+  /// 
+  /// This method handles the app link by calling the _handleUri method.
   void _handleAppLink(Uri uri) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Log.console('AppLinkHandler');
@@ -63,6 +75,9 @@ class AppLinksHandler {
     });
   }
 
+  /// Handles the URI.
+  /// 
+  /// This method handles the URI by checking the path segments and calling the appropriate method.
   void _handleUri(Uri uri) {
     final List<String> pathSegments = uri.pathSegments;
 
@@ -70,6 +85,9 @@ class AppLinksHandler {
     if (pathSegments.contains('news')) _handelNewsLink(pathSegments.last);
   }
 
+  /// Handles the news link.
+  /// 
+  /// This method handles the news link by navigating to the login page with the slug as an argument.
   void _handelNewsLink(String slug) {
     //TODO: edit route
     Get.toNamed(AppRoutes.login, arguments: slug);

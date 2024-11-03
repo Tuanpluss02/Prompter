@@ -84,7 +84,7 @@ class AuthService {
   }
 
   /// Get the error message from the Firebase exception
-  _getFirebaseExceptionMessage(FirebaseAuthException e) {
+  String _getFirebaseExceptionMessage(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':
         return 'No user found for that email.';
