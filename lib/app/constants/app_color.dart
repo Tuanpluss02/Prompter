@@ -6,7 +6,6 @@ class AppColors {
   //
   // static const black2E2E2E = Color(0xFF2E2E2E);
   // static const black1E1E1E = Color(0xFF1E1E1E);
-  static const Color backgroundColor = Color(0xFF131621);
 
   //Primary brand color
   static const appColorPrimary = Color(0xFFBB86FC);
@@ -114,4 +113,9 @@ class AppColors {
   static const black1B1D1F = Color(0xFF1B1D1F);
   static const black49454F = Color(0xFF49454F);
   static const grayF1F1F3 = Color(0xFFF1F1F3);
+
+  static const Color backgroundColor = Color(0xFF131621);
+  static const Color textFieldColor = Color(0XFF292c35);
+  static const Color textFieldBorderColor = Color(0XFF076acf);
+  static const Color textFieldBorderErrorColor = Color(0XFFf44336);
 }
