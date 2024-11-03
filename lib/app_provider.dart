@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class AppProvider extends GetxService {
@@ -12,26 +8,6 @@ class AppProvider extends GetxService {
 
   AppProvider._internal();
 
-  bool authenticated = false;
-  StreamSubscription? _authStateChangesSubscription;
   final AuthService _authService = AuthService();
-
-  @override
-  void onInit() {
-    super.onInit();
-    _authStateChangesSubscription = _authService.user.listen((User? user) {
-      if (user == null) {
-        authenticated = false;
-        Get.offAllNamed(AppRoutes.login);
-      } else {
-        authenticated = true;
-      }
-    });
-  }
-
-  @override
-  void onClose() {
-    _authStateChangesSubscription?.cancel();
-    super.onClose();
-  }
+  bool get isSignedIn => _authService.currentUser != null;
 }

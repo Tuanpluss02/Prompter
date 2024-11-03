@@ -41,7 +41,7 @@ class LoginController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
-    Get.toNamed(AppRoutes.root);
+    Get.offAllNamed(AppRoutes.root);
   }
 
   signInWithEmailAndPassword(String email, String password) async {
@@ -55,7 +55,7 @@ class LoginController extends BaseController {
       Get.snackbar(result.error!, '');
       return;
     }
-    Get.toNamed(AppRoutes.root);
+    Get.offAllNamed(AppRoutes.root);
   }
 
   void toggleObscureText() {

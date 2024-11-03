@@ -14,7 +14,7 @@ class AuthMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (!_appProvider.authenticated && !_excludedRoutes.contains(route)) {
+    if (!_appProvider.isSignedIn && !_excludedRoutes.contains(route)) {
       return RouteSettings(name: AppRoutes.login);
     }
     return null;
