@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "467739299542",
     "project_id": "prompter-32d5d",
-    "storage_bucket": "prompter-32d5d.appspot.com"
+    "storage_bucket": "prompter-32d5d.firebasestorage.app"
   },
   "client": [
     {

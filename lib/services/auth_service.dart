@@ -1,3 +1,4 @@
+import 'package:base/app/utils/log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -42,7 +43,9 @@ class AuthService {
       userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (_) {}
+    } catch (e) {
+      Log.console(e, where: 'AuthService.signInWithGoogle', level: LogLevel.error);
+    }
     return (userCredential: userCredential, error: error);
   }
 

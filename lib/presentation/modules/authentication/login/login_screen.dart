@@ -1,3 +1,4 @@
+import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/utils/validator.dart';
 import 'package:base/base/base_screen.dart';
@@ -7,6 +8,7 @@ import 'package:base/presentation/widgets/global/app_back_button.dart';
 import 'package:base/presentation/widgets/global/app_text_field.dart';
 import 'package:base/presentation/widgets/highlighted_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -59,7 +61,6 @@ class LoginScreen extends BaseScreen<LoginController> {
               SizedBox(height: 16),
               Obx(() => AppTextField(
                     controller: controller.passwordController,
-                    focusNode: controller.passwordFocus,
                     hintText: 'Password',
                     validator: passwordValidator,
                     keyboardType: TextInputType.visiblePassword,
@@ -134,7 +135,7 @@ class LoginScreen extends BaseScreen<LoginController> {
 
   ScaleButton _buildContinueGoogle() {
     return ScaleButton(
-      onTap: () {},
+      onTap: controller.signInGoogle,
       child: Container(
         width: double.infinity,
         height: 60,
@@ -143,13 +144,24 @@ class LoginScreen extends BaseScreen<LoginController> {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
-          child: Text(
-            'Continue with Google',
-            style: GoogleFonts.poppins(
-              color: Color(0xff0677e8),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                SvgPath.ic_google,
+                width: 24,
+                height: 24,
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Continue with Google',
+                style: GoogleFonts.poppins(
+                  color: Color(0xff0677e8),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
       ),
