@@ -19,6 +19,8 @@ class ResetPasswordController extends BaseController {
     super.onReady();
   }
 
+  String token = Get.parameters['token'] ?? '';
+
   var obscureText = true.obs;
 
   onSubmit() {
@@ -33,7 +35,7 @@ class ResetPasswordController extends BaseController {
   }
 
   resetPassword(String password) async {
-    final result = await _authService.resetPassword(password);
+    final result = await _authService.resetPassword(password, token);
     if (result == null) {
       Get.snackbar('Successfully', 'Password reset successfully');
     } else {

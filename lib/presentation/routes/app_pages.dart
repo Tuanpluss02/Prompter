@@ -1,14 +1,14 @@
+import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_binding.dart';
+import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_screen.dart';
 import 'package:base/presentation/modules/authentication/login/login_binding.dart';
 import 'package:base/presentation/modules/authentication/login/login_screen.dart';
 import 'package:base/presentation/modules/authentication/register/register_binding.dart';
 import 'package:base/presentation/modules/authentication/register/register_screen.dart';
+import 'package:base/presentation/modules/authentication/reset_password/reset_password_binding.dart';
+import 'package:base/presentation/modules/authentication/reset_password/reset_password_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
 import 'package:get/get.dart';
-import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_binding.dart';
-import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_screen.dart';
-import 'package:base/presentation/modules/authentication/reset_password/reset_password_binding.dart';
-import 'package:base/presentation/modules/authentication/reset_password/reset_password_screen.dart';
 
 part 'app_routes.dart';
 
@@ -32,12 +32,12 @@ class AppPages {
       binding: RegisterBinding(),
     ),
     GetPage(
-      name: AppRoutes.forgot,
+      name: AppRoutes.forgotPassword,
       page: () => ForgotPasswordScreen(),
       binding: ForgotPasswordBinding(),
     ),
     GetPage(
-      name: AppRoutes.reset,
+      name: AppRoutes.resetPassword,
       page: () => ResetPasswordScreen(),
       binding: ResetPasswordBinding(),
     ),

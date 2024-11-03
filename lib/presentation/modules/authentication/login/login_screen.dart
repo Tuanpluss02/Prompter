@@ -82,7 +82,7 @@ class LoginScreen extends BaseScreen<LoginController> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () => Get.toNamed(AppRoutes.forgotPassword),
                   child: Text(
                     'Forgot Password?',
                     style: GoogleFonts.manrope(

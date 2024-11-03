@@ -70,11 +70,6 @@ class AuthService {
     return await _firebaseInstance.signOut();
   }
 
-  /// Reset password
-  Future resetPassword(String email) async {
-    return await _firebaseInstance.sendPasswordResetEmail(email: email);
-  }
-
   /// Forgot password
   Future<String?> forgotPassword(String email) async {
     try {

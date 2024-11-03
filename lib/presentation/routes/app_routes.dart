@@ -4,9 +4,9 @@ class AppRoutes {
   static const login = '/login';
   static const root = '/root';
   static const welcome = '/welcome';
-  static const forgot = '/forgot';
+  static const forgotPassword = '/forgot-password';
   static const home = '/home';
   static const register = '/register';
   static const search = '/search';
-  static const reset = '/reset';
+  static const resetPassword = '/reset';
 }
