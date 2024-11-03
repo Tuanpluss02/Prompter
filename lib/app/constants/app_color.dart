@@ -118,4 +118,5 @@ class AppColors {
   static const Color textFieldColor = Color(0XFF292c35);
   static const Color textFieldBorderColor = Color(0XFF076acf);
   static const Color textFieldBorderErrorColor = Color(0XFFf44336);
+  static const Color textFieldCursorColor = Color(0XFF076acf);
 }

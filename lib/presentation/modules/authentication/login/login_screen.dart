@@ -78,6 +78,21 @@ class LoginScreen extends BaseScreen<LoginController> {
                       color: Colors.white,
                     ),
                   )),
+              SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Text(
+                    'Forgot Password?',
+                    style: GoogleFonts.manrope(
+                      color: Color(0XFFacadb9),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
               SizedBox(height: 20),
               _buildSubmitButton(),
               SizedBox(height: 12),

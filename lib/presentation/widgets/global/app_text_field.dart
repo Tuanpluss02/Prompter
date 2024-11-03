@@ -51,6 +51,8 @@ class AppTextField extends StatelessWidget {
       obscureText: obscureText ?? false,
       readOnly: readOnly ?? false,
       enabled: enabled ?? true,
+      cursorColor: AppColors.textFieldCursorColor,
+      cursorOpacityAnimates: true,
       style: GoogleFonts.manrope(
         color: Colors.white,
         fontSize: 16,
