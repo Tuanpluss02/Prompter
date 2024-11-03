@@ -1,9 +1,10 @@
 import 'package:base/app/constants/app_color.dart';
+import 'package:base/app/utils/validator.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
-import 'package:base/presentation/widgets/animated_scale_button.dart';
-import 'package:base/presentation/widgets/app_back_button.dart';
-import 'package:base/presentation/widgets/app_text_field.dart';
+import 'package:base/presentation/widgets/animated/animated_scale_button.dart';
+import 'package:base/presentation/widgets/global/app_back_button.dart';
+import 'package:base/presentation/widgets/global/app_text_field.dart';
 import 'package:base/presentation/widgets/highlighted_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,6 +45,7 @@ class LoginScreen extends BaseScreen<LoginController> {
               AppTextField(
                 controller: controller.emailController,
                 focusNode: controller.emailFocus,
+                validator: emailValidator,
                 hintText: 'Enter Your Email',
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icon(
@@ -56,6 +58,7 @@ class LoginScreen extends BaseScreen<LoginController> {
                 controller: controller.passwordController,
                 focusNode: controller.passwordFocus,
                 hintText: 'Password',
+                validator: passwordValidator,
                 textInputAction: TextInputAction.done,
                 prefixIcon: Icon(
                   Icons.password_outlined,

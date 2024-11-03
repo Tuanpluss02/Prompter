@@ -1,5 +1,12 @@
 import 'package:get/get.dart';
 
+String? fullNameValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your full name';
+  }
+  return null;
+}
+
 String? emailValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Please enter your email';

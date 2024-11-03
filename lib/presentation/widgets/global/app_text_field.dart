@@ -54,7 +54,10 @@ class AppTextField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
-        // suffixIcon: ,
+        errorStyle: GoogleFonts.manrope(
+          color: AppColors.textFieldBorderErrorColor,
+          fontSize: 12,
+        ),
         fillColor: AppColors.textFieldColor,
         filled: true,
         hintText: hintText,

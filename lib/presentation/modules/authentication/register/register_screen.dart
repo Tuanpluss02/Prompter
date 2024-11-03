@@ -1,8 +1,8 @@
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/base/base_screen.dart';
-import 'package:base/presentation/widgets/animated_scale_button.dart';
-import 'package:base/presentation/widgets/app_back_button.dart';
-import 'package:base/presentation/widgets/app_text_field.dart';
+import 'package:base/presentation/widgets/animated/animated_scale_button.dart';
+import 'package:base/presentation/widgets/global/app_back_button.dart';
+import 'package:base/presentation/widgets/global/app_text_field.dart';
 import 'package:base/presentation/widgets/highlighted_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

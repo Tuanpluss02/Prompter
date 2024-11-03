@@ -6,6 +6,7 @@ class ImagePath {
 class SvgPath {
   static const String svgPath = 'assets/svgs';
   static const String ic_Google = '$svgPath/ic_google.svg';
+  static const String ic_attention = '$svgPath/ic_attention.svg';
 }
 
 class LottiePath {}
