@@ -6,6 +6,7 @@ class AppColors {
   //
   // static const black2E2E2E = Color(0xFF2E2E2E);
   // static const black1E1E1E = Color(0xFF1E1E1E);
+  static const Color backgroundColor = Color(0xFF131621);
 
   //Primary brand color
   static const appColorPrimary = Color(0xFFBB86FC);
@@ -83,8 +84,6 @@ class AppColors {
   static const purple673AB7 = Color(0xFF673AB7);
 
   static const green016B69 = Color(0xFF016B69);
-
-
 
   static const transparent = Colors.transparent;
   static const green1AD822 = Color(0xFF1AD822);
