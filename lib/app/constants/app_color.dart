@@ -119,4 +119,8 @@ class AppColors {
   static const Color textFieldBorderColor = Color(0XFF076acf);
   static const Color textFieldBorderErrorColor = Color(0XFFf44336);
   static const Color textFieldCursorColor = Color(0XFF076acf);
+
+  static const Color navigationBarColor = Color(0xFF131620);
+
+  static const Color primaryColor = Color(0XFF076acf);
 }
