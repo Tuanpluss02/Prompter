@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// Handles app links and deep links for the application.
-/// 
+///
 /// This class is responsible for managing app links and deep links,
 /// including registering listeners, handling the links, and disposing of resources.
 class AppLinksHandler {
@@ -38,7 +38,7 @@ class AppLinksHandler {
   // nếu là gọi để xử lý lần đầu sau khi app được mở bằng link (sau splash screen) thì không cần truyền uri vào
   // nếu là gọi để xử lý lai sau khi bị yêu cầu authen thì cần truyền uri vào
   /// Handles the app link.
-  /// 
+  ///
   /// This method handles the app link, either by using the provided URI or by getting the latest link.
   /// It is called manually the first time after the app is opened by a link (after the splash screen).
   Future<void> handle({Uri? uri}) async {
@@ -48,7 +48,7 @@ class AppLinksHandler {
   }
 
   /// Registers the listener for app links.
-  /// 
+  ///
   /// This method registers the listener for app links and handles the app link when it is received.
   Future<void> registerListener() async {
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
@@ -58,7 +58,7 @@ class AppLinksHandler {
   }
 
   /// Disposes of the resources used by the AppLinksHandler.
-  /// 
+  ///
   /// This method cancels the app links subscription.
   void dispose() {
     _linkSubscription?.cancel();
@@ -66,7 +66,7 @@ class AppLinksHandler {
 
   // chỉ sử dưới này khi cần xử lý thêm app links
   /// Handles the app link.
-  /// 
+  ///
   /// This method handles the app link by calling the _handleUri method.
   void _handleAppLink(Uri uri) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -76,20 +76,20 @@ class AppLinksHandler {
   }
 
   /// Handles the URI.
-  /// 
+  ///
   /// This method handles the URI by checking the path segments and calling the appropriate method.
   void _handleUri(Uri uri) {
     final List<String> pathSegments = uri.pathSegments;
+    Log.console('AppLinkHandler: ${uri.pathSegments.toString()}');
 
     // xử lý link theo pathSegments
-    if (pathSegments.contains('news')) _handelNewsLink(pathSegments.last);
+    if (pathSegments.contains('reset-password')) _handelResetPasswordLink(pathSegments.last);
   }
 
   /// Handles the news link.
-  /// 
+  ///
   /// This method handles the news link by navigating to the login page with the slug as an argument.
-  void _handelNewsLink(String slug) {
-    //TODO: edit route
-    Get.toNamed(AppRoutes.login, arguments: slug);
+  void _handelResetPasswordLink(String token) {
+    Get.toNamed(AppRoutes.resetPassword, arguments: {'token': token});
   }
 }

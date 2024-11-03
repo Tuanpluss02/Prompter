@@ -2,7 +2,6 @@ import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/utils/validator.dart';
 import 'package:base/base/base_screen.dart';
-import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/widgets/animated/animated_scale_button.dart';
 import 'package:base/presentation/widgets/global/app_back_button.dart';
 import 'package:base/presentation/widgets/global/app_text_field.dart';
@@ -12,11 +11,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'login_controller.dart';
+import 'register_controller.dart';
 
-class LoginScreen extends BaseScreen<LoginController> {
-  const LoginScreen({super.key});
-
+class RegisterScreen extends BaseScreen<RegisterController> {
+  const RegisterScreen({super.key});
   @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
@@ -36,10 +34,12 @@ class LoginScreen extends BaseScreen<LoginController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBackButton(margin: EdgeInsets.zero),
+              AppBackButton(
+                margin: EdgeInsets.zero,
+              ),
               SizedBox(height: 48),
               Text(
-                'Login Your\nAccount',
+                'Create Your\nAccount',
                 style: GoogleFonts.manrope(
                   color: Colors.white,
                   fontSize: 38,
@@ -47,6 +47,18 @@ class LoginScreen extends BaseScreen<LoginController> {
                 ),
               ),
               SizedBox(height: 20),
+              AppTextField(
+                controller: controller.fullNameController,
+                focusNode: controller.fullNameFocus,
+                validator: fullNameValidator,
+                hintText: 'Full Name',
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                ),
+                textInputAction: TextInputAction.next,
+              ),
+              SizedBox(height: 16),
               AppTextField(
                 controller: controller.emailController,
                 focusNode: controller.emailFocus,
@@ -61,10 +73,11 @@ class LoginScreen extends BaseScreen<LoginController> {
               SizedBox(height: 16),
               Obx(() => AppTextField(
                     controller: controller.passwordController,
-                    hintText: 'Password',
+                    focusNode: controller.passwordFocus,
                     validator: passwordValidator,
-                    keyboardType: TextInputType.visiblePassword,
+                    hintText: 'Password',
                     textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.visiblePassword,
                     obscureText: controller.obscureText.value,
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -78,21 +91,6 @@ class LoginScreen extends BaseScreen<LoginController> {
                       color: Colors.white,
                     ),
                   )),
-              SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () => Get.toNamed(AppRoutes.forgotPassword),
-                  child: Text(
-                    'Forgot Password?',
-                    style: GoogleFonts.manrope(
-                      color: Color(0XFFacadb9),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
               SizedBox(height: 20),
               _buildSubmitButton(),
               SizedBox(height: 12),
@@ -118,7 +116,7 @@ class LoginScreen extends BaseScreen<LoginController> {
             ),
             child: Center(
                 child: Text(
-              'Login',
+              'Register',
               style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 16,
@@ -131,9 +129,9 @@ class LoginScreen extends BaseScreen<LoginController> {
   Center _buildSignInText() {
     return Center(
       child: HighlightedText(
-        text: 'Don\'t have an account? Sign Up',
-        highlights: ['Sign Up'],
-        onTapHighlight: () => Get.toNamed(AppRoutes.register),
+        text: 'Already Have An Account? Sign In',
+        highlights: ['Sign In'],
+        onTapHighlight: () => Get.back(),
         highlightStyle: GoogleFonts.manrope(
           color: Color(0xFF0677e8),
           fontSize: 14,
@@ -150,7 +148,7 @@ class LoginScreen extends BaseScreen<LoginController> {
 
   ScaleButton _buildContinueGoogle() {
     return ScaleButton(
-      onTap: controller.signInGoogle,
+      onTap: () {},
       child: Container(
         width: double.infinity,
         height: 60,

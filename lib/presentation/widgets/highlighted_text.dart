@@ -57,8 +57,7 @@ class HighlightedText extends StatelessWidget {
     required this.highlights,
     this.highlightStyle,
     this.normalTextStyle,
-    // Sorry for the hardcoding, but I don't have time to make it dynamic @@
-    this.height = 40,
+    this.height,
     this.width,
     this.onTapHighlight,
     this.textAlign = TextAlign.start,
@@ -121,8 +120,6 @@ class HighlightedText extends StatelessWidget {
       spans.add(TextSpan(text: text.substring(start), style: normalTextStyle ?? normalTextStyleDefault));
     }
 
-    return SizedBox(height: height, width: width, child: RichText(
-        textAlign: textAlign,
-        text: TextSpan(children: spans)));
+    return SizedBox(height: height, width: width, child: RichText(textAlign: textAlign, text: TextSpan(children: spans)));
   }
 }

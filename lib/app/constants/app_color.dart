@@ -84,8 +84,6 @@ class AppColors {
 
   static const green016B69 = Color(0xFF016B69);
 
-
-
   static const transparent = Colors.transparent;
   static const green1AD822 = Color(0xFF1AD822);
   static const yellowFFED80 = Color(0xFFFFED80);
@@ -115,4 +113,10 @@ class AppColors {
   static const black1B1D1F = Color(0xFF1B1D1F);
   static const black49454F = Color(0xFF49454F);
   static const grayF1F1F3 = Color(0xFFF1F1F3);
+
+  static const Color backgroundColor = Color(0xFF131621);
+  static const Color textFieldColor = Color(0XFF292c35);
+  static const Color textFieldBorderColor = Color(0XFF076acf);
+  static const Color textFieldBorderErrorColor = Color(0XFFf44336);
+  static const Color textFieldCursorColor = Color(0XFF076acf);
 }

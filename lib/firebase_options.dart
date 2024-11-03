@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '467739299542',
     projectId: 'prompter-32d5d',
     authDomain: 'prompter-32d5d.firebaseapp.com',
-    storageBucket: 'prompter-32d5d.appspot.com',
+    storageBucket: 'prompter-32d5d.firebasestorage.app',
     measurementId: 'G-6BQJHRRERJ',
   );
 
@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
     appId: '1:467739299542:android:b285bc477797bddcb64377',
     messagingSenderId: '467739299542',
     projectId: 'prompter-32d5d',
-    storageBucket: 'prompter-32d5d.appspot.com',
+    storageBucket: 'prompter-32d5d.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -68,7 +68,8 @@ class DefaultFirebaseOptions {
     appId: '1:467739299542:ios:fa3b89a8ddb94d26b64377',
     messagingSenderId: '467739299542',
     projectId: 'prompter-32d5d',
-    storageBucket: 'prompter-32d5d.appspot.com',
+    storageBucket: 'prompter-32d5d.firebasestorage.app',
+    androidClientId: '467739299542-8eitlulmt8bulr9sc4cabqi16l298flt.apps.googleusercontent.com',
     iosClientId: '467739299542-lcfe3eedcpobkd4uc8lefjjm7hca47j3.apps.googleusercontent.com',
     iosBundleId: 'com.stormx.prompter',
   );

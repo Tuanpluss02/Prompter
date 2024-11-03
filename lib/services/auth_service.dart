@@ -1,3 +1,4 @@
+import 'package:base/app/utils/log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,7 +19,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
-      error = e.toString();
+      Log.console(e, where: 'AuthService.signInWithEmailAndPassword', level: LogLevel.error);
     }
     return (userCredential: userCredential, error: error);
   }
@@ -45,7 +46,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
-      error = e.toString();
+      Log.console(e, where: 'AuthService.signInWithGoogle', level: LogLevel.error);
     }
     return (userCredential: userCredential, error: error);
   }
@@ -59,7 +60,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
-      error = e.toString();
+      Log.console(e, where: 'AuthService.registerWithEmailAndPassword', level: LogLevel.error);
     }
     return (userCredential: userCredential, error: error);
   }
@@ -69,9 +70,30 @@ class AuthService {
     return await _firebaseInstance.signOut();
   }
 
+  /// Forgot password
+  Future<String?> forgotPassword(String email) async {
+    try {
+      await _firebaseInstance.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.forgotPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
   /// Reset password
-  Future resetPassword(String email) async {
-    return await _firebaseInstance.sendPasswordResetEmail(email: email);
+  Future<String?> resetPassword(String code, String newPassword) async {
+    try {
+      await _firebaseInstance.confirmPasswordReset(code: code, newPassword: newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.resetPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
   }
 
   // Get user stream
@@ -101,11 +123,11 @@ class AuthService {
       case 'invalid-email':
         return 'The email is invalid.';
       case 'user-disabled':
-        return 'The user corresponding to the given email has been disabled.';
+        return 'Your account has been banned.';
       case 'operation-not-allowed':
-        return 'Email & Password accounts are not enabled.';
+        return 'Email or password is incorrect..';
       case 'invalid-credential':
-        return 'The credential is malformed or has expired.';
+        return 'Email or password is incorrect.';
       case 'too-many-requests':
         return 'You have attempted to sign in too many times. Please try again later.';
       case 'account-exists-with-different-credential':

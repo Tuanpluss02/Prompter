@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "467739299542",
     "project_id": "prompter-32d5d",
-    "storage_bucket": "prompter-32d5d.appspot.com"
+    "storage_bucket": "prompter-32d5d.firebasestorage.app"
   },
   "client": [
     {
@@ -27,6 +27,14 @@
           "android_info": {
             "package_name": "com.stormx.prompter",
             "certificate_hash": "6c5a4f8d0d79843d22399674c4340402690f4c85"
+          }
+        },
+        {
+          "client_id": "467739299542-epfnaibajpau8j0d97irub2ijhjadln6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stormx.prompter",
+            "certificate_hash": "7fe656c5ff8cca86d1251a58fa19821bde3fe61c"
           }
         },
         {

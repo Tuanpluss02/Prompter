@@ -12,7 +12,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:forui/theme.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -93,14 +92,7 @@ class _MyAppState extends State<MyApp> {
       defaultTransition: Transition.cupertino,
       initialBinding: AppBinding(),
       builder: EasyLoading.init(builder: ((context, widget) {
-        return FTheme(
-          data: FThemes.zinc.dark,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
-            behavior: HitTestBehavior.translucent,
-            child: widget!,
-          ),
-        );
+        return widget!;
       })),
     );
   }

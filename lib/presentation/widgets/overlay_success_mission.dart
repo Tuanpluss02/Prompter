@@ -1,6 +1,6 @@
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_text_styles.dart';
-import 'package:base/presentation/widgets/gradient_text.dart';
+import 'package:base/presentation/widgets/gradient/gradient_text.dart';
 import 'package:flutter/material.dart';
 
 void showBadgeNotification({
@@ -34,10 +34,7 @@ void showBadgeNotification({
 
   overlayState.insert(overlayEntry);
 
-  Future.delayed(
-      Duration(
-          milliseconds: timeAnimation.inMilliseconds * 2 +
-              timeShowBadgeNotification.inMilliseconds), () {
+  Future.delayed(Duration(milliseconds: timeAnimation.inMilliseconds * 2 + timeShowBadgeNotification.inMilliseconds), () {
     overlayEntry?.remove();
     overlayEntry?.dispose();
     overlayEntry = null;
@@ -71,8 +68,7 @@ class CustomSnackBarContent extends StatefulWidget {
   }
 }
 
-class _CustomSnackBarState extends State<CustomSnackBarContent>
-    with SingleTickerProviderStateMixin {
+class _CustomSnackBarState extends State<CustomSnackBarContent> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
@@ -95,8 +91,7 @@ class _CustomSnackBarState extends State<CustomSnackBarContent>
 
     _controller.forward().then(
       (value) {
-        Future.delayed(Duration(milliseconds: widget.timeshowBadgeNotification))
-            .then(
+        Future.delayed(Duration(milliseconds: widget.timeshowBadgeNotification)).then(
           (value) {
             _controller.reverse();
           },
@@ -122,9 +117,7 @@ class _CustomSnackBarState extends State<CustomSnackBarContent>
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  bottomLeft: Radius.circular(16)),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), bottomLeft: Radius.circular(16)),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
@@ -136,9 +129,7 @@ class _CustomSnackBarState extends State<CustomSnackBarContent>
             ),
             child: Row(
               children: [
-                widget.prefixWidget != null
-                    ? widget.prefixWidget!
-                    : const SizedBox.shrink(),
+                widget.prefixWidget != null ? widget.prefixWidget! : const SizedBox.shrink(),
                 SizedBox(width: widget.prefixWidget != null ? 8 : 0),
                 Expanded(
                   child: Column(
@@ -166,9 +157,7 @@ class _CustomSnackBarState extends State<CustomSnackBarContent>
                   ),
                 ),
                 SizedBox(width: widget.suffixWidget != null ? 8 : 0),
-                widget.suffixWidget != null
-                    ? widget.suffixWidget!
-                    : const SizedBox.shrink(),
+                widget.suffixWidget != null ? widget.suffixWidget! : const SizedBox.shrink(),
               ],
             ),
           ),

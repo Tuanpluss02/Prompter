@@ -482,22 +482,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  forui:
+  font_awesome_flutter:
     dependency: "direct main"
     description:
-      name: forui
-      sha256: b3b4652aaf7e6e3f8165a234a05a53cd80e13b805ae78004b8e5ef35dd67e51c
+      name: font_awesome_flutter
+      sha256: "275ff26905134bcb59417cf60ad979136f1f8257f2f449914b2c3e05bbb4cd6f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
-  forui_assets:
-    dependency: "direct main"
-    description:
-      name: forui_assets
-      sha256: "48a036b329a855db9a18ebb3db98d5e9d1320479d747b48efd4e698ec7b1f178"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
+    version: "10.7.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -786,22 +778,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  nitrogen_flutter_svg:
-    dependency: transitive
-    description:
-      name: nitrogen_flutter_svg
-      sha256: "2c473caaeeeddb11a437e72f9d112622619493ce22dcd6b41f7364cb999b8e2b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0+1"
-  nitrogen_types:
-    dependency: transitive
-    description:
-      name: nitrogen_types
-      sha256: "04c3e921fe59a47710b81f6bfd3c4dfeb819ca16e25ad6824dcc5b44ca39ed46"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0+1"
   package_config:
     dependency: transitive
     description:
@@ -1055,14 +1031,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  sugar:
-    dependency: transitive
-    description:
-      name: sugar
-      sha256: "9bfbba7793b5e3650003fca22a857a1d8485e99bf17558cad406a74ba5c4aa3c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:

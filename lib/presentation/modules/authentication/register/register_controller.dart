@@ -2,37 +2,44 @@ import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/widgets/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
+import 'package:base/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginController extends BaseController {
-  final AuthService _authService = Get.find<AuthService>();
+class RegisterController extends BaseController {
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  final FocusNode fullNameFocus = FocusNode();
   final FocusNode emailFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final AuthService _authService = Get.find<AuthService>();
+  final UserService _userService = Get.find<UserService>();
+
+  var obscureText = true.obs;
 
   @override
   void onReady() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      emailFocus.requestFocus();
+      fullNameFocus.requestFocus();
     });
     super.onReady();
   }
-
-  var obscureText = true.obs;
 
   onSubmit() {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    signInWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
+    registerWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
   }
 
-  signInGoogle() async {
+  void registerWithEmailAndPassword(String email, String password) async {
     final result = await CallApiWidget.checkTimeCallApi(
-      api: _authService.signInWithGoogle(),
+      api: _authService.registerWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {
       return;
@@ -41,28 +48,9 @@ class LoginController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
+    await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
     Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Sign in with Google successfully');
-  }
-
-  void logout() async {
-    await _authService.signOut();
-    Get.snackbar('Successfully', 'Logout successfully');
-  }
-
-  signInWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.checkTimeCallApi(
-      api: _authService.signInWithEmailAndPassword(email, password),
-    );
-    if (result.error == null && result.userCredential == null) {
-      return;
-    }
-    if (result.error != null) {
-      Get.snackbar(result.error!, '');
-      return;
-    }
-    Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Sign in successfully');
+    Get.snackbar('Successfully', 'Register successfully');
   }
 
   void toggleObscureText() {

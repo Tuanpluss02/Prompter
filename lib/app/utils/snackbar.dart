@@ -1,7 +1,7 @@
 // import 'package:auto_size_text/auto_size_text.dart';
-// import 'package:flutter/material.dart';
 // import 'package:base/app/constants/app_assets_path.dart';
 // import 'package:base/app/constants/app_text_styles.dart';
+// import 'package:flutter/material.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:get/get.dart';
 
@@ -54,8 +54,7 @@
 //     decoration: BoxDecoration(
 //       color: Colors.white,
 //       borderRadius: BorderRadius.circular(12),
-//       border:
-//           isSuccess ? Border(left: BorderSide(width: 5, color: color)) : null,
+//       border: isSuccess ? Border(left: BorderSide(width: 5, color: color)) : null,
 //       boxShadow: [
 //         BoxShadow(
 //           color: isSuccess ? const Color(0x1E0EAA0B) : const Color(0x19000000),
@@ -99,8 +98,7 @@
 //               // Message
 //               AutoSizeText(
 //                 message,
-//                 style: AppTextStyles.s12w500
-//                     .copyWith(color: const Color(0xFF99909B)),
+//                 style: AppTextStyles.s12w500.copyWith(color: const Color(0xFF99909B)),
 //                 maxLines: 2,
 //               ),
 //             ],

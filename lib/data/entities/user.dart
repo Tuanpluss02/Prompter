@@ -22,5 +22,16 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-  // Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => {
+        'username': username,
+        'email': email,
+        'profileImage': profileImage,
+        'bio': bio,
+        'followers': followers,
+        'following': following,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+        'postCount': postCount,
+        'likeCount': likeCount,
+      };
 }
