@@ -14,7 +14,7 @@ class AppProvider extends GetxService {
 
   bool authenticated = false;
   StreamSubscription? _authStateChangesSubscription;
-  final AuthService _authService = Get.find<AuthService>();
+  final AuthService _authService = AuthService();
 
   @override
   void onInit() {

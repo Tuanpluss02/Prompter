@@ -5,7 +5,12 @@ import 'package:get/get.dart';
 
 class AuthMiddleware extends GetMiddleware {
   final _appProvider = Get.find<AppProvider>();
-  final _excludedRoutes = [AppRoutes.forgotPassword, AppRoutes.register, AppRoutes.login, AppRoutes.welcome];
+  final _excludedRoutes = [
+    AppRoutes.forgotPassword,
+    AppRoutes.register,
+    AppRoutes.login,
+    AppRoutes.resetPassword,
+  ];
 
   @override
   RouteSettings? redirect(String? route) {
