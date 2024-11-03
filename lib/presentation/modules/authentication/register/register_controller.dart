@@ -1,5 +1,6 @@
 import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
+import 'package:base/presentation/widgets/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:base/services/user_service.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +38,10 @@ class RegisterController extends BaseController {
   }
 
   void registerWithEmailAndPassword(String email, String password) async {
-    final result = await _authService.registerWithEmailAndPassword(email, password);
-    if (result.error == null || result.userCredential == null) {
+    final result = await CallApiWidget.checkTimeCallApi(
+      api: _authService.registerWithEmailAndPassword(email, password),
+    );
+    if (result.error == null && result.userCredential == null) {
       return;
     }
     if (result.error != null) {

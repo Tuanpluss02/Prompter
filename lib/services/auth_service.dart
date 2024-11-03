@@ -18,7 +18,9 @@ class AuthService {
       userCredential = await _firebaseInstance.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (_) {}
+    } catch (e) {
+      Log.console(e, where: 'AuthService.signInWithEmailAndPassword', level: LogLevel.error);
+    }
     return (userCredential: userCredential, error: error);
   }
 
@@ -57,7 +59,9 @@ class AuthService {
       userCredential = await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
-    } catch (_) {}
+    } catch (e) {
+      Log.console(e, where: 'AuthService.registerWithEmailAndPassword', level: LogLevel.error);
+    }
     return (userCredential: userCredential, error: error);
   }
 

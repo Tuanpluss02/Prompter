@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "467739299542-epfnaibajpau8j0d97irub2ijhjadln6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stormx.prompter",
+            "certificate_hash": "7fe656c5ff8cca86d1251a58fa19821bde3fe61c"
+          }
+        },
+        {
           "client_id": "467739299542-2ef9b1qatfb7r02l6onj8tqehrnh8edd.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -65,7 +65,7 @@ class AppTextField extends StatelessWidget {
         fillColor: AppColors.textFieldColor,
         filled: true,
         hintText: hintText,
-        hintStyle: GoogleFonts.manrope(
+        hintStyle: GoogleFonts.poppins(
           color: Colors.white,
           fontSize: 16,
         ),
