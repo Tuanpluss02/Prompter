@@ -75,6 +75,32 @@ class AuthService {
     return await _firebaseInstance.sendPasswordResetEmail(email: email);
   }
 
+  /// Forgot password
+  Future<String?> forgotPassword(String email) async {
+    try {
+      await _firebaseInstance.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.forgotPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
+  /// Reset password
+  Future<String?> resetPassword(String code, String newPassword) async {
+    try {
+      await _firebaseInstance.confirmPasswordReset(code: code, newPassword: newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.resetPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
   // Get user stream
   Stream<User?> get user {
     return _firebaseInstance.authStateChanges();

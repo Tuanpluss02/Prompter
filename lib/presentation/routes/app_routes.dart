@@ -8,4 +8,5 @@ class AppRoutes {
   static const home = '/home';
   static const register = '/register';
   static const search = '/search';
+  static const reset = '/reset';
 }
