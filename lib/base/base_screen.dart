@@ -18,10 +18,10 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
         color: unSafeAreaColor,
         child: wrapWithSafeArea
             ? SafeArea(
-          top: setTopSafeArea,
-          bottom: setBottomSafeArea,
-          child: _buildScaffold(context),
-        )
+                top: setTopSafeArea,
+                bottom: setBottomSafeArea,
+                child: _buildScaffold(context),
+              )
             : _buildScaffold(context),
       ),
     );
@@ -33,7 +33,11 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
       extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       appBar: buildAppBar(context),
-      body: buildScreen(context),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
+        behavior: HitTestBehavior.translucent,
+        child: buildScreen(context),
+      ),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
       floatingActionButtonLocation: floatingActionButtonLocation,
@@ -83,7 +87,7 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
   bool get setTopSafeArea => true;
 
   @protected
-  Function() get opTapScreen => (){};
+  Function() get opTapScreen => () {};
 
   @protected
   Key? get keyScaffold => null;

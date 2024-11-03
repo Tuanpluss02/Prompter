@@ -22,6 +22,9 @@ class LoginScreen extends BaseScreen<LoginController> {
   bool get wrapWithSafeArea => true;
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Widget buildScreen(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -54,17 +57,26 @@ class LoginScreen extends BaseScreen<LoginController> {
                 ),
               ),
               SizedBox(height: 16),
-              AppTextField(
-                controller: controller.passwordController,
-                focusNode: controller.passwordFocus,
-                hintText: 'Password',
-                validator: passwordValidator,
-                textInputAction: TextInputAction.done,
-                prefixIcon: Icon(
-                  Icons.password_outlined,
-                  color: Colors.white,
-                ),
-              ),
+              Obx(() => AppTextField(
+                    controller: controller.passwordController,
+                    focusNode: controller.passwordFocus,
+                    hintText: 'Password',
+                    validator: passwordValidator,
+                    keyboardType: TextInputType.visiblePassword,
+                    textInputAction: TextInputAction.done,
+                    obscureText: controller.obscureText.value,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        controller.obscureText.value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: Colors.white,
+                      ),
+                      onPressed: controller.toggleObscureText,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.password_outlined,
+                      color: Colors.white,
+                    ),
+                  )),
               SizedBox(height: 20),
               _buildSubmitButton(),
               SizedBox(height: 12),

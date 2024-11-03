@@ -92,11 +92,7 @@ class _MyAppState extends State<MyApp> {
       defaultTransition: Transition.cupertino,
       initialBinding: AppBinding(),
       builder: EasyLoading.init(builder: ((context, widget) {
-        return GestureDetector(
-          onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
-          behavior: HitTestBehavior.translucent,
-          child: widget!,
-        );
+        return widget!;
       })),
     );
   }

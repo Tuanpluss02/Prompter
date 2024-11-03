@@ -15,6 +15,7 @@ class AppTextField extends StatelessWidget {
     this.readOnly,
     this.enabled,
     this.prefixIcon,
+    this.suffixIcon,
   });
 
   final TextEditingController? controller;
@@ -37,6 +38,8 @@ class AppTextField extends StatelessWidget {
 
   final bool? enabled;
 
+  final Widget? suffixIcon;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -54,6 +57,7 @@ class AppTextField extends StatelessWidget {
       ),
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
         errorStyle: GoogleFonts.manrope(
           color: AppColors.textFieldBorderErrorColor,
           fontSize: 12,

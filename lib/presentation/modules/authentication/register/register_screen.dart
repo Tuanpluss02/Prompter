@@ -1,4 +1,5 @@
 import 'package:base/app/constants/app_color.dart';
+import 'package:base/app/utils/validator.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/widgets/animated/animated_scale_button.dart';
 import 'package:base/presentation/widgets/global/app_back_button.dart';
@@ -19,66 +20,84 @@ class RegisterScreen extends BaseScreen<RegisterController> {
   bool get wrapWithSafeArea => true;
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Widget buildScreen(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppBackButton(
-              margin: EdgeInsets.zero,
-            ),
-            SizedBox(height: 48),
-            Text(
-              'Create Your\nAccount',
-              style: GoogleFonts.manrope(
-                color: Colors.white,
-                fontSize: 38,
-                fontWeight: FontWeight.bold,
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppBackButton(
+                margin: EdgeInsets.zero,
               ),
-            ),
-            SizedBox(height: 20),
-            AppTextField(
-              controller: controller.fullNameController,
-              focusNode: controller.fullNameFocus,
-              hintText: 'Full Name',
-              prefixIcon: Icon(
-                Icons.person_outline,
-                color: Colors.white,
+              SizedBox(height: 48),
+              Text(
+                'Create Your\nAccount',
+                style: GoogleFonts.manrope(
+                  color: Colors.white,
+                  fontSize: 38,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              textInputAction: TextInputAction.next,
-            ),
-            SizedBox(height: 16),
-            AppTextField(
-              controller: controller.emailController,
-              focusNode: controller.emailFocus,
-              hintText: 'Enter Your Email',
-              textInputAction: TextInputAction.next,
-              prefixIcon: Icon(
-                Icons.email_outlined,
-                color: Colors.white,
+              SizedBox(height: 20),
+              AppTextField(
+                controller: controller.fullNameController,
+                focusNode: controller.fullNameFocus,
+                validator: fullNameValidator,
+                hintText: 'Full Name',
+                prefixIcon: Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                ),
+                textInputAction: TextInputAction.next,
               ),
-            ),
-            SizedBox(height: 16),
-            AppTextField(
-              controller: controller.passwordController,
-              focusNode: controller.passwordFocus,
-              hintText: 'Password',
-              textInputAction: TextInputAction.done,
-              prefixIcon: Icon(
-                Icons.password_outlined,
-                color: Colors.white,
+              SizedBox(height: 16),
+              AppTextField(
+                controller: controller.emailController,
+                focusNode: controller.emailFocus,
+                validator: emailValidator,
+                hintText: 'Enter Your Email',
+                textInputAction: TextInputAction.next,
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            _buildSubmitButton(),
-            SizedBox(height: 12),
-            _buildSignInText(),
-            _buildDivider(),
-            SizedBox(height: 16),
-            _buildContinueGoogle()
-          ],
+              SizedBox(height: 16),
+              Obx(() => AppTextField(
+                    controller: controller.passwordController,
+                    focusNode: controller.passwordFocus,
+                    validator: passwordValidator,
+                    hintText: 'Password',
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: controller.obscureText.value,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        controller.obscureText.value ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        color: Colors.white,
+                      ),
+                      onPressed: controller.toggleObscureText,
+                    ),
+                    prefixIcon: Icon(
+                      Icons.password_outlined,
+                      color: Colors.white,
+                    ),
+                  )),
+              SizedBox(height: 20),
+              _buildSubmitButton(),
+              SizedBox(height: 12),
+              _buildSignInText(),
+              _buildDivider(),
+              SizedBox(height: 16),
+              _buildContinueGoogle()
+            ],
+          ),
         ),
       ),
     );
@@ -102,7 +121,7 @@ class RegisterScreen extends BaseScreen<RegisterController> {
                 fontWeight: FontWeight.bold,
               ),
             ))),
-        onTap: () {});
+        onTap: controller.onSubmit);
   }
 
   Center _buildSignInText() {

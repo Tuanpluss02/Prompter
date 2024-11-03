@@ -19,6 +19,16 @@ class RegisterController extends BaseController {
   final AuthService _authService = Get.find<AuthService>();
   final UserService _userService = Get.find<UserService>();
 
+  var obscureText = true.obs;
+
+  @override
+  void onReady() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      fullNameFocus.requestFocus();
+    });
+    super.onReady();
+  }
+
   onSubmit() {
     if (!formKey.currentState!.validate()) {
       return;
@@ -38,5 +48,9 @@ class RegisterController extends BaseController {
     await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
     Get.toNamed(AppRoutes.root);
     Get.snackbar('Successfully', 'Register successfully');
+  }
+
+  void toggleObscureText() {
+    obscureText.value = !obscureText.value;
   }
 }
