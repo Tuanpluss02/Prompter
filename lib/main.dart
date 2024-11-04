@@ -6,6 +6,7 @@ import 'package:base/app/config/app_theme.dart';
 import 'package:base/di.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:error_stack/error_stack.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,7 @@ typedef TextScaler = double Function(double);
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await ErrorStack.init();
   HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -45,7 +45,7 @@ class RootScreen extends BaseScreen<RootController> {
   @override
   Widget? buildBottomNavigationBar(BuildContext context) {
     return Container(
-      height: 70.0,
+      height: 60.0,
       color: AppColors.navigationBarColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

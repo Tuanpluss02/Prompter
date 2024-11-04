@@ -6,22 +6,6 @@ part of '../../../data/responses/ai_image_generated.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AiPhotoGenerated _$AiPhotoGeneratedFromJson(Map<String, dynamic> json) =>
-    AiPhotoGenerated(
-      code: (json['code'] as num?)?.toInt(),
-      msg: json['msg'] as String?,
-      data: json['data'] == null
-          ? null
-          : Data.fromJson(json['data'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$AiPhotoGeneratedToJson(AiPhotoGenerated instance) =>
-    <String, dynamic>{
-      'code': instance.code,
-      'msg': instance.msg,
-      'data': instance.data,
-    };
-
 Data _$DataFromJson(Map<String, dynamic> json) => Data(
       image: json['image'] == null
           ? null

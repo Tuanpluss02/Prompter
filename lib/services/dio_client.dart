@@ -2,19 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
+import 'package:base/app/utils/log.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_base/app/constants/app_strings.dart';
-import 'package:flutter_base/app/utils/log.dart';
-import 'package:flutter_base/presentation/modules/root/root_controller.dart';
-import 'package:flutter_base/services/network_exceptions.dart';
-import 'package:get/get.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-import '../data/local/app_storage.dart';
-import '../presentation/routes/app_pages.dart';
+import 'package:talker_dio_logger/talker_dio_logger.dart';
 
 class DioClient {
   late Dio _dio;
@@ -54,14 +46,6 @@ class DioClient {
         handler.next(options);
       },
       onError: (error, handler) {
-        if (error.response?.statusCode == 401) {
-          if (Get.isRegistered<RootController>()) {
-            Get.find<RootController>().appProvider.clearAuthData();
-          }
-          if (Get.currentRoute != AppRoutes.login) {
-            Get.offAllNamed(AppRoutes.login);
-          }
-        }
         return handler.next(error);
       },
       onResponse: (response, handler) {
@@ -69,20 +53,20 @@ class DioClient {
       },
     ));
 
-    _dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: true,
-        error: true,
-        compact: true,
-        maxWidth: 1200,
-        enabled: true,
-        filter: (options, args) {
-          // don't print responses with unit8 list data
-          return !args.isResponse || !args.hasUint8ListData;
-        }));
-    _dio.interceptors.add(CurlLoggerDioInterceptor());
+    _dio.interceptors.add(
+      TalkerDioLogger(
+        settings: const TalkerDioLoggerSettings(
+          // All http responses enabled for console logging
+          printResponseData: true,
+          // All http requests disabled for console logging
+          printRequestData: false,
+          // Reposnse logs including http - headers
+          printResponseHeaders: true,
+          // Request logs without http - headersa
+          printRequestHeaders: false,
+        ),
+      ),
+    );
     _dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
         // Don't trust any certificate just because their root cert is trusted.
@@ -95,23 +79,23 @@ class DioClient {
   }
 
   Map<String, dynamic> getHeader() {
-    String? accessToken = AppStorage.getString(SharedPreferencesKeys.accessToken);
-    String? deviceID = AppStorage.getString(SharedPreferencesKeys.deviceId);
-    Map<String, dynamic> header = {};
-    header['Content-Type'] = 'application/json; charset=UTF-8';
-    header['Accept'] = 'application/json';
-    header['lang'] = Platform.localeName.substring(0, 2);
-    if (token != null && token != '') {
-      header['Authorization'] = 'Bearer $token';
-    } else if (accessToken != null && accessToken.isNotEmpty) {
-      header['Authorization'] = 'Bearer $accessToken';
-    }
-    header['device_id'] = deviceID;
-    header['service_id'] = AppStrings.appServiceId;
-    if (id != null) {
-      header['id'] = id;
-    }
-    return header;
+    // String? accessToken = AppStorage.getString(SharedPreferencesKeys.accessToken);
+    // String? deviceID = AppStorage.getString(SharedPreferencesKeys.deviceId);
+    // Map<String, dynamic> header = {};
+    // header['Content-Type'] = 'application/json; charset=UTF-8';
+    // header['Accept'] = 'application/json';
+    // header['lang'] = Platform.localeName.substring(0, 2);
+    // if (token != null && token != '') {
+    //   header['Authorization'] = 'Bearer $token';
+    // } else if (accessToken != null && accessToken.isNotEmpty) {
+    //   header['Authorization'] = 'Bearer $accessToken';
+    // }
+    // header['device_id'] = deviceID;
+    // if (id != null) {
+    //   header['id'] = id;
+    // }
+    // return header;
+    return {};
   }
 
   Future<dynamic> get(
@@ -131,7 +115,6 @@ class DioClient {
       );
       return response.data;
     } on SocketException catch (e) {
-      Log.console(e, where: 'GET $baseUrl$uri', level: LogLevel.error);
       throw SocketException(e.toString());
     } on FormatException catch (_) {
       Log.console('Unable to process the data', where: 'GET $baseUrl$uri', level: LogLevel.error);

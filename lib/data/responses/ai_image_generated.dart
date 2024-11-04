@@ -3,26 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 part '../../generated/data/responses/ai_image_generated.g.dart';
 
 @JsonSerializable()
-class AiPhotoGenerated {
-  @JsonKey(name: "code")
-  final int? code;
-  @JsonKey(name: "msg")
-  final String? msg;
-  @JsonKey(name: "data")
-  final Data? data;
-
-  AiPhotoGenerated({
-    this.code,
-    this.msg,
-    this.data,
-  });
-
-  factory AiPhotoGenerated.fromJson(Map<String, dynamic> json) => _$AiPhotoGeneratedFromJson(json);
-
-  Map<String, dynamic> toJson() => _$AiPhotoGeneratedToJson(this);
-}
-
-@JsonSerializable()
 class Data {
   @JsonKey(name: "image")
   final Image? image;
