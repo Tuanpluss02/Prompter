@@ -49,8 +49,7 @@ class RegisterController extends BaseController {
       return;
     }
     await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
-    Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Register successfully');
+    Get.offAllNamed(AppRoutes.root);
   }
 
   void toggleObscureText() {

@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static String initial = AppRoutes.login;
+  static String initial = AppRoutes.root;
 
   static final appRoutes = [
     GetPage(

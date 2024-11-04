@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCM61stAykytLpmAFBdTx1IzKlkWi668Ok',
-    appId: '1:467739299542:ios:fa3b89a8ddb94d26b64377',
+    appId: '1:467739299542:ios:6f80bfc48c477cfdb64377',
     messagingSenderId: '467739299542',
     projectId: 'prompter-32d5d',
     storageBucket: 'prompter-32d5d.firebasestorage.app',

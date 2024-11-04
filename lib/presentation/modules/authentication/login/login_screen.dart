@@ -163,7 +163,7 @@ class LoginScreen extends BaseScreen<LoginController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                SvgPath.ic_google,
+                SvgPath.icGoogle,
                 width: 24,
                 height: 24,
               ),

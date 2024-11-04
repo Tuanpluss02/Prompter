@@ -41,13 +41,7 @@ class LoginController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
-    Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Sign in with Google successfully');
-  }
-
-  void logout() async {
-    await _authService.signOut();
-    Get.snackbar('Successfully', 'Logout successfully');
+    Get.offAllNamed(AppRoutes.root);
   }
 
   signInWithEmailAndPassword(String email, String password) async {
@@ -61,8 +55,7 @@ class LoginController extends BaseController {
       Get.snackbar(result.error!, '');
       return;
     }
-    Get.toNamed(AppRoutes.root);
-    Get.snackbar('Successfully', 'Sign in successfully');
+    Get.offAllNamed(AppRoutes.root);
   }
 
   void toggleObscureText() {
