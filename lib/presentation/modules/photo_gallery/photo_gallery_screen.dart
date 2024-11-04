@@ -1,4 +1,5 @@
 import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/modules/photo_gallery/components/photo_gallery_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,26 +10,10 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    // return PhotoGallery(
-    //   collectionId: '12123123',
-    // );
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Obx(
-          () => controller.aiImages.isEmpty
-              ? const Center(child: CircularProgressIndicator())
-              : Image.network(
-                  controller.aiImages.first.defaultImage?.url ?? '',
-                  width: 200,
-                  height: 200,
-                ),
-        ),
-        ElevatedButton(
-          onPressed: controller.onRefresh,
-          child: const Text('Refresh'),
-        ),
-      ],
-    );
+    return Obx(() => controller.aiImages.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : PhotoGalleryGrid(
+            aiImages: controller.aiImages,
+          ));
   }
 }
