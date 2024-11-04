@@ -3,20 +3,20 @@ import 'package:json_annotation/json_annotation.dart';
 part '../../generated/data/responses/ai_image_generated.g.dart';
 
 @JsonSerializable()
-class Data {
+class AiImageGenerated {
   @JsonKey(name: "image")
   final Image? image;
   @JsonKey(name: "deep_search")
   final DeepSearch? deepSearch;
 
-  Data({
+  AiImageGenerated({
     this.image,
     this.deepSearch,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory AiImageGenerated.fromJson(Map<String, dynamic> json) => _$AiImageGeneratedFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$AiImageGeneratedToJson(this);
 }
 
 @JsonSerializable()

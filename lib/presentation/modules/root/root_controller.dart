@@ -36,9 +36,9 @@ class RootController extends BaseController {
 
   final List<Widget> screens = [
     const HomeScreen(),
-    SearchScreen(),
-    PhotoGalleryScreen(),
-    AccountScreen(),
+    const SearchScreen(),
+    const PhotoGalleryScreen(),
+    const AccountScreen(),
   ];
 
   onNavItemTaped(int index) {

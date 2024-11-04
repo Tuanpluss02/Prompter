@@ -6,7 +6,8 @@ part of '../../../data/responses/ai_image_generated.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Data _$DataFromJson(Map<String, dynamic> json) => Data(
+AiImageGenerated _$AiImageGeneratedFromJson(Map<String, dynamic> json) =>
+    AiImageGenerated(
       image: json['image'] == null
           ? null
           : Image.fromJson(json['image'] as Map<String, dynamic>),
@@ -15,7 +16,8 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
           : DeepSearch.fromJson(json['deep_search'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+Map<String, dynamic> _$AiImageGeneratedToJson(AiImageGenerated instance) =>
+    <String, dynamic>{
       'image': instance.image,
       'deep_search': instance.deepSearch,
     };
