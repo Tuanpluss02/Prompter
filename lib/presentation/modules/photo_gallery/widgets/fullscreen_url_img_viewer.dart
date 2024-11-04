@@ -81,16 +81,24 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: ExcludeSemantics(child: content),
     );
 
-    return FullscreenKeyboardListener(
-      onKeyDown: _handleKeyDown,
-      child: Container(
-        color: Colors.black,
-        child: Stack(
-          children: [
-            Positioned.fill(child: content),
-            // Show next/previous btns if there are more than one image
-            if (widget.urls.length > 1) ...{Text('hehehe')}
-          ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop && context.mounted) {
+          _handleBackPressed();
+        }
+      },
+      child: FullscreenKeyboardListener(
+        onKeyDown: _handleKeyDown,
+        child: Container(
+          color: Colors.black,
+          child: Stack(
+            children: [
+              Positioned.fill(child: content),
+              // Show next/previous btns if there are more than one image
+              if (widget.urls.length > 1) ...{Text('hehehe')}
+            ],
+          ),
         ),
       ),
     );

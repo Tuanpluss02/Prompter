@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:base/app/utils/log.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/modules/account/account_screen.dart';
 import 'package:base/presentation/modules/home/home_screen.dart';
@@ -42,7 +41,6 @@ class RootController extends BaseController {
   ];
 
   onNavItemTaped(int index) {
-    Log.console('onNavItemTaped $index');
     if (index == 2) {
       return;
     }

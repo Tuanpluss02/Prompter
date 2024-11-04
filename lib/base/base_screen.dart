@@ -62,7 +62,7 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
   PreferredSizeWidget? buildAppBar(BuildContext context) => null;
 
   @protected
-  Color? get unSafeAreaColor => Colors.black;
+  Color? get unSafeAreaColor => AppColors.backgroundColor;
 
   @protected
   Color? get screenBackgroundColor => AppColors.backgroundColor;

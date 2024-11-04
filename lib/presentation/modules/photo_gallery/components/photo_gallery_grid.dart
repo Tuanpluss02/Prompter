@@ -35,7 +35,6 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
   final double _scale = 1;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = Duration(milliseconds: 600) * .4;
-  // final _photoIds = ValueNotifier<List<String>>([]);
   int get _imgCount => pow(_gridSize, 2).round();
 
   late final List<FocusNode> _focusNodes = List.generate(_imgCount, (index) => FocusNode());
@@ -45,21 +44,8 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
   @override
   void initState() {
     super.initState();
-    // _initPhotoIds();
     _focusNodes[_index].requestFocus();
   }
-
-  // Future<void> _initPhotoIds() async {
-  //   var ids = UnsplashLogic().getCollectionPhotos(widget.collectionId);
-  //   if (ids != null && ids.isNotEmpty) {
-  //     // Ensure we have enough images to fill the grid, repeat if necessary
-  //     while (ids.length < _imgCount) {
-  //       ids.addAll(List.from(ids));
-  //       if (ids.length > _imgCount) ids.length = _imgCount;
-  //     }
-  //   }
-  //   setState(() => _photoIds.value = ids ?? []);
-  // }
 
   void _setIndex(int value, {bool skipAnimation = false}) {
     if (value < 0 || value >= _imgCount) return;
@@ -225,7 +211,7 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
           curve: Curves.easeOut,
           tween: Tween(begin: 1, end: isSelected ? 1.15 : 1),
           builder: (_, value, child) => Transform.scale(scale: value, child: child),
-          child: UnsplashPhoto(
+          child: PhotoDisplay(
             imgUrl,
             fit: BoxFit.cover,
           ).animate().fade(),

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Shared methods across button types
-// Widget _buildIcon(BuildContext context, AppIcons icon, {required bool isSecondary, required double? size}) =>
-//     AppIcon(icon, color: isSecondary ? $styles.colors.black : $styles.colors.offWhite, size: size ?? 18);
-
 /// The core button that drives all other buttons.
 class AppBtn extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
