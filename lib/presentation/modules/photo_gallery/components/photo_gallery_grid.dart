@@ -116,12 +116,9 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
 
   Future<void> _handleImageTapped(int index, bool isSelected) async {
     if (_index == index) {
-      final urls = widget.aiImages.map((e) {
-        return e.defaultImage?.url ?? "https://sf-flow-web-cdn.ciciai.com/obj/ocean-flow-web-sg/samantha/image-example/japanese-anime/japanese-anime-eg18.png";
-      }).toList();
       int? newIndex = await AppLogic().showFullscreenDialogRoute(
         context,
-        FullscreenUrlImgViewer(urls: urls, index: _index),
+        FullscreenUrlImgViewer(aiImages: widget.aiImages, index: _index),
       );
       if (newIndex != null) {
         _setIndex(newIndex, skipAnimation: true);

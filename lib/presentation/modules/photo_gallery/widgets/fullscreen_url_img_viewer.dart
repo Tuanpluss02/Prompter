@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:base/app/utils/app_haptics.dart';
+import 'package:base/data/responses/ai_image_generated.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/widgets/global/app_image.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
-  const FullscreenUrlImgViewer({super.key, required this.urls, this.index = 0});
-  final List<String> urls;
+  const FullscreenUrlImgViewer({super.key, required this.aiImages, this.index = 0});
+  final List<ImageList> aiImages;
   final int index;
 
   static const double imageScale = 2.5;
@@ -53,7 +54,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   void _handleBackPressed() => Navigator.pop(context, _controller.page!.round());
 
   void _animateToPage(int page) {
-    if (page >= 0 || page < widget.urls.length) {
+    if (page >= 0 || page < widget.aiImages.length) {
       _controller.animateToPage(page, duration: 300.ms, curve: Curves.easeOut);
     }
   }
@@ -63,12 +64,12 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     Widget content = AnimatedBuilder(
       animation: _isZoomed,
       builder: (_, __) {
-        final bool enableSwipe = !_isZoomed.value && widget.urls.length > 1;
+        final bool enableSwipe = !_isZoomed.value && widget.aiImages.length > 1;
         return PageView.builder(
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
           controller: _controller,
-          itemCount: widget.urls.length,
-          itemBuilder: (_, index) => _Viewer(widget.urls[index], _isZoomed),
+          itemCount: widget.aiImages.length,
+          itemBuilder: (_, index) => _Viewer(widget.aiImages[index].defaultImage?.url ?? '', _isZoomed),
           onPageChanged: (_) => AppHaptics.lightImpact(),
         );
       },
@@ -96,7 +97,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
             children: [
               Positioned.fill(child: content),
               // Show next/previous btns if there are more than one image
-              if (widget.urls.length > 1) ...{Text('hehehe')}
+              if (widget.aiImages.length > 1) ...{Text('hehehe')}
             ],
           ),
         ),
