@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:base/app/utils/log.dart';
 import 'package:base/base/base_controller.dart';
+import 'package:base/presentation/modules/account/account_screen.dart';
 import 'package:base/presentation/modules/home/home_screen.dart';
+import 'package:base/presentation/modules/photo_gallery/photo_gallery_screen.dart';
+import 'package:base/presentation/modules/search/search_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,15 +36,9 @@ class RootController extends BaseController {
 
   final List<Widget> screens = [
     const HomeScreen(),
-    Container(
-      color: Colors.green,
-    ),
-    Container(
-      color: Colors.blue,
-    ),
-    Container(
-      color: Colors.yellow,
-    ),
+    SearchScreen(),
+    PhotoGalleryScreen(),
+    AccountScreen(),
   ];
 
   onNavItemTaped(int index) {
