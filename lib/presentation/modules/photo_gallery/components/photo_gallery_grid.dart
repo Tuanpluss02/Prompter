@@ -129,7 +129,6 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
   }
 
   Future<void> _handleImageTapped(int index, bool isSelected) async {
-    if (_checkCollectibleIndex(index) && isSelected) return;
     if (_index == index) {
       final urls = widget.aiImages.map((e) {
         return e.defaultImage?.url ?? "https://sf-flow-web-cdn.ciciai.com/obj/ocean-flow-web-sg/samantha/image-example/japanese-anime/japanese-anime-eg18.png";
@@ -150,10 +149,6 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
     if (isFocused) {
       _setIndex(index);
     }
-  }
-
-  bool _checkCollectibleIndex(int index) {
-    return index == 1;
   }
 
   @override
@@ -224,12 +219,6 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
       child: Builder(builder: (context) {
         bool isSelected = index == _index;
         final imgUrl = widget.aiImages[index].defaultImage?.url ?? '';
-        late String semanticLbl;
-        if (_checkCollectibleIndex(index)) {
-          semanticLbl = 'Collectible';
-        } else {
-          semanticLbl = 'Image $index';
-        }
 
         final photoWidget = TweenAnimationBuilder<double>(
           duration: Duration(milliseconds: 600),
@@ -245,40 +234,38 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
         return MergeSemantics(
           child: Semantics(
             focused: isSelected,
-            image: !_checkCollectibleIndex(index),
+            image: true,
             liveRegion: isSelected,
             onIncrease: () => _handleImageTapped(_index + 1, false),
             onDecrease: () => _handleImageTapped(_index - 1, false),
-            child: _checkCollectibleIndex(index)
-                ? Text('Collectible')
-                : AppBtn.basic(
-                    semanticLabel: semanticLbl,
-                    focusNode: _focusNodes[index],
-                    onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
-                    onPressed: () => _handleImageTapped(index, isSelected),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: SizedBox(
-                        width: imgSize.width,
-                        height: imgSize.height,
-                        child: (useClipPathWorkAroundForWeb == false)
-                            ? photoWidget
-                            : Stack(
-                                children: [
-                                  photoWidget,
-                                  // Because the web platform doesn't support clipPath, we use a workaround to highlight the selected image
-                                  Positioned.fill(
-                                    child: AnimatedOpacity(
-                                      duration: Duration(milliseconds: 600),
-                                      opacity: isSelected ? 0 : .7,
-                                      child: ColoredBox(color: Colors.black),
-                                    ),
-                                  ),
-                                ],
+            child: AppBtn.basic(
+              semanticLabel: 'Image $index',
+              focusNode: _focusNodes[index],
+              onFocusChanged: (isFocused) => _handleImageFocusChanged(index, isFocused),
+              onPressed: () => _handleImageTapped(index, isSelected),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: imgSize.width,
+                  height: imgSize.height,
+                  child: (useClipPathWorkAroundForWeb == false)
+                      ? photoWidget
+                      : Stack(
+                          children: [
+                            photoWidget,
+                            // Because the web platform doesn't support clipPath, we use a workaround to highlight the selected image
+                            Positioned.fill(
+                              child: AnimatedOpacity(
+                                duration: Duration(milliseconds: 600),
+                                opacity: isSelected ? 0 : .7,
+                                child: ColoredBox(color: Colors.black),
                               ),
-                      ),
-                    ),
-                  ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+            ),
           ),
         );
       }),
