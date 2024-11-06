@@ -1,3 +1,4 @@
+import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/widgets/call_api_widget.dart';
@@ -38,7 +39,7 @@ class LoginController extends BaseController {
       return;
     }
     if (result.error != null) {
-      Get.snackbar('Fail', result.error!);
+      showSnackBar(title: result.error!, message: '', type: SnackbarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
@@ -52,7 +53,7 @@ class LoginController extends BaseController {
       return;
     }
     if (result.error != null) {
-      Get.snackbar(result.error!, '');
+      showSnackBar(title: result.error!, message: '', type: SnackbarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
