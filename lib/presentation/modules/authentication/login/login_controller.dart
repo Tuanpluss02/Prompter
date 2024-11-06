@@ -32,7 +32,7 @@ class LoginController extends BaseController {
   }
 
   signInGoogle() async {
-    final result = await CallApiWidget.checkTimeCallApi(
+    final result = await CallApiWidget.showLoading(
       api: _authService.signInWithGoogle(),
     );
     if (result.error == null && result.userCredential == null) {
@@ -46,7 +46,7 @@ class LoginController extends BaseController {
   }
 
   signInWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.checkTimeCallApi(
+    final result = await CallApiWidget.showLoading(
       api: _authService.signInWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {

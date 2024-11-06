@@ -22,7 +22,7 @@ class ForgotPasswordController extends GetxController {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    final result = await CallApiWidget.checkTimeCallApi(api: _authService.forgotPassword(emailController.text));
+    final result = await CallApiWidget.showLoading(api: _authService.forgotPassword(emailController.text));
     if (result != null) {
       Get.snackbar('Error', result ?? 'An error occurred. Please try again later');
     } else {

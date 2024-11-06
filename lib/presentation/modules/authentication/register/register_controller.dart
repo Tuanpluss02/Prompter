@@ -38,7 +38,7 @@ class RegisterController extends BaseController {
   }
 
   void registerWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.checkTimeCallApi(
+    final result = await CallApiWidget.showLoading(
       api: _authService.registerWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {
