@@ -1,3 +1,4 @@
+import 'package:base/app/constants/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -61,10 +62,10 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
   PreferredSizeWidget? buildAppBar(BuildContext context) => null;
 
   @protected
-  Color? get unSafeAreaColor => Colors.black;
+  Color? get unSafeAreaColor => AppColors.backgroundColor;
 
   @protected
-  Color? get screenBackgroundColor => Colors.white;
+  Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   //Ngăn body tự động điều chỉnh khi bàn phím xuất hiện
   @protected

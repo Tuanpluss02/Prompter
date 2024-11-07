@@ -11,8 +11,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       email: json['email'] as String?,
       profileImage: json['profileImage'] as String?,
       bio: json['bio'] as String?,
-      followers: (json['followers'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      following: (json['following'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      followers: (json['followers'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      following: (json['following'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
       postCount: (json['postCount'] as num?)?.toInt(),
@@ -37,23 +41,30 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       email: json['email'] as String? ?? '',
       profileImage: json['profileImage'] as String? ?? '',
       bio: json['bio'] as String? ?? '',
-      followers: (json['followers'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
-      following: (json['following'] as List<dynamic>?)?.map((e) => e as String).toList() ?? const <String>[],
+      followers: (json['followers'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
+      following: (json['following'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
       createdAt: json['createdAt'] as String? ?? '',
       updatedAt: json['updatedAt'] as String? ?? '',
       postCount: (json['postCount'] as num?)?.toInt() ?? 0,
       likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) => <String, dynamic>{
-      "username": instance.username,
-      "email": instance.email,
-      "profileImage": instance.profileImage,
-      "bio": instance.bio,
-      "followers": instance.followers,
-      "following": instance.following,
-      "createdAt": instance.createdAt,
-      "updatedAt": instance.updatedAt,
-      "postCount": instance.postCount,
-      "likeCount": instance.likeCount,
+Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
+    <String, dynamic>{
+      'username': instance.username,
+      'email': instance.email,
+      'profileImage': instance.profileImage,
+      'bio': instance.bio,
+      'followers': instance.followers,
+      'following': instance.following,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
+      'postCount': instance.postCount,
+      'likeCount': instance.likeCount,
     };

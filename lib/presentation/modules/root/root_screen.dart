@@ -1,6 +1,7 @@
 import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/widgets/lazy_indexed_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,7 @@ class RootScreen extends BaseScreen<RootController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Obx(() => IndexedStack(
+    return Obx(() => LazyIndexedStack(
           index: controller.currentIndex.value > 2 ? controller.currentIndex.value - 1 : controller.currentIndex.value,
           children: controller.screens,
         ));
@@ -43,29 +44,32 @@ class RootScreen extends BaseScreen<RootController> {
 
   @override
   Widget? buildBottomNavigationBar(BuildContext context) {
-    return Container(
-      height: 70.0,
-      color: AppColors.navigationBarColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: navigationBarItems
-            .asMap()
-            .entries
-            .map(
-              (MapEntry<int, NavigationBarItem> e) => e.value.isMiddleButton == false
-                  ? Obx(() => GestureDetector(
-                        child: SvgPicture.asset(
-                          controller.currentIndex.value == e.key ? e.value.selectedSvg : e.value.unSelectedSvg,
-                          width: 24.0,
-                          height: 24.0,
-                        ),
-                        onTap: () => controller.onNavItemTaped(e.key),
-                      ))
-                  : _buildAddButton(),
-            )
-            .toList(),
-      ),
-    );
+    return Obx(() => Opacity(
+          opacity: controller.currentIndex.value == 3 ? 0.8 : 1.0,
+          child: Container(
+            height: 60.0,
+            color: AppColors.navigationBarColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: navigationBarItems
+                  .asMap()
+                  .entries
+                  .map(
+                    (MapEntry<int, NavigationBarItem> e) => e.value.isMiddleButton == false
+                        ? Obx(() => GestureDetector(
+                              child: SvgPicture.asset(
+                                controller.currentIndex.value == e.key ? e.value.selectedSvg : e.value.unSelectedSvg,
+                                width: 24.0,
+                                height: 24.0,
+                              ),
+                              onTap: () => controller.onNavItemTaped(e.key),
+                            ))
+                        : _buildAddButton(),
+                  )
+                  .toList(),
+            ),
+          ),
+        ));
   }
 
   Widget _buildAddButton() {

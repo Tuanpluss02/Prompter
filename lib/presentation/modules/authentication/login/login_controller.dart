@@ -1,3 +1,4 @@
+import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/widgets/call_api_widget.dart';
@@ -31,28 +32,28 @@ class LoginController extends BaseController {
   }
 
   signInGoogle() async {
-    final result = await CallApiWidget.checkTimeCallApi(
+    final result = await CallApiWidget.showLoading(
       api: _authService.signInWithGoogle(),
     );
     if (result.error == null && result.userCredential == null) {
       return;
     }
     if (result.error != null) {
-      Get.snackbar('Fail', result.error!);
+      showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
   }
 
   signInWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.checkTimeCallApi(
+    final result = await CallApiWidget.showLoading(
       api: _authService.signInWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {
       return;
     }
     if (result.error != null) {
-      Get.snackbar(result.error!, '');
+      showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
