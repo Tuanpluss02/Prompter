@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 /// Defines the type of snackbar to be displayed.
-enum SnackbarType { error, success }
+enum SnackBarType { error, success }
 
 /// Displays a customized snackbar with the given title and message.
 ///
@@ -16,9 +16,9 @@ enum SnackbarType { error, success }
 /// [type] The type of snackbar (success or error, default is success).
 void showSnackBar({
   required String title,
-  required String message,
+  String? message,
   SnackPosition position = SnackPosition.TOP,
-  SnackbarType type = SnackbarType.success,
+  SnackBarType type = SnackBarType.success,
 }) {
   Get.showSnackbar(
     GetSnackBar(
@@ -44,8 +44,8 @@ void showSnackBar({
 /// [message] The main message of the snackbar.
 ///
 /// Returns a Widget representing the snackbar content.
-Widget _buildSnackbarContent(SnackbarType type, String title, String message) {
-  final isSuccess = type == SnackbarType.success;
+Widget _buildSnackbarContent(SnackBarType type, String title, String? message) {
+  final isSuccess = type == SnackBarType.success;
   final color = isSuccess ? const Color(0xFF0DAA0A) : const Color(0xFFF32F2F);
   final icon = isSuccess ? SvgPath.icSuccess : SvgPath.icError;
 
@@ -101,9 +101,9 @@ Widget _buildSnackbarContent(SnackbarType type, String title, String message) {
               ),
               // Message
               Visibility(
-                visible: message.isNotEmpty,
+                visible: message == null || message.isNotEmpty,
                 child: AutoSizeText(
-                  message,
+                  message ?? '',
                   style: AppTextStyles.s12w500.copyWith(color: const Color(0xFF99909B)),
                   maxLines: 2,
                 ),

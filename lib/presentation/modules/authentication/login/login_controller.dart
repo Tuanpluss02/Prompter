@@ -39,7 +39,7 @@ class LoginController extends BaseController {
       return;
     }
     if (result.error != null) {
-      showSnackBar(title: result.error!, message: '', type: SnackbarType.error);
+      showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
@@ -53,7 +53,7 @@ class LoginController extends BaseController {
       return;
     }
     if (result.error != null) {
-      showSnackBar(title: result.error!, message: '', type: SnackbarType.error);
+      showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
     }
     Get.offAllNamed(AppRoutes.root);
