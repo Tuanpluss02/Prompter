@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:base/app/constants/app_assets_path.dart';
+import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/utils/app_haptics.dart';
 import 'package:base/data/responses/ai_image_generated.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
@@ -7,6 +9,9 @@ import 'package:base/presentation/widgets/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
   const FullscreenUrlImgViewer({super.key, required this.aiImages, this.index = 0});
@@ -69,7 +74,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
           physics: enableSwipe ? PageScrollPhysics() : NeverScrollableScrollPhysics(),
           controller: _controller,
           itemCount: widget.aiImages.length,
-          itemBuilder: (_, index) => _Viewer(widget.aiImages[index].defaultImage?.url ?? '', _isZoomed),
+          itemBuilder: (_, index) => _Viewer(widget.aiImages[index], _isZoomed),
           onPageChanged: (_) => AppHaptics.lightImpact(),
         );
       },
@@ -92,24 +97,185 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: FullscreenKeyboardListener(
         onKeyDown: _handleKeyDown,
         child: Container(
-          color: Colors.black,
-          child: Stack(
-            children: [
-              Positioned.fill(child: content),
-              // Show next/previous btns if there are more than one image
-              if (widget.aiImages.length > 1) ...{Text('hehehe')}
-            ],
+          color: AppColors.backgroundColor,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Positioned.fill(
+                    child: Column(
+                  children: [
+                    Expanded(child: content),
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            _buildTools(),
+                            SizedBox(height: 10),
+                            _buildDescription(),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )),
+                Positioned(
+                  top: 10,
+                  right: 5,
+                  child: GestureDetector(
+                    onTap: _handleBackPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: ShapeDecoration(color: Color(0x8024262B), shape: CircleBorder()),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                    ),
+                  ),
+                ),
+                // Show next/previous btns if there are more than one image
+                if (widget.aiImages.length > 1) ...{
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0x8024262B),
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                                onPressed: () {
+                                  _animateToPage(_currentPage.value - 1);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0x8024262B),
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                                onPressed: () {
+                                  _animateToPage(_currentPage.value + 1);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                }
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  _buildTools() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Color(0x8024262B),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(SvgPath.icBubble, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
+              SizedBox(width: 5),
+              Text('Tools', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(20, 113, 194, 25),
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: Color.fromARGB(20, 113, 194, 25), width: 1),
+            ),
+            child: Text(
+              'CiciAI'.toUpperCase(),
+              style: GoogleFonts.poppins(color: Color(0xffA5D8FF), fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  _buildDescription() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Color(0x8024262B),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
+              SizedBox(width: 5),
+              Text('Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
+                  Fluttertoast.showToast(
+                    msg: "Copied to clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                },
+                child: Icon(
+                  Icons.copy,
+                  color: Color(0xffc1c2c5),
+                  size: 20,
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 10),
+          ValueListenableBuilder(
+              valueListenable: _currentPage,
+              builder: (context, value, child) {
+                return SelectableText(widget.aiImages[_currentPage.value].prompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
+              }),
+        ],
       ),
     );
   }
 }
 
 class _Viewer extends StatefulWidget {
-  const _Viewer(this.url, this.isZoomed);
+  const _Viewer(this.ins, this.isZoomed);
 
-  final String url;
+  final ImageList ins;
   final ValueNotifier<bool> isZoomed;
 
   @override
@@ -138,10 +304,10 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
         minScale: 1,
         maxScale: 5,
         child: Hero(
-          tag: widget.url,
+          tag: widget.ins.defaultImage?.url ?? '',
           child: AppImage(
             image: NetworkImage(
-              widget.url,
+              widget.ins.defaultImage?.url ?? '',
             ),
             fit: BoxFit.contain,
             scale: FullscreenUrlImgViewer.imageScale,

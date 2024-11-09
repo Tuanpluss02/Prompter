@@ -1,6 +1,6 @@
 class ImagePath {
-  static const String imgPath = 'assets/images';
-  static const String logo = '$imgPath/img_logo.png';
+  static const String _imgPath = 'assets/images';
+  static const String logo = '$_imgPath/img_logo.png';
 }
 
 class SvgPath {
@@ -21,6 +21,9 @@ class SvgPath {
 
   static const icSuccess = '$_svgPath/ic_success.svg';
   static const icError = '$_svgPath/ic_error.svg';
+
+  static const icBubble = '$_svgPath/ic_bubble.svg';
+  static const icinputing = '$_svgPath/ic_inputing.svg';
 }
 
 class LottiePath {}
