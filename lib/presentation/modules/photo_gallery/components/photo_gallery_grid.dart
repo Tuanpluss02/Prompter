@@ -50,7 +50,7 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
   void _setIndex(int value, {bool skipAnimation = false}) {
     if (value < 0 || value >= _imgCount) return;
     _skipNextOffsetTween = skipAnimation;
-    setState(() => _index = value);
+    if (mounted) setState(() => _index = value);
     _focusNodes[value].requestFocus();
   }
 
