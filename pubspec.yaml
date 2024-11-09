@@ -62,6 +62,7 @@ dependencies:
   dio: ^5.7.0
   talker_dio_logger: ^4.4.1
   error_stack: ^1.9.0
+  fluttertoast: ^8.2.8
 
 dev_dependencies:
   flutter_test:

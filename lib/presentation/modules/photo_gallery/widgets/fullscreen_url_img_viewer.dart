@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
@@ -55,9 +56,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 
   void _handlePageChanged() => _currentPage.value = _controller.page!.round();
 
-  void _handleBackPressed() {
-    if (mounted) Navigator.pop(context, _controller.page!.round());
-  }
+  void _handleBackPressed() => Navigator.pop(context, _controller.page!.round());
 
   void _animateToPage(int page) {
     if (page >= 0 || page < widget.aiImages.length) {
@@ -98,77 +97,91 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
       child: FullscreenKeyboardListener(
         onKeyDown: _handleKeyDown,
         child: Container(
-          color: Colors.black,
-          child: Stack(
-            children: [
-              Positioned.fill(child: content),
-              // Show next/previous btns if there are more than one image
-              if (widget.aiImages.length > 1) ...{Text('hehehe')}
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Viewer extends StatefulWidget {
-  const _Viewer(this.ins, this.isZoomed);
-
-  final ImageList ins;
-  final ValueNotifier<bool> isZoomed;
-
-  @override
-  State<_Viewer> createState() => _ViewerState();
-}
-
-class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
-  final _controller = TransformationController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  /// Reset zoom level to 1 on double-tap
-  void _handleDoubleTap() => _controller.value = Matrix4.identity();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onDoubleTap: _handleDoubleTap,
-                child: InteractiveViewer(
-                  transformationController: _controller,
-                  onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
-                  minScale: 1,
-                  maxScale: 5,
-                  child: Hero(
-                    tag: widget.ins.defaultImage?.url ?? '',
-                    child: AppImage(
-                      image: NetworkImage(
-                        widget.ins.defaultImage?.url ?? '',
+          color: AppColors.backgroundColor,
+          child: SafeArea(
+            child: Stack(
+              children: [
+                Positioned.fill(
+                    child: Column(
+                  children: [
+                    Expanded(child: content),
+                    SizedBox(height: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            _buildTools(),
+                            SizedBox(height: 10),
+                            _buildDescription(),
+                          ],
+                        ),
                       ),
-                      fit: BoxFit.contain,
-                      scale: FullscreenUrlImgViewer.imageScale,
-                      progress: true,
+                    )
+                  ],
+                )),
+                Positioned(
+                  top: 10,
+                  right: 5,
+                  child: GestureDetector(
+                    onTap: _handleBackPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: ShapeDecoration(color: Color(0x8024262B), shape: CircleBorder()),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                        size: 25,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              _buildTools(),
-              SizedBox(height: 10),
-              _buildDescription(),
-            ],
+                // Show next/previous btns if there are more than one image
+                if (widget.aiImages.length > 1) ...{
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 16,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0x8024262B),
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                                onPressed: () {
+                                  _animateToPage(_currentPage.value - 1);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0x8024262B),
+                              borderRadius: BorderRadius.circular(99),
+                            ),
+                            child: Center(
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_forward_ios, color: Colors.white),
+                                onPressed: () {
+                                  _animateToPage(_currentPage.value + 1);
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                }
+              ],
+            ),
           ),
         ),
       ),
@@ -230,8 +243,14 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: widget.ins.prompt ?? ''));
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Copied to clipboard')));
+                  Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
+                  Fluttertoast.showToast(
+                    msg: "Copied to clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                 },
                 child: Icon(
                   Icons.copy,
@@ -242,8 +261,59 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
             ],
           ),
           SizedBox(height: 10),
-          Text(widget.ins.prompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16)),
+          ValueListenableBuilder(
+              valueListenable: _currentPage,
+              builder: (context, value, child) {
+                return SelectableText(widget.aiImages[_currentPage.value].prompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
+              }),
         ],
+      ),
+    );
+  }
+}
+
+class _Viewer extends StatefulWidget {
+  const _Viewer(this.ins, this.isZoomed);
+
+  final ImageList ins;
+  final ValueNotifier<bool> isZoomed;
+
+  @override
+  State<_Viewer> createState() => _ViewerState();
+}
+
+class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
+  final _controller = TransformationController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  /// Reset zoom level to 1 on double-tap
+  void _handleDoubleTap() => _controller.value = Matrix4.identity();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onDoubleTap: _handleDoubleTap,
+      child: InteractiveViewer(
+        transformationController: _controller,
+        onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
+        minScale: 1,
+        maxScale: 5,
+        child: Hero(
+          tag: widget.ins.defaultImage?.url ?? '',
+          child: AppImage(
+            image: NetworkImage(
+              widget.ins.defaultImage?.url ?? '',
+            ),
+            fit: BoxFit.contain,
+            scale: FullscreenUrlImgViewer.imageScale,
+            progress: true,
+          ),
+        ),
       ),
     );
   }
