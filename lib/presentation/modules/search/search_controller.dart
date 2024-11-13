@@ -1,7 +1,6 @@
 import 'package:base/base/base_controller.dart';
 
 class SearchController extends BaseController {
-
   @override
   void onInit() {
     super.onInit();
@@ -21,5 +20,4 @@ class SearchController extends BaseController {
   void dispose() {
     super.dispose();
   }
-
 }

@@ -4,7 +4,7 @@ import 'package:base/data/responses/base_response.dart';
 import 'package:base/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
-class BaseRepository {
+abstract class BaseRepository {
   late DioClient dioClient;
   final String baseUrl;
 

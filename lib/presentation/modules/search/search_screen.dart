@@ -1,5 +1,6 @@
 import 'package:base/base/base_screen.dart';
-import 'package:base/presentation/modules/search/search_controller.dart' as search_controller;
+import 'package:base/presentation/modules/search/search_controller.dart'
+    as search_controller;
 import 'package:flutter/material.dart';
 
 class SearchScreen extends BaseScreen<search_controller.SearchController> {
