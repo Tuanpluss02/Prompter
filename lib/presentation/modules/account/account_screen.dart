@@ -16,46 +16,61 @@ class AccountScreen extends BaseScreen<AccountController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: 230,
-                width: double.infinity,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  fit: StackFit.loose,
-                  children: [
-                    AppImage(
-                        fit: BoxFit.contain,
-                        image: NetworkImage(
-                            'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg')),
-                    Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment(0, 0.2),
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            Colors.transparent,
-                            Colors.black.withOpacity(0.6),
-                          ])),
-                    )
-                  ],
-                ),
-              ),
-              Transform.translate(
-                  offset: Offset(0, -80), child: _buildMainContent())
+              _buildFirstSection(),
+              _buildUserInfo(),
             ]));
   }
 
-  _buildMainContent() {
-    return Column(
-      children: [
-        Row(
+  SizedBox _buildFirstSection() {
+    return SizedBox(
+      height: 230,
+      width: double.infinity,
+      child: Stack(
+        clipBehavior: Clip.none,
+        fit: StackFit.loose,
+        children: [
+          _buildBackgroundImg(),
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment(0, 0.2),
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Colors.transparent,
+                  Colors.black.withOpacity(0.6),
+                ])),
+          ),
+          _buildAvatarName(),
+        ],
+      ),
+    );
+  }
+
+  Align _buildAvatarName() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(
-                  'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
+            Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: const Color(0xff7c94b6),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2.0,
+                ),
+              ),
             ),
             SizedBox(width: 20),
             RichText(
@@ -73,8 +88,97 @@ class AccountScreen extends BaseScreen<AccountController> {
             ),
           ],
         ),
-        SizedBox(height: 20),
+      ),
+    );
+  }
+
+  AppImage _buildBackgroundImg() {
+    return AppImage(
+        fit: BoxFit.contain,
+        image: NetworkImage(
+            'https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'));
+  }
+
+  _buildUserInfo() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildReach(),
+        _buildFollowButton(),
       ],
     );
+  }
+
+  Row _buildReach() {
+    return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          (count: 15000, title: 'Likes'),
+          (count: 15000, title: 'Followers'),
+          (count: 15000, title: 'Following'),
+        ].map((item) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: item.count.toShortString() + ' ',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20),
+                  ),
+                  TextSpan(
+                    text: item.title,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList());
+  }
+
+  _buildFollowButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: Text(
+              '+ Follow',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 1000 -> 1000
+// 10000 -> 10k
+// 1000000 -> 1m
+extension on int {
+  String toShortString() {
+    if (this <= 1000) {
+      return this.toString();
+    } else if (this <= 1000000) {
+      return '${(this ~/ 1000)}k';
+    } else {
+      return '${(this ~/ 1000000)}m';
+    }
   }
 }
