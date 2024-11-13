@@ -2,6 +2,7 @@ import 'package:base/app/utils/extension.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/widgets/global/app_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'account_controller.dart';
 
@@ -101,13 +102,17 @@ class AccountScreen extends BaseScreen<AccountController> {
   }
 
   _buildUserInfo() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildReach(),
-        _buildFollowButton(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildReach(),
+          _buildFollowButton(),
+          Expanded(child: _buildUserPostMedia()),
+        ],
+      ),
     );
   }
 
@@ -163,5 +168,81 @@ class AccountScreen extends BaseScreen<AccountController> {
         ),
       ),
     );
+  }
+
+  _buildUserPostMedia() {
+    return Column(
+      children: [
+        SizedBox(
+          width: Get.width * 0.6,
+          child: TabBar(
+              dividerColor: Colors.transparent,
+              controller: controller.tabController,
+              tabs: [
+                Tab(
+                  child: Text('All',
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                ),
+                Tab(
+                  child: Text('Videos',
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                ),
+                Tab(
+                  child: Text('Images',
+                      style: TextStyle(color: Colors.white, fontSize: 12)),
+                ),
+              ]),
+        ),
+        SingleChildScrollView(
+          child: TabBarView(controller: controller.tabController, children: [
+            _buildAllMedia(),
+            _buildVideos(),
+            _buildImages(),
+          ]),
+        ),
+      ],
+    );
+  }
+
+  _buildAllMedia() {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
+        itemBuilder: (context, index) {
+          return Container(
+            color: Colors.grey,
+            child: Center(
+              child: Text('Item $index'),
+            ),
+          );
+        });
+  }
+
+  _buildVideos() {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
+        itemBuilder: (context, index) {
+          return Container(
+            color: Colors.grey,
+            child: Center(
+              child: Text('Item $index'),
+            ),
+          );
+        });
+  }
+
+  _buildImages() {
+    return GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
+        itemBuilder: (context, index) {
+          return Container(
+            color: Colors.grey,
+            child: Center(
+              child: Text('Item $index'),
+            ),
+          );
+        });
   }
 }
