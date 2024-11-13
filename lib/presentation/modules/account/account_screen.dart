@@ -1,3 +1,4 @@
+import 'package:base/app/utils/extension.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/widgets/global/app_image.dart';
 import 'package:flutter/material.dart';
@@ -125,10 +126,7 @@ class AccountScreen extends BaseScreen<AccountController> {
                 children: [
                   TextSpan(
                     text: item.count.toShortString() + ' ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   TextSpan(
                     text: item.title,
@@ -165,20 +163,5 @@ class AccountScreen extends BaseScreen<AccountController> {
         ),
       ),
     );
-  }
-}
-
-// 1000 -> 1000
-// 10000 -> 10k
-// 1000000 -> 1m
-extension on int {
-  String toShortString() {
-    if (this <= 1000) {
-      return this.toString();
-    } else if (this <= 1000000) {
-      return '${(this ~/ 1000)}k';
-    } else {
-      return '${(this ~/ 1000000)}m';
-    }
   }
 }
