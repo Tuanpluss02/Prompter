@@ -47,6 +47,6 @@ class AppPages {
         name: AppRoutes.aiChat,
         page: () => AiChatScreen(),
         binding: AiChatBinding(),
-        transition: Transition.upToDown),
+        transition: Transition.fade),
   ];
 }

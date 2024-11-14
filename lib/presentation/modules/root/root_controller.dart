@@ -43,6 +43,7 @@ class RootController extends BaseController {
   onNavItemTaped(int index) {
     if (index == 2) {
       Get.toNamed(AppRoutes.aiChat);
+      return;
     }
     currentIndex.value = index;
   }
