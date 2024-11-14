@@ -23,19 +23,40 @@ class AiChatController extends BaseController {
       ]);
   var chatViewState = ChatViewState.hasMessages.obs;
 
-  var image = Image(
-          image: NetworkImage(
-              'https://cdn-media.sforum.vn/storage/app/media/wp-content/uploads/2023/12/hinh-nen-vu-tru-72.jpg'))
-      .obs;
-
-  Future<void> generateImage(String prompt) async {
-    final result = await _huggingfaceRepository.generateImageCustomResponse(
+  Future<Uint8List?> generateImage(String prompt) async {
+    final result = await _huggingfaceRepository.generateImage(
         prompt, ImageGenerateModel.stableDiffusion);
     if (result == null) {
       showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
-      return;
+      return null;
     }
-    image.value = Image.memory(result);
+    return result;
+  }
+
+  void onTapSend(String message, ReplyMessage replyMessage,
+      MessageType messageType) async {
+    chatController.addMessage(
+      Message(
+        message: message,
+        sentBy: chatController.currentUser.id,
+        createdAt: DateTime.now(),
+        messageType: messageType,
+        replyMessage: replyMessage,
+      ),
+    );
+    if (messageType == MessageType.text) {
+      Uint8List? img = await generateImage(message);
+      if (img != null) {
+        chatController.addMessage(
+          Message(
+            message: 'Here is the generated image',
+            sentBy: chatController.otherUsers.first.id,
+            createdAt: DateTime.now(),
+            messageType: MessageType.image,
+          ),
+        );
+      }
+    }
   }
 }
 

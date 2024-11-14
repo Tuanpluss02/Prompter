@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:base/data/local/api_result.dart';
 import 'package:base/data/repositories/base_repository.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 final class HuggingfaceAPIPath {
@@ -25,16 +23,8 @@ class HuggingfaceRepository extends BaseRepository {
     'Authorization': 'Bearer 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',
     'Content-Type': 'application/json',
   };
-  Future<ApiResult> generateImage(
-      String prompt, ImageGenerateModel model) async {
-    return handleApiRequestCustomResponse(() => dioClient.post(
-          '/${model.value}',
-          data: {'inputs': prompt},
-          options: Options(headers: headers),
-        ));
-  }
 
-  Future<Uint8List?> generateImageCustomResponse(
+  Future<Uint8List?> generateImage(
       String prompt, ImageGenerateModel model) async {
     final response = await http.post(
       Uri.parse('${HuggingfaceAPIPath.baseUrl}/${model.value}'),
