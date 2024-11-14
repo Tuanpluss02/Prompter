@@ -18,39 +18,45 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ApiResult {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BaseResponse data) apiSuccess,
-    required TResult Function(NetworkExceptions error) apiFailure,
+    required TResult Function(BaseResponse data) success,
+    required TResult Function(dynamic data) successWWithCustomResponse,
+    required TResult Function(NetworkExceptions error) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BaseResponse data)? apiSuccess,
-    TResult? Function(NetworkExceptions error)? apiFailure,
+    TResult? Function(BaseResponse data)? success,
+    TResult? Function(dynamic data)? successWWithCustomResponse,
+    TResult? Function(NetworkExceptions error)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BaseResponse data)? apiSuccess,
-    TResult Function(NetworkExceptions error)? apiFailure,
+    TResult Function(BaseResponse data)? success,
+    TResult Function(dynamic data)? successWWithCustomResponse,
+    TResult Function(NetworkExceptions error)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Success value) apiSuccess,
-    required TResult Function(Failure value) apiFailure,
+    required TResult Function(Success value) success,
+    required TResult Function(SuccessResponse value) successWWithCustomResponse,
+    required TResult Function(Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Success value)? apiSuccess,
-    TResult? Function(Failure value)? apiFailure,
+    TResult? Function(Success value)? success,
+    TResult? Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult? Function(Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Success value)? apiSuccess,
-    TResult Function(Failure value)? apiFailure,
+    TResult Function(Success value)? success,
+    TResult Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,7 +125,7 @@ class _$SuccessImpl implements Success {
 
   @override
   String toString() {
-    return 'ApiResult.apiSuccess(data: $data)';
+    return 'ApiResult.success(data: $data)';
   }
 
   @override
@@ -144,30 +150,33 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BaseResponse data) apiSuccess,
-    required TResult Function(NetworkExceptions error) apiFailure,
+    required TResult Function(BaseResponse data) success,
+    required TResult Function(dynamic data) successWWithCustomResponse,
+    required TResult Function(NetworkExceptions error) failure,
   }) {
-    return apiSuccess(data);
+    return success(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BaseResponse data)? apiSuccess,
-    TResult? Function(NetworkExceptions error)? apiFailure,
+    TResult? Function(BaseResponse data)? success,
+    TResult? Function(dynamic data)? successWWithCustomResponse,
+    TResult? Function(NetworkExceptions error)? failure,
   }) {
-    return apiSuccess?.call(data);
+    return success?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BaseResponse data)? apiSuccess,
-    TResult Function(NetworkExceptions error)? apiFailure,
+    TResult Function(BaseResponse data)? success,
+    TResult Function(dynamic data)? successWWithCustomResponse,
+    TResult Function(NetworkExceptions error)? failure,
     required TResult orElse(),
   }) {
-    if (apiSuccess != null) {
-      return apiSuccess(data);
+    if (success != null) {
+      return success(data);
     }
     return orElse();
   }
@@ -175,30 +184,33 @@ class _$SuccessImpl implements Success {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Success value) apiSuccess,
-    required TResult Function(Failure value) apiFailure,
+    required TResult Function(Success value) success,
+    required TResult Function(SuccessResponse value) successWWithCustomResponse,
+    required TResult Function(Failure value) failure,
   }) {
-    return apiSuccess(this);
+    return success(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Success value)? apiSuccess,
-    TResult? Function(Failure value)? apiFailure,
+    TResult? Function(Success value)? success,
+    TResult? Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult? Function(Failure value)? failure,
   }) {
-    return apiSuccess?.call(this);
+    return success?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Success value)? apiSuccess,
-    TResult Function(Failure value)? apiFailure,
+    TResult Function(Success value)? success,
+    TResult Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) {
-    if (apiSuccess != null) {
-      return apiSuccess(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
@@ -213,6 +225,154 @@ abstract class Success implements ApiResult {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SuccessResponseImplCopyWith<$Res> {
+  factory _$$SuccessResponseImplCopyWith(_$SuccessResponseImpl value,
+          $Res Function(_$SuccessResponseImpl) then) =
+      __$$SuccessResponseImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({dynamic data});
+}
+
+/// @nodoc
+class __$$SuccessResponseImplCopyWithImpl<$Res>
+    extends _$ApiResultCopyWithImpl<$Res, _$SuccessResponseImpl>
+    implements _$$SuccessResponseImplCopyWith<$Res> {
+  __$$SuccessResponseImplCopyWithImpl(
+      _$SuccessResponseImpl _value, $Res Function(_$SuccessResponseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ApiResult
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$SuccessResponseImpl(
+      freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessResponseImpl implements SuccessResponse {
+  const _$SuccessResponseImpl(this.data);
+
+  @override
+  final dynamic data;
+
+  @override
+  String toString() {
+    return 'ApiResult.successWWithCustomResponse(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessResponseImpl &&
+            const DeepCollectionEquality().equals(other.data, data));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  /// Create a copy of ApiResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith =>
+      __$$SuccessResponseImplCopyWithImpl<_$SuccessResponseImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(BaseResponse data) success,
+    required TResult Function(dynamic data) successWWithCustomResponse,
+    required TResult Function(NetworkExceptions error) failure,
+  }) {
+    return successWWithCustomResponse(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(BaseResponse data)? success,
+    TResult? Function(dynamic data)? successWWithCustomResponse,
+    TResult? Function(NetworkExceptions error)? failure,
+  }) {
+    return successWWithCustomResponse?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(BaseResponse data)? success,
+    TResult Function(dynamic data)? successWWithCustomResponse,
+    TResult Function(NetworkExceptions error)? failure,
+    required TResult orElse(),
+  }) {
+    if (successWWithCustomResponse != null) {
+      return successWWithCustomResponse(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(Success value) success,
+    required TResult Function(SuccessResponse value) successWWithCustomResponse,
+    required TResult Function(Failure value) failure,
+  }) {
+    return successWWithCustomResponse(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(Success value)? success,
+    TResult? Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult? Function(Failure value)? failure,
+  }) {
+    return successWWithCustomResponse?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(Success value)? success,
+    TResult Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult Function(Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (successWWithCustomResponse != null) {
+      return successWWithCustomResponse(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SuccessResponse implements ApiResult {
+  const factory SuccessResponse(final dynamic data) = _$SuccessResponseImpl;
+
+  dynamic get data;
+
+  /// Create a copy of ApiResult
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -271,7 +431,7 @@ class _$FailureImpl implements Failure {
 
   @override
   String toString() {
-    return 'ApiResult.apiFailure(error: $error)';
+    return 'ApiResult.failure(error: $error)';
   }
 
   @override
@@ -296,30 +456,33 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(BaseResponse data) apiSuccess,
-    required TResult Function(NetworkExceptions error) apiFailure,
+    required TResult Function(BaseResponse data) success,
+    required TResult Function(dynamic data) successWWithCustomResponse,
+    required TResult Function(NetworkExceptions error) failure,
   }) {
-    return apiFailure(error);
+    return failure(error);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BaseResponse data)? apiSuccess,
-    TResult? Function(NetworkExceptions error)? apiFailure,
+    TResult? Function(BaseResponse data)? success,
+    TResult? Function(dynamic data)? successWWithCustomResponse,
+    TResult? Function(NetworkExceptions error)? failure,
   }) {
-    return apiFailure?.call(error);
+    return failure?.call(error);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BaseResponse data)? apiSuccess,
-    TResult Function(NetworkExceptions error)? apiFailure,
+    TResult Function(BaseResponse data)? success,
+    TResult Function(dynamic data)? successWWithCustomResponse,
+    TResult Function(NetworkExceptions error)? failure,
     required TResult orElse(),
   }) {
-    if (apiFailure != null) {
-      return apiFailure(error);
+    if (failure != null) {
+      return failure(error);
     }
     return orElse();
   }
@@ -327,30 +490,33 @@ class _$FailureImpl implements Failure {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Success value) apiSuccess,
-    required TResult Function(Failure value) apiFailure,
+    required TResult Function(Success value) success,
+    required TResult Function(SuccessResponse value) successWWithCustomResponse,
+    required TResult Function(Failure value) failure,
   }) {
-    return apiFailure(this);
+    return failure(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Success value)? apiSuccess,
-    TResult? Function(Failure value)? apiFailure,
+    TResult? Function(Success value)? success,
+    TResult? Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult? Function(Failure value)? failure,
   }) {
-    return apiFailure?.call(this);
+    return failure?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Success value)? apiSuccess,
-    TResult Function(Failure value)? apiFailure,
+    TResult Function(Success value)? success,
+    TResult Function(SuccessResponse value)? successWWithCustomResponse,
+    TResult Function(Failure value)? failure,
     required TResult orElse(),
   }) {
-    if (apiFailure != null) {
-      return apiFailure(this);
+    if (failure != null) {
+      return failure(this);
     }
     return orElse();
   }

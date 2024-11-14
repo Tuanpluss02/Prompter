@@ -17,10 +17,21 @@ abstract class BaseRepository {
     try {
       final res = await request();
       BaseResponse response = BaseResponse.fromJson(res);
-      return ApiResult.apiSuccess(response);
+      return ApiResult.success(response);
     } catch (e) {
       final error = NetworkExceptions.getDioException(e);
-      return ApiResult.apiFailure(error);
+      return ApiResult.failure(error);
+    }
+  }
+
+  Future<ApiResult> handleApiRequestCustomResponse(
+      Future<dynamic> Function() request) async {
+    try {
+      final response = await request();
+      return ApiResult.successWWithCustomResponse(response);
+    } catch (e) {
+      final error = NetworkExceptions.getDioException(e);
+      return ApiResult.failure(error);
     }
   }
 }

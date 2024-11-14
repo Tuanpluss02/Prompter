@@ -1,3 +1,5 @@
+import 'package:base/presentation/modules/ai_chat/ai_chat_binding.dart';
+import 'package:base/presentation/modules/ai_chat/ai_chat_screen.dart';
 import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_binding.dart';
 import 'package:base/presentation/modules/authentication/forgot_password/forgot_password_screen.dart';
 import 'package:base/presentation/modules/authentication/login/login_binding.dart';
@@ -41,5 +43,10 @@ class AppPages {
       page: () => ResetPasswordScreen(),
       binding: ResetPasswordBinding(),
     ),
+    GetPage(
+        name: AppRoutes.aiChat,
+        page: () => AiChatScreen(),
+        binding: AiChatBinding(),
+        transition: Transition.upToDown),
   ];
 }

@@ -9,4 +9,5 @@ class AppRoutes {
   static const register = '/register';
   static const search = '/search';
   static const resetPassword = '/reset';
+  static const aiChat = '/ai-chat';
 }

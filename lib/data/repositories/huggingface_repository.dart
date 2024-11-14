@@ -22,7 +22,7 @@ class HuggingfaceRepository extends BaseRepository {
     'Content-Type': 'application/json',
   };
   Future<ApiResult> generateImage(String prompt, ImageGenerateModel model) {
-    return handleApiRequest(() => dioClient.post(
+    return handleApiRequestCustomResponse(() => dioClient.post(
           '/${model.value}',
           data: {'inputs': prompt},
           options: Options(headers: header),
