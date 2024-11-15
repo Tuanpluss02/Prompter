@@ -1,10 +1,11 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/stable",
+  "dart.flutterSdkPath": ".fvm/versions/3.24.4",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.sortImports": "explicit"
   },
+  "dart.lineLength": 200,
   "editor.accessibilitySupport": "off",
   "dart.previewFlutterUiGuides": true,
   "editor.formatOnSave": true,

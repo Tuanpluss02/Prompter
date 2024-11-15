@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
-Widget getImageBase64({required String image,width}) {
+Widget getImageBase64({required String image, width}) {
   const Base64Codec base64 = Base64Codec();
   final bytes = base64.decode(image);
   return Image.memory(
@@ -13,7 +13,7 @@ Widget getImageBase64({required String image,width}) {
     errorBuilder: (context, error, stackTrace) {
       return const SizedBox(
         height: 40,
-        child:CupertinoActivityIndicator(
+        child: CupertinoActivityIndicator(
           animating: true,
         ),
       );

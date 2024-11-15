@@ -13,13 +13,10 @@ class ScaleButton extends StatefulWidget {
   }
 }
 
-class _ScaleButtonState extends State<ScaleButton>
-    with SingleTickerProviderStateMixin {
+class _ScaleButtonState extends State<ScaleButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   OverlayEntry? overlayEntry;
-
-
 
   @override
   void initState() {

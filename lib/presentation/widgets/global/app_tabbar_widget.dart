@@ -51,10 +51,8 @@ class AppTabBarWidget extends StatelessWidget {
                 )
               ],
             ),
-            labelStyle:
-                AppTextStyles.s14w700.copyWith(color: AppColors.yellowFFDC00),
-            unselectedLabelStyle:
-                AppTextStyles.s14w700.copyWith(color: AppColors.black28303F),
+            labelStyle: AppTextStyles.s14w700.copyWith(color: AppColors.yellowFFDC00),
+            unselectedLabelStyle: AppTextStyles.s14w700.copyWith(color: AppColors.black28303F),
             labelPadding: const EdgeInsets.symmetric(horizontal: 10),
             labelColor: AppColors.yellowFFDC00,
             unselectedLabelColor: AppColors.grey4F4950,

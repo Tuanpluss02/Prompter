@@ -6,47 +6,31 @@ part of '../../../data/responses/ai_image_generated.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AiImageGenerated _$AiImageGeneratedFromJson(Map<String, dynamic> json) =>
-    AiImageGenerated(
-      image: json['image'] == null
-          ? null
-          : Image.fromJson(json['image'] as Map<String, dynamic>),
-      deepSearch: json['deep_search'] == null
-          ? null
-          : DeepSearch.fromJson(json['deep_search'] as Map<String, dynamic>),
+AiImageGenerated _$AiImageGeneratedFromJson(Map<String, dynamic> json) => AiImageGenerated(
+      image: json['image'] == null ? null : Image.fromJson(json['image'] as Map<String, dynamic>),
+      deepSearch: json['deep_search'] == null ? null : DeepSearch.fromJson(json['deep_search'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$AiImageGeneratedToJson(AiImageGenerated instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AiImageGeneratedToJson(AiImageGenerated instance) => <String, dynamic>{
       'image': instance.image,
       'deep_search': instance.deepSearch,
     };
 
 DeepSearch _$DeepSearchFromJson(Map<String, dynamic> json) => DeepSearch(
-      template: json['template'] == null
-          ? null
-          : DeepSearchTemplate.fromJson(
-              json['template'] as Map<String, dynamic>),
+      template: json['template'] == null ? null : DeepSearchTemplate.fromJson(json['template'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$DeepSearchToJson(DeepSearch instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DeepSearchToJson(DeepSearch instance) => <String, dynamic>{
       'template': instance.template,
     };
 
-DeepSearchTemplate _$DeepSearchTemplateFromJson(Map<String, dynamic> json) =>
-    DeepSearchTemplate();
+DeepSearchTemplate _$DeepSearchTemplateFromJson(Map<String, dynamic> json) => DeepSearchTemplate();
 
-Map<String, dynamic> _$DeepSearchTemplateToJson(DeepSearchTemplate instance) =>
-    <String, dynamic>{};
+Map<String, dynamic> _$DeepSearchTemplateToJson(DeepSearchTemplate instance) => <String, dynamic>{};
 
 Image _$ImageFromJson(Map<String, dynamic> json) => Image(
-      meta: json['meta'] == null
-          ? null
-          : Meta.fromJson(json['meta'] as Map<String, dynamic>),
-      template: json['template'] == null
-          ? null
-          : ImageTemplate.fromJson(json['template'] as Map<String, dynamic>),
+      meta: json['meta'] == null ? null : Meta.fromJson(json['meta'] as Map<String, dynamic>),
+      template: json['template'] == null ? null : ImageTemplate.fromJson(json['template'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
@@ -55,12 +39,8 @@ Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
     };
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
-      categoryList: (json['category_list'] as List<dynamic>?)
-          ?.map((e) => CategoryList.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      optionList: (json['option_list'] as List<dynamic>?)
-          ?.map((e) => OptionList.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      categoryList: (json['category_list'] as List<dynamic>?)?.map((e) => CategoryList.fromJson(e as Map<String, dynamic>)).toList(),
+      optionList: (json['option_list'] as List<dynamic>?)?.map((e) => OptionList.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
@@ -73,8 +53,7 @@ CategoryList _$CategoryListFromJson(Map<String, dynamic> json) => CategoryList(
       categoryName: json['category_name'] as String?,
     );
 
-Map<String, dynamic> _$CategoryListToJson(CategoryList instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CategoryListToJson(CategoryList instance) => <String, dynamic>{
       'category_id': instance.categoryId,
       'category_name': instance.categoryName,
     };
@@ -83,13 +62,10 @@ OptionList _$OptionListFromJson(Map<String, dynamic> json) => OptionList(
       type: (json['type'] as num?)?.toInt(),
       value: json['value'] as String?,
       showName: json['show_name'] as String?,
-      options: (json['options'] as List<dynamic>?)
-          ?.map((e) => Option.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      options: (json['options'] as List<dynamic>?)?.map((e) => Option.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
-Map<String, dynamic> _$OptionListToJson(OptionList instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OptionListToJson(OptionList instance) => <String, dynamic>{
       'type': instance.type,
       'value': instance.value,
       'show_name': instance.showName,
@@ -110,19 +86,13 @@ Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
       'background_url': instance.backgroundUrl,
     };
 
-ImageTemplate _$ImageTemplateFromJson(Map<String, dynamic> json) =>
-    ImageTemplate(
-      imageList: (json['image_list'] as List<dynamic>?)
-          ?.map((e) => ImageList.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      paginator: json['paginator'] == null
-          ? null
-          : Paginator.fromJson(json['paginator'] as Map<String, dynamic>),
+ImageTemplate _$ImageTemplateFromJson(Map<String, dynamic> json) => ImageTemplate(
+      imageList: (json['image_list'] as List<dynamic>?)?.map((e) => ImageList.fromJson(e as Map<String, dynamic>)).toList(),
+      paginator: json['paginator'] == null ? null : Paginator.fromJson(json['paginator'] as Map<String, dynamic>),
       seed: json['seed'] as String?,
     );
 
-Map<String, dynamic> _$ImageTemplateToJson(ImageTemplate instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ImageTemplateToJson(ImageTemplate instance) => <String, dynamic>{
       'image_list': instance.imageList,
       'paginator': instance.paginator,
       'seed': instance.seed,
@@ -135,10 +105,7 @@ ImageList _$ImageListFromJson(Map<String, dynamic> json) => ImageList(
       createTime: (json['create_time'] as num?)?.toInt(),
       updateTime: (json['update_time'] as num?)?.toInt(),
       category: json['category'],
-      defaultImage: json['default_image'] == null
-          ? null
-          : DefaultImage.fromJson(
-              json['default_image'] as Map<String, dynamic>),
+      defaultImage: json['default_image'] == null ? null : DefaultImage.fromJson(json['default_image'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ImageListToJson(ImageList instance) => <String, dynamic>{
@@ -158,8 +125,7 @@ DefaultImage _$DefaultImageFromJson(Map<String, dynamic> json) => DefaultImage(
       height: (json['height'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$DefaultImageToJson(DefaultImage instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DefaultImageToJson(DefaultImage instance) => <String, dynamic>{
       'uri': instance.uri,
       'url': instance.url,
       'width': instance.width,

@@ -46,61 +46,45 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           flashingCircleBrightColor: theme.flashingCircleBrightColor,
           flashingCircleDarkColor: theme.flashingCircleDarkColor,
         ),
-        appBar: ChatViewAppBar(
-          elevation: theme.elevation,
-          backGroundColor: theme.appBarColor,
-          backArrowColor: theme.backArrowColor,
-          chatTitle: "Midjourney",
-          chatTitleTextStyle: TextStyle(
-            color: theme.appBarTitleTextStyle,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-            letterSpacing: 0.25,
-          ),
-          userStatus: "Let's creat something awesome",
-          userStatusTextStyle:
-              const TextStyle(color: Colors.grey, fontSize: 14),
-        ),
+        appBar: Obx(() => ChatViewAppBar(
+              elevation: theme.elevation,
+              backGroundColor: theme.appBarColor,
+              backArrowColor: theme.backArrowColor,
+              chatTitle: controller.selectedModel.value.displayName,
+              chatTitleTextStyle: TextStyle(
+                color: theme.appBarTitleTextStyle,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                letterSpacing: 0.25,
+              ),
+              userStatus: "Let's creat something awesome",
+              userStatusTextStyle: const TextStyle(color: Colors.grey, fontSize: 14),
+            )),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),
           defaultGroupSeparatorConfig: DefaultGroupSeparatorConfiguration(
             textStyle: TextStyle(
               color: theme.chatHeaderColor,
-              fontSize: 17,
+              fontSize: 12,
             ),
           ),
           backgroundColor: theme.backgroundColor,
         ),
         sendMessageConfig: SendMessageConfiguration(
-          imagePickerIconsConfig: ImagePickerIconsConfiguration(
-            cameraIconColor: theme.cameraIconColor,
-            galleryIconColor: theme.galleryIconColor,
-          ),
+          allowRecordingVoice: false,
+          enableCameraImagePicker: false,
+          enableGalleryImagePicker: false,
+          // imagePickerIconsConfig: ImagePickerIconsConfiguration(
+          //   cameraIconColor: theme.cameraIconColor,
+          //   galleryIconColor: theme.galleryIconColor,
+          // ),
           replyMessageColor: theme.replyMessageColor,
           defaultSendButtonColor: theme.sendButtonColor,
           replyDialogColor: theme.replyDialogColor,
           replyTitleColor: theme.replyTitleColor,
           textFieldBackgroundColor: theme.textFieldBackgroundColor,
           closeIconColor: theme.closeIconColor,
-          textFieldConfig: TextFieldConfiguration(
-            onMessageTyping: (status) {
-              /// Do with status
-              debugPrint(status.toString());
-            },
-            compositionThresholdTime: const Duration(seconds: 1),
-            textStyle: TextStyle(color: theme.textFieldTextColor),
-          ),
-          micIconColor: theme.replyMicIconColor,
-          voiceRecordingConfiguration: VoiceRecordingConfiguration(
-            backgroundColor: theme.waveformBackgroundColor,
-            recorderIconColor: theme.recordIconColor,
-            waveStyle: WaveStyle(
-              showMiddleLine: false,
-              waveColor: theme.waveColor ?? Colors.white,
-              extendWaveform: true,
-            ),
-          ),
         ),
         chatBubbleConfig: ChatBubbleConfiguration(
           outgoingChatBubbleConfig: ChatBubble(
@@ -109,8 +93,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
               bodyStyle: theme.outgoingChatLinkBodyStyle,
               titleStyle: theme.outgoingChatLinkTitleStyle,
             ),
-            receiptsWidgetConfig:
-                const ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
+            receiptsWidgetConfig: const ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
             color: theme.outgoingChatBubbleColor,
           ),
           inComingChatBubbleConfig: ChatBubble(
@@ -123,19 +106,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
               bodyStyle: theme.incomingChatLinkBodyStyle,
               titleStyle: theme.incomingChatLinkTitleStyle,
             ),
-            textStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
-            onMessageRead: (message) {
-              /// send your message reciepts to the other client
-              debugPrint('Message Read');
-            },
-            senderNameTextStyle:
-                TextStyle(color: theme.inComingChatBubbleTextColor),
+            textStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 16),
+            senderNameTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
             color: theme.inComingChatBubbleColor,
           ),
         ),
         replyPopupConfig: ReplyPopupConfiguration(
           backgroundColor: theme.replyPopupColor,
-          buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor),
+          buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
@@ -143,16 +121,17 @@ class AiChatScreen extends BaseScreen<AiChatController> {
             color: Colors.black54,
             blurRadius: 20,
           ),
+          userReactionCallback: (message, reaction) {
+            debugPrint('User reacted with $reaction');
+          },
           backgroundColor: theme.reactionPopupColor,
         ),
         messageConfig: MessageConfiguration(
           messageReactionConfig: MessageReactionConfiguration(
             backgroundColor: theme.messageReactionBackGroundColor,
             borderColor: theme.messageReactionBackGroundColor,
-            reactedUserCountTextStyle:
-                TextStyle(color: theme.inComingChatBubbleTextColor),
-            reactionCountTextStyle:
-                TextStyle(color: theme.inComingChatBubbleTextColor),
+            reactedUserCountTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
+            reactionCountTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
             reactionsBottomSheetConfig: ReactionsBottomSheetConfiguration(
               backgroundColor: theme.backgroundColor,
               reactedUserTextStyle: TextStyle(

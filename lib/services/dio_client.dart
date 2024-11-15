@@ -70,11 +70,9 @@ class DioClient {
     _dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
         // Don't trust any certificate just because their root cert is trusted.
-        final HttpClient client =
-            HttpClient(context: SecurityContext(withTrustedRoots: false));
+        final HttpClient client = HttpClient(context: SecurityContext(withTrustedRoots: false));
         // You can test the intermediate / root cert here. We just ignore it.
-        client.badCertificateCallback =
-            ((X509Certificate cert, String host, int port) => true);
+        client.badCertificateCallback = ((X509Certificate cert, String host, int port) => true);
         return client;
       },
     );
@@ -103,8 +101,7 @@ class DioClient {
     } on SocketException catch (e) {
       throw SocketException(e.toString());
     } on FormatException catch (_) {
-      Log.console('Unable to process the data',
-          where: 'GET $baseUrl$uri', level: LogLevel.error);
+      Log.console('Unable to process the data', where: 'GET $baseUrl$uri', level: LogLevel.error);
     } catch (e) {
       rethrow;
     }
@@ -131,8 +128,7 @@ class DioClient {
       );
       return response.data;
     } on FormatException catch (_) {
-      Log.console('Unable to process the data',
-          where: 'POST $baseUrl$uri', level: LogLevel.error);
+      Log.console('Unable to process the data', where: 'POST $baseUrl$uri', level: LogLevel.error);
     } on DioException catch (_) {
     } catch (e) {
       rethrow;
@@ -160,8 +156,7 @@ class DioClient {
       );
       return response.data;
     } on FormatException catch (_) {
-      Log.console('Unable to process the data',
-          where: 'PATCH $baseUrl$uri', level: LogLevel.error);
+      Log.console('Unable to process the data', where: 'PATCH $baseUrl$uri', level: LogLevel.error);
     } catch (e) {
       rethrow;
     }
@@ -188,8 +183,7 @@ class DioClient {
       );
       return response.data;
     } on FormatException catch (_) {
-      Log.console('Unable to process the data',
-          where: 'PUT $baseUrl$uri', level: LogLevel.error);
+      Log.console('Unable to process the data', where: 'PUT $baseUrl$uri', level: LogLevel.error);
     } catch (e) {
       rethrow;
     }
@@ -212,8 +206,7 @@ class DioClient {
       );
       return response.data;
     } on FormatException catch (_) {
-      Log.console('Unable to process the data',
-          where: 'DELETE $baseUrl$uri', level: LogLevel.error);
+      Log.console('Unable to process the data', where: 'DELETE $baseUrl$uri', level: LogLevel.error);
     } catch (e) {
       rethrow;
     }
@@ -250,17 +243,14 @@ class LoggingInterceptor extends Interceptor {
   LoggingInterceptor();
 
   @override
-  Future onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  Future onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.extra['start_time'] = DateTime.now().millisecondsSinceEpoch;
     return handler.next(options);
   }
 
   @override
   void onError(err, ErrorInterceptorHandler handler) {
-    Log.console(err,
-        where: '${err.requestOptions.method} ${err.requestOptions.uri}',
-        level: LogLevel.error);
+    Log.console(err, where: '${err.requestOptions.method} ${err.requestOptions.uri}', level: LogLevel.error);
     // var msg = 'URI: ${err.requestOptions.uri}\\n';
     // msg += 'METHOD:${err.requestOptions.method}\\n';
     // msg += 'REQUEST HEADER:${err.requestOptions.headers.toString()}\\n';
@@ -278,10 +268,7 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   Future onResponse(response, ResponseInterceptorHandler handler) async {
-    Log.console(response.data,
-        where:
-            '${response.requestOptions.method} ${response.requestOptions.uri}',
-        level: LogLevel.info);
+    Log.console(response.data, where: '${response.requestOptions.method} ${response.requestOptions.uri}', level: LogLevel.info);
     if ((response.statusCode ?? 200) != 200) {
       // var msg = 'URI: ${response.requestOptions.uri}\\n';
       // msg += 'METHOD:${response.requestOptions.method}\\n';

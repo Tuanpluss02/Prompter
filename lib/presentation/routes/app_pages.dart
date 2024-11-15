@@ -43,10 +43,6 @@ class AppPages {
       page: () => ResetPasswordScreen(),
       binding: ResetPasswordBinding(),
     ),
-    GetPage(
-        name: AppRoutes.aiChat,
-        page: () => AiChatScreen(),
-        binding: AiChatBinding(),
-        transition: Transition.fade),
+    GetPage(name: AppRoutes.aiChat, page: () => AiChatScreen(), binding: AiChatBinding(), transition: Transition.fade),
   ];
 }

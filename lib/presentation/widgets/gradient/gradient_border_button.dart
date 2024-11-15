@@ -23,10 +23,7 @@ class GradientBorderButton extends StatelessWidget {
         padding: const EdgeInsets.all(1), // Padding for the gradient border
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [
-              AppColors.purpleA410FA,
-              AppColors.yellowFFDC00
-            ], // Gradient border colors
+            colors: [AppColors.purpleA410FA, AppColors.yellowFFDC00], // Gradient border colors
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -36,8 +33,7 @@ class GradientBorderButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: AppColors.yellowFFFDF0, // Background color
-            borderRadius:
-                BorderRadius.circular(30), // Same radius as outer border
+            borderRadius: BorderRadius.circular(30), // Same radius as outer border
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

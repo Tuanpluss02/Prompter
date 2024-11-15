@@ -24,8 +24,7 @@ abstract class BaseRepository {
     }
   }
 
-  Future<ApiResult> handleApiRequestCustomResponse(
-      Future<dynamic> Function() request) async {
+  Future<ApiResult> handleApiRequestCustomResponse(Future<dynamic> Function() request) async {
     try {
       final response = await request();
       return ApiResult.successWWithCustomResponse(response);

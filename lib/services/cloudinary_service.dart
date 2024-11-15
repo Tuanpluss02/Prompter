@@ -6,8 +6,7 @@ import 'package:cloudinary/cloudinary.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CloudinaryService {
-  static final CloudinaryService _cloudinaryService =
-      CloudinaryService._internal();
+  static final CloudinaryService _cloudinaryService = CloudinaryService._internal();
   factory CloudinaryService() => _cloudinaryService;
 
   CloudinaryService._internal();

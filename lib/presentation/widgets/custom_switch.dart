@@ -35,23 +35,19 @@ class _CustomSwitchState extends State<CustomSwitch> {
           children: [
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment:
-                  widget.value ? Alignment.centerRight : Alignment.centerLeft,
+              alignment: widget.value ? Alignment.centerRight : Alignment.centerLeft,
               child: Container(
                 width: 10,
                 height: 16,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: widget.value
-                      ? AppColors.black14081C
-                      : AppColors.gray93889A,
+                  color: widget.value ? AppColors.black14081C : AppColors.gray93889A,
                 ),
               ),
             ),
             AnimatedAlign(
               duration: const Duration(milliseconds: 300),
-              alignment:
-                  widget.value ? Alignment.centerLeft : Alignment.centerRight,
+              alignment: widget.value ? Alignment.centerLeft : Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(

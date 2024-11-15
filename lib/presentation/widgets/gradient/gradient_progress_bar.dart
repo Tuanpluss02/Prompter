@@ -6,11 +6,7 @@ class GradientProgressBar extends StatelessWidget {
   final double width;
   final double height;
 
-  const GradientProgressBar(
-      {super.key,
-      required this.progress,
-      required this.width,
-      required this.height});
+  const GradientProgressBar({super.key, required this.progress, required this.width, required this.height});
 
   @override
   Widget build(BuildContext context) {

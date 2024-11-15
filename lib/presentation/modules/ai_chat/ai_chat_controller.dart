@@ -11,23 +11,36 @@ class AiChatController extends BaseController {
   final HuggingfaceRepository _huggingfaceRepository = HuggingfaceRepository();
   final CloudinaryService _cloudinaryService = CloudinaryService();
 
-  final ChatController chatController = ChatController(
-      initialMessageList: [
-        Message(
-            message: 'Hello, I am AI. How can I help you?',
-            sentBy: '2',
-            createdAt: DateTime.now()),
-      ],
-      currentUser: ChatUser(name: 'User', id: '1'),
-      scrollController: ScrollController(),
-      otherUsers: [
-        ChatUser(name: 'AI', id: '2'),
-      ]);
+  late final ChatController chatController;
   var chatViewState = ChatViewState.hasMessages.obs;
+  var selectedModel = ImageGenerateModel.stableDiffusion.obs;
+
+  @override
+  void onInit() {
+    chatController = ChatController(
+        initialMessageList: [
+          Message(
+            message: 'Hello, I am ${selectedModel.value.displayName}. How can I help you?',
+            sentBy: selectedModel.value.modelId,
+            createdAt: DateTime.now(),
+            messageType: MessageType.text,
+          ),
+        ],
+        currentUser: ChatUser(name: 'User', id: '1'),
+        scrollController: ScrollController(),
+        otherUsers: ImageGenerateModel.values
+            .map((model) => ChatUser(
+                  name: model.displayName,
+                  id: model.modelId,
+                  defaultAvatarImage: model.avatarUrl,
+                  imageType: ImageType.network,
+                ))
+            .toList());
+    super.onInit();
+  }
 
   Future<Uint8List?> generateImage(String prompt) async {
-    final result = await _huggingfaceRepository.generateImage(
-        prompt, ImageGenerateModel.stableDiffusion);
+    final result = await _huggingfaceRepository.generateImage(prompt, ImageGenerateModel.stableDiffusion);
     if (result == null) {
       showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
       return null;
@@ -35,8 +48,7 @@ class AiChatController extends BaseController {
     return result;
   }
 
-  void onTapSend(String message, ReplyMessage replyMessage,
-      MessageType messageType) async {
+  void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {
     chatController.addMessage(
       Message(
         message: message,
@@ -46,6 +58,14 @@ class AiChatController extends BaseController {
         replyMessage: replyMessage,
       ),
     );
+    chatController.addMessage(Message(
+      id: 'thinking-message',
+      message: 'Thinking...',
+      sentBy: selectedModel.value.modelId,
+      createdAt: DateTime.now(),
+      messageType: MessageType.text,
+      status: MessageStatus.pending,
+    ));
     if (messageType == MessageType.text) {
       Uint8List? img = await generateImage(message);
       if (img == null) {
@@ -57,6 +77,9 @@ class AiChatController extends BaseController {
         showSnackBar(title: 'Upload image failed', type: SnackBarType.error);
         return;
       }
+      chatController.initialMessageList.removeWhere(
+        (element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId,
+      );
       chatController.addMessage(
         Message(
           message: response,
@@ -67,8 +90,4 @@ class AiChatController extends BaseController {
       );
     }
   }
-}
-
-Uint8List stringToUint8List(String data) {
-  return Uint8List.fromList(data.codeUnits);
 }

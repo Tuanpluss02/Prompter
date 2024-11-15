@@ -28,9 +28,7 @@ class LanguageManager extends GetxController {
   }
 
   Locale getSelectedLanguage() {
-    String localeCode =
-        AppStorage.getString(SharedPreferencesKeys.localeCode) ??
-            Get.deviceLocale!.languageCode;
+    String localeCode = AppStorage.getString(SharedPreferencesKeys.localeCode) ?? Get.deviceLocale!.languageCode;
     return Locale(localeCode);
   }
 

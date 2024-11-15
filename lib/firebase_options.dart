@@ -73,5 +73,4 @@ class DefaultFirebaseOptions {
     iosClientId: '467739299542-lcfe3eedcpobkd4uc8lefjjm7hca47j3.apps.googleusercontent.com',
     iosBundleId: 'com.stormx.prompter',
   );
-
 }

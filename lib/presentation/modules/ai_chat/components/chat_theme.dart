@@ -1,3 +1,4 @@
+import 'package:base/app/constants/app_color.dart';
 import 'package:flutter/material.dart';
 
 class ChatTheme {
@@ -124,7 +125,7 @@ class DarkChatTheme extends ChatTheme {
     Color textFieldTextColor = Colors.white,
     Color appBarColor = const Color(0xff1d1b25),
     Color backArrowColor = Colors.white,
-    Color backgroundColor = const Color(0xff272336),
+    Color backgroundColor = AppColors.backgroundColor,
     Color replyDialogColor = const Color(0xff272336),
     Color linkPreviewOutgoingChatColor = const Color(0xff272336),
     Color linkPreviewIncomingChatColor = const Color(0xff9f85ff),
@@ -132,8 +133,8 @@ class DarkChatTheme extends ChatTheme {
     TextStyle linkPreviewOutgoingTitleStyle = const TextStyle(),
     Color replyTitleColor = Colors.white,
     Color textFieldBackgroundColor = const Color(0xff383152),
-    Color outgoingChatBubbleColor = const Color(0xff9f85ff),
-    Color inComingChatBubbleColor = const Color(0xff383152),
+    Color outgoingChatBubbleColor = AppColors.primaryColor,
+    Color inComingChatBubbleColor = AppColors.appColorPrimary,
     Color reactionPopupColor = const Color(0xff383152),
     Color replyPopupColor = const Color(0xff383152),
     Color replyPopupButtonColor = Colors.white,

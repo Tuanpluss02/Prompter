@@ -9,12 +9,14 @@ final class HuggingfaceAPIPath {
 }
 
 enum ImageGenerateModel {
-  midjourney('Jovie/Midjourney'),
-  stableDiffusion('stabilityai/stable-diffusion-3.5-large');
+  midjourney('Jovie/Midjourney', 'Midjourney', 'https://upload.wikimedia.org/wikipedia/commons/2/24/Midjourney_Emblem.svg'),
+  stableDiffusion('stabilityai/stable-diffusion-3.5-large', 'Stable Diffusion', 'https://images.prismic.io/encord/Zeb6euXgT-BdbvJy_image-47-.png?auto=format%2Ccompress&fit=max');
 
-  final String value;
+  final String modelId;
+  final String displayName;
+  final String avatarUrl;
 
-  const ImageGenerateModel(this.value);
+  const ImageGenerateModel(this.modelId, this.displayName, this.avatarUrl);
 }
 
 class HuggingfaceRepository extends BaseRepository {
@@ -24,10 +26,9 @@ class HuggingfaceRepository extends BaseRepository {
     'Content-Type': 'application/json',
   };
 
-  Future<Uint8List?> generateImage(
-      String prompt, ImageGenerateModel model) async {
+  Future<Uint8List?> generateImage(String prompt, ImageGenerateModel model) async {
     final response = await http.post(
-      Uri.parse('${HuggingfaceAPIPath.baseUrl}/${model.value}'),
+      Uri.parse('${HuggingfaceAPIPath.baseUrl}/${model.modelId}'),
       headers: headers,
       body: json.encode({'inputs': prompt}),
     );

@@ -14,8 +14,7 @@ ErrorModel _$ErrorModelFromJson(Map<String, dynamic> json) => ErrorModel(
       json['success'] as bool,
     );
 
-Map<String, dynamic> _$ErrorModelToJson(ErrorModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ErrorModelToJson(ErrorModel instance) => <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
       'status_code': instance.statusCode,

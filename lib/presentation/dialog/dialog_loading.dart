@@ -6,8 +6,7 @@ class DialogLoading {
   static showLoading() {
     return EasyLoading.show(
       indicator: Center(
-        child: LoadingAnimationWidget.progressiveDots(
-            color: Colors.deepPurple, size: 50),
+        child: LoadingAnimationWidget.progressiveDots(color: Colors.deepPurple, size: 50),
       ),
     );
   }
