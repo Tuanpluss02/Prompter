@@ -102,7 +102,7 @@ class AiChatController extends BaseController {
         Message(
           id: generateUniqueId(),
           message: response,
-          sentBy: chatController.otherUsers.first.id,
+          sentBy: selectedModel.value.modelId,
           createdAt: DateTime.now(),
           messageType: MessageType.image,
         ),
