@@ -2,6 +2,7 @@ import 'package:base/app/utils/generate_id.dart';
 import 'package:base/app/utils/log.dart';
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
+import 'package:base/data/repositories/gemini_repository.dart';
 import 'package:base/data/repositories/huggingface_repository.dart';
 import 'package:base/services/cloudinary_service.dart';
 import 'package:chatview/chatview.dart';
@@ -9,13 +10,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+enum ChatMode { text, image }
+
 class AiChatController extends BaseController {
-  final HuggingfaceRepository _huggingfaceRepository = HuggingfaceRepository();
-  final CloudinaryService _cloudinaryService = CloudinaryService();
+  final HuggingfaceRepository _huggingfaceRepository = Get.find<HuggingfaceRepository>();
+  final GeminiRepository _geminiRepository = Get.find<GeminiRepository>();
+  final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
 
   late final ChatController chatController;
   var chatViewState = ChatViewState.hasMessages.obs;
-  var selectedModel = ImageGenerateModel.midjourney.obs;
+  var selectedModel = ImageGenerateModel.flux.obs;
+  var chatMode = ChatMode.text.obs;
 
   @override
   void onInit() {
@@ -34,14 +39,17 @@ class AiChatController extends BaseController {
             imageType: ImageType.network,
             defaultAvatarImage: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
         scrollController: ScrollController(),
-        otherUsers: ImageGenerateModel.values
-            .map((model) => ChatUser(
-                  name: model.displayName,
-                  id: model.modelId,
-                  defaultAvatarImage: model.avatarUrl,
-                  imageType: ImageType.network,
-                ))
-            .toList());
+        otherUsers: [
+          ...ImageGenerateModel.values
+              .map((model) => ChatUser(
+                    name: model.displayName,
+                    id: model.modelId,
+                    defaultAvatarImage: model.avatarUrl,
+                    imageType: ImageType.network,
+                  ))
+              .toList(),
+          ChatUser(id: 'Gemini', name: 'Gemini')
+        ]);
     super.onInit();
   }
 
@@ -73,12 +81,12 @@ class AiChatController extends BaseController {
     chatController.addMessage(Message(
       id: 'thinking-message',
       message: 'Thinking...',
-      sentBy: selectedModel.value.modelId,
+      sentBy: chatMode.value == ChatMode.image ? selectedModel.value.modelId : 'Gemini',
       createdAt: DateTime.now(),
       messageType: MessageType.text,
       status: MessageStatus.pending,
     ));
-    if (messageType == MessageType.text) {
+    if (chatMode.value == ChatMode.image) {
       Uint8List? img = await generateImage(message);
       if (img == null) {
         showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
@@ -101,6 +109,21 @@ class AiChatController extends BaseController {
           messageType: MessageType.image,
         ),
       );
+    } else {
+      _geminiRepository.chatGemini(message).then((response) {
+        chatController.initialMessageList.removeWhere(
+          (element) => element.id == 'thinking-message' && element.sentBy == 'Gemini',
+        );
+        chatController.addMessage(
+          Message(
+            id: generateUniqueId(),
+            message: response ?? 'Sorry, I cannot understand your question',
+            sentBy: 'Gemini',
+            createdAt: DateTime.now(),
+            messageType: MessageType.text,
+          ),
+        );
+      });
     }
   }
 }

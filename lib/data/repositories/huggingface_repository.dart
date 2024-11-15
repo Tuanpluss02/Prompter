@@ -10,7 +10,8 @@ final class HuggingfaceAPIPath {
 
 enum ImageGenerateModel {
   midjourney('Jovie/Midjourney', 'Midjourney', 'https://upload.wikimedia.org/wikipedia/commons/2/24/Midjourney_Emblem.svg'),
-  stableDiffusion('stabilityai/stable-diffusion-3.5-large', 'Stable Diffusion', 'https://images.prismic.io/encord/Zeb6euXgT-BdbvJy_image-47-.png?auto=format%2Ccompress&fit=max');
+  stableDiffusion('stabilityai/stable-diffusion-3.5-large', 'Stable Diffusion', 'https://images.prismic.io/encord/Zeb6euXgT-BdbvJy_image-47-.png?auto=format%2Ccompress&fit=max'),
+  flux('black-forest-labs/FLUX.1-dev', 'FLUX', 'https://www.blackforestlabs.ai/wp-content/uploads/2024/07/logo-with-text_more-1024x970.png');
 
   final String modelId;
   final String displayName;
