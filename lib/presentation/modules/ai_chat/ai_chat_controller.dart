@@ -1,6 +1,7 @@
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/huggingface_repository.dart';
+import 'package:base/services/cloudinary_service.dart';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 
 class AiChatController extends BaseController {
   final HuggingfaceRepository _huggingfaceRepository = HuggingfaceRepository();
+  final CloudinaryService _cloudinaryService = CloudinaryService();
 
   final ChatController chatController = ChatController(
       initialMessageList: [
@@ -46,16 +48,23 @@ class AiChatController extends BaseController {
     );
     if (messageType == MessageType.text) {
       Uint8List? img = await generateImage(message);
-      if (img != null) {
-        chatController.addMessage(
-          Message(
-            message: 'Here is the generated image',
-            sentBy: chatController.otherUsers.first.id,
-            createdAt: DateTime.now(),
-            messageType: MessageType.image,
-          ),
-        );
+      if (img == null) {
+        showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
+        return;
       }
+      final response = await _cloudinaryService.uploadImage(img);
+      if (response == null) {
+        showSnackBar(title: 'Upload image failed', type: SnackBarType.error);
+        return;
+      }
+      chatController.addMessage(
+        Message(
+          message: response,
+          sentBy: chatController.otherUsers.first.id,
+          createdAt: DateTime.now(),
+          messageType: MessageType.image,
+        ),
+      );
     }
   }
 }

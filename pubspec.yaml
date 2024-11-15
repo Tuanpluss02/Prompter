@@ -66,6 +66,7 @@ dependencies:
   image: ^4.3.0
   http: ^1.2.2
   chatview: ^2.3.0
+  cloudinary: ^1.2.0
 
 dev_dependencies:
   flutter_test:
