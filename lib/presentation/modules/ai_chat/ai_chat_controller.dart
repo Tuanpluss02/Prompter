@@ -1,5 +1,4 @@
 import 'package:base/app/utils/generate_id.dart';
-import 'package:base/app/utils/log.dart';
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/gemini_repository.dart';
@@ -20,7 +19,7 @@ class AiChatController extends BaseController {
   late final ChatController chatController;
   var chatViewState = ChatViewState.hasMessages.obs;
   var selectedModel = ImageGenerateModel.flux.obs;
-  var chatMode = ChatMode.text.obs;
+  var chatMode = ChatMode.image.obs;
 
   @override
   void onInit() {
@@ -63,7 +62,6 @@ class AiChatController extends BaseController {
   }
 
   void onReactionTap(Message message, String reaction) {
-    Log.console('Reaction: $reaction, Message: ${message.toJson()}');
     chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
   }
 

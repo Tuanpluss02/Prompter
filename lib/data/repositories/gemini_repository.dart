@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:base/app/constants/app_strings.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
@@ -30,6 +32,6 @@ class GeminiRepository {
     final chat = model.startChat(history: []);
     final content = Content.text(prompt);
     final response = await chat.sendMessage(content);
-    return response.text;
+    return jsonDecode(response.text ?? '')['data'];
   }
 }
