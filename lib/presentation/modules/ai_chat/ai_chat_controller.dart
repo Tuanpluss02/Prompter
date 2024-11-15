@@ -1,3 +1,5 @@
+import 'package:base/app/utils/generate_id.dart';
+import 'package:base/app/utils/log.dart';
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/huggingface_repository.dart';
@@ -13,7 +15,7 @@ class AiChatController extends BaseController {
 
   late final ChatController chatController;
   var chatViewState = ChatViewState.hasMessages.obs;
-  var selectedModel = ImageGenerateModel.stableDiffusion.obs;
+  var selectedModel = ImageGenerateModel.midjourney.obs;
 
   @override
   void onInit() {
@@ -26,7 +28,11 @@ class AiChatController extends BaseController {
             messageType: MessageType.text,
           ),
         ],
-        currentUser: ChatUser(name: 'User', id: '1'),
+        currentUser: ChatUser(
+            name: 'Tuan Do',
+            id: generateUniqueId(),
+            imageType: ImageType.network,
+            defaultAvatarImage: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
         scrollController: ScrollController(),
         otherUsers: ImageGenerateModel.values
             .map((model) => ChatUser(
@@ -40,7 +46,7 @@ class AiChatController extends BaseController {
   }
 
   Future<Uint8List?> generateImage(String prompt) async {
-    final result = await _huggingfaceRepository.generateImage(prompt, ImageGenerateModel.stableDiffusion);
+    final result = await _huggingfaceRepository.generateImage(prompt, selectedModel.value);
     if (result == null) {
       showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
       return null;
@@ -48,9 +54,15 @@ class AiChatController extends BaseController {
     return result;
   }
 
+  void onReactionTap(Message message, String reaction) {
+    Log.console('Reaction: $reaction, Message: ${message.toJson()}');
+    chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
+  }
+
   void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {
     chatController.addMessage(
       Message(
+        id: generateUniqueId(),
         message: message,
         sentBy: chatController.currentUser.id,
         createdAt: DateTime.now(),
@@ -82,6 +94,7 @@ class AiChatController extends BaseController {
       );
       chatController.addMessage(
         Message(
+          id: generateUniqueId(),
           message: response,
           sentBy: chatController.otherUsers.first.id,
           createdAt: DateTime.now(),

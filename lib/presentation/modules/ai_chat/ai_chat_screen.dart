@@ -20,9 +20,12 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         chatViewState: controller.chatViewState.value,
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
+          enableReplySnackBar: false,
+          enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: true,
           enableScrollToBottomButton: true,
+          enableCurrentUserProfileAvatar: true,
         ),
         scrollToBottomButtonConfig: ScrollToBottomButtonConfig(
           backgroundColor: theme.textFieldBackgroundColor,
@@ -72,13 +75,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.backgroundColor,
         ),
         sendMessageConfig: SendMessageConfiguration(
+          textFieldConfig: TextFieldConfiguration(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            borderRadius: BorderRadius.circular(12),
+            textStyle: TextStyle(color: theme.textFieldTextColor, fontSize: 16),
+          ),
           allowRecordingVoice: false,
           enableCameraImagePicker: false,
           enableGalleryImagePicker: false,
-          // imagePickerIconsConfig: ImagePickerIconsConfiguration(
-          //   cameraIconColor: theme.cameraIconColor,
-          //   galleryIconColor: theme.galleryIconColor,
-          // ),
           replyMessageColor: theme.replyMessageColor,
           defaultSendButtonColor: theme.sendButtonColor,
           replyDialogColor: theme.replyDialogColor,
@@ -104,10 +108,10 @@ class AiChatScreen extends BaseScreen<AiChatController> {
               ),
               backgroundColor: theme.linkPreviewIncomingChatColor,
               bodyStyle: theme.incomingChatLinkBodyStyle,
-              titleStyle: theme.incomingChatLinkTitleStyle,
+              titleStyle: theme.incomingChatLinkTitleStyle?.copyWith(fontSize: 12),
             ),
             textStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 16),
-            senderNameTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
+            senderNameTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 12),
             color: theme.inComingChatBubbleColor,
           ),
         ),
@@ -117,13 +121,12 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           topBorderColor: theme.replyPopupTopBorderColor,
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
+          overrideUserReactionCallback: true,
           shadow: BoxShadow(
             color: Colors.black54,
             blurRadius: 20,
           ),
-          userReactionCallback: (message, reaction) {
-            debugPrint('User reacted with $reaction');
-          },
+          userReactionCallback: controller.onReactionTap,
           backgroundColor: theme.reactionPopupColor,
         ),
         messageConfig: MessageConfiguration(
@@ -158,7 +161,9 @@ class AiChatScreen extends BaseScreen<AiChatController> {
             ),
           ),
         ),
-        profileCircleConfig: const ProfileCircleConfiguration(),
+        profileCircleConfig: const ProfileCircleConfiguration(
+          profileImageUrl: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg',
+        ),
         repliedMessageConfig: RepliedMessageConfiguration(
           backgroundColor: theme.repliedMessageColor,
           verticalBarColor: theme.verticalBarColor,
@@ -175,6 +180,8 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           replyTitleTextStyle: TextStyle(color: theme.repliedTitleTextColor),
         ),
         swipeToReplyConfig: SwipeToReplyConfiguration(
+          onLeftSwipe: null,
+          onRightSwipe: null,
           replyIconColor: theme.swipeToReplyIconColor,
         ),
         replySuggestionsConfig: ReplySuggestionsConfig(
@@ -188,6 +195,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
             ),
             textStyle: TextStyle(
               color: Colors.white,
+              fontSize: 12,
             ),
           ),
         )));
