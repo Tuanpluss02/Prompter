@@ -1,16 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:base/app/constants/firebase_collection_keys.dart';
+import 'package:chatview/chatview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatService {
-  final CollectionReference _chatMessagesCollection =
-      FirebaseFirestore.instance.collection(FirebaseCollectionKeys.chatMessagesCollection);
+  final CollectionReference _chatMessagesCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.chatMessagesCollection);
 
-  Future<void> saveMessage(String message, String sentBy, DateTime createdAt) async {
-    await _chatMessagesCollection.add({
-      'message': message,
-      'sentBy': sentBy,
-      'createdAt': createdAt,
-    });
+  Future<void> saveMessage(Message message) async {
+    await _chatMessagesCollection.add(message.toJson());
   }
 
   Stream<QuerySnapshot> getMessages() {

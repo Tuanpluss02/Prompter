@@ -3,8 +3,8 @@ import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/gemini_repository.dart';
 import 'package:base/data/repositories/huggingface_repository.dart';
-import 'package:base/services/cloudinary_service.dart';
 import 'package:base/services/chat_service.dart';
+import 'package:base/services/cloudinary_service.dart';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -68,25 +68,25 @@ class AiChatController extends BaseController {
   }
 
   void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {
-    chatController.addMessage(
-      Message(
-        id: generateUniqueId(),
-        message: message,
-        sentBy: chatController.currentUser.id,
-        createdAt: DateTime.now(),
-        messageType: messageType,
-        replyMessage: replyMessage,
-      ),
+    final userMessage = Message(
+      id: generateUniqueId(),
+      message: message,
+      sentBy: chatController.currentUser.id,
+      createdAt: DateTime.now(),
+      messageType: messageType,
+      replyMessage: replyMessage,
     );
-    _chatService.saveMessage(message, chatController.currentUser.id, DateTime.now());
-    chatController.addMessage(Message(
+    final thinkingMessage = Message(
       id: 'thinking-message',
       message: 'Thinking...',
-      sentBy: chatMode.value == ChatMode.image ? selectedModel.value.modelId : 'Gemini',
+      sentBy: chatController.currentUser.id,
       createdAt: DateTime.now(),
       messageType: MessageType.text,
       status: MessageStatus.pending,
-    ));
+    );
+    chatController.addMessage(userMessage);
+    _chatService.saveMessage(userMessage);
+    chatController.addMessage(thinkingMessage);
     if (chatMode.value == ChatMode.image) {
       Uint8List? img = await generateImage(message);
       if (img == null) {
@@ -101,31 +101,29 @@ class AiChatController extends BaseController {
       chatController.initialMessageList.removeWhere(
         (element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId,
       );
-      chatController.addMessage(
-        Message(
-          id: generateUniqueId(),
-          message: response,
-          sentBy: selectedModel.value.modelId,
-          createdAt: DateTime.now(),
-          messageType: MessageType.image,
-        ),
+      final imageMessage = Message(
+        id: generateUniqueId(),
+        message: response,
+        sentBy: selectedModel.value.modelId,
+        createdAt: DateTime.now(),
+        messageType: MessageType.image,
       );
-      _chatService.saveMessage(response, selectedModel.value.modelId, DateTime.now());
+      chatController.addMessage(imageMessage);
+      _chatService.saveMessage(imageMessage);
     } else {
       _geminiRepository.chatGemini(message).then((response) {
         chatController.initialMessageList.removeWhere(
           (element) => element.id == 'thinking-message' && element.sentBy == 'Gemini',
         );
-        chatController.addMessage(
-          Message(
-            id: generateUniqueId(),
-            message: response ?? 'Sorry, I cannot understand your question',
-            sentBy: 'Gemini',
-            createdAt: DateTime.now(),
-            messageType: MessageType.text,
-          ),
+        final responseMessage = Message(
+          id: generateUniqueId(),
+          message: response ?? 'Sorry, I cannot understand your question',
+          sentBy: 'Gemini',
+          createdAt: DateTime.now(),
+          messageType: MessageType.text,
         );
-        _chatService.saveMessage(response ?? 'Sorry, I cannot understand your question', 'Gemini', DateTime.now());
+        chatController.addMessage(responseMessage);
+        _chatService.saveMessage(responseMessage);
       });
     }
   }
