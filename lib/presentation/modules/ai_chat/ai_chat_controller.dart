@@ -4,6 +4,7 @@ import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/gemini_repository.dart';
 import 'package:base/data/repositories/huggingface_repository.dart';
 import 'package:base/services/cloudinary_service.dart';
+import 'package:base/services/chat_service.dart';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class AiChatController extends BaseController {
   final HuggingfaceRepository _huggingfaceRepository = Get.find<HuggingfaceRepository>();
   final GeminiRepository _geminiRepository = Get.find<GeminiRepository>();
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
+  final ChatService _chatService = Get.find<ChatService>();
 
   late final ChatController chatController;
   var chatViewState = ChatViewState.hasMessages.obs;
@@ -76,6 +78,7 @@ class AiChatController extends BaseController {
         replyMessage: replyMessage,
       ),
     );
+    _chatService.saveMessage(message, chatController.currentUser.id, DateTime.now());
     chatController.addMessage(Message(
       id: 'thinking-message',
       message: 'Thinking...',
@@ -107,6 +110,7 @@ class AiChatController extends BaseController {
           messageType: MessageType.image,
         ),
       );
+      _chatService.saveMessage(response, selectedModel.value.modelId, DateTime.now());
     } else {
       _geminiRepository.chatGemini(message).then((response) {
         chatController.initialMessageList.removeWhere(
@@ -121,6 +125,7 @@ class AiChatController extends BaseController {
             messageType: MessageType.text,
           ),
         );
+        _chatService.saveMessage(response ?? 'Sorry, I cannot understand your question', 'Gemini', DateTime.now());
       });
     }
   }
