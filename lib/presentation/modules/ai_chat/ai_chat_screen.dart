@@ -19,13 +19,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
 
   @override
   Widget buildScreen(BuildContext context) {
+    // TODO: fix user profile image
     ChatTheme theme = DarkChatTheme();
     return Obx(() => ChatView(
         chatController: controller.chatController,
         chatViewState: controller.chatViewState.value,
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
-          enableReplySnackBar: false,
+          enableReplySnackBar: true,
           enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: true,
@@ -133,6 +134,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.replyPopupColor,
           buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
+          replyPopupBuilder: (message, sentByCurrentUser) => Container(
+              width: double.infinity,
+              height: 50,
+              color: theme.inComingChatBubbleColor,
+              child: GestureDetector(
+                onTap: () => controller.onLongPressMessage(message),
+                child: Center(child: Text(message.messageType == MessageType.text ? 'Copy' : 'Download', style: TextStyle(color: theme.inComingChatBubbleTextColor))),
+              )),
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
           overrideUserReactionCallback: true,

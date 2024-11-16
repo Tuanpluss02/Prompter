@@ -1,6 +1,7 @@
 import 'package:base/app/constants/app_enums.dart';
 import 'package:base/app/constants/app_strings.dart';
 import 'package:base/app/utils/generate_id.dart';
+import 'package:base/app/utils/save_to_gallery.dart';
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/data/repositories/gemini_repository.dart';
@@ -8,8 +9,9 @@ import 'package:base/data/repositories/huggingface_repository.dart';
 import 'package:base/services/chat_service.dart';
 import 'package:base/services/cloudinary_service.dart';
 import 'package:chatview/chatview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AiChatController extends BaseController {
@@ -139,5 +141,20 @@ class AiChatController extends BaseController {
   void addMessage(Message message) {
     chatController.addMessage(message);
     _chatService.saveMessage(message, appProvider.currentUser.value.id ?? 'User');
+  }
+
+  onLongPressMessage(Message message) {
+    if (message.messageType == MessageType.text) {
+      Clipboard.setData(ClipboardData(text: message.message));
+      Fluttertoast.showToast(
+        msg: "Copied to clipboard",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      saveImageToGallery(imageUrl: message.message);
+    }
   }
 }
