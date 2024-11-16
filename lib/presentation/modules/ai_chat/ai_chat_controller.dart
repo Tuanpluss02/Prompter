@@ -25,7 +25,7 @@ class AiChatController extends BaseController {
           name: appProvider.currentUser.value.username ?? 'User',
           id: appProvider.currentUser.value.id ?? 'User',
           imageType: ImageType.network,
-          profilePhoto: appProvider.currentUser.value.profileImage ?? '',
+          profilePhoto: appProvider.currentUser.value.profileImage,
           defaultAvatarImage: AppStrings.defaultNetworkAvatar),
       otherUsers: [],
       scrollController: ScrollController());
@@ -60,7 +60,7 @@ class AiChatController extends BaseController {
           name: appProvider.currentUser.value.username ?? 'User',
           id: appProvider.currentUser.value.id ?? 'User',
           imageType: ImageType.network,
-          profilePhoto: appProvider.currentUser.value.profileImage ?? '',
+          profilePhoto: appProvider.currentUser.value.profileImage,
           defaultAvatarImage: AppStrings.defaultNetworkAvatar),
       scrollController: ScrollController(),
       otherUsers: GenerativeAiModel.values
