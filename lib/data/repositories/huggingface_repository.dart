@@ -1,23 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:base/app/constants/app_enums.dart';
 import 'package:base/data/repositories/base_repository.dart';
 import 'package:http/http.dart' as http;
 
 final class HuggingfaceAPIPath {
   static const String baseUrl = 'https://api-inference.huggingface.co/models';
-}
-
-enum ImageGenerateModel {
-  midjourney('Jovie/Midjourney', 'Midjourney', 'https://upload.wikimedia.org/wikipedia/commons/2/24/Midjourney_Emblem.svg'),
-  stableDiffusion('stabilityai/stable-diffusion-3.5-large', 'Stable Diffusion', 'https://images.prismic.io/encord/Zeb6euXgT-BdbvJy_image-47-.png?auto=format%2Ccompress&fit=max'),
-  flux('black-forest-labs/FLUX.1-dev', 'FLUX', 'https://www.blackforestlabs.ai/wp-content/uploads/2024/07/logo-with-text_more-1024x970.png');
-
-  final String modelId;
-  final String displayName;
-  final String avatarUrl;
-
-  const ImageGenerateModel(this.modelId, this.displayName, this.avatarUrl);
 }
 
 class HuggingfaceRepository extends BaseRepository {
@@ -27,7 +16,7 @@ class HuggingfaceRepository extends BaseRepository {
     'Content-Type': 'application/json',
   };
 
-  Future<Uint8List?> generateImage(String prompt, ImageGenerateModel model) async {
+  Future<Uint8List?> generateImage(String prompt, GenerativeAiModel model) async {
     final response = await http.post(
       Uri.parse('${HuggingfaceAPIPath.baseUrl}/${model.modelId}'),
       headers: headers,

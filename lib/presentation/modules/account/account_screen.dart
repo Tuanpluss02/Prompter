@@ -1,3 +1,4 @@
+import 'package:base/app/constants/app_strings.dart';
 import 'package:base/app/utils/extension.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/widgets/global/app_image.dart';
@@ -57,7 +58,7 @@ class AccountScreen extends BaseScreen<AccountController> {
               decoration: BoxDecoration(
                 color: const Color(0xff7c94b6),
                 image: DecorationImage(
-                  image: NetworkImage('https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
+                  image: NetworkImage(AppStrings.defaultNetworkAvatar),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(50.0)),

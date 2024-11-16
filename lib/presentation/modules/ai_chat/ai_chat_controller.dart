@@ -1,3 +1,5 @@
+import 'package:base/app/constants/app_enums.dart';
+import 'package:base/app/constants/app_strings.dart';
 import 'package:base/app/utils/generate_id.dart';
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
@@ -10,23 +12,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum ChatMode { text, image }
-
 class AiChatController extends BaseController {
   final HuggingfaceRepository _huggingfaceRepository = Get.find<HuggingfaceRepository>();
   final GeminiRepository _geminiRepository = Get.find<GeminiRepository>();
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
   final ChatService _chatService = Get.find<ChatService>();
 
-  late final ChatController chatController;
-  var chatViewState = ChatViewState.hasMessages.obs;
-  var selectedModel = ImageGenerateModel.flux.obs;
-  var chatMode = ChatMode.image.obs;
+  late ChatController chatController = ChatController(
+      initialMessageList: [],
+      currentUser: ChatUser(
+          name: appProvider.currentUser.value.username ?? 'User',
+          id: appProvider.currentUser.value.id ?? 'User',
+          imageType: ImageType.network,
+          profilePhoto: appProvider.currentUser.value.profileImage ?? '',
+          defaultAvatarImage: AppStrings.defaultNetworkAvatar),
+      otherUsers: [],
+      scrollController: ScrollController());
+  var chatViewState = ChatViewState.loading.obs;
+  var selectedModel = GenerativeAiModel.gemini.obs;
 
   @override
-  void onInit() async {
-    await initChatData(appProvider.currentUser.value.id ?? 'User');
+  void onInit() {
     super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initChatData(appProvider.currentUser.value.id ?? 'User');
+    });
   }
 
   initChatData(String userId) async {
@@ -40,24 +50,25 @@ class AiChatController extends BaseController {
       ));
     }
     chatController = ChatController(
-        initialMessageList: initialMessageList,
-        currentUser: ChatUser(
-            name: appProvider.currentUser.value.username ?? 'User',
-            id: appProvider.currentUser.value.id ?? 'User',
-            imageType: ImageType.network,
-            profilePhoto: appProvider.currentUser.value.profileImage ?? '',
-            defaultAvatarImage: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
-        scrollController: ScrollController(),
-        otherUsers: [
-          ...ImageGenerateModel.values.map((model) => ChatUser(
+      initialMessageList: initialMessageList,
+      currentUser: ChatUser(
+          name: appProvider.currentUser.value.username ?? 'User',
+          id: appProvider.currentUser.value.id ?? 'User',
+          imageType: ImageType.network,
+          profilePhoto: appProvider.currentUser.value.profileImage ?? '',
+          defaultAvatarImage: AppStrings.defaultNetworkAvatar),
+      scrollController: ScrollController(),
+      otherUsers: GenerativeAiModel.values
+          .map((model) => ChatUser(
                 name: model.displayName,
                 id: model.modelId,
                 defaultAvatarImage: model.avatarUrl,
                 profilePhoto: model.avatarUrl,
                 imageType: ImageType.network,
-              )),
-          ChatUser(id: 'Gemini', name: 'Gemini')
-        ]);
+              ))
+          .toList(),
+    );
+    chatViewState.value = ChatViewState.hasMessages;
   }
 
   Future<Uint8List?> generateImage(String prompt) async {
@@ -82,17 +93,18 @@ class AiChatController extends BaseController {
       messageType: messageType,
       replyMessage: replyMessage,
     );
-    final thinkingMessage = Message(
-      id: 'thinking-message',
-      message: 'Thinking...',
-      sentBy: selectedModel.value.modelId,
-      createdAt: DateTime.now(),
-      messageType: MessageType.text,
-      status: MessageStatus.pending,
-    );
+    chatController.setTypingIndicator = true;
+    // final thinkingMessage = Message(
+    //   id: 'thinking-message',
+    //   message: 'Thinking...',
+    //   sentBy: selectedModel.value.modelId,
+    //   createdAt: DateTime.now(),
+    //   messageType: MessageType.text,
+    //   status: MessageStatus.pending,
+    // );
     addMessage(userMessage);
-    chatController.addMessage(thinkingMessage);
-    if (chatMode.value == ChatMode.image) {
+    // chatController.addMessage(thinkingMessage);
+    if (selectedModel.value.modelType == ModelType.textToImage) {
       Uint8List? img = await generateImage(message);
       if (img == null) {
         showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
@@ -103,9 +115,9 @@ class AiChatController extends BaseController {
         showSnackBar(title: 'Upload image failed', type: SnackBarType.error);
         return;
       }
-      chatController.initialMessageList.removeWhere(
-        (element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId,
-      );
+      // chatController.initialMessageList.removeWhere(
+      //   (element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId,
+      // );
       final imageMessage = Message(
         id: generateUniqueId(),
         message: response,
@@ -113,21 +125,20 @@ class AiChatController extends BaseController {
         createdAt: DateTime.now(),
         messageType: MessageType.image,
       );
+      chatController.setTypingIndicator = false;
       addMessage(imageMessage);
     } else {
-      _geminiRepository.chatGemini(message).then((response) {
-        chatController.initialMessageList.removeWhere(
-          (element) => element.id == 'thinking-message' && element.sentBy == 'Gemini',
-        );
-        final responseMessage = Message(
-          id: generateUniqueId(),
-          message: response ?? 'Sorry, I cannot understand your question',
-          sentBy: 'Gemini',
-          createdAt: DateTime.now(),
-          messageType: MessageType.text,
-        );
-        addMessage(responseMessage);
-      });
+      final geminiResponse = await _geminiRepository.chatGemini(message);
+      // chatController.initialMessageList.removeWhere((element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId);
+      final responseMessage = Message(
+        id: generateUniqueId(),
+        message: geminiResponse ?? 'Sorry, I cannot understand your question',
+        sentBy: selectedModel.value.modelId,
+        createdAt: DateTime.now(),
+        messageType: MessageType.text,
+      );
+      chatController.setTypingIndicator = false;
+      addMessage(responseMessage);
     }
   }
 

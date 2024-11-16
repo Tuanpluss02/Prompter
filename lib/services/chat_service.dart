@@ -10,7 +10,7 @@ class ChatService {
   }
 
   Future<List<Message>> getMessages(String userId) async {
-    return await _chatMessagesCollection.doc(userId).collection('messages').get().then((querySnapshot) {
+    return await _chatMessagesCollection.doc(userId).collection('messages').orderBy('createdAt').get().then((querySnapshot) {
       return querySnapshot.docs.map((doc) => Message.fromJson(doc.data())).toList();
     });
   }

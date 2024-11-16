@@ -1,3 +1,4 @@
+import 'package:base/app/constants/app_strings.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
 import 'package:chatview/chatview.dart';
@@ -165,7 +166,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           ),
         ),
         profileCircleConfig: const ProfileCircleConfiguration(
-          profileImageUrl: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg',
+          profileImageUrl: AppStrings.defaultNetworkAvatar,
         ),
         repliedMessageConfig: RepliedMessageConfiguration(
           backgroundColor: theme.repliedMessageColor,
