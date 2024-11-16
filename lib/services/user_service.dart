@@ -1,6 +1,8 @@
 import 'package:base/app/constants/firebase_collection_keys.dart';
+import 'package:base/app_provider.dart';
 import 'package:base/data/entities/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class UserService extends GetxService {
@@ -18,29 +20,27 @@ class UserService extends GetxService {
   /// [userId] is the unique identifier for the user
   /// [username] is the username of the user
   /// [email] is the email address of the user
-  Future<void> createUser(String userId, String username, String email) async {
-    final userRef = _userCollection.doc(userId);
-    await userRef.set({
-      'id': userId,
-      'username': username,
-      'email': email,
-      'profileImage': '',
-      'bio': '',
-      'followers': [],
-      'following': [],
-      'createdAt': _createdTime,
-      'updatedAt': _createdTime,
-      'postCount': 0,
-      'likeCount': 0,
-    });
+  Future<void> createUser(UserCredential user) async {
+    final userRef = _userCollection.doc(user.user!.uid);
+    final UserEntity newUser = UserEntity(
+      id: user.user?.uid,
+      displayName: user.user?.displayName,
+      username: user.user?.email?.split('@')[0],
+      email: user.user?.email,
+      profileImage: user.user?.photoURL,
+      createdAt: _createdTime,
+      updatedAt: _createdTime,
+    );
+    await userRef.set(newUser.toJson());
   }
 
-  Future<User> getUserInfo(String userId) async {
+  Future<UserEntity> getUserInfo(String userId) async {
     final userDoc = await _userCollection.doc(userId).get();
     if (!userDoc.exists) {
-      throw Exception('User not found');
+      Get.find<AppProvider>().removeAll();
+      return const UserEntity();
     }
-    return User.fromJson(userDoc.data()!);
+    return UserEntity.fromJson(userDoc.data()!);
   }
 
   Future<bool> checkUserExists(String userId) async {

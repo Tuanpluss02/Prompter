@@ -6,8 +6,10 @@ part of '../../../data/entities/user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
+_$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
+    _$UserEntityImpl(
       id: json['id'] as String? ?? '',
+      displayName: json['displayName'] as String? ?? '',
       username: json['username'] as String? ?? '',
       email: json['email'] as String? ?? '',
       profileImage: json['profileImage'] as String? ?? '',
@@ -26,9 +28,10 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
+Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'displayName': instance.displayName,
       'username': instance.username,
       'email': instance.email,
       'profileImage': instance.profileImage,

@@ -46,11 +46,7 @@ class LoginController extends BaseController {
     }
     final isExists = await _userService.checkUserExists(result.userCredential!.user!.uid);
     if (!isExists) {
-      _userService.createUser(
-        result.userCredential?.user?.uid ?? '',
-        result.userCredential?.user?.displayName ?? '',
-        result.userCredential?.user?.email ?? '',
-      );
+      _userService.createUser(result.userCredential!);
     }
     Get.offAllNamed(AppRoutes.root);
   }

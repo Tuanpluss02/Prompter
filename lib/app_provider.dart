@@ -13,7 +13,7 @@ class AppProvider {
   final AuthService _authService = Get.find<AuthService>();
   final UserService _userService = Get.find<UserService>();
 
-  var currentUser = const User().obs;
+  var currentUser = const UserEntity().obs;
 
   bool get isSignedIn => _authService.currentUser != null;
 
@@ -21,5 +21,10 @@ class AppProvider {
     if (isSignedIn) {
       currentUser.value = await _userService.getUserInfo(_authService.currentUser!.uid);
     }
+  }
+
+  removeAll() {
+    _authService.signOut();
+    currentUser.value = const UserEntity();
   }
 }

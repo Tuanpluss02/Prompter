@@ -1,6 +1,10 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:base/app/constants/app_color.dart';
+import 'package:base/app/constants/app_enums.dart';
 import 'package:base/app/constants/app_strings.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
+import 'package:base/presentation/widgets/global/app_back_button.dart';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,20 +54,25 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           flashingCircleBrightColor: theme.flashingCircleBrightColor,
           flashingCircleDarkColor: theme.flashingCircleDarkColor,
         ),
-        appBar: Obx(() => ChatViewAppBar(
-              elevation: theme.elevation,
-              backGroundColor: theme.appBarColor,
-              backArrowColor: theme.backArrowColor,
-              chatTitle: controller.selectedModel.value.displayName,
-              chatTitleTextStyle: TextStyle(
-                color: theme.appBarTitleTextStyle,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                letterSpacing: 0.25,
+        appBar: ChatViewAppBar(
+          elevation: 0,
+          backGroundColor: AppColors.backgroundColor,
+          backArrowColor: theme.backArrowColor,
+          chatTitle: '',
+          leading: AppBackButton(size: 40),
+          actions: [
+            SizedBox(
+              width: 200,
+              child: CustomDropdown<GenerativeAiModel>(
+                initialItem: controller.selectedModel.value,
+                onChanged: (GenerativeAiModel? newValue) {
+                  controller.selectedModel.value = newValue!;
+                },
+                items: GenerativeAiModel.values.toList(),
               ),
-              userStatus: "Let's creat something awesome",
-              userStatusTextStyle: const TextStyle(color: Colors.grey, fontSize: 14),
-            )),
+            ),
+          ],
+        ),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),

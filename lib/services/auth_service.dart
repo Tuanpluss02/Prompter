@@ -42,7 +42,7 @@ class AuthService {
       );
 
       // Once signed in, return the UserCredential
-      userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      userCredential = await _firebaseInstance.signInWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
@@ -67,7 +67,10 @@ class AuthService {
 
   // Sign out
   Future<void> signOut() async {
-    return await _firebaseInstance.signOut();
+    await Future.wait([
+      GoogleSignIn().signOut(),
+      _firebaseInstance.signOut(),
+    ]);
   }
 
   /// Forgot password
