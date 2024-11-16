@@ -37,7 +37,7 @@ class UserService extends GetxService {
   Future<UserEntity> getUserInfo(String userId) async {
     final userDoc = await _userCollection.doc(userId).get();
     if (!userDoc.exists) {
-      Get.find<AppProvider>().removeAll();
+      Get.find<AppProvider>().signOut();
       return const UserEntity();
     }
     return UserEntity.fromJson(userDoc.data()!);

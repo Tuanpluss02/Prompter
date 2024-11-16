@@ -1,7 +1,7 @@
 // 1000 -> 1000
 // 10000 -> 10k
 // 1000000 -> 1m
-extension Shortly on int {
+extension Shortly on num {
   String toShortString() {
     if (this <= 1000) {
       return toString();

@@ -22,10 +22,10 @@ class AiChatController extends BaseController {
   late ChatController chatController = ChatController(
       initialMessageList: [],
       currentUser: ChatUser(
-          name: appProvider.currentUser.value.username ?? 'User',
-          id: appProvider.currentUser.value.id ?? 'User',
+          name: appProvider.user.value.username ?? 'User',
+          id: appProvider.user.value.id ?? 'User',
           imageType: ImageType.network,
-          profilePhoto: appProvider.currentUser.value.profileImage,
+          profilePhoto: appProvider.user.value.profileImage,
           defaultAvatarImage: AppStrings.defaultNetworkAvatar),
       otherUsers: [],
       scrollController: ScrollController());
@@ -36,7 +36,7 @@ class AiChatController extends BaseController {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      initChatData(appProvider.currentUser.value.id ?? 'User');
+      initChatData(appProvider.user.value.id ?? 'User');
     });
   }
 
@@ -51,16 +51,16 @@ class AiChatController extends BaseController {
         messageType: MessageType.text,
       );
       initialMessageList.add(welcomeMessage);
-      _chatService.saveMessage(welcomeMessage, appProvider.currentUser.value.id ?? 'User');
+      _chatService.saveMessage(welcomeMessage, appProvider.user.value.id ?? 'User');
     }
 
     chatController = ChatController(
       initialMessageList: initialMessageList,
       currentUser: ChatUser(
-          name: appProvider.currentUser.value.username ?? 'User',
-          id: appProvider.currentUser.value.id ?? 'User',
+          name: appProvider.user.value.username ?? 'User',
+          id: appProvider.user.value.id ?? 'User',
           imageType: ImageType.network,
-          profilePhoto: appProvider.currentUser.value.profileImage,
+          profilePhoto: appProvider.user.value.profileImage,
           defaultAvatarImage: AppStrings.defaultNetworkAvatar),
       scrollController: ScrollController(),
       otherUsers: GenerativeAiModel.values
@@ -88,7 +88,7 @@ class AiChatController extends BaseController {
   void onReactionTap(Message message, String reaction) {
     chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
     final messageJustReacted = message.copyWith(reaction: Reaction(reactions: [reaction], reactedUserIds: [chatController.currentUser.id]));
-    _chatService.updateMessage(messageJustReacted, appProvider.currentUser.value.id ?? 'User');
+    _chatService.updateMessage(messageJustReacted, appProvider.user.value.id ?? 'User');
   }
 
   void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {
@@ -140,7 +140,7 @@ class AiChatController extends BaseController {
 
   void addMessage(Message message) {
     chatController.addMessage(message);
-    _chatService.saveMessage(message, appProvider.currentUser.value.id ?? 'User');
+    _chatService.saveMessage(message, appProvider.user.value.id ?? 'User');
   }
 
   onLongPressMessage(Message message) {

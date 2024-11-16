@@ -1,9 +1,12 @@
+import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_strings.dart';
+import 'package:base/app/constants/app_text_styles.dart';
 import 'package:base/app/utils/extension.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/widgets/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'account_controller.dart';
 
@@ -12,13 +15,17 @@ class AccountScreen extends BaseScreen<AccountController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Container();
-    // return SingleChildScrollView(
-    //     physics: BouncingScrollPhysics(),
-    //     child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-    //       _buildFirstSection(),
-    //       _buildUserInfo(),
-    //     ]));
+    return SmartRefresher(
+      controller: controller.refreshController,
+      onRefresh: controller.onRefresh,
+      child: SingleChildScrollView(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+          _buildFirstSection(),
+          _buildUserInfo(),
+          // Expanded(child: _buildUserPostMedia()),
+        ]),
+      ),
+    );
   }
 
   SizedBox _buildFirstSection() {
@@ -69,13 +76,19 @@ class AccountScreen extends BaseScreen<AccountController> {
               ),
             ),
             SizedBox(width: 20),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(text: 'Son Tung MTP\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  TextSpan(text: '@sontungmtp', style: TextStyle(fontSize: 16, color: Colors.grey)),
-                ],
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.appProvider.user.value.displayName ?? '',
+                  style: AppTextStyles.s24w700,
+                ),
+                Text(
+                  '@${controller.appProvider.user.value.username}',
+                  style: AppTextStyles.s16w400.copyWith(color: Colors.grey),
+                ),
+              ],
             ),
           ],
         ),
@@ -84,7 +97,7 @@ class AccountScreen extends BaseScreen<AccountController> {
   }
 
   AppImage _buildBackgroundImg() {
-    return AppImage(fit: BoxFit.contain, image: NetworkImage('https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'));
+    return AppImage(fit: BoxFit.contain, image: NetworkImage(AppStrings.defaultNetworkCover));
   }
 
   _buildUserInfo() {
@@ -96,7 +109,6 @@ class AccountScreen extends BaseScreen<AccountController> {
         children: [
           _buildReach(),
           _buildFollowButton(),
-          Expanded(child: _buildUserPostMedia()),
         ],
       ),
     );
@@ -106,9 +118,9 @@ class AccountScreen extends BaseScreen<AccountController> {
     return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (count: 15000, title: 'Likes'),
-          (count: 15000, title: 'Followers'),
-          (count: 15000, title: 'Following'),
+          (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Following'),
         ].map((item) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -131,21 +143,49 @@ class AccountScreen extends BaseScreen<AccountController> {
   }
 
   _buildFollowButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          width: double.infinity,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(8),
+    return Visibility(
+      visible: controller.userId != controller.appProvider.user.value.id,
+      replacement: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                '+ Follow',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ),
-          child: Center(
-            child: Text(
-              '+ Follow',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.edit, color: Colors.white),
+                SizedBox(width: 8),
+                Text(
+                  'Edit Profile',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ],
             ),
           ),
         ),
@@ -170,19 +210,18 @@ class AccountScreen extends BaseScreen<AccountController> {
             ),
           ]),
         ),
-        SingleChildScrollView(
-          child: TabBarView(controller: controller.tabController, children: [
-            _buildAllMedia(),
-            _buildVideos(),
-            _buildImages(),
-          ]),
-        ),
+        TabBarView(controller: controller.tabController, children: [
+          _buildAllMedia(),
+          _buildVideos(),
+          _buildImages(),
+        ]),
       ],
     );
   }
 
   _buildAllMedia() {
     return GridView.builder(
+        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
         itemBuilder: (context, index) {
           return Container(
@@ -196,6 +235,7 @@ class AccountScreen extends BaseScreen<AccountController> {
 
   _buildVideos() {
     return GridView.builder(
+        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
         itemBuilder: (context, index) {
           return Container(
@@ -209,6 +249,7 @@ class AccountScreen extends BaseScreen<AccountController> {
 
   _buildImages() {
     return GridView.builder(
+        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
         itemBuilder: (context, index) {
           return Container(
