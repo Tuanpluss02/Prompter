@@ -48,7 +48,8 @@ class AiChatController extends BaseController {
         createdAt: DateTime.now(),
         messageType: MessageType.text,
       );
-      addMessage(welcomeMessage);
+      initialMessageList.add(welcomeMessage);
+      _chatService.saveMessage(welcomeMessage, appProvider.currentUser.value.id ?? 'User');
     }
 
     chatController = ChatController(
