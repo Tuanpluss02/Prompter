@@ -10,19 +10,4 @@ class AccountController extends BaseController with GetTickerProviderStateMixin 
     tabController = TabController(length: 3, vsync: this);
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

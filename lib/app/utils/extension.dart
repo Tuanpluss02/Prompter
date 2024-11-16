@@ -4,7 +4,7 @@
 extension Shortly on int {
   String toShortString() {
     if (this <= 1000) {
-      return this.toString();
+      return toString();
     } else if (this <= 1000000) {
       return '${(this ~/ 1000)}k';
     } else {

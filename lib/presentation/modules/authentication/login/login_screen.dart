@@ -109,6 +109,7 @@ class LoginScreen extends BaseScreen<LoginController> {
 
   ScaleButton _buildSubmitButton() {
     return ScaleButton(
+        onTap: controller.onSubmit,
         child: Container(
             width: double.infinity,
             height: 60,
@@ -124,8 +125,7 @@ class LoginScreen extends BaseScreen<LoginController> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
-            ))),
-        onTap: controller.onSubmit);
+            ))));
   }
 
   Center _buildSignInText() {

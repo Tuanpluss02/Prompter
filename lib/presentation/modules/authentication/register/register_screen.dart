@@ -107,6 +107,7 @@ class RegisterScreen extends BaseScreen<RegisterController> {
 
   ScaleButton _buildSubmitButton() {
     return ScaleButton(
+        onTap: controller.onSubmit,
         child: Container(
             width: double.infinity,
             height: 60,
@@ -122,8 +123,7 @@ class RegisterScreen extends BaseScreen<RegisterController> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
-            ))),
-        onTap: controller.onSubmit);
+            ))));
   }
 
   Center _buildSignInText() {

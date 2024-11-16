@@ -8,6 +8,9 @@ class AppRoutes {
   static const home = '/home';
   static const register = '/register';
   static const search = '/search';
+  static const profile = '/profile';
+  static const settings = '/settings';
+  static const photoGallery = '/photo-gallery';
   static const resetPassword = '/reset';
   static const aiChat = '/ai-chat';
 }

@@ -48,7 +48,7 @@ class AiChatController extends BaseController {
                     defaultAvatarImage: model.avatarUrl,
                     imageType: ImageType.network,
                   ))
-              .toList(),
+              ,
           ChatUser(id: 'Gemini', name: 'Gemini')
         ]);
     super.onInit();

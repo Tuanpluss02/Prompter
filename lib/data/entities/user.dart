@@ -22,6 +22,7 @@ class User with _$User {
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  @override
   Map<String, dynamic> toJson() => {
         'username': username,
         'email': email,

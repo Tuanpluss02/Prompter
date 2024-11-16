@@ -11,12 +11,13 @@ class AccountScreen extends BaseScreen<AccountController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-          _buildFirstSection(),
-          _buildUserInfo(),
-        ]));
+    return Container();
+    // return SingleChildScrollView(
+    //     physics: BouncingScrollPhysics(),
+    //     child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+    //       _buildFirstSection(),
+    //       _buildUserInfo(),
+    //     ]));
   }
 
   SizedBox _buildFirstSection() {
@@ -114,7 +115,7 @@ class AccountScreen extends BaseScreen<AccountController> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: item.count.toShortString() + ' ',
+                    text: '${item.count.toShortString()} ',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   TextSpan(

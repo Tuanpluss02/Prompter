@@ -1,4 +1,4 @@
-library flip_card;
+library;
 
 export 'controllers/flip_card_controllers.dart';
 export 'modal/flip_side.dart';

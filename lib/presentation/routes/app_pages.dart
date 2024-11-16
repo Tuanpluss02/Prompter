@@ -8,6 +8,8 @@ import 'package:base/presentation/modules/authentication/register/register_bindi
 import 'package:base/presentation/modules/authentication/register/register_screen.dart';
 import 'package:base/presentation/modules/authentication/reset_password/reset_password_binding.dart';
 import 'package:base/presentation/modules/authentication/reset_password/reset_password_screen.dart';
+import 'package:base/presentation/modules/photo_gallery/photo_gallery_binding.dart';
+import 'package:base/presentation/modules/photo_gallery/photo_gallery_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
 import 'package:get/get.dart';
@@ -43,6 +45,16 @@ class AppPages {
       page: () => ResetPasswordScreen(),
       binding: ResetPasswordBinding(),
     ),
-    GetPage(name: AppRoutes.aiChat, page: () => AiChatScreen(), binding: AiChatBinding(), transition: Transition.fade),
+    GetPage(
+      name: AppRoutes.aiChat,
+      page: () => AiChatScreen(),
+      binding: AiChatBinding(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.photoGallery,
+      page: () => PhotoGalleryScreen(),
+      binding: PhotoGalleryBinding(),
+    )
   ];
 }

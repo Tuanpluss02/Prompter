@@ -8,6 +8,7 @@ class AppProvider extends GetxService {
 
   AppProvider._internal();
 
-  final AuthService _authService = AuthService();
+  final AuthService _authService = Get.find<AuthService>();
+
   bool get isSignedIn => _authService.currentUser != null;
 }
