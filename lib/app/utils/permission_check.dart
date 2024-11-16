@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:base/presentation/widgets/app_dialog.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -16,7 +16,10 @@ Future<bool> checkAndRequestPermission({required Permission permission}) async {
       }
       break;
     case PermissionStatus.permanentlyDenied:
-      openAppSettings();
+      bool isGranted = await _showOpenSettingDialog();
+      if (isGranted) {
+        openAppSettings();
+      }
       break;
     default:
       break;
@@ -25,21 +28,23 @@ Future<bool> checkAndRequestPermission({required Permission permission}) async {
 }
 
 Future<bool> _showRequestPermissionDialog() async {
-  return Get.dialog<bool>(
-    AppDialog(),
-  ).then((value) => value ?? false);
+  return Get.dialog<bool>(AppDialog(
+    title: "Permission Required",
+    content: "This app needs storage permission to save images.",
+    primaryButtonText: "Allow",
+    secondaryButtonText: "Deny",
+    onPrimaryButtonTap: () => Get.back(result: true),
+    onSecondaryButtonTap: () => Get.back(result: false),
+  )).then((value) => value ?? false);
 }
 
-class AppDialog extends StatelessWidget {
-  const AppDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement AppDialog
-    return Container(
-      height: context.height * 0.2,
-      width: context.width * 0.8,
-      color: Colors.red,
-    );
-  }
+Future<bool> _showOpenSettingDialog() async {
+  return Get.dialog<bool>(AppDialog(
+    title: "Permission Required",
+    content: "This app needs storage permission to save images. You can grant the permission from the app settings.",
+    primaryButtonText: "Allow",
+    secondaryButtonText: "Deny",
+    onPrimaryButtonTap: () => Get.back(result: true),
+    onSecondaryButtonTap: () => Get.back(result: false),
+  )).then((value) => value ?? false);
 }

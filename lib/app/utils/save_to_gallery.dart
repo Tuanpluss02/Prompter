@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:base/app/utils/log.dart';
 import 'package:base/app/utils/permission_check.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -25,7 +26,7 @@ Future<void> saveImageToGallery({required String imageUrl}) async {
     );
 
     if (result != null && result["isSuccess"]) {
-      Log.console("Image saved to gallery!");
+      Fluttertoast.showToast(msg: "Image saved to gallery.");
     } else {
       Log.console("Failed to save image.");
     }
