@@ -5,11 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatService {
   final CollectionReference _chatMessagesCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.chatMessagesCollection);
 
-  Future<void> saveMessage(Message message) async {
-    await _chatMessagesCollection.add(message.toJson());
+  Future<void> saveMessage(Message message, String userId) async {
+    await _chatMessagesCollection.doc(userId).collection('messages').add(message.toJson());
   }
 
-  Stream<QuerySnapshot> getMessages() {
-    return _chatMessagesCollection.orderBy('createdAt', descending: true).snapshots();
+  Future<List<Message>> getMessages(String userId) async {
+    return await _chatMessagesCollection.doc(userId).collection('messages').get().then((querySnapshot) {
+      return querySnapshot.docs.map((doc) => Message.fromJson(doc.data())).toList();
+    });
   }
 }

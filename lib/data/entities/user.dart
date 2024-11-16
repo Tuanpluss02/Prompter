@@ -6,9 +6,10 @@ part '../../generated/data/entities/user.freezed.dart';
 part '../../generated/data/entities/user.g.dart';
 
 @Freezed(fromJson: true, toJson: true)
-@JsonSerializable()
 class User with _$User {
+  @JsonSerializable()
   const factory User({
+    @Default('') String? id,
     @Default('') String? username,
     @Default('') String? email,
     @Default('') String? profileImage,
@@ -24,6 +25,7 @@ class User with _$User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   @override
   Map<String, dynamic> toJson() => {
+        'id': id,
         'username': username,
         'email': email,
         'profileImage': profileImage,

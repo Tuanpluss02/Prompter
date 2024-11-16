@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class CallApiWidget {
   static OverlayEntry? overlayEntry;
-  static Future<dynamic> showLoading({required Future<dynamic> api, child}) async {
+  static Future<T> showLoading<T>({required Future<T> api, child}) async {
     createHighlightOverlay(context: Get.context!, child: child);
     Stopwatch stopwatch = Stopwatch()..start();
     final result = await api;

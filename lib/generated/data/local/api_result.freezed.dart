@@ -64,11 +64,13 @@ mixin _$ApiResult {
 
 /// @nodoc
 abstract class $ApiResultCopyWith<$Res> {
-  factory $ApiResultCopyWith(ApiResult value, $Res Function(ApiResult) then) = _$ApiResultCopyWithImpl<$Res, ApiResult>;
+  factory $ApiResultCopyWith(ApiResult value, $Res Function(ApiResult) then) =
+      _$ApiResultCopyWithImpl<$Res, ApiResult>;
 }
 
 /// @nodoc
-class _$ApiResultCopyWithImpl<$Res, $Val extends ApiResult> implements $ApiResultCopyWith<$Res> {
+class _$ApiResultCopyWithImpl<$Res, $Val extends ApiResult>
+    implements $ApiResultCopyWith<$Res> {
   _$ApiResultCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -82,14 +84,20 @@ class _$ApiResultCopyWithImpl<$Res, $Val extends ApiResult> implements $ApiResul
 
 /// @nodoc
 abstract class _$$SuccessImplCopyWith<$Res> {
-  factory _$$SuccessImplCopyWith(_$SuccessImpl value, $Res Function(_$SuccessImpl) then) = __$$SuccessImplCopyWithImpl<$Res>;
+  factory _$$SuccessImplCopyWith(
+          _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
+      __$$SuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BaseResponse data});
 }
 
 /// @nodoc
-class __$$SuccessImplCopyWithImpl<$Res> extends _$ApiResultCopyWithImpl<$Res, _$SuccessImpl> implements _$$SuccessImplCopyWith<$Res> {
-  __$$SuccessImplCopyWithImpl(_$SuccessImpl _value, $Res Function(_$SuccessImpl) _then) : super(_value, _then);
+class __$$SuccessImplCopyWithImpl<$Res>
+    extends _$ApiResultCopyWithImpl<$Res, _$SuccessImpl>
+    implements _$$SuccessImplCopyWith<$Res> {
+  __$$SuccessImplCopyWithImpl(
+      _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
@@ -122,7 +130,10 @@ class _$SuccessImpl implements Success {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessImpl && (identical(other.data, data) || other.data == data));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessImpl &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
@@ -133,7 +144,8 @@ class _$SuccessImpl implements Success {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -212,19 +224,26 @@ abstract class Success implements ApiResult {
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$SuccessResponseImplCopyWith<$Res> {
-  factory _$$SuccessResponseImplCopyWith(_$SuccessResponseImpl value, $Res Function(_$SuccessResponseImpl) then) = __$$SuccessResponseImplCopyWithImpl<$Res>;
+  factory _$$SuccessResponseImplCopyWith(_$SuccessResponseImpl value,
+          $Res Function(_$SuccessResponseImpl) then) =
+      __$$SuccessResponseImplCopyWithImpl<$Res>;
   @useResult
   $Res call({dynamic data});
 }
 
 /// @nodoc
-class __$$SuccessResponseImplCopyWithImpl<$Res> extends _$ApiResultCopyWithImpl<$Res, _$SuccessResponseImpl> implements _$$SuccessResponseImplCopyWith<$Res> {
-  __$$SuccessResponseImplCopyWithImpl(_$SuccessResponseImpl _value, $Res Function(_$SuccessResponseImpl) _then) : super(_value, _then);
+class __$$SuccessResponseImplCopyWithImpl<$Res>
+    extends _$ApiResultCopyWithImpl<$Res, _$SuccessResponseImpl>
+    implements _$$SuccessResponseImplCopyWith<$Res> {
+  __$$SuccessResponseImplCopyWithImpl(
+      _$SuccessResponseImpl _value, $Res Function(_$SuccessResponseImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
@@ -257,18 +276,24 @@ class _$SuccessResponseImpl implements SuccessResponse {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$SuccessResponseImpl && const DeepCollectionEquality().equals(other.data, data));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessResponseImpl &&
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
 
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith => __$$SuccessResponseImplCopyWithImpl<_$SuccessResponseImpl>(this, _$identity);
+  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith =>
+      __$$SuccessResponseImplCopyWithImpl<_$SuccessResponseImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -347,12 +372,15 @@ abstract class SuccessResponse implements ApiResult {
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$SuccessResponseImplCopyWith<_$SuccessResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$FailureImplCopyWith<$Res> {
-  factory _$$FailureImplCopyWith(_$FailureImpl value, $Res Function(_$FailureImpl) then) = __$$FailureImplCopyWithImpl<$Res>;
+  factory _$$FailureImplCopyWith(
+          _$FailureImpl value, $Res Function(_$FailureImpl) then) =
+      __$$FailureImplCopyWithImpl<$Res>;
   @useResult
   $Res call({NetworkExceptions error});
 
@@ -360,8 +388,12 @@ abstract class _$$FailureImplCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$FailureImplCopyWithImpl<$Res> extends _$ApiResultCopyWithImpl<$Res, _$FailureImpl> implements _$$FailureImplCopyWith<$Res> {
-  __$$FailureImplCopyWithImpl(_$FailureImpl _value, $Res Function(_$FailureImpl) _then) : super(_value, _then);
+class __$$FailureImplCopyWithImpl<$Res>
+    extends _$ApiResultCopyWithImpl<$Res, _$FailureImpl>
+    implements _$$FailureImplCopyWith<$Res> {
+  __$$FailureImplCopyWithImpl(
+      _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
@@ -404,7 +436,10 @@ class _$FailureImpl implements Failure {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is _$FailureImpl && (identical(other.error, error) || other.error == error));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FailureImpl &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -415,7 +450,8 @@ class _$FailureImpl implements Failure {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      __$$FailureImplCopyWithImpl<_$FailureImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -494,5 +530,6 @@ abstract class Failure implements ApiResult {
   /// Create a copy of ApiResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FailureImplCopyWith<_$FailureImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

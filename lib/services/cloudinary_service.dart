@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:base/app/constants/app_strings.dart';
+import 'package:base/app/utils/generate_id.dart';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,16 +18,13 @@ class CloudinaryService {
   );
 
   Future<String?> uploadImage(Uint8List bytes) async {
-    final file = await _convertUint8ListToFile(bytes, 'temp.jpg');
+    final file = await _convertUint8ListToFile(bytes, '${generateUniqueId()}.jpg');
     final response = await cloudinary.upload(
       file: file.path,
       fileBytes: file.readAsBytesSync(),
       resourceType: CloudinaryResourceType.image,
       folder: 'images',
       fileName: 'AI-Image-Generated ${DateTime.now().millisecondsSinceEpoch}',
-      progressCallback: (count, total) {
-        print('Uploading image from file with progress: $count/$total');
-      },
     );
 
     if (response.isSuccessful) {

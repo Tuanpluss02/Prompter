@@ -24,34 +24,40 @@ class AiChatController extends BaseController {
   var chatMode = ChatMode.image.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    await initChatData(appProvider.currentUser.value.id ?? 'User');
+    super.onInit();
+  }
+
+  initChatData(String userId) async {
+    final List<Message> initialMessageList = await _chatService.getMessages(userId);
+    if (initialMessageList.isEmpty) {
+      initialMessageList.add(Message(
+        message: 'Hello, I am ${selectedModel.value.displayName}. How can I help you?',
+        sentBy: selectedModel.value.modelId,
+        createdAt: DateTime.now(),
+        messageType: MessageType.text,
+      ));
+    }
     chatController = ChatController(
-        initialMessageList: [
-          Message(
-            message: 'Hello, I am ${selectedModel.value.displayName}. How can I help you?',
-            sentBy: selectedModel.value.modelId,
-            createdAt: DateTime.now(),
-            messageType: MessageType.text,
-          ),
-        ],
+        initialMessageList: initialMessageList,
         currentUser: ChatUser(
-            name: 'Tuan Do',
-            id: generateUniqueId(),
+            name: appProvider.currentUser.value.username ?? 'User',
+            id: appProvider.currentUser.value.id ?? 'User',
             imageType: ImageType.network,
+            profilePhoto: appProvider.currentUser.value.profileImage ?? '',
             defaultAvatarImage: 'https://danviet.mediacdn.vn/296231569849192448/2024/6/13/son-tung-mtp-17182382517241228747767.jpg'),
         scrollController: ScrollController(),
         otherUsers: [
-          ...ImageGenerateModel.values
-              .map((model) => ChatUser(
-                    name: model.displayName,
-                    id: model.modelId,
-                    defaultAvatarImage: model.avatarUrl,
-                    imageType: ImageType.network,
-                  ))
-              ,
+          ...ImageGenerateModel.values.map((model) => ChatUser(
+                name: model.displayName,
+                id: model.modelId,
+                defaultAvatarImage: model.avatarUrl,
+                profilePhoto: model.avatarUrl,
+                imageType: ImageType.network,
+              )),
           ChatUser(id: 'Gemini', name: 'Gemini')
         ]);
-    super.onInit();
   }
 
   Future<Uint8List?> generateImage(String prompt) async {
@@ -79,13 +85,12 @@ class AiChatController extends BaseController {
     final thinkingMessage = Message(
       id: 'thinking-message',
       message: 'Thinking...',
-      sentBy: chatController.currentUser.id,
+      sentBy: selectedModel.value.modelId,
       createdAt: DateTime.now(),
       messageType: MessageType.text,
       status: MessageStatus.pending,
     );
-    chatController.addMessage(userMessage);
-    _chatService.saveMessage(userMessage);
+    addMessage(userMessage);
     chatController.addMessage(thinkingMessage);
     if (chatMode.value == ChatMode.image) {
       Uint8List? img = await generateImage(message);
@@ -108,8 +113,7 @@ class AiChatController extends BaseController {
         createdAt: DateTime.now(),
         messageType: MessageType.image,
       );
-      chatController.addMessage(imageMessage);
-      _chatService.saveMessage(imageMessage);
+      addMessage(imageMessage);
     } else {
       _geminiRepository.chatGemini(message).then((response) {
         chatController.initialMessageList.removeWhere(
@@ -122,9 +126,13 @@ class AiChatController extends BaseController {
           createdAt: DateTime.now(),
           messageType: MessageType.text,
         );
-        chatController.addMessage(responseMessage);
-        _chatService.saveMessage(responseMessage);
+        addMessage(responseMessage);
       });
     }
+  }
+
+  void addMessage(Message message) {
+    chatController.addMessage(message);
+    _chatService.saveMessage(message, appProvider.currentUser.value.id ?? 'User');
   }
 }

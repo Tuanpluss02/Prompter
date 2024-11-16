@@ -20,6 +20,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$User {
+  String? get id => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profileImage => throw _privateConstructorUsedError;
@@ -42,14 +43,26 @@ mixin _$User {
 
 /// @nodoc
 abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) = _$UserCopyWithImpl<$Res, User>;
+  factory $UserCopyWith(User value, $Res Function(User) then) =
+      _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String? username, String? email, String? profileImage, String? bio, List<String>? followers, List<String>? following, String? createdAt, String? updatedAt, int? postCount, int? likeCount});
+      {String? id,
+      String? username,
+      String? email,
+      String? profileImage,
+      String? bio,
+      List<String>? followers,
+      List<String>? following,
+      String? createdAt,
+      String? updatedAt,
+      int? postCount,
+      int? likeCount});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User> implements $UserCopyWith<$Res> {
+class _$UserCopyWithImpl<$Res, $Val extends User>
+    implements $UserCopyWith<$Res> {
   _$UserCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -62,6 +75,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User> implements $UserCopyWith<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
@@ -74,6 +88,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User> implements $UserCopyWith<$Res>
     Object? likeCount = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -120,22 +138,38 @@ class _$UserCopyWithImpl<$Res, $Val extends User> implements $UserCopyWith<$Res>
 
 /// @nodoc
 abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$UserImplCopyWith(_$UserImpl value, $Res Function(_$UserImpl) then) = __$$UserImplCopyWithImpl<$Res>;
+  factory _$$UserImplCopyWith(
+          _$UserImpl value, $Res Function(_$UserImpl) then) =
+      __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String? username, String? email, String? profileImage, String? bio, List<String>? followers, List<String>? following, String? createdAt, String? updatedAt, int? postCount, int? likeCount});
+      {String? id,
+      String? username,
+      String? email,
+      String? profileImage,
+      String? bio,
+      List<String>? followers,
+      List<String>? following,
+      String? createdAt,
+      String? updatedAt,
+      int? postCount,
+      int? likeCount});
 }
 
 /// @nodoc
-class __$$UserImplCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$UserImpl> implements _$$UserImplCopyWith<$Res> {
-  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then) : super(_value, _then);
+class __$$UserImplCopyWithImpl<$Res>
+    extends _$UserCopyWithImpl<$Res, _$UserImpl>
+    implements _$$UserImplCopyWith<$Res> {
+  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
@@ -148,6 +182,10 @@ class __$$UserImplCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$UserImpl
     Object? likeCount = freezed,
   }) {
     return _then(_$UserImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -193,10 +231,12 @@ class __$$UserImplCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$UserImpl
 }
 
 /// @nodoc
+
 @JsonSerializable()
 class _$UserImpl implements _User {
   const _$UserImpl(
-      {this.username = '',
+      {this.id = '',
+      this.username = '',
       this.email = '',
       this.profileImage = '',
       this.bio = '',
@@ -209,8 +249,12 @@ class _$UserImpl implements _User {
       : _followers = followers,
         _following = following;
 
-  factory _$UserImpl.fromJson(Map<String, dynamic> json) => _$$UserImplFromJson(json);
+  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserImplFromJson(json);
 
+  @override
+  @JsonKey()
+  final String? id;
   @override
   @JsonKey()
   final String? username;
@@ -260,7 +304,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, updatedAt: $updatedAt, postCount: $postCount, likeCount: $likeCount)';
+    return 'User(id: $id, username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, updatedAt: $updatedAt, postCount: $postCount, likeCount: $likeCount)';
   }
 
   @override
@@ -268,29 +312,50 @@ class _$UserImpl implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.username, username) || other.username == username) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.profileImage, profileImage) || other.profileImage == profileImage) &&
+            (identical(other.profileImage, profileImage) ||
+                other.profileImage == profileImage) &&
             (identical(other.bio, bio) || other.bio == bio) &&
-            const DeepCollectionEquality().equals(other._followers, _followers) &&
-            const DeepCollectionEquality().equals(other._following, _following) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt) &&
-            (identical(other.postCount, postCount) || other.postCount == postCount) &&
-            (identical(other.likeCount, likeCount) || other.likeCount == likeCount));
+            const DeepCollectionEquality()
+                .equals(other._followers, _followers) &&
+            const DeepCollectionEquality()
+                .equals(other._following, _following) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.postCount, postCount) ||
+                other.postCount == postCount) &&
+            (identical(other.likeCount, likeCount) ||
+                other.likeCount == likeCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, username, email, profileImage, bio, const DeepCollectionEquality().hash(_followers), const DeepCollectionEquality().hash(_following), createdAt, updatedAt, postCount, likeCount);
+      runtimeType,
+      id,
+      username,
+      email,
+      profileImage,
+      bio,
+      const DeepCollectionEquality().hash(_followers),
+      const DeepCollectionEquality().hash(_following),
+      createdAt,
+      updatedAt,
+      postCount,
+      likeCount);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserImplCopyWith<_$UserImpl> get copyWith => __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -302,7 +367,8 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {final String? username,
+      {final String? id,
+      final String? username,
       final String? email,
       final String? profileImage,
       final String? bio,
@@ -315,6 +381,8 @@ abstract class _User implements User {
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
+  @override
+  String? get id;
   @override
   String? get username;
   @override
@@ -340,5 +408,6 @@ abstract class _User implements User {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserImplCopyWith<_$UserImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
