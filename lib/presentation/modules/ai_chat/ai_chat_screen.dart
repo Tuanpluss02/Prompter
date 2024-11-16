@@ -62,7 +62,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           leading: AppBackButton(size: 40),
           actions: [
             SizedBox(
-              width: Get.width * 0.,
+              width: Get.width * 0.4,
               child: CustomDropdown<String>(
                   initialItem: controller.selectedModel.value.displayName,
                   onChanged: (String? newValue) {
