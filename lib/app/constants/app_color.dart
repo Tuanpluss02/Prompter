@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // static const cardColor = Color(0xFF262837);
-  // static const schemeSeedColor = Color(0xFF000000);
-  //
-  // static const black2E2E2E = Color(0xFF2E2E2E);
-  // static const black1E1E1E = Color(0xFF1E1E1E);
-
   //Primary brand color
   static const appColorPrimary = Color(0xFFBB86FC);
   static const appColorPrimaryVariant = Color(0xFF6200EE);
@@ -123,4 +117,6 @@ class AppColors {
   static const Color navigationBarColor = Color(0xFF131620);
 
   static const Color primaryColor = Color(0XFF076acf);
+
+  static const Color dialogBackgroundColor = Color(0xFF141416);
 }

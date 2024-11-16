@@ -1,7 +1,7 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_enums.dart';
-import 'package:base/app/constants/app_strings.dart';
+import 'package:base/app/constants/app_text_styles.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
 import 'package:base/presentation/widgets/global/app_back_button.dart';
@@ -18,6 +18,9 @@ class AiChatScreen extends BaseScreen<AiChatController> {
   bool get resizeToAvoidBottomInset => true;
 
   @override
+  bool get wrapWithSafeArea => true;
+
+  @override
   Widget buildScreen(BuildContext context) {
     ChatTheme theme = DarkChatTheme();
     return Obx(() => ChatView(
@@ -25,10 +28,10 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         chatViewState: controller.chatViewState.value,
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
-          enableReplySnackBar: false,
+          enableReplySnackBar: true,
           enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
-          receiptsBuilderVisibility: true,
+          receiptsBuilderVisibility: false,
           enableScrollToBottomButton: true,
           enableCurrentUserProfileAvatar: true,
         ),
@@ -55,28 +58,29 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           flashingCircleBrightColor: theme.flashingCircleBrightColor,
           flashingCircleDarkColor: theme.flashingCircleDarkColor,
         ),
-        appBar: ChatViewAppBar(
-          elevation: 0,
-          backGroundColor: AppColors.backgroundColor,
-          backArrowColor: theme.backArrowColor,
-          chatTitle: '',
-          leading: AppBackButton(size: 40),
-          actions: [
-            SizedBox(
-              width: Get.width * 0.4,
-              child: CustomDropdown<String>(
-                  initialItem: controller.selectedModel.value.displayName,
-                  onChanged: (String? newValue) {
-                    controller.selectedModel.value = GenerativeAiModel.values.firstWhere((element) => element.displayName == newValue);
-                  },
-                  items: GenerativeAiModel.values.map((e) => e.displayName).toList(),
-                  decoration: CustomDropdownDecoration(
-                    closedFillColor: AppColors.backgroundColor,
-                    expandedFillColor: AppColors.backgroundColor,
-                  )),
-            ),
-          ],
-        ),
+        appBar: Container(
+            color: AppColors.backgroundColor,
+            child: Row(
+              children: [
+                AppBackButton(size: 40, margin: const EdgeInsets.only(left: 16)),
+                const SizedBox(width: 16),
+                SizedBox(
+                  width: Get.width * 0.6,
+                  child: CustomDropdown<String>(
+                      maxlines: 2,
+                      initialItem: controller.selectedModel.value.displayName,
+                      onChanged: (String? newValue) {
+                        controller.selectedModel.value = GenerativeAiModel.values.firstWhere((element) => element.displayName == newValue);
+                      },
+                      items: GenerativeAiModel.values.map((e) => e.displayName).toList(),
+                      decoration: CustomDropdownDecoration(
+                        headerStyle: AppTextStyles.s20w700,
+                        closedFillColor: Colors.transparent,
+                        expandedFillColor: AppColors.backgroundColor,
+                      )),
+                ),
+              ],
+            )),
         chatBackgroundConfig: ChatBackgroundConfiguration(
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),
@@ -133,6 +137,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.replyPopupColor,
           buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
+          replyPopupBuilder: (message, sentByCurrentUser) => Container(
+              width: double.infinity,
+              height: 50,
+              color: theme.inComingChatBubbleColor,
+              child: GestureDetector(
+                onTap: () => controller.onLongPressMessage(message),
+                child: Center(child: Text(message.messageType == MessageType.text ? 'Copy' : 'Download', style: TextStyle(color: theme.inComingChatBubbleTextColor))),
+              )),
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
           overrideUserReactionCallback: true,
@@ -177,9 +189,6 @@ class AiChatScreen extends BaseScreen<AiChatController> {
               defaultIconColor: theme.shareIconColor,
             ),
           ),
-        ),
-        profileCircleConfig: const ProfileCircleConfiguration(
-          profileImageUrl: AppStrings.defaultNetworkAvatar,
         ),
         repliedMessageConfig: RepliedMessageConfiguration(
           backgroundColor: theme.repliedMessageColor,
