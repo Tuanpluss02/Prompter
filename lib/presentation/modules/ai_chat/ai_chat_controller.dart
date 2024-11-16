@@ -17,7 +17,6 @@ class AiChatController extends BaseController {
   final GeminiRepository _geminiRepository = Get.find<GeminiRepository>();
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
   final ChatService _chatService = Get.find<ChatService>();
-
   late ChatController chatController = ChatController(
       initialMessageList: [],
       currentUser: ChatUser(

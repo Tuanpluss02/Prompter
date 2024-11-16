@@ -62,14 +62,17 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           leading: AppBackButton(size: 40),
           actions: [
             SizedBox(
-              width: 200,
-              child: CustomDropdown<GenerativeAiModel>(
-                initialItem: controller.selectedModel.value,
-                onChanged: (GenerativeAiModel? newValue) {
-                  controller.selectedModel.value = newValue!;
-                },
-                items: GenerativeAiModel.values.toList(),
-              ),
+              width: Get.width * 0.,
+              child: CustomDropdown<String>(
+                  initialItem: controller.selectedModel.value.displayName,
+                  onChanged: (String? newValue) {
+                    controller.selectedModel.value = GenerativeAiModel.values.firstWhere((element) => element.displayName == newValue);
+                  },
+                  items: GenerativeAiModel.values.map((e) => e.displayName).toList(),
+                  decoration: CustomDropdownDecoration(
+                    closedFillColor: AppColors.backgroundColor,
+                    expandedFillColor: AppColors.backgroundColor,
+                  )),
             ),
           ],
         ),
