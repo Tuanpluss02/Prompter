@@ -1,17 +1,11 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/3.24.4",
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit",
-    "source.sortImports": "explicit"
+    "source.fixAll": "always",
+    "source.organizeImports": "always",
+    "source.sortImports": "always"
   },
   "dart.lineLength": 200,
-  "editor.accessibilitySupport": "off",
   "dart.previewFlutterUiGuides": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
-  "editor.selectionHighlight": false,
-  "editor.suggestSelection": "first",
-  "editor.tabCompletion": "onlySnippets",
-  "editor.wordBasedSuggestions": "currentDocument"
 }
