@@ -65,12 +65,13 @@ dependencies:
   fluttertoast: ^8.2.8
   image: ^4.3.0
   http: ^1.2.2
-  chatview: ^2.3.0
   cloudinary: ^1.2.0
   full_screen_image: ^2.0.0
   google_generative_ai: ^0.4.6
   shared_preferences: ^2.3.3
   animated_custom_dropdown: ^3.1.1
+  chatview:
+    path: ./flutter_chatview
 
 dev_dependencies:
   flutter_test:

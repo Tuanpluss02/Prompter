@@ -241,10 +241,9 @@ packages:
   chatview:
     dependency: "direct main"
     description:
-      name: chatview
-      sha256: "2f9b4ba79ef91e94e7ae8c9c9b4f96336ec59ab9c1e70a77b7c9b5ed0c378454"
-      url: "https://pub.dev"
-    source: hosted
+      path: flutter_chatview
+      relative: true
+    source: path
     version: "2.3.0"
   checked_yaml:
     dependency: transitive
