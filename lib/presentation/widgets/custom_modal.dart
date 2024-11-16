@@ -33,8 +33,7 @@ class CustomModal extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTextStyles.s16w700
-                    .copyWith(color: AppColors.black14081C),
+                style: AppTextStyles.s16w700.copyWith(color: AppColors.black14081C),
               ),
               IconButton(icon: const Icon(Icons.close), onPressed: onCancel),
             ],

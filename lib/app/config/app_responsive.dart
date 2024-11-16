@@ -17,15 +17,11 @@ class AppResponsiveBuilder extends StatelessWidget {
     BoxConstraints constraint,
   ) tabletBuilder;
 
-  static bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width < 450;
+  static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 450;
 
-  static bool isTablet(BuildContext context) =>
-      MediaQuery.of(context).size.width < 1250 &&
-          MediaQuery.of(context).size.width >= 450;
+  static bool isTablet(BuildContext context) => MediaQuery.of(context).size.width < 1250 && MediaQuery.of(context).size.width >= 450;
 
-  static bool isDesktop(BuildContext context) =>
-      MediaQuery.of(context).size.width >= 1250;
+  static bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width >= 1250;
 
   @override
   Widget build(BuildContext context) {

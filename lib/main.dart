@@ -85,10 +85,7 @@ class _MyAppState extends State<MyApp> {
         textTheme: AppTheme.lightTheme.textTheme.apply(fontFamily: GoogleFonts.manrope().fontFamily),
       ),
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      // navigatorObservers: [
-      //   PosthogObserver(),
-      // ],
+      themeMode: ThemeMode.dark,
       initialRoute: AppPages.initial,
       getPages: AppPages.appRoutes,
       defaultTransition: Transition.cupertino,

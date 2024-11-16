@@ -1,56 +1,68 @@
 import 'dart:convert';
 
 import 'package:base/data/local/api_result.dart';
-import 'package:base/data/local/network_exceptions.dart';
-import 'package:base/data/responses/base_response.dart';
+import 'package:base/data/repositories/base_repository.dart';
 import 'package:dio/dio.dart';
 
-class CiciRepository {
-  // CiciRepository() : super(baseUrl: '');
+final class CiciAPIPath {
+  static const String baseUrl = 'https://www.ciciai.com';
+  static const String skillPackEndpoint = '/samantha/skill/pack';
+}
+
+class CiciRepository extends BaseRepository {
+  CiciRepository() : super(baseUrl: CiciAPIPath.baseUrl);
 
   Future<ApiResult> getAiImages() async {
-    var headers = {
+    Map<String, String> headers = {
       'accept': 'application/json, text/plain, */*',
       'accept-language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
       'content-type': 'application/json',
       'cookie':
-          'store-idc=alisg; store-country-code=vn; store-country-code-src=uid; oauth_token=9588f8dd-9d6f-46f2-9d4d-8aa612ad992b; s_v_web_id=verify_m31x8a3z_whIu02Ia_SZx9_4SN4_8X9t_JHqajtCPPgIB; passport_csrf_token=39141bda4386a387ea353107b6af95b1; passport_csrf_token_default=39141bda4386a387ea353107b6af95b1; passport_csrf_token_wap_state=22d7dab73gAToVCgoVPZIGIzYzY5OTQ3MmVjODNiMjZhNTJiOGRkMTFjZWJiMTFioU6goVYBoUkAoUQAoUHSAAeQN6FNAKFIrnd3dy5jaWNpYWkuY29toVIColBM0QglpkFDVElPTqChTNkkaHR0cHM6Ly93d3cuY2ljaWFpLmNvbS9hdXRoL2NhbGxiYWNroVTZIGY3NGU2ZGI0MzcxMTgzNmQ5ZGY0ZDgyNzliM2QwMzY1oVcAoUYAolNBAKFVwqJNTMI%253D; odin_tt=9fe892f0996ba95e26044e99719a3eac532788bd3dcdcf214dfb8cff229092b49ed65ead10d4d358d2e173f109d8d18543c155c63e1fb910161984f46d2a464d; passport_auth_status=2934fbb50771d447f28816acd0d4bcdb%2C; passport_auth_status_ss=2934fbb50771d447f28816acd0d4bcdb%2C; sid_guard=5097fa483b55a3b724fabb707f79199d%7C1730658237%7C5184000%7CThu%2C+02-Jan-2025+18%3A23%3A57+GMT; uid_tt=9d9164b62b435085e6a1ebb463650d2199f95e5e8407dc8e24d1f1e9be35bc7d; uid_tt_ss=9d9164b62b435085e6a1ebb463650d2199f95e5e8407dc8e24d1f1e9be35bc7d; sid_tt=5097fa483b55a3b724fabb707f79199d; sessionid=5097fa483b55a3b724fabb707f79199d; sessionid_ss=5097fa483b55a3b724fabb707f79199d; is_staff_user=false; sid_ucp_v1=1.0.0-KDg2ZTUxMWYzZDM3Y2FiNTVjNTUxNDcxOWQ2ODM4MjJiMzdlZGNjMTMKIAiHiJDKlNuUh2YQvf-euQYYt6AeIAwwiKa5sAY4CEASEAMaA3NnMSIgNTA5N2ZhNDgzYjU1YTNiNzI0ZmFiYjcwN2Y3OTE5OWQ; ssid_ucp_v1=1.0.0-KDg2ZTUxMWYzZDM3Y2FiNTVjNTUxNDcxOWQ2ODM4MjJiMzdlZGNjMTMKIAiHiJDKlNuUh2YQvf-euQYYt6AeIAwwiKa5sAY4CEASEAMaA3NnMSIgNTA5N2ZhNDgzYjU1YTNiNzI0ZmFiYjcwN2Y3OTE5OWQ; ttwid=1%7CFMkNWKVcmHz5PVvc1iCZjRv4dAzwkd-RPlSLFKCOIxY%7C1730658341%7C2146a9e443fbb55d3f34fd8997afcdc4baed3251e6ee38d25b98200fd0edd52f; passport_fe_beating_status=true; msToken=llSQa3LBHnarsrIWJO1v9vcSfIXf484pIXaZPYpNl1gYjJ_JXr55mXVImydSHb2GJTjz_mGKN21t-Tbb3o-OSLD5CCv8YcrrVEE22pnwCkQQ6wVc9Z3HLj9-SweO5Bc=; msToken=llSQa3LBHnarsrIWJO1v9vcSfIXf484pIXaZPYpNl1gYjJ_JXr55mXVImydSHb2GJTjz_mGKN21t-Tbb3o-OSLD5CCv8YcrrVEE22pnwCkQQ6wVc9Z3HLj9-SweO5Bc=',
+          'passport_csrf_token=0e11e0ad0e7bd14756dd9064b449e044; passport_csrf_token_default=0e11e0ad0e7bd14756dd9064b449e044; is_staff_user=false; store-idc=alisg; store-country-code=vn; store-country-code-src=uid; s_v_web_id=verify_m3g4aey2_pMDbOpdb_eYJt_4iVZ_9U5R_oX74Wix9mJ2n; oauth_token=df58b2b9-ba7a-4049-8e9d-5ab602e88804; uid_tt=dbbac47d23639f0aae5b244ee2e4f2dc37708fbe44b1c478582b3bc2e8079b0c; uid_tt_ss=dbbac47d23639f0aae5b244ee2e4f2dc37708fbe44b1c478582b3bc2e8079b0c; sid_tt=18254d3338d98932bee0c43679e0929f; sessionid=18254d3338d98932bee0c43679e0929f; sessionid_ss=18254d3338d98932bee0c43679e0929f; ttwid=1%7CzL7tRVIXcEw1zwxHNl6_T7JvqCpnRlInztXlR-CLxds%7C1731516641%7C41dae1bc2b850248784225eaf9acb4076258da51cd8d146d56cb122aa26911fb; passport_csrf_token_wap_state=6cfb3bac3gAToVCgoVPZIDE4MjU0ZDMzMzhkOTg5MzJiZWUwYzQzNjc5ZTA5MjlmoU6goVYBoUkAoUQAoUHSAAeQN6FNAKFIrnd3dy5jaWNpYWkuY29toVIColBM0QglpkFDVElPTqChTNmpaHR0cHM6Ly93d3cuY2ljaWFpLmNvbS9jaGF0L2NyZWF0ZS1pbWFnZT9mcm9tX2xvZ2luPTEmb3JpZ2luX2xhbmRpbmc9aHR0cHMlM0ElMkYlMkZ3d3cuY2ljaWFpLmNvbSUyRiUzRmZyb21fbG9nb3V0JTNEMSUyNmxvZ2luU3VjY2Vzc0JhY2tVcmwlM0QlMjUyRmNoYXQlMjUyRmNyZWF0ZS1pbWFnZaFU2SA2MjRjYjM2MTIzYjdkZDEwNmRjODEzM2Q3MGY0NmJhYaFXAKFGAKJTQQChVcKiTUzC; odin_tt=abc5309178fce8acaae3ec654ee5b641b4c844b400416a210e8ee3f5a660efdb8aef30b62c0220a40281f9da88407cac96120d47842b109ed58f80be447b0256; passport_auth_status=3420f4e3b6a360412448457986c7c7c0%2C56f250f625a7542df5009550d749d244; passport_auth_status_ss=3420f4e3b6a360412448457986c7c7c0%2C56f250f625a7542df5009550d749d244; sid_guard=18254d3338d98932bee0c43679e0929f%7C1731516643%7C5183999%7CSun%2C+12-Jan-2025+16%3A50%3A42+GMT; sid_ucp_v1=1.0.0-KGFkNmNjYWY5YTllZjA0MWM5MDlmOTkyMjQ3MTNjMTk3NmYwOGUxNGEKIAiHiJDKlNuUh2YQ47HTuQYYt6AeIAwwiKa5sAY4CEASEAMaA3NnMSIgMTgyNTRkMzMzOGQ5ODkzMmJlZTBjNDM2NzllMDkyOWY; ssid_ucp_v1=1.0.0-KGFkNmNjYWY5YTllZjA0MWM5MDlmOTkyMjQ3MTNjMTk3NmYwOGUxNGEKIAiHiJDKlNuUh2YQ47HTuQYYt6AeIAwwiKa5sAY4CEASEAMaA3NnMSIgMTgyNTRkMzMzOGQ5ODkzMmJlZTBjNDM2NzllMDkyOWY; passport_fe_beating_status=true; msToken=0Ckfe8hbwpGQE1x0fT_4tRqENKdRqCd0EqCzae9XNUudmDzG_aafikvx8wPy2SjIO6sHfQeadrAh2mpWkBLYj607ubh1czztAiQlXuByvqzkaXw-XoqZ5ApUa7hJ_0Mg; msToken=0Ckfe8hbwpGQE1x0fT_4tRqENKdRqCd0EqCzae9XNUudmDzG_aafikvx8wPy2SjIO6sHfQeadrAh2mpWkBLYj607ubh1czztAiQlXuByvqzkaXw-XoqZ5ApUa7hJ_0Mg',
       'origin': 'https://www.ciciai.com',
       'priority': 'u=1, i',
-      'referer': 'https://www.ciciai.com/chat/create-image',
-      'sec-ch-ua': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
+      'referer': 'https://www.ciciai.com/chat/create-image?from_login=1&origin_landing=https%3A%2F%2Fwww.ciciai.com%2F%3Ffrom_logout%3D1%26loginSuccessBackUrl%3D%252Fchat%252Fcreate-image',
+      'sec-ch-ua': '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
       'sec-ch-ua-mobile': '?0',
-      'sec-ch-ua-platform': '"Windows"',
+      'sec-ch-ua-platform': '"Linux"',
       'sec-fetch-dest': 'empty',
       'sec-fetch-mode': 'cors',
       'sec-fetch-site': 'same-origin',
-      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
+      'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36'
     };
-    var data = json.encode({
+
+    Map<String, String> queryParameters = {
+      'version_code': '20710',
+      'language': 'en',
+      'device_platform': 'web',
+      'aid': '495671',
+      'real_aid': '495671',
+      'pkg_type': 'release_version',
+      'device_id': '7424896809073772033',
+      'web_id': '7424896863613109778',
+      'tea_uuid': '7424896863613109778',
+      'use-olympus-account': '1',
+      'region': 'US',
+      'sys_region': 'US',
+      'samantha_web': '1',
+      'msToken': '0Ckfe8hbwpGQE1x0fT_4tRqENKdRqCd0EqCzae9XNUudmDzG_aafikvx8wPy2SjIO6sHfQeadrAh2mpWkBLYj607ubh1czztAiQlXuByvqzkaXw-XoqZ5ApUa7hJ_0Mg',
+      'X-Bogus': 'DFSzswVYFXblhP4jtKDW7t4l0Tbj',
+      '_signature': '_02B4Z6wo00001CEmvoAAAIDAESnGFuFWv-ghJroAAG-Ed6',
+    };
+
+    Map<String, dynamic> data = {
       "skill_type": 3,
       "condition": {
         "image_condition": {"category_id": 0}
       }
-    });
-    var dio = Dio();
-    return await handleApiRequest(() => dio.request(
-          'https://www.ciciai.com/samantha/skill/pack?version_code=20710&language=vi&device_platform=web&aid=495671&real_aid=495671&pkg_type=release_version&device_id=7336076071664485890&web_id=7336076075816044033&tea_uuid=7336076075816044033&use-olympus-account=1&region=VN&sys_region=VN&samantha_web=1&msToken=llSQa3LBHnarsrIWJO1v9vcSfIXf484pIXaZPYpNl1gYjJ_JXr55mXVImydSHb2GJTjz_mGKN21t-Tbb3o-OSLD5CCv8YcrrVEE22pnwCkQQ6wVc9Z3HLj9-SweO5Bc=&X-Bogus=DFSzswVuV9hlhON8ts8hGShPmk39&_signature=_02B4Z6wo00001pjVutgAAIDC6wj4efN-DTaY1b5AAMEece',
+    };
+    return handleApiRequest(() => dioClient.post(
+          CiciAPIPath.skillPackEndpoint,
+          data: json.encode(data),
+          queryParameters: queryParameters,
           options: Options(
-            method: 'POST',
             headers: headers,
           ),
-          data: data,
         ));
-  }
-}
-
-Future<ApiResult> handleApiRequest(Future<dynamic> Function() request) async {
-  try {
-    final res = await request();
-    BaseResponse response = BaseResponse.fromJson(res.data);
-    return ApiResult.apiSuccess(response);
-  } catch (e) {
-    final error = NetworkExceptions.getDioException(e);
-    return ApiResult.apiFailure(error);
   }
 }

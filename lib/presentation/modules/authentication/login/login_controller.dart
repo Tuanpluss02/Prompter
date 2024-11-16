@@ -3,11 +3,13 @@ import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/widgets/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
+import 'package:base/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends BaseController {
   final AuthService _authService = Get.find<AuthService>();
+  final UserService _userService = Get.find<UserService>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode emailFocus = FocusNode();
@@ -41,6 +43,10 @@ class LoginController extends BaseController {
     if (result.error != null) {
       showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
+    }
+    final isExists = await _userService.checkUserExists(result.userCredential!.user!.uid);
+    if (!isExists) {
+      _userService.createUser(result.userCredential!);
     }
     Get.offAllNamed(AppRoutes.root);
   }

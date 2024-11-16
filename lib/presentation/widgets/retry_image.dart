@@ -97,8 +97,7 @@ class RetryImage extends ImageProvider<Object> {
   int get hashCode => Object.hash(imageProvider, scale);
 
   @override
-  String toString() =>
-      '${objectRuntimeType(this, 'RetryImage')}(imageProvider: $imageProvider, maxRetries: $maxRetries, scale: $scale)';
+  String toString() => '${objectRuntimeType(this, 'RetryImage')}(imageProvider: $imageProvider, maxRetries: $maxRetries, scale: $scale)';
 }
 
 class _DelegatingImageStreamCompleter extends ImageStreamCompleter {

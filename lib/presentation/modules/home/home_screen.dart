@@ -15,8 +15,7 @@ class HomeScreen extends BaseScreen<HomeController> {
   @override
   Widget buildScreen(BuildContext context) {
     return Container(
-      width: double.infinity,
-      // height: 200,
-    );
+        // height: 200,
+        );
   }
 }

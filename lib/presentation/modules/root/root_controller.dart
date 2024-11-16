@@ -18,6 +18,11 @@ class RootController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    _initAuthListener();
+    appProvider.getUserInfomation();
+  }
+
+  void _initAuthListener() {
     _authStateChangesSubscription = _authService.user.listen((User? user) {
       if (user == null) {
         Get.offAllNamed(AppRoutes.login);
@@ -42,6 +47,7 @@ class RootController extends BaseController {
 
   onNavItemTaped(int index) {
     if (index == 2) {
+      Get.toNamed(AppRoutes.aiChat);
       return;
     }
     currentIndex.value = index;

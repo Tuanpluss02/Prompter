@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-Future<void> showBottomSheetVerify({
-  required BuildContext context,
-  required List<Widget> children,
-  double initialChildSize = 0.88,
-  double minChildSize = 0,
-  double maxChildSize = 0.88,
-  VoidCallback? onResult,
-  required PageController pageController
-}) async {
+Future<void> showBottomSheetVerify(
+    {required BuildContext context,
+    required List<Widget> children,
+    double initialChildSize = 0.88,
+    double minChildSize = 0,
+    double maxChildSize = 0.88,
+    VoidCallback? onResult,
+    required PageController pageController}) async {
   final result = await showModalBottomSheet(
     context: context,
     isScrollControlled: true,

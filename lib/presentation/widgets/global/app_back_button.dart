@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppBackButton extends StatelessWidget {
-  final double? width;
-
-  final double? height;
+  final double? size;
 
   final EdgeInsetsGeometry? margin;
 
@@ -13,8 +11,7 @@ class AppBackButton extends StatelessWidget {
 
   const AppBackButton({
     super.key,
-    this.width = 50,
-    this.height = 50,
+    this.size = 50,
     this.margin,
     this.onTap,
   });
@@ -24,8 +21,8 @@ class AppBackButton extends StatelessWidget {
     return ScaleButton(
       onTap: onTap ?? () => Get.back(),
       child: Container(
-        width: width,
-        height: height,
+        width: size,
+        height: size,
         margin: margin ?? const EdgeInsets.only(top: 16, left: 16),
         padding: const EdgeInsets.only(left: 8),
         decoration: BoxDecoration(

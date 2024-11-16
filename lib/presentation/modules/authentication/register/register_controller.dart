@@ -48,7 +48,7 @@ class RegisterController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
-    await _userService.createUser(result.userCredential!.user!.uid, email.split('@')[0], email);
+    await _userService.createUser(result.userCredential!);
     Get.offAllNamed(AppRoutes.root);
   }
 

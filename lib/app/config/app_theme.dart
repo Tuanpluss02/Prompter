@@ -45,7 +45,7 @@ class AppTheme {
         colorError: Colors.green,
         accentColor: Colors.red,
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.black0D0C0E,
+          backgroundColor: AppColors.backgroundColor,
           titleTextStyle: AppTextStyles.s16w700.copyWith(
             color: AppColors.appColorWhite,
           ),

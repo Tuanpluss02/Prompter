@@ -1,3 +1,4 @@
+import 'package:base/app/utils/snackbar.dart';
 import 'package:base/presentation/widgets/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,9 @@ class ForgotPasswordController extends GetxController {
     }
     final result = await CallApiWidget.showLoading(api: _authService.forgotPassword(emailController.text));
     if (result != null) {
-      Get.snackbar('Error', result ?? 'An error occurred. Please try again later');
+      showSnackBar(title: result, type: SnackBarType.error);
     } else {
-      Get.snackbar('Success', 'Please check your email to reset password');
+      showSnackBar(title: 'Email sent successfully', type: SnackBarType.success);
     }
   }
 }

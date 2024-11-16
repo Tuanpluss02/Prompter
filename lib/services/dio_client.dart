@@ -59,11 +59,11 @@ class DioClient {
           // All http responses enabled for console logging
           printResponseData: true,
           // All http requests disabled for console logging
-          printRequestData: false,
+          printRequestData: true,
           // Reposnse logs including http - headers
-          printResponseHeaders: true,
+          printResponseHeaders: false,
           // Request logs without http - headersa
-          printRequestHeaders: false,
+          printRequestHeaders: true,
         ),
       ),
     );
@@ -79,22 +79,6 @@ class DioClient {
   }
 
   Map<String, dynamic> getHeader() {
-    // String? accessToken = AppStorage.getString(SharedPreferencesKeys.accessToken);
-    // String? deviceID = AppStorage.getString(SharedPreferencesKeys.deviceId);
-    // Map<String, dynamic> header = {};
-    // header['Content-Type'] = 'application/json; charset=UTF-8';
-    // header['Accept'] = 'application/json';
-    // header['lang'] = Platform.localeName.substring(0, 2);
-    // if (token != null && token != '') {
-    //   header['Authorization'] = 'Bearer $token';
-    // } else if (accessToken != null && accessToken.isNotEmpty) {
-    //   header['Authorization'] = 'Bearer $accessToken';
-    // }
-    // header['device_id'] = deviceID;
-    // if (id != null) {
-    //   header['id'] = id;
-    // }
-    // return header;
     return {};
   }
 

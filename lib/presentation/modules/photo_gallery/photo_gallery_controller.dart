@@ -11,12 +11,12 @@ class PhotoGalleryController extends BaseController {
   Future<List<ImageList>> initData() async {
     final result = await _ciciRepository.getAiImages();
     List<ImageList> aiImages = <ImageList>[];
-    result.when(
-      apiSuccess: (res) {
+    result.whenOrNull(
+      success: (res) {
         AiImageGenerated aiImageGenerated = AiImageGenerated.fromJson(res.data);
         aiImages = aiImageGenerated.image?.template!.imageList ?? [];
       },
-      apiFailure: (error) {
+      failure: (error) {
         final String errorMessage = NetworkExceptions.getErrorMessage(error);
         showSnackBar(title: errorMessage, type: SnackBarType.error);
       },

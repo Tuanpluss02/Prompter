@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "467739299542-6gfb2c07g9rs7bt0bvd48ncnkc7turpb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stormx.prompter",
+            "certificate_hash": "a67fb86a5323698abc6fe6e6fb5ca9fcab8fd909"
+          }
+        },
+        {
           "client_id": "467739299542-8eitlulmt8bulr9sc4cabqi16l298flt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

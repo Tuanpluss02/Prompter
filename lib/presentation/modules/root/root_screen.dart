@@ -1,7 +1,6 @@
 import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/base/base_screen.dart';
-import 'package:base/presentation/widgets/lazy_indexed_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -36,7 +35,7 @@ class RootScreen extends BaseScreen<RootController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Obx(() => LazyIndexedStack(
+    return Obx(() => IndexedStack(
           index: controller.currentIndex.value > 2 ? controller.currentIndex.value - 1 : controller.currentIndex.value,
           children: controller.screens,
         ));

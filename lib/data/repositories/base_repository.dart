@@ -4,7 +4,7 @@ import 'package:base/data/responses/base_response.dart';
 import 'package:base/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
-class BaseRepository {
+abstract class BaseRepository {
   late DioClient dioClient;
   final String baseUrl;
 
@@ -17,10 +17,20 @@ class BaseRepository {
     try {
       final res = await request();
       BaseResponse response = BaseResponse.fromJson(res);
-      return ApiResult.apiSuccess(response);
+      return ApiResult.success(response);
     } catch (e) {
       final error = NetworkExceptions.getDioException(e);
-      return ApiResult.apiFailure(error);
+      return ApiResult.failure(error);
+    }
+  }
+
+  Future<ApiResult> handleApiRequestCustomResponse(Future<dynamic> Function() request) async {
+    try {
+      final response = await request();
+      return ApiResult.successWWithCustomResponse(response);
+    } catch (e) {
+      final error = NetworkExceptions.getDioException(e);
+      return ApiResult.failure(error);
     }
   }
 }

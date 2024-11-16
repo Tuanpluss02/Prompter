@@ -14,12 +14,14 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-User _$UserFromJson(Map<String, dynamic> json) {
-  return _User.fromJson(json);
+UserEntity _$UserEntityFromJson(Map<String, dynamic> json) {
+  return _UserEntity.fromJson(json);
 }
 
 /// @nodoc
-mixin _$User {
+mixin _$UserEntity {
+  String? get id => throw _privateConstructorUsedError;
+  String? get displayName => throw _privateConstructorUsedError;
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profileImage => throw _privateConstructorUsedError;
@@ -31,22 +33,26 @@ mixin _$User {
   int? get postCount => throw _privateConstructorUsedError;
   int? get likeCount => throw _privateConstructorUsedError;
 
-  /// Serializes this User to a JSON map.
+  /// Serializes this UserEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of User
+  /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserEntityCopyWith<UserEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res, User>;
+abstract class $UserEntityCopyWith<$Res> {
+  factory $UserEntityCopyWith(
+          UserEntity value, $Res Function(UserEntity) then) =
+      _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
   $Res call(
-      {String? username,
+      {String? id,
+      String? displayName,
+      String? username,
       String? email,
       String? profileImage,
       String? bio,
@@ -59,20 +65,22 @@ abstract class $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res, $Val extends User>
-    implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
+    implements $UserEntityCopyWith<$Res> {
+  _$UserEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of User
+  /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? displayName = freezed,
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
@@ -85,6 +93,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? likeCount = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -130,14 +146,17 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 }
 
 /// @nodoc
-abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$$UserImplCopyWith(
-          _$UserImpl value, $Res Function(_$UserImpl) then) =
-      __$$UserImplCopyWithImpl<$Res>;
+abstract class _$$UserEntityImplCopyWith<$Res>
+    implements $UserEntityCopyWith<$Res> {
+  factory _$$UserEntityImplCopyWith(
+          _$UserEntityImpl value, $Res Function(_$UserEntityImpl) then) =
+      __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String? username,
+      {String? id,
+      String? displayName,
+      String? username,
       String? email,
       String? profileImage,
       String? bio,
@@ -150,17 +169,20 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$UserImplCopyWithImpl<$Res>
-    extends _$UserCopyWithImpl<$Res, _$UserImpl>
-    implements _$$UserImplCopyWith<$Res> {
-  __$$UserImplCopyWithImpl(_$UserImpl _value, $Res Function(_$UserImpl) _then)
+class __$$UserEntityImplCopyWithImpl<$Res>
+    extends _$UserEntityCopyWithImpl<$Res, _$UserEntityImpl>
+    implements _$$UserEntityImplCopyWith<$Res> {
+  __$$UserEntityImplCopyWithImpl(
+      _$UserEntityImpl _value, $Res Function(_$UserEntityImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of User
+  /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? displayName = freezed,
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
@@ -172,7 +194,15 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? postCount = freezed,
     Object? likeCount = freezed,
   }) {
-    return _then(_$UserImpl(
+    return _then(_$UserEntityImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
       username: freezed == username
           ? _value.username
           : username // ignore: cast_nullable_to_non_nullable
@@ -218,10 +248,13 @@ class __$$UserImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 @JsonSerializable()
-class _$UserImpl implements _User {
-  const _$UserImpl(
-      {this.username = '',
+class _$UserEntityImpl implements _UserEntity {
+  const _$UserEntityImpl(
+      {this.id = '',
+      this.displayName = '',
+      this.username = '',
       this.email = '',
       this.profileImage = '',
       this.bio = '',
@@ -234,9 +267,15 @@ class _$UserImpl implements _User {
       : _followers = followers,
         _following = following;
 
-  factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserImplFromJson(json);
+  factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserEntityImplFromJson(json);
 
+  @override
+  @JsonKey()
+  final String? id;
+  @override
+  @JsonKey()
+  final String? displayName;
   @override
   @JsonKey()
   final String? username;
@@ -286,14 +325,17 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, updatedAt: $updatedAt, postCount: $postCount, likeCount: $likeCount)';
+    return 'UserEntity(id: $id, displayName: $displayName, username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, updatedAt: $updatedAt, postCount: $postCount, likeCount: $likeCount)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
+            other is _$UserEntityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
@@ -318,6 +360,8 @@ class _$UserImpl implements _User {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
+      displayName,
       username,
       email,
       profileImage,
@@ -329,25 +373,27 @@ class _$UserImpl implements _User {
       postCount,
       likeCount);
 
-  /// Create a copy of User
+  /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
-      __$$UserImplCopyWithImpl<_$UserImpl>(this, _$identity);
+  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
+      __$$UserEntityImplCopyWithImpl<_$UserEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$UserImplToJson(
+    return _$$UserEntityImplToJson(
       this,
     );
   }
 }
 
-abstract class _User implements User {
-  const factory _User(
-      {final String? username,
+abstract class _UserEntity implements UserEntity {
+  const factory _UserEntity(
+      {final String? id,
+      final String? displayName,
+      final String? username,
       final String? email,
       final String? profileImage,
       final String? bio,
@@ -356,10 +402,15 @@ abstract class _User implements User {
       final String? createdAt,
       final String? updatedAt,
       final int? postCount,
-      final int? likeCount}) = _$UserImpl;
+      final int? likeCount}) = _$UserEntityImpl;
 
-  factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
+  factory _UserEntity.fromJson(Map<String, dynamic> json) =
+      _$UserEntityImpl.fromJson;
 
+  @override
+  String? get id;
+  @override
+  String? get displayName;
   @override
   String? get username;
   @override
@@ -381,10 +432,10 @@ abstract class _User implements User {
   @override
   int? get likeCount;
 
-  /// Create a copy of User
+  /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

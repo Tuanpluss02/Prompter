@@ -52,8 +52,7 @@ class AnimatedProgressBar extends StatefulWidget {
 }
 
 /// The state class managing the animation and visual representation of the progress bar.
-class _AnimatedProgressBarState extends State<AnimatedProgressBar>
-    with SingleTickerProviderStateMixin {
+class _AnimatedProgressBarState extends State<AnimatedProgressBar> with SingleTickerProviderStateMixin {
   /// The animation controller, governing the progress animation and ensuring smooth transitions.
   late AnimationController _animationController;
 
@@ -102,8 +101,7 @@ class _AnimatedProgressBarState extends State<AnimatedProgressBar>
           height: 6,
           decoration: ShapeDecoration(
             color: widget.backgroundColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
         ),
         // Animated container representing the filled progress. Its width is driven by the animation.
