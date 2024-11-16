@@ -41,13 +41,16 @@ class AiChatController extends BaseController {
   initChatData(String userId) async {
     final List<Message> initialMessageList = await _chatService.getMessages(userId);
     if (initialMessageList.isEmpty) {
-      initialMessageList.add(Message(
+      final welcomeMessage = Message(
+        id: generateUniqueId(),
         message: 'Hello, I am ${selectedModel.value.displayName}. How can I help you?',
         sentBy: selectedModel.value.modelId,
         createdAt: DateTime.now(),
         messageType: MessageType.text,
-      ));
+      );
+      addMessage(welcomeMessage);
     }
+
     chatController = ChatController(
       initialMessageList: initialMessageList,
       currentUser: ChatUser(
@@ -81,6 +84,8 @@ class AiChatController extends BaseController {
 
   void onReactionTap(Message message, String reaction) {
     chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
+    final messageJustReacted = message.copyWith(reaction: Reaction(reactions: [reaction], reactedUserIds: [chatController.currentUser.id]));
+    _chatService.updateMessage(messageJustReacted, appProvider.currentUser.value.id ?? 'User');
   }
 
   void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {

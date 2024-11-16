@@ -5,4 +5,5 @@ class FirebaseCollectionKeys {
   static const String likesCollection = 'likes';
   static const String followersCollection = 'followers';
   static const String chatMessagesCollection = 'messages';
+  static const String chatMessagesSubCollection = 'ai-messages';
 }
