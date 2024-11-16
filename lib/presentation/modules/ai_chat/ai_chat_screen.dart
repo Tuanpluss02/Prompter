@@ -51,6 +51,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           onReloadButtonTap: () {},
         ),
         typeIndicatorConfig: TypeIndicatorConfiguration(
+          indicatorSize: 5,
           flashingCircleBrightColor: theme.flashingCircleBrightColor,
           flashingCircleDarkColor: theme.flashingCircleDarkColor,
         ),

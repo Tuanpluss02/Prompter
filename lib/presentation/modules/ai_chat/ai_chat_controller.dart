@@ -93,16 +93,7 @@ class AiChatController extends BaseController {
       replyMessage: replyMessage,
     );
     chatController.setTypingIndicator = true;
-    // final thinkingMessage = Message(
-    //   id: 'thinking-message',
-    //   message: 'Thinking...',
-    //   sentBy: selectedModel.value.modelId,
-    //   createdAt: DateTime.now(),
-    //   messageType: MessageType.text,
-    //   status: MessageStatus.pending,
-    // );
     addMessage(userMessage);
-    // chatController.addMessage(thinkingMessage);
     if (selectedModel.value.modelType == ModelType.textToImage) {
       Uint8List? img = await generateImage(message);
       if (img == null) {
@@ -114,9 +105,7 @@ class AiChatController extends BaseController {
         showSnackBar(title: 'Upload image failed', type: SnackBarType.error);
         return;
       }
-      // chatController.initialMessageList.removeWhere(
-      //   (element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId,
-      // );
+
       final imageMessage = Message(
         id: generateUniqueId(),
         message: response,
@@ -127,8 +116,8 @@ class AiChatController extends BaseController {
       chatController.setTypingIndicator = false;
       addMessage(imageMessage);
     } else {
-      final geminiResponse = await _geminiRepository.chatGemini(message);
-      // chatController.initialMessageList.removeWhere((element) => element.id == 'thinking-message' && element.sentBy == selectedModel.value.modelId);
+      final previousGeminiMessages = chatController.initialMessageList.where((element) => element.sentBy == selectedModel.value.modelId).map((e) => e.message).toList();
+      final geminiResponse = await _geminiRepository.chatGemini(message, previousGeminiMessages);
       final responseMessage = Message(
         id: generateUniqueId(),
         message: geminiResponse ?? 'Sorry, I cannot understand your question',
