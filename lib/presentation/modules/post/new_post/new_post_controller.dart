@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:base/common/utils/permission_check.dart';
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/domain/services/post_service.dart';
@@ -58,6 +59,9 @@ class NewPostController extends BaseController {
       return await _postService.createPost(post, appProvider.user.value);
     }
 
-    CallApiWidget.showLoading(api: process());
+    CallApiWidget.showLoading(api: process()).then((value) {
+      showSnackBar(title: 'Post created successfully');
+      Get.back();
+    });
   }
 }

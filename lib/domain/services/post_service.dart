@@ -35,6 +35,16 @@ class PostService extends GetxService {
     return PostEntity.fromJson(postSnapshot.data()!);
   }
 
+  Future<List<PostEntity>> getPostsByUserId(String userId) async {
+    final postsSnapshot = await _postCollection.where('authorId', isEqualTo: userId).get();
+    return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
+  }
+
+  Future<List<PostEntity>> getNewsFeed() async {
+    final postsSnapshot = await _postCollection.get();
+    return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
+  }
+
   /// Like a post
   ///
   /// This method allows a user to like a post.
