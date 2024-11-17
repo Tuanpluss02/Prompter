@@ -1,4 +1,4 @@
-import 'package:base/app/utils/color_utils.dart';
+import 'package:base/common/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {

@@ -1,4 +1,4 @@
-import 'package:base/app/utils/snackbar.dart';
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';

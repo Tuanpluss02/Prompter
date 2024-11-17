@@ -1,6 +1,6 @@
-import 'package:base/app/constants/app_assets_path.dart';
-import 'package:base/app/constants/app_color.dart';
-import 'package:base/app/utils/validator.dart';
+import 'package:base/common/constants/app_assets_path.dart';
+import 'package:base/common/constants/app_color.dart';
+import 'package:base/common/utils/validator.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';

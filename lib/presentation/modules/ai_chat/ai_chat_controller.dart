@@ -1,8 +1,8 @@
-import 'package:base/app/constants/app_enums.dart';
-import 'package:base/app/constants/app_strings.dart';
-import 'package:base/app/utils/generate_id.dart';
-import 'package:base/app/utils/save_to_gallery.dart';
-import 'package:base/app/utils/snackbar.dart';
+import 'package:base/common/constants/app_enums.dart';
+import 'package:base/common/constants/app_strings.dart';
+import 'package:base/common/utils/generate_id.dart';
+import 'package:base/common/utils/save_to_gallery.dart';
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/repositories/gemini_repository.dart';
 import 'package:base/domain/data/repositories/huggingface_repository.dart';
 import 'package:base/domain/services/chat_service.dart';

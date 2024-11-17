@@ -1,5 +1,5 @@
+import 'package:base/common/constants/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:base/app/constants/app_color.dart';
 
 class GradientProgressBar extends StatelessWidget {
   final double progress;

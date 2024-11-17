@@ -1,5 +1,5 @@
-import 'package:base/app/constants/app_color.dart';
-import 'package:base/app/constants/app_text_styles.dart';
+import 'package:base/common/constants/app_color.dart';
+import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:flutter/material.dart';
 

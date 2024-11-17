@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:base/app/utils/log.dart';
-import 'package:base/app/utils/permission_check.dart';
+import 'package:base/common/utils/log.dart';
+import 'package:base/common/utils/permission_check.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';

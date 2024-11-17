@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:base/app/constants/app_strings.dart';
+import 'package:base/common/constants/app_strings.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiRepository {

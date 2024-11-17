@@ -1,6 +1,6 @@
+import 'package:base/common/constants/app_color.dart';
+import 'package:base/common/constants/app_text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:base/app/constants/app_color.dart';
-import 'package:base/app/constants/app_text_styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class GradientBorderButton extends StatelessWidget {

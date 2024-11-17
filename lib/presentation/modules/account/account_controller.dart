@@ -1,4 +1,4 @@
-import 'package:base/app/utils/log.dart';
+import 'package:base/common/utils/log.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

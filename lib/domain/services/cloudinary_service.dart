@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:base/app/constants/app_strings.dart';
-import 'package:base/app/utils/generate_id.dart';
+import 'package:base/common/constants/app_strings.dart';
+import 'package:base/common/utils/generate_id.dart';
 import 'package:cloudinary/cloudinary.dart';
 import 'package:path_provider/path_provider.dart';
 

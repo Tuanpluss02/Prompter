@@ -1,5 +1,5 @@
+import 'package:base/common/constants/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:base/app/constants/app_color.dart';
 
 /// An animated progress bar that visually reflects progress updates with smooth transitions.
 ///

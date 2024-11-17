@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:base/app/constants/app_assets_path.dart';
-import 'package:base/app/constants/app_text_styles.dart';
+import 'package:base/common/constants/app_assets_path.dart';
+import 'package:base/common/constants/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
-import 'package:base/app/app_links/app_links_handler.dart';
-import 'package:base/app/localization/locale_manager.dart';
 import 'package:base/app_provider.dart';
+import 'package:base/common/app_links/app_links_handler.dart';
+import 'package:base/common/localization/locale_manager.dart';
 import 'package:base/domain/data/local/app_storage.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';

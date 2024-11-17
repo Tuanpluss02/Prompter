@@ -1,4 +1,4 @@
-import 'package:base/app/constants/app_color.dart';
+import 'package:base/common/constants/app_color.dart';
 import 'package:flutter/material.dart';
 
 class AppLoadingIndicator extends StatelessWidget {

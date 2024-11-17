@@ -1,5 +1,5 @@
-import 'package:base/app/constants/app_assets_path.dart';
-import 'package:base/app/constants/app_color.dart';
+import 'package:base/common/constants/app_assets_path.dart';
+import 'package:base/common/constants/app_color.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

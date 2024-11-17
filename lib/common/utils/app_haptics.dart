@@ -1,6 +1,6 @@
 // Simple class wrapping HapticFeedback to make testing a bit simpler.
 
-import 'package:base/app/utils/platform_info.dart';
+import 'package:base/common/utils/platform_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

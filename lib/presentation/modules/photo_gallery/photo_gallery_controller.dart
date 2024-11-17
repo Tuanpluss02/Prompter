@@ -1,4 +1,4 @@
-import 'package:base/app/utils/snackbar.dart';
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/local/network_exceptions.dart';
 import 'package:base/domain/data/repositories/cici_repository.dart';
 import 'package:base/domain/data/responses/ai_image_generated.dart';

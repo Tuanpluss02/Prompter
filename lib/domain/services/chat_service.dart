@@ -1,4 +1,4 @@
-import 'package:base/app/constants/firebase_collection_keys.dart';
+import 'package:base/common/constants/firebase_collection_keys.dart';
 import 'package:chatview/chatview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 

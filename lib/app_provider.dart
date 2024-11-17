@@ -1,4 +1,4 @@
-import 'package:base/app/utils/log.dart';
+import 'package:base/common/utils/log.dart';
 import 'package:base/domain/data/entities/user.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
