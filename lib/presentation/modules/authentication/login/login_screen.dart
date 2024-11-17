@@ -6,7 +6,7 @@ import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
-import 'package:base/presentation/shared/highlighted_text.dart';
+import 'package:base/presentation/shared/utils/highlighted_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

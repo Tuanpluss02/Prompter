@@ -1,4 +1,4 @@
-import 'package:base/presentation/shared/app_dialog.dart';
+import 'package:base/presentation/shared/global/app_dialog.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
