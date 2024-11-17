@@ -37,14 +37,11 @@ class HomeScreen extends BaseScreen<HomeController> {
     return SmartRefresher(
       controller: controller.refreshController,
       onRefresh: controller.onRefresh,
-      // child: ListView.builder(itemBuilder: controller.itemBuilder, itemCount: controller.itemCount),
-      child: Column(
-        children: [
-          const SizedBox(height: 20),
-          PostView(
-            post: controller.posts[0],
-          ),
-        ],
+      child: ListView.builder(
+        itemCount: controller.posts.length,
+        itemBuilder: (context, index) {
+          return PostView(post: controller.posts[index]);
+        },
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:base/common/utils/log.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
+import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,16 +22,43 @@ class PostView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildPostAuthor(),
-        const SizedBox(height: 10),
-        _buildPostText(),
-        const SizedBox(height: 10),
-        _buildPostReact(),
-        Divider(),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildPostAuthor(),
+          const SizedBox(height: 10),
+          _buildPostText(),
+          _buildPostMedia(),
+          const SizedBox(height: 10),
+          _buildPostReact(),
+          Divider(),
+        ],
+      ),
+    );
+  }
+
+  _buildPostMedia() {
+    return Visibility(
+      visible: (post.images?.isNotEmpty ?? false),
+      child: Container(
+        padding: const EdgeInsets.only(top: 10),
+        height: Get.width * 0.5,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: post.images?.length,
+          itemBuilder: (context, index) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AppImage(image: NetworkImage(post.images![index])),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
