@@ -6,12 +6,14 @@ enum ButtonType { primary, secondary }
 class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
-    required this.type,
+    this.type = ButtonType.primary,
     required this.text,
     this.onTap,
     this.textStyle,
     this.height,
     this.width,
+    this.padding,
+    this.margin,
   });
 
   final ButtonType type;
@@ -20,6 +22,8 @@ class AppButton extends StatelessWidget {
   final TextStyle? textStyle;
   final double? height;
   final double? width;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,8 @@ class AppButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
+        padding: padding,
+        margin: margin,
         decoration: BoxDecoration(
           color: type == ButtonType.primary ? Color(0XFF0677e8) : Color(0XFF0f2e53),
           borderRadius: BorderRadius.circular(16),
