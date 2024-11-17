@@ -169,12 +169,10 @@ class AppTextStyles {
   );
 
   static TextStyle s22w400 = GoogleFonts.manrope(
-    color: Colors.black,
     fontSize: 22,
     fontWeight: FontWeight.w400,
   );
   static TextStyle s15w600 = GoogleFonts.manrope(
-    color: Colors.black,
     fontSize: 15,
     fontWeight: FontWeight.w600,
   );

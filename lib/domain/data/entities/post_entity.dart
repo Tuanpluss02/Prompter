@@ -15,8 +15,8 @@ class PostEntity with _$PostEntity {
     @Default('') String? authorDisplayName,
     @Default('') String? authorUsername,
     @Default(<String>[]) List<String>? images,
-    @Default(0) int? likeCount,
     @Default(<String>[]) List<String>? comments,
+    @Default(<String>[]) List<String>? likes,
     @Default('') String? content,
     @Default(null) DateTime? createdAt,
   }) = _PostEntity;

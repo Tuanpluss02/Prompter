@@ -26,8 +26,8 @@ mixin _$PostEntity {
   String? get authorDisplayName => throw _privateConstructorUsedError;
   String? get authorUsername => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
-  int? get likeCount => throw _privateConstructorUsedError;
   List<String>? get comments => throw _privateConstructorUsedError;
+  List<String>? get likes => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -54,8 +54,8 @@ abstract class $PostEntityCopyWith<$Res> {
       String? authorDisplayName,
       String? authorUsername,
       List<String>? images,
-      int? likeCount,
       List<String>? comments,
+      List<String>? likes,
       String? content,
       DateTime? createdAt});
 }
@@ -81,8 +81,8 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity>
     Object? authorDisplayName = freezed,
     Object? authorUsername = freezed,
     Object? images = freezed,
-    Object? likeCount = freezed,
     Object? comments = freezed,
+    Object? likes = freezed,
     Object? content = freezed,
     Object? createdAt = freezed,
   }) {
@@ -111,13 +111,13 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity>
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       comments: freezed == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      likes: freezed == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       content: freezed == content
           ? _value.content
@@ -146,8 +146,8 @@ abstract class _$$PostEntityImplCopyWith<$Res>
       String? authorDisplayName,
       String? authorUsername,
       List<String>? images,
-      int? likeCount,
       List<String>? comments,
+      List<String>? likes,
       String? content,
       DateTime? createdAt});
 }
@@ -171,8 +171,8 @@ class __$$PostEntityImplCopyWithImpl<$Res>
     Object? authorDisplayName = freezed,
     Object? authorUsername = freezed,
     Object? images = freezed,
-    Object? likeCount = freezed,
     Object? comments = freezed,
+    Object? likes = freezed,
     Object? content = freezed,
     Object? createdAt = freezed,
   }) {
@@ -201,13 +201,13 @@ class __$$PostEntityImplCopyWithImpl<$Res>
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       comments: freezed == comments
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      likes: freezed == likes
+          ? _value._likes
+          : likes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       content: freezed == content
           ? _value.content
@@ -232,12 +232,13 @@ class _$PostEntityImpl implements _PostEntity {
       this.authorDisplayName = '',
       this.authorUsername = '',
       final List<String>? images = const <String>[],
-      this.likeCount = 0,
       final List<String>? comments = const <String>[],
+      final List<String>? likes = const <String>[],
       this.content = '',
       this.createdAt = null})
       : _images = images,
-        _comments = comments;
+        _comments = comments,
+        _likes = likes;
 
   factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostEntityImplFromJson(json);
@@ -268,9 +269,6 @@ class _$PostEntityImpl implements _PostEntity {
     return EqualUnmodifiableListView(value);
   }
 
-  @override
-  @JsonKey()
-  final int? likeCount;
   final List<String>? _comments;
   @override
   @JsonKey()
@@ -278,6 +276,17 @@ class _$PostEntityImpl implements _PostEntity {
     final value = _comments;
     if (value == null) return null;
     if (_comments is EqualUnmodifiableListView) return _comments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _likes;
+  @override
+  @JsonKey()
+  List<String>? get likes {
+    final value = _likes;
+    if (value == null) return null;
+    if (_likes is EqualUnmodifiableListView) return _likes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -291,7 +300,7 @@ class _$PostEntityImpl implements _PostEntity {
 
   @override
   String toString() {
-    return 'PostEntity(id: $id, authorId: $authorId, authorAvatarUrl: $authorAvatarUrl, authorDisplayName: $authorDisplayName, authorUsername: $authorUsername, images: $images, likeCount: $likeCount, comments: $comments, content: $content, createdAt: $createdAt)';
+    return 'PostEntity(id: $id, authorId: $authorId, authorAvatarUrl: $authorAvatarUrl, authorDisplayName: $authorDisplayName, authorUsername: $authorUsername, images: $images, comments: $comments, likes: $likes, content: $content, createdAt: $createdAt)';
   }
 
   @override
@@ -309,9 +318,8 @@ class _$PostEntityImpl implements _PostEntity {
             (identical(other.authorUsername, authorUsername) ||
                 other.authorUsername == authorUsername) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.likeCount, likeCount) ||
-                other.likeCount == likeCount) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
+            const DeepCollectionEquality().equals(other._likes, _likes) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -327,8 +335,8 @@ class _$PostEntityImpl implements _PostEntity {
       authorDisplayName,
       authorUsername,
       const DeepCollectionEquality().hash(_images),
-      likeCount,
       const DeepCollectionEquality().hash(_comments),
+      const DeepCollectionEquality().hash(_likes),
       content,
       createdAt);
 
@@ -356,8 +364,8 @@ abstract class _PostEntity implements PostEntity {
       final String? authorDisplayName,
       final String? authorUsername,
       final List<String>? images,
-      final int? likeCount,
       final List<String>? comments,
+      final List<String>? likes,
       final String? content,
       final DateTime? createdAt}) = _$PostEntityImpl;
 
@@ -377,9 +385,9 @@ abstract class _PostEntity implements PostEntity {
   @override
   List<String>? get images;
   @override
-  int? get likeCount;
-  @override
   List<String>? get comments;
+  @override
+  List<String>? get likes;
   @override
   String? get content;
   @override

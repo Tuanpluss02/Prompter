@@ -17,11 +17,13 @@ _$PostEntityImpl _$$PostEntityImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
-      likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
       comments: (json['comments'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
+      likes:
+          (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
       content: json['content'] as String? ?? '',
       createdAt: json['createdAt'] == null
           ? null
@@ -36,8 +38,8 @@ Map<String, dynamic> _$$PostEntityImplToJson(_$PostEntityImpl instance) =>
       'authorDisplayName': instance.authorDisplayName,
       'authorUsername': instance.authorUsername,
       'images': instance.images,
-      'likeCount': instance.likeCount,
       'comments': instance.comments,
+      'likes': instance.likes,
       'content': instance.content,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

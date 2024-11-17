@@ -29,6 +29,8 @@ class SvgPath {
   static const icHeart = '$_svgPath/ic_heart.svg';
   static const icHeartFilled = '$_svgPath/ic_heart_filled.svg';
   static const icMore = '$_svgPath/ic_more.svg';
+  static const icImage = '$_svgPath/ic_image.svg';
+  static const icLink = '$_svgPath/ic_link.svg';
 }
 
 class LottiePath {}

@@ -1,5 +1,6 @@
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/modules/home/components/new_post.dart';
 import 'package:base/presentation/modules/home/components/post_view.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -37,11 +38,16 @@ class HomeScreen extends BaseScreen<HomeController> {
     return SmartRefresher(
       controller: controller.refreshController,
       onRefresh: controller.onRefresh,
-      child: ListView.builder(
-        itemCount: controller.posts.length,
-        itemBuilder: (context, index) {
-          return PostView(post: controller.posts[index]);
-        },
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: NewPost()),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => PostView(post: controller.posts[index]),
+              childCount: controller.posts.length,
+            ),
+          ),
+        ],
       ),
     );
   }

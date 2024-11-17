@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:url_launcher/url_launcher.dart';
 
 class PostView extends GetView<HomeController> {
   const PostView({super.key, required this.post});
@@ -87,12 +88,12 @@ class PostView extends GetView<HomeController> {
               children: [
                 SvgPicture.asset(SvgPath.icHeart),
                 const SizedBox(width: 5),
-                Text(post.likeCount?.toShortString() ?? '', style: AppTextStyles.s14w600),
+                Text(post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
               ],
             ),
           ),
           SizedBox(width: 15),
-          GestureDetector(
+          ScaleButton(
             onTap: () {},
             child: Row(
               children: [
@@ -103,7 +104,7 @@ class PostView extends GetView<HomeController> {
             ),
           ),
           SizedBox(width: 15),
-          GestureDetector(
+          ScaleButton(
             onTap: () {},
             child: SvgPicture.asset(SvgPath.icShare),
           ),
@@ -143,13 +144,13 @@ class PostView extends GetView<HomeController> {
             ),
           ),
           Annotation(
-            regExp: RegExp(r'(https?://[^\s]+)'),
+            regExp: RegExp(r"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@%_\+~#?&//=]*)"),
             spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
               text: text,
               style: textStyle?.copyWith(color: Colors.blue),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  Log.console('URL tapped');
+                  launchUrl(Uri.parse(text));
                 },
             ),
           ),
