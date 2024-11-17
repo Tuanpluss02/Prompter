@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
@@ -5,6 +8,7 @@ import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
+import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -25,19 +29,21 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           _buildAppBar(),
           Divider(),
           _buildAvatarName(),
-          _buildPostAction(),
+          _buildPostTextContent(),
+          _buildPostMediaContent(),
+          SizedBox(height: 10),
           _buildPostInputOption(),
         ],
       ),
     );
   }
 
-  Padding _buildPostAction() {
+  _buildPostTextContent() {
     return Padding(
       padding: const EdgeInsets.only(left: 90),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: 300.0,
+          maxHeight: Get.width * 0.4,
         ),
         child: TextField(
             maxLines: null,
@@ -71,6 +77,102 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           ),
           SizedBox(width: 60),
         ],
+      ),
+    );
+  }
+
+  _buildPostMediaContent() {
+    return Obx(() => Visibility(
+          visible: controller.postImages.isNotEmpty,
+          replacement: _buildLinkPreview(),
+          child: _buildImagePreview(),
+        ));
+  }
+
+  Container _buildImagePreview() {
+    return Container(
+      padding: const EdgeInsets.only(top: 10),
+      height: Get.width * 0.5,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: controller.postImages.asMap().entries.map((e) {
+          final index = e.key;
+          final image = File(e.value.path);
+          return Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: AppImage(image: FileImage(image)),
+                ),
+              ),
+              Positioned(
+                top: 5,
+                right: 20,
+                child: ScaleButton(
+                  onTap: () {
+                    controller.postImages.removeAt(index);
+                    controller.postImages.refresh();
+                  },
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Padding _buildLinkPreview() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Visibility(
+        visible: !controller.hideLinkPreview.value,
+        child: Stack(
+          children: [
+            AnyLinkPreview(
+              link: "https://vardaan.app/",
+              removeElevation: true,
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: ScaleButton(
+                onTap: () {
+                  controller.hideLinkPreview.value = true;
+                },
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  // padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.clear,
+                    color: Colors.white,
+                    // size: 25,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -126,7 +228,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
       child: Row(
         children: [
           ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.image),
+            onTap: controller.onSelectImage,
             child: SvgPicture.asset(
               SvgPath.icImage,
               colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),

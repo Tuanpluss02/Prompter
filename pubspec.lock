@@ -55,7 +55,7 @@ packages:
     source: hosted
     version: "2.0.3"
   any_link_preview:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: any_link_preview
       sha256: "3135873778da5400e784ec4f304229d16f5d748276de2fce88170554907bca46"
@@ -859,7 +859,7 @@ packages:
     source: git
     version: "2.0.3"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       sha256: "021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a"
