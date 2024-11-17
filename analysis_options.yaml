@@ -14,7 +14,7 @@ analyzer:
     - build/**
     - '**/*.freezed.dart'
     - '**/*.g.dart'
-    - mason_script/**
+    - mason/**
 
 
 

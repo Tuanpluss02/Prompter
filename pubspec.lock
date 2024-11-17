@@ -241,7 +241,7 @@ packages:
   chatview:
     dependency: "direct main"
     description:
-      path: flutter_chatview
+      path: "packages/flutter_chatview"
       relative: true
     source: path
     version: "2.3.0"
