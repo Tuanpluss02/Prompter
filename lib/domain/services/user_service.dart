@@ -32,7 +32,7 @@ class UserService extends GetxService {
     await userRef.set(newUser.toJson());
   }
 
-  Future<UserEntity?> getUserInfo(String userId) async {
+  Future<UserEntity?> getUserById(String userId) async {
     final userDoc = await _userCollection.doc(userId).get();
     if (!userDoc.exists) {
       return null;

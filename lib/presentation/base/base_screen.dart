@@ -34,11 +34,7 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
       extendBody: extendBodyBehindAppBar,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       appBar: buildAppBar(context),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(Get.context!).requestFocus(FocusNode()),
-        behavior: HitTestBehavior.translucent,
-        child: buildScreen(context),
-      ),
+      body: buildScreen(context),
       backgroundColor: screenBackgroundColor,
       bottomNavigationBar: buildBottomNavigationBar(context),
       floatingActionButtonLocation: floatingActionButtonLocation,

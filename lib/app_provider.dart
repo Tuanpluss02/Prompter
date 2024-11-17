@@ -20,7 +20,7 @@ class AppProvider {
 
   getUserInfomation({String? userId}) async {
     if (isSignedIn) {
-      final UserEntity? userData = await _userService.getUserInfo(userId ?? _authService.currentUser!.uid);
+      final UserEntity? userData = await _userService.getUserById(userId ?? _authService.currentUser!.uid);
       if (userData == null) {
         Log.console('User not found');
         return;

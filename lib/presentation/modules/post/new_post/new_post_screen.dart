@@ -8,6 +8,7 @@ import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
+import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,6 +23,22 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   bool get wrapWithSafeArea => true;
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
+  Widget? buildBottomNavigationBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: AppButton(
+        text: 'Post',
+        height: 50,
+        onTap: () => controller.onTapPost(),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+      ),
+    );
+  }
+
+  @override
   Widget buildScreen(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -33,6 +50,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           _buildPostMediaContent(),
           SizedBox(height: 10),
           _buildPostInputOption(),
+          SizedBox(height: 70),
         ],
       ),
     );
@@ -43,14 +61,15 @@ class NewPostScreen extends BaseScreen<NewPostController> {
       padding: const EdgeInsets.only(left: 90),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: Get.width * 0.4,
+          maxHeight: Get.width * 0.6,
         ),
         child: TextField(
+            controller: controller.textController,
             maxLines: null,
             maxLength: 5000,
             cursorColor: Colors.white,
             keyboardType: TextInputType.multiline,
-            style: AppTextStyles.s14w600.copyWith(color: Colors.white),
+            style: AppTextStyles.s14w400.copyWith(color: Colors.white),
             decoration: InputDecoration(
               counterText: '',
               hintText: 'What\'s news',
@@ -92,60 +111,61 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   Container _buildImagePreview() {
     return Container(
       padding: const EdgeInsets.only(top: 10),
-      height: Get.width * 0.5,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: controller.postImages.asMap().entries.map((e) {
-          final index = e.key;
-          final image = File(e.value.path);
-          return Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: AppImage(image: FileImage(image)),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: controller.postImages.length.isEqual(1) ? Get.width * 0.7 : Get.width * 0.5,
+        ),
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: controller.postImages.asMap().entries.map((e) {
+            final index = e.key;
+            final image = File(e.value.path);
+            return Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: AppImage(image: FileImage(image)),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 5,
-                right: 20,
-                child: ScaleButton(
-                  onTap: () {
-                    controller.postImages.removeAt(index);
-                    controller.postImages.refresh();
-                  },
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                      size: 15,
+                Positioned(
+                  top: 5,
+                  right: 20,
+                  child: ScaleButton(
+                    onTap: () => controller.onRemoveImage(index),
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                        size: 15,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }).toList(),
+              ],
+            );
+          }).toList(),
+        ),
       ),
     );
   }
 
-  Padding _buildLinkPreview() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Visibility(
-        visible: !controller.hideLinkPreview.value,
+  _buildLinkPreview() {
+    return Visibility(
+      visible: !controller.hideLinkPreview.value,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
             AnyLinkPreview(
-              link: "https://vardaan.app/",
+              link: "https://facebook.com/",
               removeElevation: true,
             ),
             Positioned(

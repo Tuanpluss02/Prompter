@@ -22,9 +22,6 @@ PostEntity _$PostEntityFromJson(Map<String, dynamic> json) {
 mixin _$PostEntity {
   String? get id => throw _privateConstructorUsedError;
   String? get authorId => throw _privateConstructorUsedError;
-  String? get authorAvatarUrl => throw _privateConstructorUsedError;
-  String? get authorDisplayName => throw _privateConstructorUsedError;
-  String? get authorUsername => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
   List<String>? get comments => throw _privateConstructorUsedError;
   List<String>? get likes => throw _privateConstructorUsedError;
@@ -37,19 +34,19 @@ mixin _$PostEntity {
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PostEntityCopyWith<PostEntity> get copyWith => throw _privateConstructorUsedError;
+  $PostEntityCopyWith<PostEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $PostEntityCopyWith<$Res> {
-  factory $PostEntityCopyWith(PostEntity value, $Res Function(PostEntity) then) = _$PostEntityCopyWithImpl<$Res, PostEntity>;
+  factory $PostEntityCopyWith(
+          PostEntity value, $Res Function(PostEntity) then) =
+      _$PostEntityCopyWithImpl<$Res, PostEntity>;
   @useResult
   $Res call(
       {String? id,
       String? authorId,
-      String? authorAvatarUrl,
-      String? authorDisplayName,
-      String? authorUsername,
       List<String>? images,
       List<String>? comments,
       List<String>? likes,
@@ -58,7 +55,8 @@ abstract class $PostEntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity> implements $PostEntityCopyWith<$Res> {
+class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity>
+    implements $PostEntityCopyWith<$Res> {
   _$PostEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -73,9 +71,6 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity> implements $PostEn
   $Res call({
     Object? id = freezed,
     Object? authorId = freezed,
-    Object? authorAvatarUrl = freezed,
-    Object? authorDisplayName = freezed,
-    Object? authorUsername = freezed,
     Object? images = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
@@ -90,18 +85,6 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity> implements $PostEn
       authorId: freezed == authorId
           ? _value.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authorAvatarUrl: freezed == authorAvatarUrl
-          ? _value.authorAvatarUrl
-          : authorAvatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authorDisplayName: freezed == authorDisplayName
-          ? _value.authorDisplayName
-          : authorDisplayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authorUsername: freezed == authorUsername
-          ? _value.authorUsername
-          : authorUsername // ignore: cast_nullable_to_non_nullable
               as String?,
       images: freezed == images
           ? _value.images
@@ -128,16 +111,16 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity> implements $PostEn
 }
 
 /// @nodoc
-abstract class _$$PostEntityImplCopyWith<$Res> implements $PostEntityCopyWith<$Res> {
-  factory _$$PostEntityImplCopyWith(_$PostEntityImpl value, $Res Function(_$PostEntityImpl) then) = __$$PostEntityImplCopyWithImpl<$Res>;
+abstract class _$$PostEntityImplCopyWith<$Res>
+    implements $PostEntityCopyWith<$Res> {
+  factory _$$PostEntityImplCopyWith(
+          _$PostEntityImpl value, $Res Function(_$PostEntityImpl) then) =
+      __$$PostEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String? id,
       String? authorId,
-      String? authorAvatarUrl,
-      String? authorDisplayName,
-      String? authorUsername,
       List<String>? images,
       List<String>? comments,
       List<String>? likes,
@@ -146,8 +129,12 @@ abstract class _$$PostEntityImplCopyWith<$Res> implements $PostEntityCopyWith<$R
 }
 
 /// @nodoc
-class __$$PostEntityImplCopyWithImpl<$Res> extends _$PostEntityCopyWithImpl<$Res, _$PostEntityImpl> implements _$$PostEntityImplCopyWith<$Res> {
-  __$$PostEntityImplCopyWithImpl(_$PostEntityImpl _value, $Res Function(_$PostEntityImpl) _then) : super(_value, _then);
+class __$$PostEntityImplCopyWithImpl<$Res>
+    extends _$PostEntityCopyWithImpl<$Res, _$PostEntityImpl>
+    implements _$$PostEntityImplCopyWith<$Res> {
+  __$$PostEntityImplCopyWithImpl(
+      _$PostEntityImpl _value, $Res Function(_$PostEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -156,9 +143,6 @@ class __$$PostEntityImplCopyWithImpl<$Res> extends _$PostEntityCopyWithImpl<$Res
   $Res call({
     Object? id = freezed,
     Object? authorId = freezed,
-    Object? authorAvatarUrl = freezed,
-    Object? authorDisplayName = freezed,
-    Object? authorUsername = freezed,
     Object? images = freezed,
     Object? comments = freezed,
     Object? likes = freezed,
@@ -174,28 +158,16 @@ class __$$PostEntityImplCopyWithImpl<$Res> extends _$PostEntityCopyWithImpl<$Res
           ? _value.authorId
           : authorId // ignore: cast_nullable_to_non_nullable
               as String?,
-      authorAvatarUrl: freezed == authorAvatarUrl
-          ? _value.authorAvatarUrl
-          : authorAvatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authorDisplayName: freezed == authorDisplayName
-          ? _value.authorDisplayName
-          : authorDisplayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      authorUsername: freezed == authorUsername
-          ? _value.authorUsername
-          : authorUsername // ignore: cast_nullable_to_non_nullable
-              as String?,
       images: freezed == images
-          ? _value._images
+          ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       comments: freezed == comments
-          ? _value._comments
+          ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       likes: freezed == likes
-          ? _value._likes
+          ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       content: freezed == content
@@ -217,19 +189,14 @@ class _$PostEntityImpl implements _PostEntity {
   const _$PostEntityImpl(
       {this.id = '',
       this.authorId = '',
-      this.authorAvatarUrl = '',
-      this.authorDisplayName = '',
-      this.authorUsername = '',
-      final List<String>? images = const <String>[],
-      final List<String>? comments = const <String>[],
-      final List<String>? likes = const <String>[],
+      this.images = const <String>[],
+      this.comments = const <String>[],
+      this.likes = const <String>[],
       this.content = '',
-      this.createdAt = null})
-      : _images = images,
-        _comments = comments,
-        _likes = likes;
+      this.createdAt = null});
 
-  factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) => _$$PostEntityImplFromJson(json);
+  factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PostEntityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -239,46 +206,13 @@ class _$PostEntityImpl implements _PostEntity {
   final String? authorId;
   @override
   @JsonKey()
-  final String? authorAvatarUrl;
+  final List<String>? images;
   @override
   @JsonKey()
-  final String? authorDisplayName;
+  final List<String>? comments;
   @override
   @JsonKey()
-  final String? authorUsername;
-  final List<String>? _images;
-  @override
-  @JsonKey()
-  List<String>? get images {
-    final value = _images;
-    if (value == null) return null;
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _comments;
-  @override
-  @JsonKey()
-  List<String>? get comments {
-    final value = _comments;
-    if (value == null) return null;
-    if (_comments is EqualUnmodifiableListView) return _comments;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _likes;
-  @override
-  @JsonKey()
-  List<String>? get likes {
-    final value = _likes;
-    if (value == null) return null;
-    if (_likes is EqualUnmodifiableListView) return _likes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<String>? likes;
   @override
   @JsonKey()
   final String? content;
@@ -288,7 +222,7 @@ class _$PostEntityImpl implements _PostEntity {
 
   @override
   String toString() {
-    return 'PostEntity(id: $id, authorId: $authorId, authorAvatarUrl: $authorAvatarUrl, authorDisplayName: $authorDisplayName, authorUsername: $authorUsername, images: $images, comments: $comments, likes: $likes, content: $content, createdAt: $createdAt)';
+    return 'PostEntity(id: $id, authorId: $authorId, images: $images, comments: $comments, likes: $likes, content: $content, createdAt: $createdAt)';
   }
 
   @override
@@ -297,28 +231,35 @@ class _$PostEntityImpl implements _PostEntity {
         (other.runtimeType == runtimeType &&
             other is _$PostEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.authorId, authorId) || other.authorId == authorId) &&
-            (identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl) &&
-            (identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName) &&
-            (identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername) &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
-            const DeepCollectionEquality().equals(other._comments, _comments) &&
-            const DeepCollectionEquality().equals(other._likes, _likes) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
+            const DeepCollectionEquality().equals(other.images, images) &&
+            const DeepCollectionEquality().equals(other.comments, comments) &&
+            const DeepCollectionEquality().equals(other.likes, likes) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, authorId, authorAvatarUrl, authorDisplayName, authorUsername, const DeepCollectionEquality().hash(_images),
-      const DeepCollectionEquality().hash(_comments), const DeepCollectionEquality().hash(_likes), content, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      authorId,
+      const DeepCollectionEquality().hash(images),
+      const DeepCollectionEquality().hash(comments),
+      const DeepCollectionEquality().hash(likes),
+      content,
+      createdAt);
 
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith => __$$PostEntityImplCopyWithImpl<_$PostEntityImpl>(this, _$identity);
+  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith =>
+      __$$PostEntityImplCopyWithImpl<_$PostEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -332,27 +273,19 @@ abstract class _PostEntity implements PostEntity {
   const factory _PostEntity(
       {final String? id,
       final String? authorId,
-      final String? authorAvatarUrl,
-      final String? authorDisplayName,
-      final String? authorUsername,
       final List<String>? images,
       final List<String>? comments,
       final List<String>? likes,
       final String? content,
       final DateTime? createdAt}) = _$PostEntityImpl;
 
-  factory _PostEntity.fromJson(Map<String, dynamic> json) = _$PostEntityImpl.fromJson;
+  factory _PostEntity.fromJson(Map<String, dynamic> json) =
+      _$PostEntityImpl.fromJson;
 
   @override
   String? get id;
   @override
   String? get authorId;
-  @override
-  String? get authorAvatarUrl;
-  @override
-  String? get authorDisplayName;
-  @override
-  String? get authorUsername;
   @override
   List<String>? get images;
   @override
@@ -368,5 +301,6 @@ abstract class _PostEntity implements PostEntity {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

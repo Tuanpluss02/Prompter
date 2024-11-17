@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part '../../../generated/domain/data/entities/user_entity.freezed.dart';
 part '../../../generated/domain/data/entities/user_entity.g.dart';
 
-@Freezed(fromJson: true, toJson: true)
+@Freezed(fromJson: true, toJson: true, makeCollectionsUnmodifiable: false)
 class UserEntity with _$UserEntity {
   @JsonSerializable()
   const factory UserEntity({
