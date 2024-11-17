@@ -18,6 +18,7 @@ class PostService extends GetxService {
     if (newpost.id == null || newpost.id!.isEmpty) {
       newpost = newpost.copyWith(id: generateUniqueId());
     }
+
     newpost = newpost.copyWith(
       authorAvatarUrl: author.profileImage,
       createdAt: DateTime.now(),
@@ -43,6 +44,11 @@ class PostService extends GetxService {
   Future<List<PostEntity>> getNewsFeed() async {
     final postsSnapshot = await _postCollection.get();
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
+  }
+
+  Future<void> removePost(String postId) async {
+    final postRef = _postCollection.doc(postId);
+    await postRef.delete();
   }
 
   /// Like a post

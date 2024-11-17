@@ -10,6 +10,7 @@ class PostEntity with _$PostEntity {
   @JsonSerializable()
   const factory PostEntity({
     @Default('') String? id,
+    // TODO: refactor entity
     @Default('') String? authorId,
     @Default('') String? authorAvatarUrl,
     @Default('') String? authorDisplayName,
