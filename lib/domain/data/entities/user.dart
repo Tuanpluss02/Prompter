@@ -2,8 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../generated/data/entities/user.freezed.dart';
-part '../../generated/data/entities/user.g.dart';
+part '../../../generated/domain/data/entities/user.freezed.dart';
+part '../../../generated/domain/data/entities/user.g.dart';
 
 @Freezed(fromJson: true, toJson: true)
 class UserEntity with _$UserEntity {

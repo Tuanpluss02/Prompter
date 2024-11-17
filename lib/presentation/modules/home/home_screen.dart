@@ -1,4 +1,4 @@
-import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'home_controller.dart';

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part '../../generated/data/responses/base_response.g.dart';
+part '../../../generated/domain/data/responses/base_response.g.dart';
 
 @JsonSerializable()
 class BaseResponse {

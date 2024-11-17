@@ -2,7 +2,7 @@ import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_strings.dart';
 import 'package:base/app/constants/app_text_styles.dart';
 import 'package:base/app/utils/extension.dart';
-import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';

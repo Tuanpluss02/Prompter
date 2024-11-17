@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part '../../generated/data/responses/ai_image_generated.g.dart';
+part '../../../generated/domain/data/responses/ai_image_generated.g.dart';
 
 @JsonSerializable()
 class AiImageGenerated {

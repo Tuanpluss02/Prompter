@@ -1,7 +1,7 @@
 import 'package:base/app/utils/log.dart';
-import 'package:base/data/entities/user.dart';
-import 'package:base/services/auth_service.dart';
-import 'package:base/services/user_service.dart';
+import 'package:base/domain/data/entities/user.dart';
+import 'package:base/domain/services/auth_service.dart';
+import 'package:base/domain/services/user_service.dart';
 import 'package:get/get.dart';
 
 class AppProvider {

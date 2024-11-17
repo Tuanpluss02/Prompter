@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/utils/app_haptics.dart';
-import 'package:base/data/responses/ai_image_generated.dart';
+import 'package:base/domain/data/responses/ai_image_generated.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:base/app/utils/app_haptics.dart';
-import 'package:base/data/responses/ai_image_generated.dart';
+import 'package:base/domain/data/responses/ai_image_generated.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/app_loading_indicator.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/buttons.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/eight_way_swipe_detector.dart';

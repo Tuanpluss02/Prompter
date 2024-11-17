@@ -1,8 +1,8 @@
 import 'package:base/app/utils/snackbar.dart';
-import 'package:base/base/base_controller.dart';
-import 'package:base/data/local/network_exceptions.dart';
-import 'package:base/data/repositories/cici_repository.dart';
-import 'package:base/data/responses/ai_image_generated.dart';
+import 'package:base/domain/data/local/network_exceptions.dart';
+import 'package:base/domain/data/repositories/cici_repository.dart';
+import 'package:base/domain/data/responses/ai_image_generated.dart';
+import 'package:base/presentation/base/base_controller.dart';
 import 'package:get/get.dart';
 
 class PhotoGalleryController extends BaseController {

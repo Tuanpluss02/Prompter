@@ -1,9 +1,9 @@
-import 'package:base/data/responses/base_response.dart';
+import 'package:base/domain/data/responses/base_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'network_exceptions.dart';
 
-part '../../generated/data/local/api_result.freezed.dart';
+part '../../../generated/domain/data/local/api_result.freezed.dart';
 
 @freezed
 abstract class ApiResult with _$ApiResult {

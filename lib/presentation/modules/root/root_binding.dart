@@ -1,4 +1,4 @@
-import 'package:base/data/repositories/cici_repository.dart';
+import 'package:base/domain/data/repositories/cici_repository.dart';
 import 'package:base/presentation/modules/account/account_controller.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_controller.dart';

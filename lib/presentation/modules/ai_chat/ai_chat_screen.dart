@@ -2,7 +2,7 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/constants/app_enums.dart';
 import 'package:base/app/constants/app_text_styles.dart';
-import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:chatview/chatview.dart';

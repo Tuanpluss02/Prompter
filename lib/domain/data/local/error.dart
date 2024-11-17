@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part '../../generated/data/local/error.g.dart';
+part '../../../generated/domain/data/local/error.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ErrorModel {

@@ -1,7 +1,7 @@
-import 'package:base/data/local/api_result.dart';
-import 'package:base/data/local/network_exceptions.dart';
-import 'package:base/data/responses/base_response.dart';
-import 'package:base/services/dio_client.dart';
+import 'package:base/domain/data/local/api_result.dart';
+import 'package:base/domain/data/local/network_exceptions.dart';
+import 'package:base/domain/data/responses/base_response.dart';
+import 'package:base/domain/services/dio_client.dart';
 import 'package:dio/dio.dart';
 
 abstract class BaseRepository {

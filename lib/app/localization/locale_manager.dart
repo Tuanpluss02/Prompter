@@ -1,6 +1,6 @@
+import 'package:base/domain/data/local/app_storage.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:base/data/local/app_storage.dart';
 import 'package:get/get.dart';
 
 class LanguageOption {

@@ -1,4 +1,4 @@
-import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/photo_gallery/components/photo_gallery_grid.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';

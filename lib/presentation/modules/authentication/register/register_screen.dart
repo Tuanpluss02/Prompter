@@ -1,7 +1,7 @@
 import 'package:base/app/constants/app_assets_path.dart';
 import 'package:base/app/constants/app_color.dart';
 import 'package:base/app/utils/validator.dart';
-import 'package:base/base/base_screen.dart';
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';

@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'error.dart';
 
-part '../../generated/data/local/network_exceptions.freezed.dart';
+part '../../../generated/domain/data/local/network_exceptions.freezed.dart';
 
 @freezed
 abstract class NetworkExceptions with _$NetworkExceptions {
