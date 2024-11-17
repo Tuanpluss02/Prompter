@@ -75,7 +75,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle s16w700 = TextStyle(
+  static TextStyle s16w700 = GoogleFonts.manrope(
     fontSize: 16,
     fontWeight: FontWeight.w700,
   );

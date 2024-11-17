@@ -23,20 +23,17 @@ class PostView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildPostAuthor(),
-          const SizedBox(height: 10),
-          _buildPostText(),
-          _buildPostMedia(),
-          const SizedBox(height: 10),
-          _buildPostReact(),
-          Divider(),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildPostAuthor(),
+        const SizedBox(height: 10),
+        _buildPostText(),
+        _buildPostMedia(),
+        const SizedBox(height: 10),
+        _buildPostReact(),
+        Divider(),
+      ],
     );
   }
 
