@@ -24,20 +24,4 @@ class UserEntity with _$UserEntity {
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => _$UserEntityFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'displayName': displayName,
-        'username': username,
-        'email': email,
-        'profileImage': profileImage,
-        'bio': bio,
-        'followers': followers,
-        'following': following,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt,
-        'postCount': postCount,
-        'likeCount': likeCount,
-      };
 }

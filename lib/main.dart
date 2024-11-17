@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:base/common/app_links/app_links_handler.dart';
 import 'package:base/common/config/app_binding.dart';
 import 'package:base/common/config/app_theme.dart';
-import 'package:base/di.dart';
+import 'package:base/dependency_injection.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:error_stack/error_stack.dart';
