@@ -45,7 +45,7 @@ class HomeScreen extends BaseScreen<HomeController> {
           Obx(() => controller.newsFeed.isNotEmpty
               ? SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => PostView(post: controller.newsFeed[index]),
+                    (context, index) => PostView(news: controller.newsFeed[index]),
                     childCount: controller.newsFeed.length,
                   ),
                 )

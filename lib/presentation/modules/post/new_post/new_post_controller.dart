@@ -6,6 +6,8 @@ import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +31,7 @@ class NewPostController extends BaseController {
   NewPostController({required this.action});
   final ImagePicker picker = ImagePicker();
   var postImages = <XFile>[].obs;
-  var hideLinkPreview = false.obs;
+  var hideLinkPreview = true.obs;
   onSelectImage() async {
     final hasPermission = await checkAndRequestPermission(permission: Permission.photos);
     if (!hasPermission) return;
@@ -55,13 +57,14 @@ class NewPostController extends BaseController {
       PostEntity post = PostEntity(
         content: textController.text.trim(),
         images: imageUrls,
+        authorId: appProvider.user.value.id,
       );
-      return await _postService.createPost(post, appProvider.user.value);
+      return await _postService.createPost(post);
     }
 
-    CallApiWidget.showLoading(api: process()).then((value) {
-      showSnackBar(title: 'Post created successfully');
-      Get.back();
-    });
+    final newPost = await CallApiWidget.showLoading<PostEntity>(api: process());
+    Get.find<HomeController>().addNewPost(newPost);
+    showSnackBar(title: 'Post created successfully');
+    Get.until((route) => route.settings.name == AppRoutes.root);
   }
 }

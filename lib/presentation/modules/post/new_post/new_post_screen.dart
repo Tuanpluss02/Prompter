@@ -111,53 +111,57 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   Container _buildImagePreview() {
     return Container(
       padding: const EdgeInsets.only(top: 10),
-      height: Get.width * 0.5,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: controller.postImages.asMap().entries.map((e) {
-          final index = e.key;
-          final image = File(e.value.path);
-          return Stack(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: AppImage(image: FileImage(image)),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: controller.postImages.length.isEqual(1) ? Get.width * 0.7 : Get.width * 0.5,
+        ),
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: controller.postImages.asMap().entries.map((e) {
+            final index = e.key;
+            final image = File(e.value.path);
+            return Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: AppImage(image: FileImage(image)),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 5,
-                right: 20,
-                child: ScaleButton(
-                  onTap: () => controller.onRemoveImage(index),
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                      size: 15,
+                Positioned(
+                  top: 5,
+                  right: 20,
+                  child: ScaleButton(
+                    onTap: () => controller.onRemoveImage(index),
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                        size: 15,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
-        }).toList(),
+              ],
+            );
+          }).toList(),
+        ),
       ),
     );
   }
 
-  Padding _buildLinkPreview() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Visibility(
-        visible: !controller.hideLinkPreview.value,
+  _buildLinkPreview() {
+    return Visibility(
+      visible: !controller.hideLinkPreview.value,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
             AnyLinkPreview(

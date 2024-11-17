@@ -3,7 +3,6 @@ import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
 import 'package:base/common/utils/log.dart';
-import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
@@ -17,9 +16,9 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class PostView extends GetView<HomeController> {
-  const PostView({super.key, required this.post});
+  const PostView({super.key, required this.news});
 
-  final PostEntity post;
+  final PostNewsFeed news;
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +38,26 @@ class PostView extends GetView<HomeController> {
 
   _buildPostMedia() {
     return Visibility(
-      visible: (post.images?.isNotEmpty ?? false),
+      visible: (news.post.images?.isNotEmpty ?? false),
       child: Container(
         padding: const EdgeInsets.only(top: 10),
-        height: Get.width * 0.5,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: post.images?.length,
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: AppImage(image: NetworkImage(post.images![index])),
-              ),
-            );
-          },
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: Get.width * 0.6,
+          ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: news.post.images?.length,
+            itemBuilder: (context, index) {
+              return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: AppImage(image: NetworkImage(news.post.images![index])),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -85,7 +88,7 @@ class PostView extends GetView<HomeController> {
               children: [
                 SvgPicture.asset(SvgPath.icHeart),
                 const SizedBox(width: 5),
-                Text(post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
               ],
             ),
           ),
@@ -96,7 +99,7 @@ class PostView extends GetView<HomeController> {
               children: [
                 SvgPicture.asset(SvgPath.icComment),
                 const SizedBox(width: 5),
-                Text(post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
               ],
             ),
           ),
@@ -111,54 +114,57 @@ class PostView extends GetView<HomeController> {
   }
 
   _buildPostText() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ReadMoreText(
-        post.content ?? '',
-        trimMode: TrimMode.Line,
-        trimLines: (post.images?.isNotEmpty ?? false) ? 3 : 5,
-        annotations: [
-          Annotation(
-            regExp: RegExp(r'#([a-zA-Z0-9_]+)'),
-            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
-              text: text,
-              style: textStyle?.copyWith(color: Colors.blue),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Log.console('Hashtag tapped');
-                },
+    return Visibility(
+      visible: (news.post.content?.isNotEmpty ?? false),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: ReadMoreText(
+          news.post.content ?? '',
+          trimMode: TrimMode.Line,
+          trimLines: (news.post.images?.isNotEmpty ?? false) ? 3 : 5,
+          annotations: [
+            Annotation(
+              regExp: RegExp(r'#([a-zA-Z0-9_]+)'),
+              spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+                text: text,
+                style: textStyle?.copyWith(color: Colors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Log.console('Hashtag tapped');
+                  },
+              ),
             ),
-          ),
-          Annotation(
-            regExp: RegExp(r'<@(\d+)>'),
-            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
-              text: '@User123',
-              style: textStyle?.copyWith(color: Colors.green),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  Log.console('User123 tapped');
-                },
+            Annotation(
+              regExp: RegExp(r'<@(\d+)>'),
+              spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+                text: '@User123',
+                style: textStyle?.copyWith(color: Colors.green),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Log.console('User123 tapped');
+                  },
+              ),
             ),
-          ),
-          Annotation(
-            regExp: RegExp(r"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@%_\+~#?&//=]*)"),
-            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
-              text: text,
-              style: textStyle?.copyWith(color: Colors.blue),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  launchUrl(Uri.parse(text));
-                },
+            Annotation(
+              regExp: RegExp(r"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@%_\+~#?&//=]*)"),
+              spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+                text: text,
+                style: textStyle?.copyWith(color: Colors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launchUrl(Uri.parse(text));
+                  },
+              ),
             ),
+          ],
+          style: GoogleFonts.poppins(
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
           ),
-        ],
-        style: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.w300,
+          textAlign: TextAlign.left,
+          lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
-        textAlign: TextAlign.left,
-        lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-        moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -190,15 +196,15 @@ class PostView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              post.authorDisplayName ?? '',
+              news.author.displayName ?? '',
               style: AppTextStyles.s16w700,
             ),
             Text(
-              '@${post.authorUsername}',
+              '@${news.author.username}',
               style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
             ),
             Text(
-              timeago.format(post.createdAt ?? DateTime.now()),
+              timeago.format(news.post.createdAt ?? DateTime.now()),
               style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
             ),
           ],

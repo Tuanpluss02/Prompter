@@ -1,7 +1,6 @@
 import 'package:base/common/constants/firebase_collection_keys.dart';
 import 'package:base/common/utils/generate_id.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
-import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -14,18 +13,11 @@ class PostService extends GetxService {
   /// This method creates a new post with the given userId, content, and optional imageUrl.
   /// It sets the initial values for the post's userId, content, imageUrl, likes, commentsCount, createdAt, and updatedAt.
   /// It also increments the postCount of the user who created the post.
-  Future<PostEntity> createPost(PostEntity newpost, UserEntity author) async {
+  Future<PostEntity> createPost(PostEntity newpost) async {
     if (newpost.id == null || newpost.id!.isEmpty) {
       newpost = newpost.copyWith(id: generateUniqueId());
     }
-
-    newpost = newpost.copyWith(
-      authorAvatarUrl: author.profileImage,
-      createdAt: DateTime.now(),
-      authorId: author.id,
-      authorDisplayName: author.displayName,
-      authorUsername: author.username,
-    );
+    newpost = newpost.copyWith(createdAt: DateTime.now());
     final postRef = _postCollection.doc(newpost.id);
     await postRef.set(newpost.toJson());
     return await getPostById(newpost.id!);
@@ -42,7 +34,7 @@ class PostService extends GetxService {
   }
 
   Future<List<PostEntity>> getNewsFeed() async {
-    final postsSnapshot = await _postCollection.get();
+    final postsSnapshot = await _postCollection.orderBy('createdAt', descending: true).get();
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
   }
 
