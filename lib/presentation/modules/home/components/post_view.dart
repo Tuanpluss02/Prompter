@@ -83,10 +83,10 @@ class PostView extends GetView<HomeController> {
       child: Row(
         children: [
           ScaleButton(
-            onTap: () {},
+            onTap: () => controller.likePost(news),
             child: Row(
               children: [
-                SvgPicture.asset(SvgPath.icHeart),
+                SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
                 const SizedBox(width: 5),
                 Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
               ],

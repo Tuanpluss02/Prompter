@@ -38,12 +38,15 @@ mixin _$UserEntity {
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UserEntityCopyWith<UserEntity> get copyWith => throw _privateConstructorUsedError;
+  $UserEntityCopyWith<UserEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserEntityCopyWith<$Res> {
-  factory $UserEntityCopyWith(UserEntity value, $Res Function(UserEntity) then) = _$UserEntityCopyWithImpl<$Res, UserEntity>;
+  factory $UserEntityCopyWith(
+          UserEntity value, $Res Function(UserEntity) then) =
+      _$UserEntityCopyWithImpl<$Res, UserEntity>;
   @useResult
   $Res call(
       {String? id,
@@ -60,7 +63,8 @@ abstract class $UserEntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity> implements $UserEntityCopyWith<$Res> {
+class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
+    implements $UserEntityCopyWith<$Res> {
   _$UserEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -135,8 +139,11 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity> implements $UserEn
 }
 
 /// @nodoc
-abstract class _$$UserEntityImplCopyWith<$Res> implements $UserEntityCopyWith<$Res> {
-  factory _$$UserEntityImplCopyWith(_$UserEntityImpl value, $Res Function(_$UserEntityImpl) then) = __$$UserEntityImplCopyWithImpl<$Res>;
+abstract class _$$UserEntityImplCopyWith<$Res>
+    implements $UserEntityCopyWith<$Res> {
+  factory _$$UserEntityImplCopyWith(
+          _$UserEntityImpl value, $Res Function(_$UserEntityImpl) then) =
+      __$$UserEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -154,8 +161,12 @@ abstract class _$$UserEntityImplCopyWith<$Res> implements $UserEntityCopyWith<$R
 }
 
 /// @nodoc
-class __$$UserEntityImplCopyWithImpl<$Res> extends _$UserEntityCopyWithImpl<$Res, _$UserEntityImpl> implements _$$UserEntityImplCopyWith<$Res> {
-  __$$UserEntityImplCopyWithImpl(_$UserEntityImpl _value, $Res Function(_$UserEntityImpl) _then) : super(_value, _then);
+class __$$UserEntityImplCopyWithImpl<$Res>
+    extends _$UserEntityCopyWithImpl<$Res, _$UserEntityImpl>
+    implements _$$UserEntityImplCopyWith<$Res> {
+  __$$UserEntityImplCopyWithImpl(
+      _$UserEntityImpl _value, $Res Function(_$UserEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -200,11 +211,11 @@ class __$$UserEntityImplCopyWithImpl<$Res> extends _$UserEntityCopyWithImpl<$Res
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
       followers: freezed == followers
-          ? _value._followers
+          ? _value.followers
           : followers // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       following: freezed == following
-          ? _value._following
+          ? _value.following
           : following // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       createdAt: freezed == createdAt
@@ -234,15 +245,14 @@ class _$UserEntityImpl implements _UserEntity {
       this.email = '',
       this.profileImage = '',
       this.bio = '',
-      final List<String>? followers = const <String>[],
-      final List<String>? following = const <String>[],
+      this.followers = const <String>[],
+      this.following = const <String>[],
       this.createdAt = null,
       this.postCount = 0,
-      this.likeCount = 0})
-      : _followers = followers,
-        _following = following;
+      this.likeCount = 0});
 
-  factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) => _$$UserEntityImplFromJson(json);
+  factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserEntityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -262,28 +272,12 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   @JsonKey()
   final String? bio;
-  final List<String>? _followers;
   @override
   @JsonKey()
-  List<String>? get followers {
-    final value = _followers;
-    if (value == null) return null;
-    if (_followers is EqualUnmodifiableListView) return _followers;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _following;
+  final List<String>? followers;
   @override
   @JsonKey()
-  List<String>? get following {
-    final value = _following;
-    if (value == null) return null;
-    if (_following is EqualUnmodifiableListView) return _following;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<String>? following;
   @override
   @JsonKey()
   final DateTime? createdAt;
@@ -305,29 +299,47 @@ class _$UserEntityImpl implements _UserEntity {
         (other.runtimeType == runtimeType &&
             other is _$UserEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.displayName, displayName) || other.displayName == displayName) &&
-            (identical(other.username, username) || other.username == username) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.username, username) ||
+                other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.profileImage, profileImage) || other.profileImage == profileImage) &&
+            (identical(other.profileImage, profileImage) ||
+                other.profileImage == profileImage) &&
             (identical(other.bio, bio) || other.bio == bio) &&
-            const DeepCollectionEquality().equals(other._followers, _followers) &&
-            const DeepCollectionEquality().equals(other._following, _following) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt) &&
-            (identical(other.postCount, postCount) || other.postCount == postCount) &&
-            (identical(other.likeCount, likeCount) || other.likeCount == likeCount));
+            const DeepCollectionEquality().equals(other.followers, followers) &&
+            const DeepCollectionEquality().equals(other.following, following) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.postCount, postCount) ||
+                other.postCount == postCount) &&
+            (identical(other.likeCount, likeCount) ||
+                other.likeCount == likeCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, displayName, username, email, profileImage, bio, const DeepCollectionEquality().hash(_followers), const DeepCollectionEquality().hash(_following),
-      createdAt, postCount, likeCount);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      displayName,
+      username,
+      email,
+      profileImage,
+      bio,
+      const DeepCollectionEquality().hash(followers),
+      const DeepCollectionEquality().hash(following),
+      createdAt,
+      postCount,
+      likeCount);
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith => __$$UserEntityImplCopyWithImpl<_$UserEntityImpl>(this, _$identity);
+  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
+      __$$UserEntityImplCopyWithImpl<_$UserEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -351,7 +363,8 @@ abstract class _UserEntity implements UserEntity {
       final int? postCount,
       final int? likeCount}) = _$UserEntityImpl;
 
-  factory _UserEntity.fromJson(Map<String, dynamic> json) = _$UserEntityImpl.fromJson;
+  factory _UserEntity.fromJson(Map<String, dynamic> json) =
+      _$UserEntityImpl.fromJson;
 
   @override
   String? get id;
@@ -380,5 +393,6 @@ abstract class _UserEntity implements UserEntity {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$UserEntityImplCopyWith<_$UserEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

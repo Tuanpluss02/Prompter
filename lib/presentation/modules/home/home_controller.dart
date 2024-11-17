@@ -20,14 +20,30 @@ class HomeController extends BaseController {
     super.onReady();
   }
 
-  getNewsFeed() async {
+  getNewsFeed({bool mustRefresh = false}) async {
     final List<PostEntity> posts = await _postService.getNewsFeed();
     newsFeed.clear();
     for (final post in posts) {
       final author = await _userService.getUserById(post.authorId ?? '');
       newsFeed.add((post: post, author: author!));
     }
+    if (mustRefresh) newsFeed.refresh();
+  }
+
+  likePost(PostNewsFeed postToLike) async {
+    final isLiked = isPostLiked(postToLike);
+    final index = newsFeed.indexWhere((element) => element.post.id == postToLike.post.id);
+    if (isLiked) {
+      newsFeed[index].post.likes?.remove(appProvider.user.value.id);
+    } else {
+      newsFeed[index].post.likes?.add(appProvider.user.value.id ?? '');
+    }
+    await _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
     newsFeed.refresh();
+  }
+
+  bool isPostLiked(PostNewsFeed news) {
+    return news.post.likes?.contains(appProvider.user.value.id) ?? false;
   }
 
   addNewPost(PostEntity post) async {

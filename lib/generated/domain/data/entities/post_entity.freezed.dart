@@ -159,15 +159,15 @@ class __$$PostEntityImplCopyWithImpl<$Res>
           : authorId // ignore: cast_nullable_to_non_nullable
               as String?,
       images: freezed == images
-          ? _value._images
+          ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       comments: freezed == comments
-          ? _value._comments
+          ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       likes: freezed == likes
-          ? _value._likes
+          ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       content: freezed == content
@@ -189,14 +189,11 @@ class _$PostEntityImpl implements _PostEntity {
   const _$PostEntityImpl(
       {this.id = '',
       this.authorId = '',
-      final List<String>? images = const <String>[],
-      final List<String>? comments = const <String>[],
-      final List<String>? likes = const <String>[],
+      this.images = const <String>[],
+      this.comments = const <String>[],
+      this.likes = const <String>[],
       this.content = '',
-      this.createdAt = null})
-      : _images = images,
-        _comments = comments,
-        _likes = likes;
+      this.createdAt = null});
 
   factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$PostEntityImplFromJson(json);
@@ -207,39 +204,15 @@ class _$PostEntityImpl implements _PostEntity {
   @override
   @JsonKey()
   final String? authorId;
-  final List<String>? _images;
   @override
   @JsonKey()
-  List<String>? get images {
-    final value = _images;
-    if (value == null) return null;
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _comments;
+  final List<String>? images;
   @override
   @JsonKey()
-  List<String>? get comments {
-    final value = _comments;
-    if (value == null) return null;
-    if (_comments is EqualUnmodifiableListView) return _comments;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _likes;
+  final List<String>? comments;
   @override
   @JsonKey()
-  List<String>? get likes {
-    final value = _likes;
-    if (value == null) return null;
-    if (_likes is EqualUnmodifiableListView) return _likes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<String>? likes;
   @override
   @JsonKey()
   final String? content;
@@ -260,9 +233,9 @@ class _$PostEntityImpl implements _PostEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.authorId, authorId) ||
                 other.authorId == authorId) &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
-            const DeepCollectionEquality().equals(other._comments, _comments) &&
-            const DeepCollectionEquality().equals(other._likes, _likes) &&
+            const DeepCollectionEquality().equals(other.images, images) &&
+            const DeepCollectionEquality().equals(other.comments, comments) &&
+            const DeepCollectionEquality().equals(other.likes, likes) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -274,9 +247,9 @@ class _$PostEntityImpl implements _PostEntity {
       runtimeType,
       id,
       authorId,
-      const DeepCollectionEquality().hash(_images),
-      const DeepCollectionEquality().hash(_comments),
-      const DeepCollectionEquality().hash(_likes),
+      const DeepCollectionEquality().hash(images),
+      const DeepCollectionEquality().hash(comments),
+      const DeepCollectionEquality().hash(likes),
       content,
       createdAt);
 

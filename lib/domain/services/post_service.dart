@@ -47,17 +47,17 @@ class PostService extends GetxService {
   ///
   /// This method allows a user to like a post.
   /// It updates the likes collection of the post and increments the likes count of the post.
-  Future<void> likePost(String userId, String postId) async {
-    final likeRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.likesCollection).doc(userId);
-
-    await likeRef.set({
-      'userId': _userCollection.doc(userId),
-      'createdAt': FieldValue.serverTimestamp(),
-    });
-
+  Future<void> updatePostLike(String userId, String postId) async {
+    var post = await getPostById(postId);
+    if (post.likes?.contains(userId) ?? false) {
+      final index = post.likes!.indexWhere((element) => element == userId);
+      post.likes!.removeAt(index);
+    } else {
+      post.likes!.add(userId);
+    }
     final postRef = _postCollection.doc(postId);
     await postRef.update({
-      'likes': FieldValue.increment(1),
+      'likes': post.likes,
     });
   }
 
