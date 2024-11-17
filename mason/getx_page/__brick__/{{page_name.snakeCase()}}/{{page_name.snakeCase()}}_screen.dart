@@ -1,5 +1,5 @@
+import 'package:base/presentation/base/base_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:base/base/base_screen.dart';
 
 import '{{page_name.snakeCase()}}_controller.dart';
 

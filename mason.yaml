@@ -3,7 +3,7 @@
 # To learn more, visit https://docs.brickhub.dev.
 bricks:
   getx_page:
-    path: ./mason_script/getx_page/
+    path: ./mason/getx_page/
   # Bricks can be imported via version constraint from a registry.
   # Uncomment the following line to import the "hello" brick from BrickHub.
   # hello: 0.1.0+1
