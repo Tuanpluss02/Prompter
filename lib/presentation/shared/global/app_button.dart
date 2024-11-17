@@ -1,4 +1,5 @@
 import 'package:base/common/constants/app_text_styles.dart';
+import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 
 enum ButtonType { primary, secondary }
@@ -8,7 +9,7 @@ class AppButton extends StatelessWidget {
     super.key,
     this.type = ButtonType.primary,
     required this.text,
-    this.onTap,
+    required this.onTap,
     this.textStyle,
     this.height,
     this.width,
@@ -18,7 +19,7 @@ class AppButton extends StatelessWidget {
 
   final ButtonType type;
   final String text;
-  final Function()? onTap;
+  final Function() onTap;
   final TextStyle? textStyle;
   final double? height;
   final double? width;
@@ -27,7 +28,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return ScaleButton(
       onTap: onTap,
       child: Container(
         height: height,

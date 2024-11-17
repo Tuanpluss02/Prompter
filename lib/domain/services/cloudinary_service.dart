@@ -33,6 +33,23 @@ class CloudinaryService {
       return null;
     }
   }
+
+  Future<List<String>> uploadMultipleImages(List<File> files) async {
+    final List<String> imageLinks = [];
+    for (var file in files) {
+      final response = await cloudinary.upload(
+        file: file.path,
+        fileBytes: file.readAsBytesSync(),
+        resourceType: CloudinaryResourceType.image,
+        folder: 'images',
+        fileName: generateUniqueId(),
+      );
+      if (response.isSuccessful) {
+        imageLinks.add(response.secureUrl ?? '');
+      }
+    }
+    return imageLinks;
+  }
 }
 
 Future<File> _convertUint8ListToFile(Uint8List bytes, String fileName) async {

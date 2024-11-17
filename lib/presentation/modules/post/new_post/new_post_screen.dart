@@ -8,6 +8,7 @@ import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
+import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,6 +23,22 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   bool get wrapWithSafeArea => true;
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
+  Widget? buildBottomNavigationBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: AppButton(
+        text: 'Post',
+        height: 50,
+        onTap: () => controller.onTapPost(),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+      ),
+    );
+  }
+
+  @override
   Widget buildScreen(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -33,6 +50,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           _buildPostMediaContent(),
           SizedBox(height: 10),
           _buildPostInputOption(),
+          SizedBox(height: 70),
         ],
       ),
     );
@@ -43,14 +61,15 @@ class NewPostScreen extends BaseScreen<NewPostController> {
       padding: const EdgeInsets.only(left: 90),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxHeight: Get.width * 0.4,
+          maxHeight: Get.width * 0.6,
         ),
         child: TextField(
+            controller: controller.textController,
             maxLines: null,
             maxLength: 5000,
             cursorColor: Colors.white,
             keyboardType: TextInputType.multiline,
-            style: AppTextStyles.s14w600.copyWith(color: Colors.white),
+            style: AppTextStyles.s14w400.copyWith(color: Colors.white),
             decoration: InputDecoration(
               counterText: '',
               hintText: 'What\'s news',
@@ -111,10 +130,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                 top: 5,
                 right: 20,
                 child: ScaleButton(
-                  onTap: () {
-                    controller.postImages.removeAt(index);
-                    controller.postImages.refresh();
-                  },
+                  onTap: () => controller.onRemoveImage(index),
                   child: Container(
                     width: 20,
                     height: 20,
@@ -145,7 +161,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
         child: Stack(
           children: [
             AnyLinkPreview(
-              link: "https://vardaan.app/",
+              link: "https://facebook.com/",
               removeElevation: true,
             ),
             Positioned(
