@@ -9,7 +9,7 @@ import 'package:base/presentation/modules/photo_gallery/widgets/eight_way_swipe_
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_url_img_viewer.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/unsplash_photo.dart';
-import 'package:base/presentation/widgets/global/app_logic.dart';
+import 'package:base/presentation/shared/global/app_logic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

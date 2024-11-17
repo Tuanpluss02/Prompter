@@ -1,5 +1,5 @@
 import 'package:base/app/utils/snackbar.dart';
-import 'package:base/presentation/widgets/call_api_widget.dart';
+import 'package:base/presentation/shared/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

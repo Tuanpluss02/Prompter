@@ -1,4 +1,4 @@
-import 'package:base/presentation/widgets/global/app_image.dart';
+import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 
 class PhotoDisplay extends StatelessWidget {

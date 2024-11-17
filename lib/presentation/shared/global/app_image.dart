@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:base/presentation/modules/photo_gallery/widgets/app_loading_indicator.dart';
-import 'package:base/presentation/widgets/retry_image.dart';
+import 'package:base/presentation/shared/retry_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';

@@ -1,7 +1,7 @@
 import 'package:base/app/utils/snackbar.dart';
 import 'package:base/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
-import 'package:base/presentation/widgets/call_api_widget.dart';
+import 'package:base/presentation/shared/call_api_widget.dart';
 import 'package:base/services/auth_service.dart';
 import 'package:base/services/user_service.dart';
 import 'package:flutter/material.dart';

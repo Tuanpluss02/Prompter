@@ -4,7 +4,7 @@ import 'package:base/app/constants/app_enums.dart';
 import 'package:base/app/constants/app_text_styles.dart';
 import 'package:base/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
-import 'package:base/presentation/widgets/global/app_back_button.dart';
+import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
