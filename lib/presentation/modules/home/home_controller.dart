@@ -1,16 +1,24 @@
-import 'package:base/domain/services/auth_service.dart';
+import 'package:base/common/constants/app_strings.dart';
+import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/presentation/base/base_controller.dart';
-import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeController extends BaseController {
-  final AuthService _authService = Get.find<AuthService>();
-
   final RefreshController refreshController = RefreshController();
-
-  void signOut() {
-    _authService.signOut();
-  }
+  final List<PostEntity> posts = [
+    PostEntity(
+      id: '1',
+      authorId: 'Dw5wgm3HeiaFuOj4Daf6c03h7Xj1',
+      authorAvatarUrl: AppStrings.defaultNetworkAvatar,
+      authorDisplayName: 'Tuan Do',
+      authorUsername: 'tuanpluss02',
+      images: ['https://picsum.photos/200/300'],
+      likeCount: 10,
+      comments: [],
+      content: 'This is a post content',
+      createdAt: DateTime.now(),
+    ),
+  ];
 
   void onRefresh() async {
     await Future.delayed(const Duration(seconds: 2));

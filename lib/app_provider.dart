@@ -1,5 +1,5 @@
 import 'package:base/common/utils/log.dart';
-import 'package:base/domain/data/entities/user.dart';
+import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:get/get.dart';
@@ -20,7 +20,12 @@ class AppProvider {
 
   getUserInfomation({String? userId}) async {
     if (isSignedIn) {
-      user.value = await _userService.getUserInfo(userId ?? _authService.currentUser!.uid);
+      final UserEntity? userData = await _userService.getUserInfo(userId ?? _authService.currentUser!.uid);
+      if (userData == null) {
+        Log.console('User not found');
+        return;
+      }
+      user.value = userData;
       Log.console('Got user info: ${user.value.toJson()}');
     }
   }

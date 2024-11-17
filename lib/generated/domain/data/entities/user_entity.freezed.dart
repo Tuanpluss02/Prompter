@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of '../../../../domain/data/entities/user.dart';
+part of '../../../../domain/data/entities/user_entity.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -28,8 +28,7 @@ mixin _$UserEntity {
   String? get bio => throw _privateConstructorUsedError;
   List<String>? get followers => throw _privateConstructorUsedError;
   List<String>? get following => throw _privateConstructorUsedError;
-  String? get createdAt => throw _privateConstructorUsedError;
-  String? get updatedAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   int? get postCount => throw _privateConstructorUsedError;
   int? get likeCount => throw _privateConstructorUsedError;
 
@@ -58,8 +57,7 @@ abstract class $UserEntityCopyWith<$Res> {
       String? bio,
       List<String>? followers,
       List<String>? following,
-      String? createdAt,
-      String? updatedAt,
+      DateTime? createdAt,
       int? postCount,
       int? likeCount});
 }
@@ -88,7 +86,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? followers = freezed,
     Object? following = freezed,
     Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? postCount = freezed,
     Object? likeCount = freezed,
   }) {
@@ -128,11 +125,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       postCount: freezed == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
@@ -162,8 +155,7 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? bio,
       List<String>? followers,
       List<String>? following,
-      String? createdAt,
-      String? updatedAt,
+      DateTime? createdAt,
       int? postCount,
       int? likeCount});
 }
@@ -190,7 +182,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? followers = freezed,
     Object? following = freezed,
     Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? postCount = freezed,
     Object? likeCount = freezed,
   }) {
@@ -230,11 +221,7 @@ class __$$UserEntityImplCopyWithImpl<$Res>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
       postCount: freezed == postCount
           ? _value.postCount
           : postCount // ignore: cast_nullable_to_non_nullable
@@ -260,8 +247,7 @@ class _$UserEntityImpl implements _UserEntity {
       this.bio = '',
       final List<String>? followers = const <String>[],
       final List<String>? following = const <String>[],
-      this.createdAt = '',
-      this.updatedAt = '',
+      this.createdAt = null,
       this.postCount = 0,
       this.likeCount = 0})
       : _followers = followers,
@@ -312,10 +298,7 @@ class _$UserEntityImpl implements _UserEntity {
 
   @override
   @JsonKey()
-  final String? createdAt;
-  @override
-  @JsonKey()
-  final String? updatedAt;
+  final DateTime? createdAt;
   @override
   @JsonKey()
   final int? postCount;
@@ -325,7 +308,7 @@ class _$UserEntityImpl implements _UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, displayName: $displayName, username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, updatedAt: $updatedAt, postCount: $postCount, likeCount: $likeCount)';
+    return 'UserEntity(id: $id, displayName: $displayName, username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, postCount: $postCount, likeCount: $likeCount)';
   }
 
   @override
@@ -348,8 +331,6 @@ class _$UserEntityImpl implements _UserEntity {
                 .equals(other._following, _following) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.postCount, postCount) ||
                 other.postCount == postCount) &&
             (identical(other.likeCount, likeCount) ||
@@ -369,7 +350,6 @@ class _$UserEntityImpl implements _UserEntity {
       const DeepCollectionEquality().hash(_followers),
       const DeepCollectionEquality().hash(_following),
       createdAt,
-      updatedAt,
       postCount,
       likeCount);
 
@@ -399,8 +379,7 @@ abstract class _UserEntity implements UserEntity {
       final String? bio,
       final List<String>? followers,
       final List<String>? following,
-      final String? createdAt,
-      final String? updatedAt,
+      final DateTime? createdAt,
       final int? postCount,
       final int? likeCount}) = _$UserEntityImpl;
 
@@ -424,9 +403,7 @@ abstract class _UserEntity implements UserEntity {
   @override
   List<String>? get following;
   @override
-  String? get createdAt;
-  @override
-  String? get updatedAt;
+  DateTime? get createdAt;
   @override
   int? get postCount;
   @override
