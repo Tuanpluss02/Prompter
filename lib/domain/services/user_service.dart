@@ -1,6 +1,5 @@
-import 'package:base/app_provider.dart';
 import 'package:base/common/constants/firebase_collection_keys.dart';
-import 'package:base/domain/data/entities/user.dart';
+import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,7 @@ import 'package:get/get.dart';
 class UserService extends GetxService {
   final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
 
-  String get _createdTime => DateTime.now().toIso8601String();
+  DateTime get _createdTime => DateTime.now();
 
   /// Initializes the UserService
   /// This method is used to initialize the UserService and perform any necessary setup.
@@ -29,16 +28,14 @@ class UserService extends GetxService {
       email: user.user?.email,
       profileImage: user.user?.photoURL,
       createdAt: _createdTime,
-      updatedAt: _createdTime,
     );
     await userRef.set(newUser.toJson());
   }
 
-  Future<UserEntity> getUserInfo(String userId) async {
+  Future<UserEntity?> getUserInfo(String userId) async {
     final userDoc = await _userCollection.doc(userId).get();
     if (!userDoc.exists) {
-      Get.find<AppProvider>().signOut();
-      return const UserEntity();
+      return null;
     }
     return UserEntity.fromJson(userDoc.data()!);
   }

@@ -1,4 +1,6 @@
 import 'package:base/common/constants/firebase_collection_keys.dart';
+import 'package:base/common/utils/generate_id.dart';
+import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -11,21 +13,12 @@ class PostService extends GetxService {
   /// This method creates a new post with the given userId, content, and optional imageUrl.
   /// It sets the initial values for the post's userId, content, imageUrl, likes, commentsCount, createdAt, and updatedAt.
   /// It also increments the postCount of the user who created the post.
-  Future<void> createPost(String userId, String content, {String? imageUrl}) async {
-    await _postCollection.doc().set({
-      'userId': _userCollection.doc(userId),
-      'content': content,
-      'imageUrl': imageUrl ?? '',
-      'likes': 0,
-      'commentsCount': 0,
-      'createdAt': FieldValue.serverTimestamp(),
-      'updatedAt': FieldValue.serverTimestamp(),
-    });
-
-    final userRef = _userCollection.doc(userId);
-    await userRef.update({
-      'postCount': FieldValue.increment(1),
-    });
+  Future<void> createPost(PostEntity newpost) async {
+    if (newpost.id == null || newpost.id!.isEmpty) {
+      newpost = newpost.copyWith(id: generateUniqueId());
+    }
+    final postRef = _postCollection.doc(newpost.id);
+    await postRef.set(newpost.toJson());
   }
 
   /// Like a post

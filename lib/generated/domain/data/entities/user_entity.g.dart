@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../../../../domain/data/entities/user.dart';
+part of '../../../../domain/data/entities/user_entity.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -22,8 +22,9 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
-      createdAt: json['createdAt'] as String? ?? '',
-      updatedAt: json['updatedAt'] as String? ?? '',
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
       postCount: (json['postCount'] as num?)?.toInt() ?? 0,
       likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
     );
@@ -38,8 +39,7 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'bio': instance.bio,
       'followers': instance.followers,
       'following': instance.following,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
+      'createdAt': instance.createdAt?.toIso8601String(),
       'postCount': instance.postCount,
       'likeCount': instance.likeCount,
     };

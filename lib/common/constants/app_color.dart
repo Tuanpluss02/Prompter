@@ -108,15 +108,13 @@ class AppColors {
   static const black49454F = Color(0xFF49454F);
   static const grayF1F1F3 = Color(0xFFF1F1F3);
 
+  static const Color primaryColor = Color(0XFF076acf);
   static const Color backgroundColor = Color(0xFF131621);
   static const Color textFieldColor = Color(0XFF292c35);
   static const Color textFieldBorderColor = Color(0XFF076acf);
   static const Color textFieldBorderErrorColor = Color(0XFFf44336);
   static const Color textFieldCursorColor = Color(0XFF076acf);
-
   static const Color navigationBarColor = Color(0xFF131620);
-
-  static const Color primaryColor = Color(0XFF076acf);
-
   static const Color dialogBackgroundColor = Color(0xFF141416);
+  static const Color postBackgroundColor = Color(0xFF292c35);
 }

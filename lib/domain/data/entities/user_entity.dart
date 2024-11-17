@@ -2,8 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '../../../generated/domain/data/entities/user.freezed.dart';
-part '../../../generated/domain/data/entities/user.g.dart';
+part '../../../generated/domain/data/entities/user_entity.freezed.dart';
+part '../../../generated/domain/data/entities/user_entity.g.dart';
 
 @Freezed(fromJson: true, toJson: true)
 class UserEntity with _$UserEntity {
@@ -17,8 +17,7 @@ class UserEntity with _$UserEntity {
     @Default('') String? bio,
     @Default(<String>[]) List<String>? followers,
     @Default(<String>[]) List<String>? following,
-    @Default('') String? createdAt,
-    @Default('') String? updatedAt,
+    @Default(null) DateTime? createdAt,
     @Default(0) int? postCount,
     @Default(0) int? likeCount,
   }) = _UserEntity;
