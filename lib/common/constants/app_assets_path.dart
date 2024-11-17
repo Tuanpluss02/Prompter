@@ -24,6 +24,15 @@ class SvgPath {
 
   static const icBubble = '$_svgPath/ic_bubble.svg';
   static const icinputing = '$_svgPath/ic_inputing.svg';
+  static const icComment = '$_svgPath/ic_comment.svg';
+  static const icShare = '$_svgPath/ic_share.svg';
+  static const icHeart = '$_svgPath/ic_heart.svg';
+  static const icHeartFilled = '$_svgPath/ic_heart_filled.svg';
 }
 
 class LottiePath {}
+
+class RivePath {
+  static const _rivePath = 'assets/rives';
+  static const heart = '$_rivePath/heart.riv';
+}

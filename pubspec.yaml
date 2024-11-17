@@ -110,7 +110,6 @@ flutter:
     - assets/svgs/
     - assets/fonts/
     - assets/fonts/larsseit-font-family/
-    - assets/rives/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

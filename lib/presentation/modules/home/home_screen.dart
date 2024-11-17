@@ -1,7 +1,9 @@
+import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -76,7 +78,7 @@ class HomeScreen extends BaseScreen<HomeController> {
                       onTap: () {},
                       child: Row(
                         children: [
-                          const Icon(Icons.favorite_border),
+                          SvgPicture.asset(SvgPath.icHeart),
                           const SizedBox(width: 5),
                           Text('325', style: AppTextStyles.s14w600),
                         ],
@@ -87,7 +89,7 @@ class HomeScreen extends BaseScreen<HomeController> {
                       onTap: () {},
                       child: Row(
                         children: [
-                          const Icon(Icons.comment_outlined),
+                          SvgPicture.asset(SvgPath.icComment),
                           const SizedBox(width: 5),
                           Text('1000', style: AppTextStyles.s14w600),
                         ],
@@ -96,7 +98,7 @@ class HomeScreen extends BaseScreen<HomeController> {
                     SizedBox(width: 15),
                     GestureDetector(
                       onTap: () {},
-                      child: const Icon(Icons.share_outlined),
+                      child: SvgPicture.asset(SvgPath.icShare),
                     ),
                   ],
                 ),
