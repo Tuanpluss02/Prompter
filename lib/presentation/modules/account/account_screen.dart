@@ -1,9 +1,13 @@
-import 'package:base/app/constants/app_strings.dart';
-import 'package:base/app/utils/extension.dart';
-import 'package:base/base/base_screen.dart';
-import 'package:base/presentation/widgets/global/app_image.dart';
+import 'package:base/common/constants/app_color.dart';
+import 'package:base/common/constants/app_strings.dart';
+import 'package:base/common/constants/app_text_styles.dart';
+import 'package:base/common/utils/extension.dart';
+import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/shared/global/app_button.dart';
+import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'account_controller.dart';
 
@@ -12,92 +16,148 @@ class AccountScreen extends BaseScreen<AccountController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Container();
-    // return SingleChildScrollView(
-    //     physics: BouncingScrollPhysics(),
-    //     child: Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-    //       _buildFirstSection(),
-    //       _buildUserInfo(),
-    //     ]));
-  }
-
-  SizedBox _buildFirstSection() {
-    return SizedBox(
-      height: 230,
-      width: double.infinity,
-      child: Stack(
-        clipBehavior: Clip.none,
-        fit: StackFit.loose,
-        children: [
-          _buildBackgroundImg(),
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(begin: Alignment(0, 0.2), end: Alignment.bottomCenter, colors: [
-              Colors.transparent,
-              Colors.black.withOpacity(0.6),
-            ])),
+    return SmartRefresher(
+      controller: controller.refreshController,
+      onRefresh: controller.onRefresh,
+      child: CustomScrollView(controller: controller.scrollController, slivers: [
+        Obx(
+          () => SliverAppBar(
+            collapsedHeight: 80.0,
+            expandedHeight: 230.0,
+            leading: Visibility(
+              visible: !controller.isMyAccount,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Get.back(),
+              ),
+            ),
+            floating: false,
+            pinned: true,
+            actions: controller.isAppBarCollapsed.value
+                ? [
+                    Visibility(
+                      visible: !controller.isMyAccount,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: AppButton(
+                          text: '+ Follow',
+                          height: 30,
+                          width: 80,
+                          padding: EdgeInsets.all(4),
+                          onTap: () {},
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: !controller.isMyAccount,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+                : null,
+            flexibleSpace: FlexibleSpaceBar(
+              title: _buildAvatarName(),
+              background: _buildBackgroundImage(),
+            ),
           ),
-          _buildAvatarName(),
-        ],
-      ),
-    );
-  }
-
-  Align _buildAvatarName() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: 100.0,
-              height: 100.0,
-              decoration: BoxDecoration(
-                color: const Color(0xff7c94b6),
-                image: DecorationImage(
-                  image: NetworkImage(AppStrings.defaultNetworkAvatar),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                border: Border.all(
-                  color: Colors.white,
-                  width: 2.0,
-                ),
-              ),
-            ),
-            SizedBox(width: 20),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(text: 'Son Tung MTP\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  TextSpan(text: '@sontungmtp', style: TextStyle(fontSize: 16, color: Colors.grey)),
-                ],
-              ),
-            ),
-          ],
         ),
-      ),
+        _buildUserInfo(),
+        SliverGrid.builder(
+          itemCount: 20,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
+          itemBuilder: (context, index) {
+            return Container(
+              height: 20,
+              width: 20,
+              color: Colors.red,
+              child: Center(
+                child: Text('Item $index'),
+              ),
+            );
+          },
+        )
+
+        // Expanded(child: _buildUserPostMedia()),
+      ]),
     );
   }
 
-  AppImage _buildBackgroundImg() {
-    return AppImage(fit: BoxFit.contain, image: NetworkImage('https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg'));
+  _buildBackgroundImage() {
+    return Stack(
+      children: [
+        AppImage(fit: BoxFit.cover, image: NetworkImage(AppStrings.defaultNetworkCover)),
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment(0, 0), end: Alignment.bottomCenter, colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.9),
+          ])),
+        ),
+      ],
+    );
+  }
+
+  _buildAvatarName() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 60.0,
+          height: 60.0,
+          decoration: BoxDecoration(
+            color: const Color(0xff7c94b6),
+            image: DecorationImage(
+              image: NetworkImage(AppStrings.defaultNetworkAvatar),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            border: Border.all(
+              color: Colors.white,
+              width: 2.0,
+            ),
+          ),
+        ),
+        SizedBox(width: 20),
+        Obx(() => Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  controller.appProvider.user.value.displayName ?? '',
+                  style: AppTextStyles.s16w700,
+                ),
+                Text(
+                  '@${controller.appProvider.user.value.username}',
+                  style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                ),
+              ],
+            )),
+      ],
+    );
   }
 
   _buildUserInfo() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildReach(),
-          _buildFollowButton(),
-          Expanded(child: _buildUserPostMedia()),
-        ],
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildReach(),
+            _buildFollowButton(),
+          ],
+        ),
       ),
     );
   }
@@ -106,9 +166,9 @@ class AccountScreen extends BaseScreen<AccountController> {
     return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (count: 15000, title: 'Likes'),
-          (count: 15000, title: 'Followers'),
-          (count: 15000, title: 'Following'),
+          (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Following'),
         ].map((item) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -131,92 +191,53 @@ class AccountScreen extends BaseScreen<AccountController> {
   }
 
   _buildFollowButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          width: double.infinity,
-          height: 40,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(8),
+    return Visibility(
+      visible: controller.userId != controller.appProvider.user.value.id,
+      replacement: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(
+                '+ Follow',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+            ),
           ),
-          child: Center(
-            child: Text(
-              '+ Follow',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.edit, color: Colors.white),
+                SizedBox(width: 8),
+                Text(
+                  'Edit Profile',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ],
             ),
           ),
         ),
       ),
     );
-  }
-
-  _buildUserPostMedia() {
-    return Column(
-      children: [
-        SizedBox(
-          width: Get.width * 0.6,
-          child: TabBar(dividerColor: Colors.transparent, controller: controller.tabController, tabs: [
-            Tab(
-              child: Text('All', style: TextStyle(color: Colors.white, fontSize: 12)),
-            ),
-            Tab(
-              child: Text('Videos', style: TextStyle(color: Colors.white, fontSize: 12)),
-            ),
-            Tab(
-              child: Text('Images', style: TextStyle(color: Colors.white, fontSize: 12)),
-            ),
-          ]),
-        ),
-        SingleChildScrollView(
-          child: TabBarView(controller: controller.tabController, children: [
-            _buildAllMedia(),
-            _buildVideos(),
-            _buildImages(),
-          ]),
-        ),
-      ],
-    );
-  }
-
-  _buildAllMedia() {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
-        itemBuilder: (context, index) {
-          return Container(
-            color: Colors.grey,
-            child: Center(
-              child: Text('Item $index'),
-            ),
-          );
-        });
-  }
-
-  _buildVideos() {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
-        itemBuilder: (context, index) {
-          return Container(
-            color: Colors.grey,
-            child: Center(
-              child: Text('Item $index'),
-            ),
-          );
-        });
-  }
-
-  _buildImages() {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
-        itemBuilder: (context, index) {
-          return Container(
-            color: Colors.grey,
-            child: Center(
-              child: Text('Item $index'),
-            ),
-          );
-        });
   }
 }

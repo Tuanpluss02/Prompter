@@ -5,6 +5,7 @@ import 'account_controller.dart';
 class AccountBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AccountController());
+    var userId = Get.parameters['userId'];
+    Get.lazyPut(() => AccountController(userId: userId));
   }
 }
