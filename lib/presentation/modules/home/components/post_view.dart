@@ -2,13 +2,16 @@ import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
+import 'package:base/common/utils/log.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:readmore/readmore.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class PostView extends GetView<HomeController> {
@@ -19,65 +22,118 @@ class PostView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAvatarName(),
-              Spacer(),
-              GestureDetector(onTap: () {}, child: const Icon(Icons.more_vert)),
-            ],
-          ),
-        ),
+        _buildPostAuthor(),
         const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SelectableText(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ),
+        _buildPostText(),
         const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              ScaleButton(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    SvgPicture.asset(SvgPath.icHeart),
-                    const SizedBox(width: 5),
-                    Text(post.likeCount?.toShortString() ?? '', style: AppTextStyles.s14w600),
-                  ],
-                ),
-              ),
-              SizedBox(width: 15),
-              GestureDetector(
-                onTap: () {},
-                child: Row(
-                  children: [
-                    SvgPicture.asset(SvgPath.icComment),
-                    const SizedBox(width: 5),
-                    Text(post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-                  ],
-                ),
-              ),
-              SizedBox(width: 15),
-              GestureDetector(
-                onTap: () {},
-                child: SvgPicture.asset(SvgPath.icShare),
-              ),
-            ],
-          ),
-        ),
+        _buildPostReact(),
         Divider(),
       ],
+    );
+  }
+
+  _buildPostAuthor() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildAvatarName(),
+          Spacer(),
+          GestureDetector(onTap: () {}, child: SvgPicture.asset(SvgPath.icMore)),
+        ],
+      ),
+    );
+  }
+
+  _buildPostReact() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          ScaleButton(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset(SvgPath.icHeart),
+                const SizedBox(width: 5),
+                Text(post.likeCount?.toShortString() ?? '', style: AppTextStyles.s14w600),
+              ],
+            ),
+          ),
+          SizedBox(width: 15),
+          GestureDetector(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset(SvgPath.icComment),
+                const SizedBox(width: 5),
+                Text(post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+              ],
+            ),
+          ),
+          SizedBox(width: 15),
+          GestureDetector(
+            onTap: () {},
+            child: SvgPicture.asset(SvgPath.icShare),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildPostText() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: ReadMoreText(
+        post.content ?? '',
+        trimMode: TrimMode.Line,
+        trimLines: (post.images?.isNotEmpty ?? false) ? 3 : 5,
+        annotations: [
+          Annotation(
+            regExp: RegExp(r'#([a-zA-Z0-9_]+)'),
+            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+              text: text,
+              style: textStyle?.copyWith(color: Colors.blue),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Log.console('Hashtag tapped');
+                },
+            ),
+          ),
+          Annotation(
+            regExp: RegExp(r'<@(\d+)>'),
+            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+              text: '@User123',
+              style: textStyle?.copyWith(color: Colors.green),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Log.console('User123 tapped');
+                },
+            ),
+          ),
+          Annotation(
+            regExp: RegExp(r'(https?://[^\s]+)'),
+            spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
+              text: text,
+              style: textStyle?.copyWith(color: Colors.blue),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Log.console('URL tapped');
+                },
+            ),
+          ),
+        ],
+        style: GoogleFonts.poppins(
+          fontSize: 14,
+          fontWeight: FontWeight.w300,
+        ),
+        textAlign: TextAlign.left,
+        lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      ),
     );
   }
 

@@ -15,7 +15,10 @@ class HomeController extends BaseController {
       images: ['https://picsum.photos/200/300'],
       likeCount: 10,
       comments: [],
-      content: 'This is a post content',
+      content: '''
+Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase.
+This is a sample text with a #hashtag, a mention <@123>, and a URL: https://example.com.
+''',
       createdAt: DateTime.now(),
     ),
   ];
