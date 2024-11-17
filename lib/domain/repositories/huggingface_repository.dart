@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:base/common/constants/app_enums.dart';
-import 'package:base/domain/data/repositories/base_repository.dart';
+import 'package:base/domain/repositories/base_repository.dart';
 import 'package:http/http.dart' as http;
 
 final class HuggingfaceAPIPath {

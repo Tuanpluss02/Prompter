@@ -1,5 +1,5 @@
-import 'package:base/domain/data/repositories/gemini_repository.dart';
-import 'package:base/domain/data/repositories/huggingface_repository.dart';
+import 'package:base/domain/repositories/gemini_repository.dart';
+import 'package:base/domain/repositories/huggingface_repository.dart';
 import 'package:base/domain/services/chat_service.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:get/get.dart';

@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'error.dart';
+import 'api_error.dart';
 
 part '../../../generated/domain/data/local/network_exceptions.freezed.dart';
 
@@ -47,12 +47,12 @@ abstract class NetworkExceptions with _$NetworkExceptions {
   const factory NetworkExceptions.unexpectedError() = UnexpectedError;
 
   static NetworkExceptions handleResponse(Response? response) {
-    ErrorModel? errorModel;
+    ApiError? apiError;
 
     try {
-      errorModel = ErrorModel.fromJson(response?.data);
+      apiError = ApiError.fromJson(response?.data);
     } catch (e) {
-      log('ErrorModel.fromJson error: $e', name: 'NetworkExceptions');
+      log('ApiError.fromJson error: $e', name: 'NetworkExceptions');
     }
 
     int statusCode = response?.statusCode ?? 0;
@@ -64,7 +64,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
       case 403:
         return const NetworkExceptions.badRequest();
       case 404:
-        return NetworkExceptions.notFound(errorModel?.message ?? tr(LocaleKeys.something_went_wrong));
+        return NetworkExceptions.notFound(apiError?.message ?? tr(LocaleKeys.something_went_wrong));
       case 409:
         return const NetworkExceptions.conflict();
       case 408:
@@ -75,7 +75,7 @@ abstract class NetworkExceptions with _$NetworkExceptions {
         return const NetworkExceptions.serviceUnavailable();
       default:
         return NetworkExceptions.defaultError(
-          errorModel?.message ?? tr(LocaleKeys.something_went_wrong),
+          apiError?.message ?? tr(LocaleKeys.something_went_wrong),
         );
     }
   }

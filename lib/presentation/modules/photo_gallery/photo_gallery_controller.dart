@@ -1,7 +1,7 @@
 import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/local/network_exceptions.dart';
-import 'package:base/domain/data/repositories/cici_repository.dart';
 import 'package:base/domain/data/responses/ai_image_generated.dart';
+import 'package:base/domain/repositories/cici_repository.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:get/get.dart';
 

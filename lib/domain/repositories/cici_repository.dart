@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:base/domain/data/local/api_result.dart';
-import 'package:base/domain/data/repositories/base_repository.dart';
+import 'package:base/domain/repositories/base_repository.dart';
 import 'package:dio/dio.dart';
 
 final class CiciAPIPath {
