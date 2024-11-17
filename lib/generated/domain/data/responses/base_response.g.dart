@@ -12,8 +12,7 @@ BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) => BaseResponse(
       data: json['data'],
     );
 
-Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) => <String, dynamic>{
       'code': instance.code,
       'msg': instance.msg,
       'data': instance.data,

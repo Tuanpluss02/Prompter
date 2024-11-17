@@ -67,23 +67,18 @@ abstract class BaseScreen<T extends GetxController> extends GetView<T> {
   @protected
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
-  //Ngăn body tự động điều chỉnh khi bàn phím xuất hiện
   @protected
   bool get resizeToAvoidBottomInset => false;
 
-  // Bật tắt mở rộng phần body ra phía sau các phần khác
   @protected
   bool get extendBodyBehindAppBar => false;
 
-  // Chuyển đổi layout safe area
   @protected
   bool get wrapWithSafeArea => false;
 
-  // Bật tắt vùng bottom safe area
   @protected
   bool get setBottomSafeArea => true;
 
-  // Bật tắt vùng top safe area
   @protected
   bool get setTopSafeArea => true;
 

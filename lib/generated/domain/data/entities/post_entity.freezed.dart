@@ -37,15 +37,12 @@ mixin _$PostEntity {
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PostEntityCopyWith<PostEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PostEntityCopyWith<PostEntity> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $PostEntityCopyWith<$Res> {
-  factory $PostEntityCopyWith(
-          PostEntity value, $Res Function(PostEntity) then) =
-      _$PostEntityCopyWithImpl<$Res, PostEntity>;
+  factory $PostEntityCopyWith(PostEntity value, $Res Function(PostEntity) then) = _$PostEntityCopyWithImpl<$Res, PostEntity>;
   @useResult
   $Res call(
       {String? id,
@@ -61,8 +58,7 @@ abstract class $PostEntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity>
-    implements $PostEntityCopyWith<$Res> {
+class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity> implements $PostEntityCopyWith<$Res> {
   _$PostEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -132,11 +128,8 @@ class _$PostEntityCopyWithImpl<$Res, $Val extends PostEntity>
 }
 
 /// @nodoc
-abstract class _$$PostEntityImplCopyWith<$Res>
-    implements $PostEntityCopyWith<$Res> {
-  factory _$$PostEntityImplCopyWith(
-          _$PostEntityImpl value, $Res Function(_$PostEntityImpl) then) =
-      __$$PostEntityImplCopyWithImpl<$Res>;
+abstract class _$$PostEntityImplCopyWith<$Res> implements $PostEntityCopyWith<$Res> {
+  factory _$$PostEntityImplCopyWith(_$PostEntityImpl value, $Res Function(_$PostEntityImpl) then) = __$$PostEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -153,12 +146,8 @@ abstract class _$$PostEntityImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PostEntityImplCopyWithImpl<$Res>
-    extends _$PostEntityCopyWithImpl<$Res, _$PostEntityImpl>
-    implements _$$PostEntityImplCopyWith<$Res> {
-  __$$PostEntityImplCopyWithImpl(
-      _$PostEntityImpl _value, $Res Function(_$PostEntityImpl) _then)
-      : super(_value, _then);
+class __$$PostEntityImplCopyWithImpl<$Res> extends _$PostEntityCopyWithImpl<$Res, _$PostEntityImpl> implements _$$PostEntityImplCopyWith<$Res> {
+  __$$PostEntityImplCopyWithImpl(_$PostEntityImpl _value, $Res Function(_$PostEntityImpl) _then) : super(_value, _then);
 
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -240,8 +229,7 @@ class _$PostEntityImpl implements _PostEntity {
         _comments = comments,
         _likes = likes;
 
-  factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PostEntityImplFromJson(json);
+  factory _$PostEntityImpl.fromJson(Map<String, dynamic> json) => _$$PostEntityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -309,44 +297,28 @@ class _$PostEntityImpl implements _PostEntity {
         (other.runtimeType == runtimeType &&
             other is _$PostEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.authorId, authorId) ||
-                other.authorId == authorId) &&
-            (identical(other.authorAvatarUrl, authorAvatarUrl) ||
-                other.authorAvatarUrl == authorAvatarUrl) &&
-            (identical(other.authorDisplayName, authorDisplayName) ||
-                other.authorDisplayName == authorDisplayName) &&
-            (identical(other.authorUsername, authorUsername) ||
-                other.authorUsername == authorUsername) &&
+            (identical(other.authorId, authorId) || other.authorId == authorId) &&
+            (identical(other.authorAvatarUrl, authorAvatarUrl) || other.authorAvatarUrl == authorAvatarUrl) &&
+            (identical(other.authorDisplayName, authorDisplayName) || other.authorDisplayName == authorDisplayName) &&
+            (identical(other.authorUsername, authorUsername) || other.authorUsername == authorUsername) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             const DeepCollectionEquality().equals(other._likes, _likes) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      authorId,
-      authorAvatarUrl,
-      authorDisplayName,
-      authorUsername,
-      const DeepCollectionEquality().hash(_images),
-      const DeepCollectionEquality().hash(_comments),
-      const DeepCollectionEquality().hash(_likes),
-      content,
-      createdAt);
+  int get hashCode => Object.hash(runtimeType, id, authorId, authorAvatarUrl, authorDisplayName, authorUsername, const DeepCollectionEquality().hash(_images),
+      const DeepCollectionEquality().hash(_comments), const DeepCollectionEquality().hash(_likes), content, createdAt);
 
   /// Create a copy of PostEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith =>
-      __$$PostEntityImplCopyWithImpl<_$PostEntityImpl>(this, _$identity);
+  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith => __$$PostEntityImplCopyWithImpl<_$PostEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -369,8 +341,7 @@ abstract class _PostEntity implements PostEntity {
       final String? content,
       final DateTime? createdAt}) = _$PostEntityImpl;
 
-  factory _PostEntity.fromJson(Map<String, dynamic> json) =
-      _$PostEntityImpl.fromJson;
+  factory _PostEntity.fromJson(Map<String, dynamic> json) = _$PostEntityImpl.fromJson;
 
   @override
   String? get id;
@@ -397,6 +368,5 @@ abstract class _PostEntity implements PostEntity {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PostEntityImplCopyWith<_$PostEntityImpl> get copyWith => throw _privateConstructorUsedError;
 }
