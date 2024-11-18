@@ -35,8 +35,8 @@ class NewPostController extends BaseController {
   }
 
   @override
-  void onReady() {
-    _initData();
+  void onReady() async {
+    await _initData();
     super.onReady();
   }
 

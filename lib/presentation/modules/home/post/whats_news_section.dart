@@ -67,7 +67,13 @@ class WhatsNewsSection extends GetView<HomeController> {
     return Row(
       children: [
         ScaleButton(
-          onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.image),
+          onTap: () => Get.toNamed(
+            AppRoutes.newPost,
+            arguments: NewPostPageData(
+              type: RouteNewPostType.create,
+              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.image),
+            ),
+          ),
           child: SvgPicture.asset(
             SvgPath.icImage,
             colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
@@ -75,7 +81,13 @@ class WhatsNewsSection extends GetView<HomeController> {
         ),
         SizedBox(width: 10),
         ScaleButton(
-          onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
+          onTap: () => Get.toNamed(
+            AppRoutes.newPost,
+            arguments: NewPostPageData(
+              type: RouteNewPostType.create,
+              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.link),
+            ),
+          ),
           child: SvgPicture.asset(
             SvgPath.icLink,
             colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
@@ -83,12 +95,24 @@ class WhatsNewsSection extends GetView<HomeController> {
         ),
         SizedBox(width: 10),
         ScaleButton(
-          onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
+          onTap: () => Get.toNamed(
+            AppRoutes.newPost,
+            arguments: NewPostPageData(
+              type: RouteNewPostType.create,
+              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.hastag),
+            ),
+          ),
           child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
         ),
         SizedBox(width: 10),
         ScaleButton(
-          onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
+          onTap: () => Get.toNamed(
+            AppRoutes.newPost,
+            arguments: NewPostPageData(
+              type: RouteNewPostType.create,
+              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.mention),
+            ),
+          ),
           child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
         ),
       ],
