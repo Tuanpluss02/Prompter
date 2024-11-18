@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
+import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
