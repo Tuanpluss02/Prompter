@@ -21,31 +21,6 @@ class PostView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    var content = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildPostAuthor(),
-        const SizedBox(height: 10),
-        _buildPostText(),
-        _buildPostMedia(),
-        const SizedBox(height: 10),
-        _buildPostReact(),
-        Divider(),
-        if (isDetailView) ...[
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Comments',
-              style: AppTextStyles.s16w700,
-            ),
-          ),
-          Divider(),
-          const SizedBox(height: 10),
-          CommentSection(postId: news.post.id!),
-        ],
-      ],
-    );
     return isDetailView
         ? Scaffold(
             backgroundColor: AppColors.backgroundColor,
@@ -56,9 +31,7 @@ class PostView extends GetView<HomeController> {
                   controller.getComments(news.post.id!);
                   controller.postDetailRefreshController.refreshCompleted();
                 },
-                child: SingleChildScrollView(
-                  child: content,
-                ),
+                child: SingleChildScrollView(child: _buildMainView()),
               ),
             ),
             appBar: AppBar(
@@ -75,8 +48,41 @@ class PostView extends GetView<HomeController> {
             onTap: () {
               Get.to(() => PostView(news: news, isDetailView: true));
             },
-            child: content,
-          );
+            child: _buildMainView());
+  }
+
+  _buildMainView() {
+    return GetBuilder<HomeController>(
+      init: HomeController(),
+      initState: (_) {},
+      builder: (_) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildPostAuthor(),
+            const SizedBox(height: 10),
+            _buildPostText(),
+            _buildPostMedia(),
+            const SizedBox(height: 10),
+            _buildPostReact(),
+            Divider(),
+            if (isDetailView) ...[
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Comments',
+                  style: AppTextStyles.s16w700,
+                ),
+              ),
+              Divider(),
+              const SizedBox(height: 10),
+              CommentSection(postId: news.post.id!),
+            ],
+          ],
+        );
+      },
+    );
   }
 
   _buildPostMedia() {
