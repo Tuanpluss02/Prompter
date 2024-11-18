@@ -10,18 +10,18 @@ class TextContent extends StatelessWidget {
   const TextContent({
     super.key,
     this.content,
-    this.images,
+    this.hasMedia = false,
   });
 
   final String? content;
-  final List<String>? images;
+  final bool hasMedia;
 
   @override
   Widget build(BuildContext context) {
     return ReadMoreText(
       content ?? '',
       trimMode: TrimMode.Line,
-      trimLines: (images?.isNotEmpty ?? false) ? 3 : 5,
+      trimLines: hasMedia ? 3 : 5,
       annotations: [
         Annotation(
           regExp: RegExp(AppRegex.hashtag),

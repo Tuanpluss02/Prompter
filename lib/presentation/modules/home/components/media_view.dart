@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MediaView extends StatelessWidget {
-  const MediaView({super.key, this.images});
+  const MediaView({super.key, this.images, this.maxHeight});
 
   final List<String>? images;
+  final double? maxHeight;
+
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: Get.width * 0.6,
+        maxHeight: maxHeight ?? Get.width * 0.6,
       ),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

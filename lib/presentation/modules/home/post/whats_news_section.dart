@@ -24,7 +24,10 @@ class WhatsNewsSection extends GetView<HomeController> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Obx(() => UserSection(user: controller.appProvider.user.value)),
+              child: Obx(() => UserSection(
+                    user: controller.appProvider.user.value,
+                    showOptions: false,
+                  )),
             ),
             _buildPostAction(),
             Divider(),

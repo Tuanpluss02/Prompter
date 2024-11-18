@@ -37,7 +37,7 @@ class HomeScreen extends BaseScreen<HomeController> {
   @override
   Widget buildScreen(BuildContext context) {
     return SmartRefresher(
-      controller: controller.refreshController,
+      controller: controller.newsFeedRefreshController,
       onRefresh: controller.onRefresh,
       child: CustomScrollView(
         slivers: [

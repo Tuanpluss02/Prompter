@@ -12,7 +12,8 @@ typedef PostNewsFeed = ({PostEntity post, UserEntity author});
 typedef PostComment = ({CommentEntity comment, UserEntity author});
 
 class HomeController extends BaseController {
-  final RefreshController refreshController = RefreshController();
+  final RefreshController newsFeedRefreshController = RefreshController();
+  final RefreshController postDetailRefreshController = RefreshController();
   final PostService _postService = Get.find<PostService>();
   final UserService _userService = Get.find<UserService>();
   final newsFeed = <PostNewsFeed>[].obs;
@@ -86,6 +87,6 @@ class HomeController extends BaseController {
 
   void onRefresh() async {
     await getNewsFeed();
-    refreshController.refreshCompleted();
+    newsFeedRefreshController.refreshCompleted();
   }
 }

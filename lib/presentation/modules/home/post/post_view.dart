@@ -11,6 +11,7 @@ import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PostView extends GetView<HomeController> {
   const PostView({super.key, required this.news, this.isDetailView = false});
@@ -49,8 +50,15 @@ class PostView extends GetView<HomeController> {
         ? Scaffold(
             backgroundColor: AppColors.backgroundColor,
             body: SafeArea(
-              child: SingleChildScrollView(
-                child: content,
+              child: SmartRefresher(
+                controller: controller.postDetailRefreshController,
+                onRefresh: () {
+                  controller.getComments(news.post.id!);
+                  controller.postDetailRefreshController.refreshCompleted();
+                },
+                child: SingleChildScrollView(
+                  child: content,
+                ),
               ),
             ),
             appBar: AppBar(
@@ -126,12 +134,14 @@ class PostView extends GetView<HomeController> {
 
   _buildPostText() {
     return Visibility(
-        visible: (news.post.content?.isNotEmpty ?? false),
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextContent(
-              content: news.post.content ?? '',
-              images: news.post.images ?? [],
-            )));
+      visible: (news.post.content?.isNotEmpty ?? false),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: TextContent(
+          content: news.post.content ?? '',
+          hasMedia: news.post.images?.isNotEmpty ?? false,
+        ),
+      ),
+    );
   }
 }

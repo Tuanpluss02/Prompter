@@ -1,8 +1,10 @@
+import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class UserSection extends StatelessWidget {
@@ -69,7 +71,7 @@ class UserSection extends StatelessWidget {
           Spacer(),
           ScaleButton(
             onTap: onOptionsTap ?? () {},
-            child: Icon(Icons.more_vert),
+            child: SvgPicture.asset(SvgPath.icMore),
           ),
         ]
       ],
