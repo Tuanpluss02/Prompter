@@ -112,12 +112,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
 
   _buildPostMediaContent() {
     return Obx(() => Visibility(
-          visible: () {
-            if (controller.pageData.type == RouteNewPostType.comment) {
-              return controller.pageData.commentPostPageData!.newsfeedPost.post.images?.isNotEmpty ?? false;
-            }
-            return controller.postImages.isNotEmpty;
-          }(),
+          visible: controller.postImages.isNotEmpty,
           // replacement: _buildLinkPreview(),
           child: _buildImagePreview(),
         ));

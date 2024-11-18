@@ -81,6 +81,7 @@ dependencies:
   url_launcher: ^6.3.1
   image_picker: ^1.1.2
   any_link_preview: ^3.0.2
+  flutter_cache_manager: ^3.4.1
 
 dev_dependencies:
   flutter_test:

@@ -11,8 +11,8 @@ import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -45,6 +45,9 @@ class NewPostController extends BaseController {
       textController.text = pageData.editPostPageData!.postNeedEdit.content ?? '';
       postImages.addAll(await urlToXfile(pageData.editPostPageData!.postNeedEdit.images ?? []));
       postImages.refresh();
+    } else if (pageData.type == RouteNewPostType.comment) {
+      postImages.addAll(await urlToXfile(pageData.commentPostPageData!.newsfeedPost.post.images ?? []));
+      postImages.refresh();
     }
   }
 
@@ -56,10 +59,15 @@ class NewPostController extends BaseController {
   Future<List<XFile>> urlToXfile(List<String> urls) async {
     List<XFile> xFiles = [];
     for (var url in urls) {
-      final file = await get(Uri.parse(url));
-      xFiles.add(XFile.fromData(file.bodyBytes));
+      xFiles.add(await getImageXFileByUrl(url));
     }
     return xFiles;
+  }
+
+  Future<XFile> getImageXFileByUrl(String url) async {
+    var file = await DefaultCacheManager().getSingleFile(url);
+    XFile result = XFile(file.path);
+    return result;
   }
 
   onTapPost() async {
