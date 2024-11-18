@@ -29,7 +29,7 @@ import 'profile_image_widget.dart';
 
 class ProfileCircle extends StatelessWidget {
   const ProfileCircle({
-    Key? key,
+    super.key,
     required this.bottomPadding,
     this.imageUrl,
     this.profileCirclePadding,
@@ -41,7 +41,7 @@ class ProfileCircle extends StatelessWidget {
     this.networkImageErrorBuilder,
     this.imageType = ImageType.network,
     this.networkImageProgressIndicatorBuilder,
-  }) : super(key: key);
+  });
 
   /// Allow users to give  default bottom padding according to user case.
   final double bottomPadding;
@@ -76,14 +76,12 @@ class ProfileCircle extends StatelessWidget {
   final NetworkImageErrorBuilder? networkImageErrorBuilder;
 
   /// Progress indicator builder for network image
-  final NetworkImageProgressIndicatorBuilder?
-      networkImageProgressIndicatorBuilder;
+  final NetworkImageProgressIndicatorBuilder? networkImageProgressIndicatorBuilder;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: profileCirclePadding ??
-          EdgeInsets.only(left: 6.0, right: 4, bottom: bottomPadding),
+      padding: profileCirclePadding ?? EdgeInsets.only(left: 6.0, right: 4, bottom: bottomPadding),
       child: InkWell(
         onLongPress: onLongPress,
         onTap: onTap,
@@ -94,8 +92,7 @@ class ProfileCircle extends StatelessWidget {
           assetImageErrorBuilder: assetImageErrorBuilder,
           networkImageErrorBuilder: networkImageErrorBuilder,
           imageType: imageType,
-          networkImageProgressIndicatorBuilder:
-              networkImageProgressIndicatorBuilder,
+          networkImageProgressIndicatorBuilder: networkImageProgressIndicatorBuilder,
         ),
       ),
     );

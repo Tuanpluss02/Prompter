@@ -31,10 +31,10 @@ class MeasureSize extends StatefulWidget {
   final OnWidgetSizeChange onSizeChange;
 
   const MeasureSize({
-    Key? key,
+    super.key,
     required this.onSizeChange,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<MeasureSize> createState() => _MeasureSizeState();
@@ -65,7 +65,6 @@ class _MeasureSizeState extends State<MeasureSize> {
 
     /// Below logic checks that end position of widget greater than or less than
     /// to device width
-    widget.onSizeChange(
-        (position.dx + newSize!.width) >= MediaQuery.of(context).size.width);
+    widget.onSizeChange((position.dx + newSize!.width) >= MediaQuery.of(context).size.width);
   }
 }

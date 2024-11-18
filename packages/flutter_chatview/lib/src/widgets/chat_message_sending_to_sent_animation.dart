@@ -4,18 +4,15 @@ import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 
 class SendingMessageAnimatingWidget extends StatefulWidget {
-  const SendingMessageAnimatingWidget(this.status, {Key? key})
-      : super(key: key);
+  const SendingMessageAnimatingWidget(this.status, {super.key});
 
   final MessageStatus status;
 
   @override
-  State<SendingMessageAnimatingWidget> createState() =>
-      _SendingMessageAnimatingWidgetState();
+  State<SendingMessageAnimatingWidget> createState() => _SendingMessageAnimatingWidgetState();
 }
 
-class _SendingMessageAnimatingWidgetState
-    extends State<SendingMessageAnimatingWidget> with TickerProviderStateMixin {
+class _SendingMessageAnimatingWidgetState extends State<SendingMessageAnimatingWidget> with TickerProviderStateMixin {
   bool get isSent => widget.status != MessageStatus.pending;
 
   bool isVisible = false;

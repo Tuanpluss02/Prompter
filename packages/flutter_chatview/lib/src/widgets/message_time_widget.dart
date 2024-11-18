@@ -24,10 +24,10 @@ import 'package:flutter/material.dart';
 
 class MessageTimeWidget extends StatelessWidget {
   const MessageTimeWidget({
-    Key? key,
+    super.key,
     required this.messageTime,
     required this.isCurrentUser,
-  }) : super(key: key);
+  });
 
   /// Provides message crated date time.
   final DateTime messageTime;
@@ -38,8 +38,7 @@ class MessageTimeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatBackgroundConfig = context.chatListConfig.chatBackgroundConfig;
-    final messageTimeIconColor =
-        chatBackgroundConfig.messageTimeIconColor ?? Colors.black;
+    final messageTimeIconColor = chatBackgroundConfig.messageTimeIconColor ?? Colors.black;
     return Align(
       alignment: Alignment.centerRight,
       child: Padding(
@@ -64,8 +63,7 @@ class MessageTimeWidget extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               messageTime.getTimeFromDateTime,
-              style: chatBackgroundConfig.messageTimeTextStyle ??
-                  const TextStyle(fontSize: 12),
+              style: chatBackgroundConfig.messageTimeTextStyle ?? const TextStyle(fontSize: 12),
             ),
           ],
         ),

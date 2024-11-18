@@ -31,14 +31,14 @@ import 'share_icon.dart';
 
 class ImageMessageView extends StatelessWidget {
   const ImageMessageView({
-    Key? key,
+    super.key,
     required this.message,
     required this.isMessageBySender,
     this.imageMessageConfig,
     this.messageReactionConfig,
     this.highlightImage = false,
     this.highlightScale = 1.2,
-  }) : super(key: key);
+  });
 
   /// Provides message instance of chat.
   final Message message;
@@ -69,22 +69,16 @@ class ImageMessageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment:
-          isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: isMessageBySender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
-        if (isMessageBySender && !(imageMessageConfig?.hideShareIcon ?? false))
-          iconButton,
+        if (isMessageBySender && !(imageMessageConfig?.hideShareIcon ?? false)) iconButton,
         Stack(
           children: [
             GestureDetector(
-              onTap: () => imageMessageConfig?.onTap != null
-                  ? imageMessageConfig?.onTap!(message)
-                  : null,
+              onTap: () => imageMessageConfig?.onTap != null ? imageMessageConfig?.onTap!(message) : null,
               child: Transform.scale(
                 scale: highlightImage ? highlightScale : 1.0,
-                alignment: isMessageBySender
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
+                alignment: isMessageBySender ? Alignment.centerRight : Alignment.centerLeft,
                 child: Container(
                   padding: imageMessageConfig?.padding ?? EdgeInsets.zero,
                   margin: imageMessageConfig?.margin ??
@@ -97,8 +91,7 @@ class ImageMessageView extends StatelessWidget {
                   height: imageMessageConfig?.height ?? 200,
                   width: imageMessageConfig?.width ?? 150,
                   child: ClipRRect(
-                    borderRadius: imageMessageConfig?.borderRadius ??
-                        BorderRadius.circular(14),
+                    borderRadius: imageMessageConfig?.borderRadius ?? BorderRadius.circular(14),
                     child: (() {
                       if (imageUrl.isUrl) {
                         return Image.network(
@@ -108,19 +101,14 @@ class ImageMessageView extends StatelessWidget {
                             if (loadingProgress == null) return child;
                             return Center(
                               child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                    : null,
+                                value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
                               ),
                             );
                           },
                         );
                       } else if (imageUrl.fromMemory) {
                         return Image.memory(
-                          base64Decode(imageUrl
-                              .substring(imageUrl.indexOf('base64') + 7)),
+                          base64Decode(imageUrl.substring(imageUrl.indexOf('base64') + 7)),
                           fit: BoxFit.fill,
                         );
                       } else {
@@ -142,8 +130,7 @@ class ImageMessageView extends StatelessWidget {
               ),
           ],
         ),
-        if (!isMessageBySender && !(imageMessageConfig?.hideShareIcon ?? false))
-          iconButton,
+        if (!isMessageBySender && !(imageMessageConfig?.hideShareIcon ?? false)) iconButton,
       ],
     );
   }

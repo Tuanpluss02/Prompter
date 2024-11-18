@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class ConfigurationsInheritedWidget extends InheritedWidget {
   const ConfigurationsInheritedWidget({
-    Key? key,
-    required Widget child,
+    super.key,
+    required super.child,
     required this.chatBackgroundConfig,
     this.reactionPopupConfig,
     this.messageConfig,
@@ -17,7 +17,7 @@ class ConfigurationsInheritedWidget extends InheritedWidget {
     this.replyPopupConfig,
     this.emojiPickerSheetConfig,
     this.scrollToBottomButtonConfig,
-  }) : super(key: key, child: child);
+  });
 
   /// Provides configuration for background of chat.
   final ChatBackgroundConfiguration chatBackgroundConfig;
@@ -54,10 +54,8 @@ class ConfigurationsInheritedWidget extends InheritedWidget {
   /// Provides a configuration for scroll to bottom button config
   final ScrollToBottomButtonConfig? scrollToBottomButtonConfig;
 
-  static ConfigurationsInheritedWidget? of(BuildContext context) => context
-      .dependOnInheritedWidgetOfExactType<ConfigurationsInheritedWidget>();
+  static ConfigurationsInheritedWidget? of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<ConfigurationsInheritedWidget>();
 
   @override
-  bool updateShouldNotify(covariant ConfigurationsInheritedWidget oldWidget) =>
-      oldWidget != this;
+  bool updateShouldNotify(covariant ConfigurationsInheritedWidget oldWidget) => oldWidget != this;
 }

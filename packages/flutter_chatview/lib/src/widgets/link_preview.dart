@@ -29,10 +29,10 @@ import '../utils/constants/constants.dart';
 
 class LinkPreview extends StatelessWidget {
   const LinkPreview({
-    Key? key,
+    super.key,
     required this.url,
     this.linkPreviewConfig,
-  }) : super(key: key);
+  });
 
   /// Provides url which is passed in message.
   final String url;
@@ -44,8 +44,7 @@ class LinkPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: linkPreviewConfig?.padding ??
-          const EdgeInsets.symmetric(horizontal: 6, vertical: verticalPadding),
+      padding: linkPreviewConfig?.padding ?? const EdgeInsets.symmetric(horizontal: 6, vertical: verticalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,11 +75,9 @@ class LinkPreview extends StatelessWidget {
                         ),
                       ),
                     ),
-                    backgroundColor: linkPreviewConfig?.backgroundColor ??
-                        Colors.grey.shade200,
+                    backgroundColor: linkPreviewConfig?.backgroundColor ?? Colors.grey.shade200,
                     borderRadius: linkPreviewConfig?.borderRadius,
-                    bodyStyle: linkPreviewConfig?.bodyStyle ??
-                        const TextStyle(color: Colors.black),
+                    bodyStyle: linkPreviewConfig?.bodyStyle ?? const TextStyle(color: Colors.black),
                     titleStyle: linkPreviewConfig?.titleStyle,
                   ),
           ),
@@ -111,8 +108,6 @@ class LinkPreview extends StatelessWidget {
 
   void _launchURL() async {
     final parsedUrl = Uri.parse(url);
-    await canLaunchUrl(parsedUrl)
-        ? await launchUrl(parsedUrl)
-        : throw couldNotLunch;
+    await canLaunchUrl(parsedUrl) ? await launchUrl(parsedUrl) : throw couldNotLunch;
   }
 }

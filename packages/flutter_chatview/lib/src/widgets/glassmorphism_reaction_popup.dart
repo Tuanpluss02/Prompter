@@ -28,10 +28,10 @@ import '../utils/constants/constants.dart';
 
 class GlassMorphismReactionPopup extends StatelessWidget {
   const GlassMorphismReactionPopup({
-    Key? key,
+    super.key,
     required this.child,
     this.reactionPopupConfig,
-  }) : super(key: key);
+  });
 
   /// Allow user to assign custom widget which is appeared in glassmorphism
   /// effect.
@@ -40,18 +40,13 @@ class GlassMorphismReactionPopup extends StatelessWidget {
   /// Provides configuration for reaction pop-up appearance.
   final ReactionPopupConfiguration? reactionPopupConfig;
 
-  Color get backgroundColor =>
-      reactionPopupConfig?.glassMorphismConfig?.backgroundColor ?? Colors.white;
+  Color get backgroundColor => reactionPopupConfig?.glassMorphismConfig?.backgroundColor ?? Colors.white;
 
-  double get strokeWidth =>
-      reactionPopupConfig?.glassMorphismConfig?.strokeWidth ?? 2;
+  double get strokeWidth => reactionPopupConfig?.glassMorphismConfig?.strokeWidth ?? 2;
 
-  Color get borderColor =>
-      reactionPopupConfig?.glassMorphismConfig?.borderColor ??
-      Colors.grey.shade400;
+  Color get borderColor => reactionPopupConfig?.glassMorphismConfig?.borderColor ?? Colors.grey.shade400;
 
-  double get borderRadius =>
-      reactionPopupConfig?.glassMorphismConfig?.borderRadius ?? 30;
+  double get borderRadius => reactionPopupConfig?.glassMorphismConfig?.borderRadius ?? 30;
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +54,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Container(
-          constraints:
-              BoxConstraints(maxWidth: reactionPopupConfig?.maxWidth ?? 350),
+          constraints: BoxConstraints(maxWidth: reactionPopupConfig?.maxWidth ?? 350),
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -85,8 +79,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
                 sigmaY: 16,
               ),
               child: Padding(
-                padding: reactionPopupConfig?.padding ??
-                    const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
+                padding: reactionPopupConfig?.padding ?? const EdgeInsets.symmetric(vertical: 6, horizontal: 14),
                 child: child,
               ),
             ),
@@ -95,8 +88,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
         IgnorePointer(
           ignoring: true,
           child: Padding(
-            padding: reactionPopupConfig?.margin ??
-                const EdgeInsets.symmetric(horizontal: 25),
+            padding: reactionPopupConfig?.margin ?? const EdgeInsets.symmetric(horizontal: 25),
             child: CustomPaint(
               painter: _GradientPainter(
                 strokeWidth: strokeWidth,
@@ -104,8 +96,7 @@ class GlassMorphismReactionPopup extends StatelessWidget {
                 borderColor: borderColor,
               ),
               child: Container(
-                constraints: BoxConstraints(
-                    maxWidth: reactionPopupConfig?.maxWidth ?? maxWidth),
+                constraints: BoxConstraints(maxWidth: reactionPopupConfig?.maxWidth ?? maxWidth),
                 padding: EdgeInsets.symmetric(
                   vertical: reactionPopupConfig?.emojiConfig?.size ?? 28,
                 ),
@@ -151,8 +142,7 @@ class _GradientPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final RRect innerRect2 = RRect.fromRectAndRadius(
-      Rect.fromLTRB(strokeWidth, strokeWidth, size.width - strokeWidth,
-          size.height - strokeWidth),
+      Rect.fromLTRB(strokeWidth, strokeWidth, size.width - strokeWidth, size.height - strokeWidth),
       Radius.circular(radius - strokeWidth),
     );
 

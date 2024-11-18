@@ -33,18 +33,28 @@ mixin _$CommentEntity {
   /// Create a copy of CommentEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommentEntityCopyWith<CommentEntity> get copyWith => throw _privateConstructorUsedError;
+  $CommentEntityCopyWith<CommentEntity> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $CommentEntityCopyWith<$Res> {
-  factory $CommentEntityCopyWith(CommentEntity value, $Res Function(CommentEntity) then) = _$CommentEntityCopyWithImpl<$Res, CommentEntity>;
+  factory $CommentEntityCopyWith(
+          CommentEntity value, $Res Function(CommentEntity) then) =
+      _$CommentEntityCopyWithImpl<$Res, CommentEntity>;
   @useResult
-  $Res call({String? id, String? userId, List<String>? images, int? likeCount, String? content, String? createdAt});
+  $Res call(
+      {String? id,
+      String? userId,
+      List<String>? images,
+      int? likeCount,
+      String? content,
+      String? createdAt});
 }
 
 /// @nodoc
-class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity> implements $CommentEntityCopyWith<$Res> {
+class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity>
+    implements $CommentEntityCopyWith<$Res> {
   _$CommentEntityCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -94,16 +104,29 @@ class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity> implements $
 }
 
 /// @nodoc
-abstract class _$$CommentEntityImplCopyWith<$Res> implements $CommentEntityCopyWith<$Res> {
-  factory _$$CommentEntityImplCopyWith(_$CommentEntityImpl value, $Res Function(_$CommentEntityImpl) then) = __$$CommentEntityImplCopyWithImpl<$Res>;
+abstract class _$$CommentEntityImplCopyWith<$Res>
+    implements $CommentEntityCopyWith<$Res> {
+  factory _$$CommentEntityImplCopyWith(
+          _$CommentEntityImpl value, $Res Function(_$CommentEntityImpl) then) =
+      __$$CommentEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? userId, List<String>? images, int? likeCount, String? content, String? createdAt});
+  $Res call(
+      {String? id,
+      String? userId,
+      List<String>? images,
+      int? likeCount,
+      String? content,
+      String? createdAt});
 }
 
 /// @nodoc
-class __$$CommentEntityImplCopyWithImpl<$Res> extends _$CommentEntityCopyWithImpl<$Res, _$CommentEntityImpl> implements _$$CommentEntityImplCopyWith<$Res> {
-  __$$CommentEntityImplCopyWithImpl(_$CommentEntityImpl _value, $Res Function(_$CommentEntityImpl) _then) : super(_value, _then);
+class __$$CommentEntityImplCopyWithImpl<$Res>
+    extends _$CommentEntityCopyWithImpl<$Res, _$CommentEntityImpl>
+    implements _$$CommentEntityImplCopyWith<$Res> {
+  __$$CommentEntityImplCopyWithImpl(
+      _$CommentEntityImpl _value, $Res Function(_$CommentEntityImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of CommentEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -150,9 +173,17 @@ class __$$CommentEntityImplCopyWithImpl<$Res> extends _$CommentEntityCopyWithImp
 
 @JsonSerializable()
 class _$CommentEntityImpl implements _CommentEntity {
-  const _$CommentEntityImpl({this.id = '', this.userId = '', final List<String>? images = const <String>[], this.likeCount = 0, this.content = '', this.createdAt = ''}) : _images = images;
+  const _$CommentEntityImpl(
+      {this.id = '',
+      this.userId = '',
+      final List<String>? images = const <String>[],
+      this.likeCount = 0,
+      this.content = '',
+      this.createdAt = ''})
+      : _images = images;
 
-  factory _$CommentEntityImpl.fromJson(Map<String, dynamic> json) => _$$CommentEntityImplFromJson(json);
+  factory _$CommentEntityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CommentEntityImplFromJson(json);
 
   @override
   @JsonKey()
@@ -194,21 +225,31 @@ class _$CommentEntityImpl implements _CommentEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.likeCount, likeCount) || other.likeCount == likeCount) &&
+            (identical(other.likeCount, likeCount) ||
+                other.likeCount == likeCount) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, userId, const DeepCollectionEquality().hash(_images), likeCount, content, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      userId,
+      const DeepCollectionEquality().hash(_images),
+      likeCount,
+      content,
+      createdAt);
 
   /// Create a copy of CommentEntity
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CommentEntityImplCopyWith<_$CommentEntityImpl> get copyWith => __$$CommentEntityImplCopyWithImpl<_$CommentEntityImpl>(this, _$identity);
+  _$$CommentEntityImplCopyWith<_$CommentEntityImpl> get copyWith =>
+      __$$CommentEntityImplCopyWithImpl<_$CommentEntityImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -219,9 +260,16 @@ class _$CommentEntityImpl implements _CommentEntity {
 }
 
 abstract class _CommentEntity implements CommentEntity {
-  const factory _CommentEntity({final String? id, final String? userId, final List<String>? images, final int? likeCount, final String? content, final String? createdAt}) = _$CommentEntityImpl;
+  const factory _CommentEntity(
+      {final String? id,
+      final String? userId,
+      final List<String>? images,
+      final int? likeCount,
+      final String? content,
+      final String? createdAt}) = _$CommentEntityImpl;
 
-  factory _CommentEntity.fromJson(Map<String, dynamic> json) = _$CommentEntityImpl.fromJson;
+  factory _CommentEntity.fromJson(Map<String, dynamic> json) =
+      _$CommentEntityImpl.fromJson;
 
   @override
   String? get id;
@@ -240,5 +288,6 @@ abstract class _CommentEntity implements CommentEntity {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommentEntityImplCopyWith<_$CommentEntityImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$CommentEntityImplCopyWith<_$CommentEntityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

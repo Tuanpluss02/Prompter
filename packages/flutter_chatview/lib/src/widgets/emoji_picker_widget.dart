@@ -30,10 +30,10 @@ import '../values/typedefs.dart';
 
 class EmojiPickerWidget extends StatelessWidget {
   const EmojiPickerWidget({
-    Key? key,
+    super.key,
     required this.onSelected,
     this.emojiPickerSheetConfig,
-  }) : super(key: key);
+  });
 
   /// Provides callback when user selects emoji.
   final StringCallback onSelected;
@@ -47,8 +47,7 @@ class EmojiPickerWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
       decoration: BoxDecoration(
-        color: emojiPickerSheetConfig?.emojiViewConfig.backgroundColor ??
-            Colors.white,
+        color: emojiPickerSheetConfig?.emojiViewConfig.backgroundColor ?? Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       ),
       height: size.height * 0.6,
@@ -66,14 +65,12 @@ class EmojiPickerWidget extends StatelessWidget {
           ),
           Expanded(
             child: EmojiPicker(
-              onEmojiSelected: (Category? category, Emoji emoji) =>
-                  onSelected(emoji.emoji),
+              onEmojiSelected: (Category? category, Emoji emoji) => onSelected(emoji.emoji),
               config: emojiPickerSheetConfig ??
                   Config(
                     emojiViewConfig: EmojiViewConfig(
                       columns: 7,
-                      emojiSizeMax:
-                          32 * ((!kIsWeb && Platform.isIOS) ? 1.30 : 1.0),
+                      emojiSizeMax: 32 * ((!kIsWeb && Platform.isIOS) ? 1.30 : 1.0),
                       recentsLimit: 28,
                       backgroundColor: Colors.white,
                     ),

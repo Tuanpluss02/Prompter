@@ -27,7 +27,7 @@ import '../values/typedefs.dart';
 
 class ReplyPopupWidget extends StatelessWidget {
   const ReplyPopupWidget({
-    Key? key,
+    super.key,
     required this.sentByCurrentUser,
     required this.onUnsendTap,
     required this.onReplyTap,
@@ -35,7 +35,7 @@ class ReplyPopupWidget extends StatelessWidget {
     required this.onMoreTap,
     this.buttonTextStyle,
     this.topBorderColor,
-  }) : super(key: key);
+  });
 
   /// Represents message is sent by current user or not.
   final bool sentByCurrentUser;
@@ -60,15 +60,12 @@ class ReplyPopupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle =
-        buttonTextStyle ?? const TextStyle(fontSize: 14, color: Colors.black);
+    final textStyle = buttonTextStyle ?? const TextStyle(fontSize: 14, color: Colors.black);
     final deviceWidth = MediaQuery.of(context).size.width;
     return Container(
       height: deviceWidth > 500 ? deviceWidth * 0.05 : deviceWidth * 0.13,
       decoration: BoxDecoration(
-        border: Border(
-            top: BorderSide(
-                color: topBorderColor ?? Colors.grey.shade400, width: 1)),
+        border: Border(top: BorderSide(color: topBorderColor ?? Colors.grey.shade400, width: 1)),
       ),
       child: Row(
         children: [

@@ -30,7 +30,7 @@ import 'profile_image_widget.dart';
 
 class ChatViewAppBar extends StatelessWidget {
   const ChatViewAppBar({
-    Key? key,
+    super.key,
     required this.chatTitle,
     this.backGroundColor,
     this.userStatus,
@@ -49,7 +49,7 @@ class ChatViewAppBar extends StatelessWidget {
     this.networkImageErrorBuilder,
     this.imageType = ImageType.network,
     this.networkImageProgressIndicatorBuilder,
-  }) : super(key: key);
+  });
 
   /// Allow user to change colour of appbar.
   final Color? backGroundColor;
@@ -103,8 +103,7 @@ class ChatViewAppBar extends StatelessWidget {
   final ImageType imageType;
 
   /// Progress indicator builder for network image
-  final NetworkImageProgressIndicatorBuilder?
-      networkImageProgressIndicatorBuilder;
+  final NetworkImageProgressIndicatorBuilder? networkImageProgressIndicatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +123,7 @@ class ChatViewAppBar extends StatelessWidget {
                   IconButton(
                     onPressed: onBackPress ?? () => Navigator.pop(context),
                     icon: Icon(
-                      (!kIsWeb && Platform.isIOS)
-                          ? Icons.arrow_back_ios
-                          : Icons.arrow_back,
+                      (!kIsWeb && Platform.isIOS) ? Icons.arrow_back_ios : Icons.arrow_back,
                       color: backArrowColor,
                     ),
                   ),
@@ -142,8 +139,7 @@ class ChatViewAppBar extends StatelessWidget {
                         assetImageErrorBuilder: assetImageErrorBuilder,
                         networkImageErrorBuilder: networkImageErrorBuilder,
                         imageType: imageType,
-                        networkImageProgressIndicatorBuilder:
-                            networkImageProgressIndicatorBuilder,
+                        networkImageProgressIndicatorBuilder: networkImageProgressIndicatorBuilder,
                       ),
                     ),
                   Column(

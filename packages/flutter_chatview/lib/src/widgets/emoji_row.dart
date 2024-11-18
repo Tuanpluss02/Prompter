@@ -20,17 +20,17 @@
  * SOFTWARE.
  */
 import 'package:chatview/src/extensions/extensions.dart';
-import 'package:flutter/material.dart';
 import 'package:chatview/src/utils/constants/constants.dart';
+import 'package:flutter/material.dart';
 
 import '../values/typedefs.dart';
 import 'emoji_picker_widget.dart';
 
 class EmojiRow extends StatelessWidget {
   EmojiRow({
-    Key? key,
+    super.key,
     required this.onEmojiTap,
-  }) : super(key: key);
+  });
 
   /// Provides callback when user taps on emoji in reaction pop-up.
   final StringCallback onEmojiTap;

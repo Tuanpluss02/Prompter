@@ -27,11 +27,11 @@ import 'reply_icon.dart';
 
 class SwipeToReply extends StatefulWidget {
   const SwipeToReply({
-    Key? key,
+    super.key,
     required this.onSwipe,
     required this.child,
     this.isMessageByCurrentUser = true,
-  }) : super(key: key);
+  });
 
   /// Provides callback when user swipes chat bubble from left side.
   final VoidCallback onSwipe;
@@ -65,8 +65,7 @@ class _SwipeToReplyState extends State<SwipeToReply> {
     return !(chatViewIW?.featureActiveConfig.enableSwipeToReply ?? true)
         ? widget.child
         : GestureDetector(
-            onHorizontalDragStart: (details) =>
-                initialTouchPoint = details.globalPosition.dx,
+            onHorizontalDragStart: (details) => initialTouchPoint = details.globalPosition.dx,
             onHorizontalDragEnd: (details) => setState(
               () {
                 paddingValue = 0;
@@ -75,16 +74,12 @@ class _SwipeToReplyState extends State<SwipeToReply> {
             ),
             onHorizontalDragUpdate: _onHorizontalDragUpdate,
             child: Stack(
-              alignment: isMessageByCurrentUser
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
+              alignment: isMessageByCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
               fit: StackFit.passthrough,
               children: [
                 ReplyIcon(
                   replyIconSize: replyIconSize,
-                  animationValue: paddingValue > replyIconSize
-                      ? (paddingValue) / (paddingLimit)
-                      : 0.0,
+                  animationValue: paddingValue > replyIconSize ? (paddingValue) / (paddingLimit) : 0.0,
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -99,9 +94,7 @@ class _SwipeToReplyState extends State<SwipeToReply> {
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
-    final swipeDistance = isMessageByCurrentUser
-        ? (initialTouchPoint - details.globalPosition.dx)
-        : (details.globalPosition.dx - initialTouchPoint);
+    final swipeDistance = isMessageByCurrentUser ? (initialTouchPoint - details.globalPosition.dx) : (details.globalPosition.dx - initialTouchPoint);
     if (swipeDistance >= 0 && trackPaddingValue < paddingLimit) {
       setState(() {
         paddingValue = swipeDistance;
