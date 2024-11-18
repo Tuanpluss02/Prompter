@@ -43,25 +43,21 @@ class CommentView extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10),
-        _buildPostReact(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ScaleButton(
+            onTap: () {},
+            child: Row(
+              children: [
+                SvgPicture.asset(Get.find<HomeController>().isCommentLiked(postComment) ? SvgPath.icHeartFilled : SvgPath.icHeart),
+                const SizedBox(width: 5),
+                Text(postComment.comment.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+              ],
+            ),
+          ),
+        ),
         Divider(),
       ],
-    );
-  }
-
-  _buildPostReact() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ScaleButton(
-        onTap: () {},
-        child: Row(
-          children: [
-            SvgPicture.asset(Get.find<HomeController>().isCommentLiked(postComment) ? SvgPath.icHeartFilled : SvgPath.icHeart),
-            const SizedBox(width: 5),
-            Text(postComment.comment.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-          ],
-        ),
-      ),
     );
   }
 }

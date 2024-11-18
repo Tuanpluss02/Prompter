@@ -42,8 +42,7 @@ class HomeController extends BaseController {
     } else {
       newsFeed[index].post.likes?.add(appProvider.user.value.id ?? '');
     }
-    // newsFeed.refresh();
-    update();
+    update([postToLike.post.id!]);
     _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
   }
 

@@ -52,36 +52,30 @@ class PostView extends GetView<HomeController> {
   }
 
   _buildMainView() {
-    return GetBuilder<HomeController>(
-      init: HomeController(),
-      initState: (_) {},
-      builder: (_) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildPostAuthor(),
-            const SizedBox(height: 10),
-            _buildPostText(),
-            _buildPostMedia(),
-            const SizedBox(height: 10),
-            _buildPostReact(),
-            Divider(),
-            if (isDetailView) ...[
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Comments',
-                  style: AppTextStyles.s16w700,
-                ),
-              ),
-              Divider(),
-              const SizedBox(height: 10),
-              CommentSection(postId: news.post.id!),
-            ],
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildPostAuthor(),
+        const SizedBox(height: 10),
+        _buildPostText(),
+        _buildPostMedia(),
+        const SizedBox(height: 10),
+        _buildPostReact(),
+        Divider(),
+        if (isDetailView) ...[
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Comments',
+              style: AppTextStyles.s16w700,
+            ),
+          ),
+          Divider(),
+          const SizedBox(height: 10),
+          CommentSection(postId: news.post.id!),
+        ],
+      ],
     );
   }
 
@@ -109,23 +103,37 @@ class PostView extends GetView<HomeController> {
         children: [
           ScaleButton(
             onTap: () => controller.likePost(news),
-            child: Row(
-              children: [
-                SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
-                const SizedBox(width: 5),
-                Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-              ],
+            child: GetBuilder<HomeController>(
+              init: controller,
+              id: news.post.id,
+              initState: (_) {},
+              builder: (_) {
+                return Row(
+                  children: [
+                    SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
+                    const SizedBox(width: 5),
+                    Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                  ],
+                );
+              },
             ),
           ),
           SizedBox(width: 15),
           ScaleButton(
             onTap: () {},
-            child: Row(
-              children: [
-                SvgPicture.asset(SvgPath.icComment),
-                const SizedBox(width: 5),
-                Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-              ],
+            child: GetBuilder<HomeController>(
+              init: controller,
+              id: news.post.id,
+              initState: (_) {},
+              builder: (_) {
+                return Row(
+                  children: [
+                    SvgPicture.asset(SvgPath.icComment),
+                    const SizedBox(width: 5),
+                    Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                  ],
+                );
+              },
             ),
           ),
           SizedBox(width: 15),
