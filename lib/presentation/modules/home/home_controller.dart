@@ -1,3 +1,4 @@
+import 'package:base/common/constants/app_strings.dart';
 import 'package:base/domain/data/entities/comment_entity.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
@@ -64,6 +65,10 @@ class HomeController extends BaseController {
           id: 'fhr9248f21h023hf2f',
           authorId: "Dw5wgm3HeiaFuOj4Daf6c03h7Xj1",
           content: 'This is another comment',
+          images: [
+            AppStrings.defaultNetworkCover,
+            AppStrings.defaultNetworkAvatar,
+          ],
           createdAt: DateTime.now(),
         ),
         author: appProvider.user.value
