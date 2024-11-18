@@ -1,3 +1,4 @@
+import 'package:base/domain/data/entities/comment_entity.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/domain/services/post_service.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 typedef PostNewsFeed = ({PostEntity post, UserEntity author});
+typedef PostComment = ({CommentEntity comment, UserEntity author});
 
 class HomeController extends BaseController {
   final RefreshController refreshController = RefreshController();
@@ -38,12 +40,37 @@ class HomeController extends BaseController {
     } else {
       newsFeed[index].post.likes?.add(appProvider.user.value.id ?? '');
     }
-    await _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
     newsFeed.refresh();
+    _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
   }
 
   bool isPostLiked(PostNewsFeed news) {
     return news.post.likes?.contains(appProvider.user.value.id) ?? false;
+  }
+
+  Future<List<PostComment>> getComments(String postId) async {
+    List<PostComment> comments = [
+      (
+        comment: CommentEntity(
+          id: '23hr92hfe9un934hb23',
+          authorId: "Dw5wgm3HeiaFuOj4Daf6c03h7Xj1",
+          content: 'This is a comment',
+          createdAt: DateTime.now(),
+        ),
+        author: appProvider.user.value
+      ),
+      (
+        comment: CommentEntity(
+          id: 'fhr9248f21h023hf2f',
+          authorId: "Dw5wgm3HeiaFuOj4Daf6c03h7Xj1",
+          content: 'This is another comment',
+          createdAt: DateTime.now(),
+        ),
+        author: appProvider.user.value
+      ),
+    ];
+    return comments;
+    // return await _postService.getCommentsByPostId(postId);
   }
 
   addNewPost(PostEntity post) async {

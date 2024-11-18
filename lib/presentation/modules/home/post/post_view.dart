@@ -1,8 +1,11 @@
 import 'package:base/common/constants/app_assets_path.dart';
-import 'package:base/common/constants/app_strings.dart';
+import 'package:base/common/constants/app_color.dart';
+import 'package:base/common/constants/app_regex.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
 import 'package:base/common/utils/log.dart';
+import 'package:base/presentation/modules/home/comment/comment_section.dart';
+import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
@@ -12,17 +15,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
 class PostView extends GetView<HomeController> {
-  const PostView({super.key, required this.news});
+  const PostView({super.key, required this.news, this.isDetailView = false});
 
   final PostNewsFeed news;
+  final bool isDetailView;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    var content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildPostAuthor(),
@@ -32,8 +35,45 @@ class PostView extends GetView<HomeController> {
         const SizedBox(height: 10),
         _buildPostReact(),
         Divider(),
+        if (isDetailView) ...[
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Comments',
+              style: AppTextStyles.s16w700,
+            ),
+          ),
+          Divider(),
+          const SizedBox(height: 10),
+          CommentSection(postId: news.post.id!),
+        ],
       ],
     );
+    return isDetailView
+        ? Scaffold(
+            backgroundColor: AppColors.backgroundColor,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: content,
+              ),
+            ),
+            appBar: AppBar(
+              title: Text('Post Detail'),
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            ),
+          )
+        : GestureDetector(
+            onTap: () {
+              Get.to(() => PostView(news: news, isDetailView: true));
+            },
+            child: content,
+          );
   }
 
   _buildPostMedia() {
@@ -69,9 +109,9 @@ class PostView extends GetView<HomeController> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildAvatarName(),
+          UserSection(user: news.author, timeAgo: news.post.createdAt),
           Spacer(),
-          GestureDetector(onTap: () {}, child: SvgPicture.asset(SvgPath.icMore)),
+          ScaleButton(onTap: () {}, child: SvgPicture.asset(SvgPath.icMore)),
         ],
       ),
     );
@@ -124,7 +164,7 @@ class PostView extends GetView<HomeController> {
           trimLines: (news.post.images?.isNotEmpty ?? false) ? 3 : 5,
           annotations: [
             Annotation(
-              regExp: RegExp(r'#([a-zA-Z0-9_]+)'),
+              regExp: RegExp(AppRegex.hashtag),
               spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
                 text: text,
                 style: textStyle?.copyWith(color: Colors.blue),
@@ -135,7 +175,7 @@ class PostView extends GetView<HomeController> {
               ),
             ),
             Annotation(
-              regExp: RegExp(r'<@(\d+)>'),
+              regExp: RegExp(AppRegex.mentionUser),
               spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
                 text: '@User123',
                 style: textStyle?.copyWith(color: Colors.green),
@@ -146,7 +186,7 @@ class PostView extends GetView<HomeController> {
               ),
             ),
             Annotation(
-              regExp: RegExp(r"[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@%_\+~#?&//=]*)"),
+              regExp: RegExp(AppRegex.url),
               spanBuilder: ({required String text, TextStyle? textStyle}) => TextSpan(
                 text: text,
                 style: textStyle?.copyWith(color: Colors.blue),
@@ -166,50 +206,6 @@ class PostView extends GetView<HomeController> {
           moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
       ),
-    );
-  }
-
-  _buildAvatarName() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: 50.0,
-          height: 50.0,
-          decoration: BoxDecoration(
-            color: const Color(0xff7c94b6),
-            image: DecorationImage(
-              image: NetworkImage(AppStrings.defaultNetworkAvatar),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
-            border: Border.all(
-              color: Colors.white,
-              width: 2.0,
-            ),
-          ),
-        ),
-        SizedBox(width: 20),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              news.author.displayName ?? '',
-              style: AppTextStyles.s16w700,
-            ),
-            Text(
-              '@${news.author.username}',
-              style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
-            ),
-            Text(
-              timeago.format(news.post.createdAt ?? DateTime.now()),
-              style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

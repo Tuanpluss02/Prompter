@@ -1,7 +1,7 @@
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/presentation/base/base_screen.dart';
-import 'package:base/presentation/modules/home/components/create_post_view.dart';
-import 'package:base/presentation/modules/home/components/post_view.dart';
+import 'package:base/presentation/modules/home/post/post_view.dart';
+import 'package:base/presentation/modules/home/post/whats_news_section.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -41,7 +41,7 @@ class HomeScreen extends BaseScreen<HomeController> {
       onRefresh: controller.onRefresh,
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: CreatePostView()),
+          SliverToBoxAdapter(child: WhatsNewsSection()),
           Obx(() => controller.newsFeed.isNotEmpty
               ? SliverList(
                   delegate: SliverChildBuilderDelegate(

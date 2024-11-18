@@ -9,22 +9,26 @@ part of '../../../../domain/data/entities/comment_entity.dart';
 _$CommentEntityImpl _$$CommentEntityImplFromJson(Map<String, dynamic> json) =>
     _$CommentEntityImpl(
       id: json['id'] as String? ?? '',
-      userId: json['userId'] as String? ?? '',
+      authorId: json['authorId'] as String? ?? '',
       images: (json['images'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const <String>[],
-      likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
+      likes:
+          (json['likes'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
       content: json['content'] as String? ?? '',
-      createdAt: json['createdAt'] as String? ?? '',
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$CommentEntityImplToJson(_$CommentEntityImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
+      'authorId': instance.authorId,
       'images': instance.images,
-      'likeCount': instance.likeCount,
+      'likes': instance.likes,
       'content': instance.content,
-      'createdAt': instance.createdAt,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };

@@ -21,11 +21,11 @@ CommentEntity _$CommentEntityFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CommentEntity {
   String? get id => throw _privateConstructorUsedError;
-  String? get userId => throw _privateConstructorUsedError;
+  String? get authorId => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
-  int? get likeCount => throw _privateConstructorUsedError;
+  List<String>? get likes => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
-  String? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this CommentEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,11 +45,11 @@ abstract class $CommentEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      String? userId,
+      String? authorId,
       List<String>? images,
-      int? likeCount,
+      List<String>? likes,
       String? content,
-      String? createdAt});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -68,9 +68,9 @@ class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
+    Object? authorId = freezed,
     Object? images = freezed,
-    Object? likeCount = freezed,
+    Object? likes = freezed,
     Object? content = freezed,
     Object? createdAt = freezed,
   }) {
@@ -79,18 +79,18 @@ class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      authorId: freezed == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
               as String?,
       images: freezed == images
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+      likes: freezed == likes
+          ? _value.likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ class _$CommentEntityCopyWithImpl<$Res, $Val extends CommentEntity>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -113,11 +113,11 @@ abstract class _$$CommentEntityImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
-      String? userId,
+      String? authorId,
       List<String>? images,
-      int? likeCount,
+      List<String>? likes,
       String? content,
-      String? createdAt});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -134,9 +134,9 @@ class __$$CommentEntityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? userId = freezed,
+    Object? authorId = freezed,
     Object? images = freezed,
-    Object? likeCount = freezed,
+    Object? likes = freezed,
     Object? content = freezed,
     Object? createdAt = freezed,
   }) {
@@ -145,18 +145,18 @@ class __$$CommentEntityImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      authorId: freezed == authorId
+          ? _value.authorId
+          : authorId // ignore: cast_nullable_to_non_nullable
               as String?,
       images: freezed == images
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+      likes: freezed == likes
+          ? _value._likes
+          : likes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -164,7 +164,7 @@ class __$$CommentEntityImplCopyWithImpl<$Res>
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime?,
     ));
   }
 }
@@ -175,12 +175,13 @@ class __$$CommentEntityImplCopyWithImpl<$Res>
 class _$CommentEntityImpl implements _CommentEntity {
   const _$CommentEntityImpl(
       {this.id = '',
-      this.userId = '',
+      this.authorId = '',
       final List<String>? images = const <String>[],
-      this.likeCount = 0,
+      final List<String>? likes = const <String>[],
       this.content = '',
-      this.createdAt = ''})
-      : _images = images;
+      this.createdAt = null})
+      : _images = images,
+        _likes = likes;
 
   factory _$CommentEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentEntityImplFromJson(json);
@@ -190,7 +191,7 @@ class _$CommentEntityImpl implements _CommentEntity {
   final String? id;
   @override
   @JsonKey()
-  final String? userId;
+  final String? authorId;
   final List<String>? _images;
   @override
   @JsonKey()
@@ -202,19 +203,27 @@ class _$CommentEntityImpl implements _CommentEntity {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<String>? _likes;
   @override
   @JsonKey()
-  final int? likeCount;
+  List<String>? get likes {
+    final value = _likes;
+    if (value == null) return null;
+    if (_likes is EqualUnmodifiableListView) return _likes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey()
   final String? content;
   @override
   @JsonKey()
-  final String? createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'CommentEntity(id: $id, userId: $userId, images: $images, likeCount: $likeCount, content: $content, createdAt: $createdAt)';
+    return 'CommentEntity(id: $id, authorId: $authorId, images: $images, likes: $likes, content: $content, createdAt: $createdAt)';
   }
 
   @override
@@ -223,10 +232,10 @@ class _$CommentEntityImpl implements _CommentEntity {
         (other.runtimeType == runtimeType &&
             other is _$CommentEntityImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.authorId, authorId) ||
+                other.authorId == authorId) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.likeCount, likeCount) ||
-                other.likeCount == likeCount) &&
+            const DeepCollectionEquality().equals(other._likes, _likes) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -237,9 +246,9 @@ class _$CommentEntityImpl implements _CommentEntity {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      userId,
+      authorId,
       const DeepCollectionEquality().hash(_images),
-      likeCount,
+      const DeepCollectionEquality().hash(_likes),
       content,
       createdAt);
 
@@ -262,11 +271,11 @@ class _$CommentEntityImpl implements _CommentEntity {
 abstract class _CommentEntity implements CommentEntity {
   const factory _CommentEntity(
       {final String? id,
-      final String? userId,
+      final String? authorId,
       final List<String>? images,
-      final int? likeCount,
+      final List<String>? likes,
       final String? content,
-      final String? createdAt}) = _$CommentEntityImpl;
+      final DateTime? createdAt}) = _$CommentEntityImpl;
 
   factory _CommentEntity.fromJson(Map<String, dynamic> json) =
       _$CommentEntityImpl.fromJson;
@@ -274,15 +283,15 @@ abstract class _CommentEntity implements CommentEntity {
   @override
   String? get id;
   @override
-  String? get userId;
+  String? get authorId;
   @override
   List<String>? get images;
   @override
-  int? get likeCount;
+  List<String>? get likes;
   @override
   String? get content;
   @override
-  String? get createdAt;
+  DateTime? get createdAt;
 
   /// Create a copy of CommentEntity
   /// with the given fields replaced by the non-null parameter values.

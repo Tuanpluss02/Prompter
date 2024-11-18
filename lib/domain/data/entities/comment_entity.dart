@@ -10,11 +10,11 @@ class CommentEntity with _$CommentEntity {
   @JsonSerializable()
   const factory CommentEntity({
     @Default('') String? id,
-    @Default('') String? userId,
+    @Default('') String? authorId,
     @Default(<String>[]) List<String>? images,
-    @Default(0) int? likeCount,
+    @Default(<String>[]) List<String>? likes,
     @Default('') String? content,
-    @Default('') String? createdAt,
+    @Default(null) DateTime? createdAt,
   }) = _CommentEntity;
 
   factory CommentEntity.fromJson(Map<String, dynamic> json) => _$CommentEntityFromJson(json);

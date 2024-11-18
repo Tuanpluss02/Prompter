@@ -1,12 +1,13 @@
 import 'package:base/common/constants/firebase_collection_keys.dart';
 import 'package:base/common/utils/generate_id.dart';
+import 'package:base/domain/data/entities/comment_entity.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class PostService extends GetxService {
   final _postCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.postsCollection);
-  final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
+  final _commentCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.commentsCollection);
 
   /// Create a new post
   ///
@@ -61,22 +62,21 @@ class PostService extends GetxService {
     });
   }
 
+  Future<List<CommentEntity>> getCommentsByPostId(String postId) async {
+    final commentIds = await getPostById(postId).then((value) => value.comments);
+    List<CommentEntity> comments = [];
+    for (final commentId in commentIds!) {
+      final commentSnapshot = await _commentCollection.doc(commentId).get();
+      comments.add(CommentEntity.fromJson(commentSnapshot.data()!));
+    }
+    return comments;
+  }
+
   /// Add a comment to a post
   ///
   /// This method allows a user to add a comment to a post.
   /// It updates the comments collection of the post and increments the comments count of the post.
-  Future<void> addComment(String userId, String postId, String content) async {
-    final commentRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.commentsCollection).doc();
-
-    await commentRef.set({
-      'userId': _userCollection.doc(userId),
-      'content': content,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
-
-    final postRef = _postCollection.doc(postId);
-    await postRef.update({
-      'commentsCount': FieldValue.increment(1),
-    });
-  }
+  // Future<void> addComment(String userId, String postId, CommentEntity comment) async {
+  //   final commentRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.commentsCollection).doc();
+  // }
 }
