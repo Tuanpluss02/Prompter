@@ -11,7 +11,7 @@ class NewPostBinding extends Bindings {
     Get.lazyPut(() => CloudinaryService());
     Get.lazyPut(() => PostService());
     if (args != null) {
-      Get.lazyPut(() => NewPostController(action: args));
+      Get.lazyPut(() => NewPostController(pageData: args));
     } else {
       throw Exception('No arguments passed to NewPostBinding');
     }

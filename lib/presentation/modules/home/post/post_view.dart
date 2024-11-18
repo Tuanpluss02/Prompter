@@ -7,6 +7,8 @@ import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/modules/home/post/new_post/new_post_controller.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,6 +43,26 @@ class PostView extends GetView<HomeController> {
                 onPressed: () {
                   Get.back();
                 },
+              ),
+            ),
+            bottomNavigationBar: ScaleButton(
+              onTap: () => Get.toNamed(AppRoutes.newPost,
+                  arguments: NewPostPageData(
+                    type: RouteNewPostType.comment,
+                    commentPostPageData: CommentPostPageData(newsfeedPost: news),
+                  )),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border(top: BorderSide(color: Colors.grey)),
+                ),
+                child: Text(
+                  'Write a comment...',
+                  style: AppTextStyles.s14w600.copyWith(color: Colors.black),
+                ),
               ),
             ),
           )

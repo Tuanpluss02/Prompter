@@ -11,6 +11,7 @@ import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -22,13 +23,46 @@ enum NewPostAction {
   mention,
 }
 
-class NewPostController extends BaseController {
+enum RouteNewPostType { create, edit, comment }
+
+class NewPostPageData {
+  final RouteNewPostType type;
+  final CreateNewPostPageData? createNewPostPageData;
+  final EditPostPageData? editPostPageData;
+  final CommentPostPageData? commentPostPageData;
+
+  NewPostPageData({
+    required this.type,
+    this.createNewPostPageData,
+    this.editPostPageData,
+    this.commentPostPageData,
+  }) : assert(type == RouteNewPostType.create && createNewPostPageData != null ||
+            type == RouteNewPostType.edit && editPostPageData != null ||
+            type == RouteNewPostType.comment && commentPostPageData != null);
+}
+
+class CreateNewPostPageData {
   final NewPostAction action;
+  const CreateNewPostPageData({required this.action});
+}
+
+class EditPostPageData {
+  final PostEntity postNeedEdit;
+  const EditPostPageData({required this.postNeedEdit});
+}
+
+class CommentPostPageData {
+  final PostNewsFeed newsfeedPost;
+  const CommentPostPageData({required this.newsfeedPost});
+}
+
+class NewPostController extends BaseController {
+  final NewPostPageData pageData;
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
   final PostService _postService = Get.find<PostService>();
   final TextEditingController textController = TextEditingController();
 
-  NewPostController({required this.action});
+  NewPostController({required this.pageData});
   final ImagePicker picker = ImagePicker();
   var postImages = <XFile>[].obs;
   var hideLinkPreview = true.obs;
@@ -40,9 +74,32 @@ class NewPostController extends BaseController {
     postImages.refresh();
   }
 
+  @override
+  void onReady() {
+    _initData();
+    super.onReady();
+  }
+
+  _initData() async {
+    if (pageData.type == RouteNewPostType.edit) {
+      textController.text = pageData.editPostPageData!.postNeedEdit.content ?? '';
+      postImages.addAll(await urlToXfile(pageData.editPostPageData!.postNeedEdit.images ?? []));
+      postImages.refresh();
+    }
+  }
+
   onRemoveImage(int index) {
     postImages.removeAt(index);
     postImages.refresh();
+  }
+
+  Future<List<XFile>> urlToXfile(List<String> urls) async {
+    List<XFile> xFiles = [];
+    for (var url in urls) {
+      final file = await get(Uri.parse(url));
+      xFiles.add(XFile.fromData(file.bodyBytes));
+    }
+    return xFiles;
   }
 
   onTapPost() async {

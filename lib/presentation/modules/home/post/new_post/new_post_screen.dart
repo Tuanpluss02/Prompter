@@ -4,6 +4,7 @@ import 'package:any_link_preview/any_link_preview.dart';
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
@@ -48,11 +49,11 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: UserSection(
-              user: controller.appProvider.user.value,
+              user: controller.pageData.type != RouteNewPostType.comment ? controller.appProvider.user.value : controller.pageData.commentPostPageData!.newsfeedPost.author,
               showOptions: false,
             ),
           ),
-          _buildPostTextContent(),
+          _buildPostTextEdit(),
           _buildPostMediaContent(),
           SizedBox(height: 10),
           _buildPostInputOption(),
@@ -62,14 +63,16 @@ class NewPostScreen extends BaseScreen<NewPostController> {
     );
   }
 
-  _buildPostTextContent() {
+  _buildPostTextEdit() {
     return Padding(
-      padding: const EdgeInsets.only(left: 90),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: Get.width * 0.6,
-        ),
-        child: TextField(
+        padding: const EdgeInsets.only(left: 90),
+        child: () {
+          if (controller.pageData.type == RouteNewPostType.comment) {
+            return TextContent(
+              content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
+            );
+          }
+          return TextField(
             controller: controller.textController,
             maxLines: null,
             maxLength: 5000,
@@ -81,9 +84,9 @@ class NewPostScreen extends BaseScreen<NewPostController> {
               hintText: 'What\'s news',
               hintStyle: AppTextStyles.s14w600.copyWith(color: Colors.grey),
               border: InputBorder.none,
-            )),
-      ),
-    );
+            ),
+          );
+        }());
   }
 
   _buildAppBar() {
@@ -108,8 +111,13 @@ class NewPostScreen extends BaseScreen<NewPostController> {
 
   _buildPostMediaContent() {
     return Obx(() => Visibility(
-          visible: controller.postImages.isNotEmpty,
-          replacement: _buildLinkPreview(),
+          visible: () {
+            if (controller.pageData.type == RouteNewPostType.comment) {
+              return controller.pageData.commentPostPageData!.newsfeedPost.post.images?.isNotEmpty ?? false;
+            }
+            return controller.postImages.isNotEmpty;
+          }(),
+          // replacement: _buildLinkPreview(),
           child: _buildImagePreview(),
         ));
   }
@@ -135,22 +143,25 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                     child: AppImage(image: FileImage(image)),
                   ),
                 ),
-                Positioned(
-                  top: 5,
-                  right: 20,
-                  child: ScaleButton(
-                    onTap: () => controller.onRemoveImage(index),
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.clear,
-                        color: Colors.white,
-                        size: 15,
+                Visibility(
+                  visible: controller.pageData.type != RouteNewPostType.comment,
+                  child: Positioned(
+                    top: 5,
+                    right: 20,
+                    child: ScaleButton(
+                      onTap: () => controller.onRemoveImage(index),
+                      child: Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.clear,
+                          color: Colors.white,
+                          size: 15,
+                        ),
                       ),
                     ),
                   ),
@@ -204,36 +215,39 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   }
 
   _buildPostInputOption() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 90),
-      child: Row(
-        children: [
-          ScaleButton(
-            onTap: controller.onSelectImage,
-            child: SvgPicture.asset(
-              SvgPath.icImage,
-              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+    return Visibility(
+      visible: controller.pageData.type != RouteNewPostType.comment,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 90),
+        child: Row(
+          children: [
+            ScaleButton(
+              onTap: controller.onSelectImage,
+              child: SvgPicture.asset(
+                SvgPath.icImage,
+                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+              ),
             ),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
-            child: SvgPicture.asset(
-              SvgPath.icLink,
-              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            SizedBox(width: 10),
+            ScaleButton(
+              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
+              child: SvgPicture.asset(
+                SvgPath.icLink,
+                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+              ),
             ),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
-            child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
-            child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-          ),
-        ],
+            SizedBox(width: 10),
+            ScaleButton(
+              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
+              child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+            ),
+            SizedBox(width: 10),
+            ScaleButton(
+              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
+              child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+            ),
+          ],
+        ),
       ),
     );
   }

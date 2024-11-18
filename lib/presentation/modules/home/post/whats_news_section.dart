@@ -17,7 +17,13 @@ class WhatsNewsSection extends GetView<HomeController> {
     return SizedBox(
       width: double.infinity,
       child: GestureDetector(
-        onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.text),
+        onTap: () => Get.toNamed(
+          AppRoutes.newPost,
+          arguments: NewPostPageData(
+            type: RouteNewPostType.create,
+            createNewPostPageData: CreateNewPostPageData(action: NewPostAction.text),
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,

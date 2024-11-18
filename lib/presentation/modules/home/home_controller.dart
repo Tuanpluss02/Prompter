@@ -17,6 +17,7 @@ class HomeController extends BaseController {
   final PostService _postService = Get.find<PostService>();
   final UserService _userService = Get.find<UserService>();
   final newsFeed = <PostNewsFeed>[].obs;
+  final commentList = <PostComment>[].obs;
 
   @override
   void onReady() {
@@ -52,6 +53,24 @@ class HomeController extends BaseController {
 
   Future<List<PostComment>> getComments(String postId) async {
     List<PostComment> comments = [
+      (
+        comment: CommentEntity(
+          id: '23hr92hfe9un934hb23',
+          authorId: "Dw5wgm3HeiaFuOj4Daf6c03h7Xj1",
+          content: 'This is a comment',
+          createdAt: DateTime.now(),
+        ),
+        author: appProvider.user.value
+      ),
+      (
+        comment: CommentEntity(
+          id: '23hr92hfe9un934hb23',
+          authorId: "Dw5wgm3HeiaFuOj4Daf6c03h7Xj1",
+          content: 'This is a comment',
+          createdAt: DateTime.now(),
+        ),
+        author: appProvider.user.value
+      ),
       (
         comment: CommentEntity(
           id: '23hr92hfe9un934hb23',
