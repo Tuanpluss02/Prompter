@@ -89,4 +89,8 @@ class HomeController extends BaseController {
     await getNewsFeed();
     newsFeedRefreshController.refreshCompleted();
   }
+
+  bool isCommentLiked(PostComment postComment) {
+    return postComment.comment.likes?.contains(appProvider.user.value.id) ?? false;
+  }
 }

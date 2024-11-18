@@ -5,7 +5,12 @@ class ScaleButton extends StatefulWidget {
   final Widget child;
   final Function() onTap;
   final Duration duration;
-  const ScaleButton({super.key, required this.child, required this.onTap, this.duration = const Duration(milliseconds: 100)});
+  const ScaleButton({
+    super.key,
+    required this.child,
+    required this.onTap,
+    this.duration = const Duration(milliseconds: 50),
+  });
 
   @override
   State<ScaleButton> createState() {
