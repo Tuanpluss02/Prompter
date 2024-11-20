@@ -5,13 +5,13 @@ import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/modules/home/components/post_image_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
-import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -69,8 +69,11 @@ class NewPostScreen extends BaseScreen<NewPostController> {
         padding: const EdgeInsets.only(left: 90),
         child: () {
           if (controller.pageData.type == RouteNewPostType.comment) {
-            return TextContent(
-              content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
+            return Visibility(
+              visible: controller.pageData.commentPostPageData!.newsfeedPost.post.content?.isNotEmpty ?? false,
+              child: TextContent(
+                content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
+              ),
             );
           }
           return TextField(
@@ -119,56 +122,38 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   }
 
   _buildImagePreview() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        padding: const EdgeInsets.only(top: 10),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: controller.postImages.length.isEqual(1) ? Get.width * 0.7 : Get.width * 0.5,
-          ),
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: controller.postImages.asMap().entries.map((e) {
-              final index = e.key;
-              final image = File(e.value.path);
-              return Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: AppImage(image: FileImage(image)),
-                    ),
-                  ),
-                  Visibility(
-                    visible: controller.pageData.type != RouteNewPostType.comment,
-                    child: Positioned(
-                      top: 5,
-                      right: 20,
-                      child: ScaleButton(
-                        onTap: () => controller.onRemoveImage(index),
-                        child: Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.clear,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            }).toList(),
-          ),
+    return Container(
+      padding: const EdgeInsets.only(top: 10),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: Get.width * 0.7,
         ),
+        child: controller.postImages.length.isEqual(1)
+            ? PostImageView(
+                image: FileImage(File(controller.postImages.first.path)),
+                removeElevation: (
+                  showRemoveButton: controller.pageData.type != RouteNewPostType.comment,
+                  onTapRemove: () {
+                    controller.onRemoveImage(0);
+                  },
+                ),
+              )
+            : ListView(
+                scrollDirection: Axis.horizontal,
+                children: controller.postImages.asMap().entries.map((e) {
+                  final index = e.key;
+                  final image = File(e.value.path);
+                  return PostImageView(
+                    image: FileImage(image),
+                    removeElevation: (
+                      showRemoveButton: controller.pageData.type != RouteNewPostType.comment,
+                      onTapRemove: () {
+                        controller.onRemoveImage(index);
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
       ),
     );
   }

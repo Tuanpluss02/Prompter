@@ -75,7 +75,7 @@ class PostView extends GetView<HomeController> {
 
   _buildMainView() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildPostAuthor(),
         const SizedBox(height: 10),
@@ -86,11 +86,14 @@ class PostView extends GetView<HomeController> {
         Divider(),
         if (isDetailView) ...[
           const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Comments',
-              style: AppTextStyles.s16w700,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Comments',
+                style: AppTextStyles.s16w700,
+              ),
             ),
           ),
           Divider(),

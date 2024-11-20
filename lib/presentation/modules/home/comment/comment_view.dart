@@ -38,7 +38,7 @@ class CommentView extends StatelessWidget {
         Visibility(
           visible: postComment.comment.images?.isNotEmpty ?? false,
           child: MediaView(
-            images: postComment.comment.images,
+            images: postComment.comment.images ?? [],
             maxHeight: Get.width * 0.4,
           ),
         ),
