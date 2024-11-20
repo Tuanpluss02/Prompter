@@ -3,6 +3,7 @@ import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
+import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -33,17 +34,17 @@ class UserSection extends StatelessWidget {
           width: 50.0,
           height: 50.0,
           decoration: BoxDecoration(
-            color: const Color(0xff7c94b6),
-            image: DecorationImage(
-              image: NetworkImage(user.profileImage ?? AppStrings.defaultNetworkAvatar),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            shape: BoxShape.circle,
             border: Border.all(
               color: Colors.white,
-              width: 2.0,
+              width: 1.0,
             ),
           ),
+          child: ClipOval(
+              child: AppImage(
+            image: NetworkImage(user.profileImage ?? AppStrings.defaultNetworkAvatar),
+            fit: BoxFit.cover,
+          )),
         ),
         SizedBox(width: 20),
         Column(
