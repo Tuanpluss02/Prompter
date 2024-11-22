@@ -12,10 +12,10 @@ class HomeScreen extends BaseScreen<HomeController> {
   const HomeScreen({super.key});
 
   @override
-  bool get wrapWithSafeArea => true;
+  bool get resizeToAvoidBottomInset => true;
 
   @override
-  bool get resizeToAvoidBottomInset => true;
+  bool get wrapWithSafeArea => true;
 
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {

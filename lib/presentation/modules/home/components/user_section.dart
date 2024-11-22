@@ -9,6 +9,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class UserSection extends StatelessWidget {
+  final UserEntity user;
+
+  final DateTime? timeAgo;
+  final Function()? onTap;
+  final bool showOptions;
+  final Function()? onOptionsTap;
   const UserSection({
     super.key,
     required this.user,
@@ -17,12 +23,6 @@ class UserSection extends StatelessWidget {
     this.showOptions = true,
     this.onOptionsTap,
   });
-
-  final UserEntity user;
-  final DateTime? timeAgo;
-  final Function()? onTap;
-  final bool showOptions;
-  final Function()? onOptionsTap;
 
   @override
   Widget build(BuildContext context) {
