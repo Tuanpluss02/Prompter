@@ -67,7 +67,7 @@ class PostService extends GetxService {
       final commentSnapshot = await _commentCollection.doc(commentId).get();
       comments.add(CommentEntity.fromJson(commentSnapshot.data()!));
     }
-    comments.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+    comments.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
     return comments;
   }
 

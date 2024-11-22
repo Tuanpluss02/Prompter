@@ -54,7 +54,7 @@ class CommentController extends BaseController {
     userCommentImage.clear();
     userCommentImage.refresh();
     commentList.insert(0, PostComment(comment: newComment, author: appProvider.user.value));
-    commentList.refresh();
+    update(['comment_${newsFeedPost.post.id}', 'post_${newsFeedPost.post.id}']);
   }
 
   Future<List<PostComment>> getComments(String postId) async {

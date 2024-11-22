@@ -26,10 +26,10 @@ class CommentView extends StatelessWidget {
             timeAgo: postComment.comment.createdAt,
           ),
         ),
-        Visibility(
-          visible: postComment.comment.content?.isNotEmpty ?? false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Visibility(
+            visible: postComment.comment.content?.isNotEmpty ?? false,
             child: TextContent(
               content: postComment.comment.content,
               hasMedia: postComment.comment.images?.isNotEmpty ?? false,

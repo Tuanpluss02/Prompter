@@ -26,8 +26,7 @@ class CommentSection extends GetView<CommentController> {
             physics: NeverScrollableScrollPhysics(),
             itemCount: controller.commentList.length,
             itemBuilder: (context, index) {
-              final comment = controller.commentList[index];
-              return CommentView(postComment: comment);
+              return CommentView(postComment: controller.commentList[index]);
             },
           ),
         );

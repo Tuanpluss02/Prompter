@@ -63,7 +63,7 @@ class PostView extends GetView<HomeController> {
             onTap: () => controller.likePost(news),
             child: GetBuilder<HomeController>(
               init: controller,
-              id: news.post.id,
+              id: 'post_${news.post.id}',
               initState: (_) {},
               builder: (_) {
                 return Row(
@@ -84,7 +84,7 @@ class PostView extends GetView<HomeController> {
             ),
             child: GetBuilder<HomeController>(
               init: controller,
-              id: news.post.id,
+              id: 'post_${news.post.id}',
               initState: (_) {},
               builder: (_) {
                 return Row(
