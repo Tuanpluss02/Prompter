@@ -22,10 +22,10 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   const NewPostScreen({super.key});
 
   @override
-  bool get wrapWithSafeArea => true;
+  bool get resizeToAvoidBottomInset => true;
 
   @override
-  bool get resizeToAvoidBottomInset => true;
+  bool get wrapWithSafeArea => true;
 
   @override
   Widget? buildBottomNavigationBar(BuildContext context) {
@@ -64,35 +64,6 @@ class NewPostScreen extends BaseScreen<NewPostController> {
     );
   }
 
-  _buildPostTextEdit() {
-    return Padding(
-        padding: const EdgeInsets.only(left: 90),
-        child: () {
-          if (controller.pageData.type == RouteNewPostType.comment) {
-            return Visibility(
-              visible: controller.pageData.commentPostPageData!.newsfeedPost.post.content?.isNotEmpty ?? false,
-              child: TextContent(
-                content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
-              ),
-            );
-          }
-          return TextField(
-            controller: controller.textController,
-            maxLines: null,
-            maxLength: 5000,
-            cursorColor: Colors.white,
-            keyboardType: TextInputType.multiline,
-            style: AppTextStyles.s14w400.copyWith(color: Colors.white),
-            decoration: InputDecoration(
-              counterText: '',
-              hintText: 'What\'s news',
-              hintStyle: AppTextStyles.s14w600.copyWith(color: Colors.grey),
-              border: InputBorder.none,
-            ),
-          );
-        }());
-  }
-
   _buildAppBar() {
     return Container(
       margin: const EdgeInsets.only(top: 10, left: 10),
@@ -111,14 +82,6 @@ class NewPostScreen extends BaseScreen<NewPostController> {
         ],
       ),
     );
-  }
-
-  _buildPostMediaContent() {
-    return Obx(() => Visibility(
-          visible: controller.postImages.isNotEmpty,
-          // replacement: _buildLinkPreview(),
-          child: _buildImagePreview(),
-        ));
   }
 
   _buildImagePreview() {
@@ -234,5 +197,42 @@ class NewPostScreen extends BaseScreen<NewPostController> {
         ),
       ),
     );
+  }
+
+  _buildPostMediaContent() {
+    return Obx(() => Visibility(
+          visible: controller.postImages.isNotEmpty,
+          // replacement: _buildLinkPreview(),
+          child: _buildImagePreview(),
+        ));
+  }
+
+  _buildPostTextEdit() {
+    return Padding(
+        padding: const EdgeInsets.only(left: 90),
+        child: () {
+          if (controller.pageData.type == RouteNewPostType.comment) {
+            return Visibility(
+              visible: controller.pageData.commentPostPageData!.newsfeedPost.post.content?.isNotEmpty ?? false,
+              child: TextContent(
+                content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
+              ),
+            );
+          }
+          return TextField(
+            controller: controller.textController,
+            maxLines: null,
+            maxLength: 5000,
+            cursorColor: Colors.white,
+            keyboardType: TextInputType.multiline,
+            style: AppTextStyles.s14w400.copyWith(color: Colors.white),
+            decoration: InputDecoration(
+              counterText: '',
+              hintText: 'What\'s news',
+              hintStyle: AppTextStyles.s14w600.copyWith(color: Colors.grey),
+              border: InputBorder.none,
+            ),
+          );
+        }());
   }
 }

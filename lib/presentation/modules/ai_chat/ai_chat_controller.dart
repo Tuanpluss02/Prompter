@@ -8,7 +8,7 @@ import 'package:base/domain/repositories/huggingface_repository.dart';
 import 'package:base/domain/services/chat_service.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
-import 'package:chatview/chatview.dart';
+import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

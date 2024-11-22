@@ -119,7 +119,7 @@ packages:
     source: hosted
     version: "2.11.0"
   audio_waveforms:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: audio_waveforms
       sha256: "9fbd314cd4f67e8964df960548ea3b56f829716879527caafb8f3d76ee7e6bf0"
@@ -207,7 +207,7 @@ packages:
     source: hosted
     version: "8.9.2"
   cached_network_image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cached_network_image
       sha256: "7c1183e361e5c8b0a0f21a28401eecdbde252441106a9816400dd4c2b2424916"
@@ -238,13 +238,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
-  chatview:
-    dependency: "direct main"
-    description:
-      path: "packages/flutter_chatview"
-      relative: true
-    source: path
-    version: "2.3.0"
   checked_yaml:
     dependency: transitive
     description:
@@ -390,7 +383,7 @@ packages:
     source: hosted
     version: "0.0.2"
   emoji_picker_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: emoji_picker_flutter
       sha256: "08567e6f914d36c32091a96cf2f51d2558c47aa2bd47a590dc4f50e42e0965f6"
@@ -947,7 +940,7 @@ packages:
     source: hosted
     version: "1.0.0+1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf

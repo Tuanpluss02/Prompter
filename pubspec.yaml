@@ -67,8 +67,8 @@ dependencies:
   google_generative_ai: ^0.4.6
   shared_preferences: ^2.3.3
   animated_custom_dropdown: ^3.1.1
-  chatview:
-    path: ./packages/flutter_chatview
+  # chatview:
+  #   path: ./packages/flutter_chatview
   permission_handler: ^11.3.1
   image_gallery_saver:
     git:
@@ -83,6 +83,10 @@ dependencies:
   flutter_cache_manager: ^3.4.1
   extended_image: ^9.0.7
   smooth_sheets: ^0.10.2
+  emoji_picker_flutter: ^3.1.0
+  audio_waveforms: ^1.1.1
+  intl: ^0.19.0
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
