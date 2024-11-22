@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MediaView extends StatelessWidget {
-  const MediaView({super.key, required this.images, this.maxHeight});
-
   final List<String> images;
+
   final double? maxHeight;
+  const MediaView({super.key, required this.images, this.maxHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,11 @@ class MediaView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: images.length,
               itemBuilder: (context, index) {
-                return PostImageView(
-                  image: NetworkImage(images[index]),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: PostImageView(
+                    image: NetworkImage(images[index]),
+                  ),
                 );
               },
             ),

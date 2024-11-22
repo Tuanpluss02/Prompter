@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:base/common/utils/image_utils.dart';
 import 'package:base/common/utils/permission_check.dart';
 import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
@@ -11,7 +12,6 @@ import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,33 +22,14 @@ class NewPostController extends BaseController {
   final PostService _postService = Get.find<PostService>();
   final TextEditingController textController = TextEditingController();
 
-  NewPostController({required this.pageData});
   final ImagePicker picker = ImagePicker();
   var postImages = <XFile>[].obs;
   var hideLinkPreview = true.obs;
-  onSelectImage() async {
-    final hasPermission = await checkAndRequestPermission(permission: Permission.photos);
-    if (!hasPermission) return;
-    final List<XFile> images = await picker.pickMultiImage();
-    postImages.addAll(images);
-    postImages.refresh();
-  }
-
+  NewPostController({required this.pageData});
   @override
   void onReady() async {
     await _initData();
     super.onReady();
-  }
-
-  _initData() async {
-    if (pageData.type == RouteNewPostType.edit) {
-      textController.text = pageData.editPostPageData!.postNeedEdit.content ?? '';
-      postImages.addAll(await urlToXfile(pageData.editPostPageData!.postNeedEdit.images ?? []));
-      postImages.refresh();
-    } else if (pageData.type == RouteNewPostType.comment) {
-      postImages.addAll(await urlToXfile(pageData.commentPostPageData!.newsfeedPost.post.images ?? []));
-      postImages.refresh();
-    }
   }
 
   onRemoveImage(int index) {
@@ -56,18 +37,12 @@ class NewPostController extends BaseController {
     postImages.refresh();
   }
 
-  Future<List<XFile>> urlToXfile(List<String> urls) async {
-    List<XFile> xFiles = [];
-    for (var url in urls) {
-      xFiles.add(await getImageXFileByUrl(url));
-    }
-    return xFiles;
-  }
-
-  Future<XFile> getImageXFileByUrl(String url) async {
-    var file = await DefaultCacheManager().getSingleFile(url);
-    XFile result = XFile(file.path);
-    return result;
+  onSelectImage() async {
+    final hasPermission = await checkAndRequestPermission(permission: Permission.photos);
+    if (!hasPermission) return;
+    final List<XFile> images = await picker.pickMultiImage();
+    postImages.addAll(images);
+    postImages.refresh();
   }
 
   onTapPost() async {
@@ -91,5 +66,16 @@ class NewPostController extends BaseController {
     Get.find<HomeController>().addNewPost(newPost);
     showSnackBar(title: 'Post created successfully');
     Get.until((route) => route.settings.name == AppRoutes.root);
+  }
+
+  _initData() async {
+    if (pageData.type == RouteNewPostType.edit) {
+      textController.text = pageData.editPostPageData!.postNeedEdit.content ?? '';
+      postImages.addAll(await ImageUtils.urlToXfile(pageData.editPostPageData!.postNeedEdit.images ?? []));
+      postImages.refresh();
+    } else if (pageData.type == RouteNewPostType.comment) {
+      postImages.addAll(await ImageUtils.urlToXfile(pageData.commentPostPageData!.newsfeedPost.post.images ?? []));
+      postImages.refresh();
+    }
   }
 }
