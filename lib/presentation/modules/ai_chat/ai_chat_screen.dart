@@ -28,7 +28,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         chatViewState: controller.chatViewState.value,
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
-          enableReplySnackBar: true,
+          enableReplySnackBar: false,
           enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: false,
@@ -137,14 +137,6 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.replyPopupColor,
           buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
-          replyPopupBuilder: (message, sentByCurrentUser) => Container(
-              width: double.infinity,
-              height: 50,
-              color: theme.inComingChatBubbleColor,
-              child: GestureDetector(
-                onTap: () => controller.onLongPressMessage(message),
-                child: Center(child: Text(message.messageType == MessageType.text ? 'Copy' : 'Download', style: TextStyle(color: theme.inComingChatBubbleTextColor))),
-              )),
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
           overrideUserReactionCallback: true,

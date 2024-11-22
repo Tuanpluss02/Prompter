@@ -1,9 +1,9 @@
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/image_utils.dart';
+import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
 
 enum DisposeLevel { high, medium, low }
 
@@ -65,62 +65,6 @@ class FullScreenWidget extends StatelessWidget {
   }
 }
 
-class _ActionSheet extends StatelessWidget {
-  final String imageUrl;
-  const _ActionSheet(this.imageUrl);
-  @override
-  Widget build(BuildContext context) {
-    // You can use PopScope to handle the swipe-to-dismiss gestures, as well as
-    // the system back gestures and tapping on the barrier, all in one place.
-    return DraggableSheet(
-      // minPosition: const SheetAnchor.proportional(0.5),
-      child: Card(
-        color: Color(0xff2c2c2c),
-        margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 15),
-            Container(
-              height: 5,
-              width: 40,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            SizedBox(height: 15),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Color(0xff363636),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  ImageUtils.saveImageToGallery(imageUrl: imageUrl);
-                },
-                child: ListTile(
-                  trailing: SvgPicture.asset(SvgPath.icImageDownload),
-                  title: Text(
-                    'Download',
-                    style: AppTextStyles.s18w400,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _FullScreenPageState extends State<FullScreenPage> {
   double initialPositionY = 0;
 
@@ -143,20 +87,28 @@ class _FullScreenPageState extends State<FullScreenPage> {
           onVerticalDragStart: (details) => _startVerticalDrag(details),
           onVerticalDragUpdate: (details) => _whileVerticalDrag(details),
           onVerticalDragEnd: (details) => _endVerticalDrag(details),
-          onLongPress: () {
-            final modalRoute = ModalSheetRoute(
-              // Enable the swipe-to-dismiss behavior.
-              swipeDismissible: true,
-              // Use `SwipeDismissSensitivity` to tweak the sensitivity of the swipe-to-dismiss behavior.
-              swipeDismissSensitivity: const SwipeDismissSensitivity(
-                minFlingVelocityRatio: 2.0,
-                minDragDistance: 200.0,
+          onLongPress: () => showAppBottomSheet(
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xff363636),
+                borderRadius: BorderRadius.circular(20),
               ),
-              builder: (context) => _ActionSheet(widget.imageUrl),
-            );
-
-            Navigator.push(context, modalRoute);
-          },
+              child: GestureDetector(
+                onTap: () {
+                  ImageUtils.saveImageToGallery(imageUrl: widget.imageUrl);
+                },
+                child: ListTile(
+                  trailing: SvgPicture.asset(SvgPath.icImageDownload),
+                  title: Text(
+                    'Download',
+                    style: AppTextStyles.s18w400,
+                  ),
+                ),
+              ),
+            ),
+          ),
           child: Container(
             color: widget.backgroundColor.withOpacity(opacity),
             constraints: BoxConstraints.expand(
@@ -171,7 +123,9 @@ class _FullScreenPageState extends State<FullScreenPage> {
                   bottom: 0 - positionYDelta,
                   left: 0,
                   right: 0,
-                  child: widget.child,
+                  child: InteractiveViewer(
+                    child: FittedBox(fit: BoxFit.contain, child: widget.child),
+                  ),
                 )
               ],
             ),
