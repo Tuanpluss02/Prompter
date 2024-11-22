@@ -110,23 +110,25 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         ),
         chatBubbleConfig: ChatBubbleConfiguration(
           outgoingChatBubbleConfig: ChatBubble(
+            borderRadius: BorderRadius.circular(16),
             linkPreviewConfig: LinkPreviewConfiguration(
               backgroundColor: theme.linkPreviewOutgoingChatColor,
-              bodyStyle: theme.outgoingChatLinkBodyStyle,
-              titleStyle: theme.outgoingChatLinkTitleStyle,
+              padding: EdgeInsets.zero,
+              linkStyle: AppTextStyles.s16w400,
+              titleStyle: AppTextStyles.s14w600,
+              bodyStyle: AppTextStyles.s12w400,
             ),
             receiptsWidgetConfig: const ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
             color: theme.outgoingChatBubbleColor,
           ),
           inComingChatBubbleConfig: ChatBubble(
+            borderRadius: BorderRadius.circular(16),
             linkPreviewConfig: LinkPreviewConfiguration(
-              linkStyle: TextStyle(
-                color: theme.inComingChatBubbleTextColor,
-                decoration: TextDecoration.underline,
-              ),
-              backgroundColor: theme.linkPreviewIncomingChatColor,
-              bodyStyle: theme.incomingChatLinkBodyStyle,
-              titleStyle: theme.incomingChatLinkTitleStyle?.copyWith(fontSize: 12),
+              backgroundColor: theme.linkPreviewOutgoingChatColor,
+              padding: EdgeInsets.zero,
+              linkStyle: AppTextStyles.s16w400,
+              titleStyle: AppTextStyles.s14w600,
+              bodyStyle: AppTextStyles.s12w400,
             ),
             textStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 16),
             senderNameTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 12),

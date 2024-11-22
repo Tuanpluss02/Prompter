@@ -3,6 +3,7 @@ import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/modules/account/lib/delete_account.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
@@ -91,21 +92,6 @@ class AccountScreen extends BaseScreen<AccountController> {
     );
   }
 
-  _buildBackgroundImage() {
-    return Stack(
-      children: [
-        AppImage(fit: BoxFit.cover, image: NetworkImage(AppStrings.defaultNetworkCover)),
-        Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment(0, 0), end: Alignment.bottomCenter, colors: [
-            Colors.transparent,
-            Colors.black.withOpacity(0.9),
-          ])),
-        ),
-      ],
-    );
-  }
-
   _buildAvatarName() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -146,48 +132,19 @@ class AccountScreen extends BaseScreen<AccountController> {
     );
   }
 
-  _buildUserInfo() {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildReach(),
-            _buildFollowButton(),
-          ],
+  _buildBackgroundImage() {
+    return Stack(
+      children: [
+        AppImage(fit: BoxFit.cover, image: NetworkImage(AppStrings.defaultNetworkCover)),
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment(0, 0), end: Alignment.bottomCenter, colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.9),
+          ])),
         ),
-      ),
+      ],
     );
-  }
-
-  Row _buildReach() {
-    return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
-          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
-          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Following'),
-        ].map((item) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${item.count.toShortString()} ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  TextSpan(
-                    text: item.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList());
   }
 
   _buildFollowButton() {
@@ -236,6 +193,69 @@ class AccountScreen extends BaseScreen<AccountController> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Row _buildReach() {
+    return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
+          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Following'),
+        ].map((item) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${item.count.toShortString()} ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  TextSpan(
+                    text: item.title,
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList());
+  }
+
+  _buildUserInfo() {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildReach(),
+            ElevatedButton(
+              onPressed: () {
+                showDialog(
+                  context: Get.context!,
+                  barrierColor: Colors.transparent,
+                  builder: (_) {
+                    return const AlertDialog(
+                      backgroundColor: Colors.transparent,
+                      content: Wrap(
+                        children: [
+                          DeleteAccount(),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              child: const Text("Show Delete Widget"),
+            ),
+            _buildFollowButton(),
+          ],
         ),
       ),
     );
