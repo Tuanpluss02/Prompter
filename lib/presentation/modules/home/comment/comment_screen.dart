@@ -8,6 +8,7 @@ import 'package:base/presentation/modules/home/components/comment_section.dart';
 import 'package:base/presentation/modules/home/components/post_image_view.dart';
 import 'package:base/presentation/modules/home/components/post_input_action.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
+import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -110,8 +111,11 @@ class CommentScreen extends BaseScreen<CommentController> {
       keyboardType: TextInputType.multiline,
       style: AppTextStyles.s14w400.copyWith(color: Colors.white),
       decoration: InputDecoration(
-        suffix: SvgPicture.asset(
-          SvgPath.icSend,
+        suffix: ScaleButton(
+          onTap: () => controller.addComment(),
+          child: SvgPicture.asset(
+            SvgPath.icSend,
+          ),
         ),
         counterText: '',
         hintText: 'Add a comment',

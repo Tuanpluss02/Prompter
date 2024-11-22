@@ -9,6 +9,26 @@ class PostService extends GetxService {
   final _postCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.postsCollection);
   final _commentCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.commentsCollection);
 
+  // / Add a comment to a post
+  // /
+  // / This method allows a user to add a comment to a post.
+  // / It updates the comments collection of the post and increments the comments count of the post.
+  Future<CommentEntity> addComment(String userId, String postId, CommentEntity comment) async {
+    if (comment.id == null || comment.id!.isEmpty) {
+      comment = comment.copyWith(id: generateUniqueId());
+    }
+    comment = comment.copyWith(createdAt: DateTime.now());
+    final commentRef = _commentCollection.doc(comment.id);
+    await commentRef.set(comment.toJson());
+    final postRef = _postCollection.doc(postId);
+    final post = await getPostById(postId);
+    post.comments!.add(comment.id!);
+    await postRef.update({
+      'comments': post.comments,
+    });
+    return await getCommentById(comment.id!);
+  }
+
   /// Create a new post
   ///
   /// This method creates a new post with the given userId, content, and optional imageUrl.
@@ -24,6 +44,38 @@ class PostService extends GetxService {
     return await getPostById(newpost.id!);
   }
 
+  Future<void> deleteComment(String postId, String commentId) async {
+    final postRef = _postCollection.doc(postId);
+    final post = await getPostById(postId);
+    post.comments!.remove(commentId);
+    await postRef.update({
+      'comments': post.comments,
+    });
+    final commentRef = _commentCollection.doc(commentId);
+    await commentRef.delete();
+  }
+
+  Future<CommentEntity> getCommentById(String commentId) async {
+    final commentSnapshot = await _commentCollection.doc(commentId).get();
+    return CommentEntity.fromJson(commentSnapshot.data()!);
+  }
+
+  Future<List<CommentEntity>> getCommentsByPostId(String postId) async {
+    final commentIds = await getPostById(postId).then((value) => value.comments);
+    List<CommentEntity> comments = [];
+    for (final commentId in commentIds!) {
+      final commentSnapshot = await _commentCollection.doc(commentId).get();
+      comments.add(CommentEntity.fromJson(commentSnapshot.data()!));
+    }
+    comments.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+    return comments;
+  }
+
+  Future<List<PostEntity>> getNewsFeed() async {
+    final postsSnapshot = await _postCollection.orderBy('createdAt', descending: true).get();
+    return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
+  }
+
   Future<PostEntity> getPostById(String postId) async {
     final postSnapshot = await _postCollection.doc(postId).get();
     return PostEntity.fromJson(postSnapshot.data()!);
@@ -31,11 +83,6 @@ class PostService extends GetxService {
 
   Future<List<PostEntity>> getPostsByUserId(String userId) async {
     final postsSnapshot = await _postCollection.where('authorId', isEqualTo: userId).get();
-    return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
-  }
-
-  Future<List<PostEntity>> getNewsFeed() async {
-    final postsSnapshot = await _postCollection.orderBy('createdAt', descending: true).get();
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
   }
 
@@ -61,22 +108,4 @@ class PostService extends GetxService {
       'likes': post.likes,
     });
   }
-
-  Future<List<CommentEntity>> getCommentsByPostId(String postId) async {
-    final commentIds = await getPostById(postId).then((value) => value.comments);
-    List<CommentEntity> comments = [];
-    for (final commentId in commentIds!) {
-      final commentSnapshot = await _commentCollection.doc(commentId).get();
-      comments.add(CommentEntity.fromJson(commentSnapshot.data()!));
-    }
-    return comments;
-  }
-
-  /// Add a comment to a post
-  ///
-  /// This method allows a user to add a comment to a post.
-  /// It updates the comments collection of the post and increments the comments count of the post.
-  // Future<void> addComment(String userId, String postId, CommentEntity comment) async {
-  //   final commentRef = _postCollection.doc(postId).collection(FirebaseCollectionKeys.commentsCollection).doc();
-  // }
 }
