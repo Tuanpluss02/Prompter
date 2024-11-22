@@ -3,6 +3,13 @@ class ImagePath {
   static const String logo = '$_imgPath/img_logo.png';
 }
 
+class LottiePath {}
+
+class RivePath {
+  static const _rivePath = 'assets/rives';
+  static const heart = '$_rivePath/heart.riv';
+}
+
 class SvgPath {
   static const _svgPath = 'assets/svgs';
   static const icGoogle = '$_svgPath/ic_google.svg';
@@ -31,11 +38,6 @@ class SvgPath {
   static const icMore = '$_svgPath/ic_more.svg';
   static const icImage = '$_svgPath/ic_image.svg';
   static const icLink = '$_svgPath/ic_link.svg';
-}
-
-class LottiePath {}
-
-class RivePath {
-  static const _rivePath = 'assets/rives';
-  static const heart = '$_rivePath/heart.riv';
+  static const icCopy = '$_svgPath/ic_copy.svg';
+  static const icImageDownload = '$_svgPath/ic_image_download.svg';
 }

@@ -1,8 +1,9 @@
-import 'dart:typed_data';
+import 'dart:io';
 
 import 'package:base/common/utils/log.dart';
 import 'package:base/common/utils/permission_check.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -14,6 +15,18 @@ class ImageUtils {
     var file = await DefaultCacheManager().getSingleFile(url);
     XFile result = XFile(file.path);
     return result;
+  }
+
+  static Future<void> saveImageToClipboard({required String url}) async {
+    File file = await urlToCachePath(url);
+    if (file.existsSync()) {
+      await Clipboard.setData(ClipboardData(
+        text: "content:/${file.path}",
+      ));
+      Fluttertoast.showToast(msg: "Image copied to clipboard.");
+    } else {
+      Log.console("Failed to copy image to clipboard.");
+    }
   }
 
   static Future<void> saveImageToGallery({required String imageUrl}) async {
@@ -42,6 +55,11 @@ class ImageUtils {
     } catch (e) {
       Log.console("Error saving image: $e");
     }
+  }
+
+  static Future<File> urlToCachePath(String url) async {
+    var file = await DefaultCacheManager().getSingleFile(url);
+    return file;
   }
 
   static Future<List<XFile>> urlToXfile(List<String> urls) async {

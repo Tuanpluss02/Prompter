@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class PostImageView extends StatelessWidget {
   final ImageProvider<Object> image;
+  final String? imageUrl;
   final ({bool showRemoveButton, Function() onTapRemove})? removeElevation;
-  const PostImageView({super.key, this.removeElevation, required this.image});
+  const PostImageView({super.key, this.removeElevation, required this.image, this.imageUrl})
+      : assert(image is NetworkImage && imageUrl != null, 'imageUrl must be provided when image is NetworkImage');
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +16,7 @@ class PostImageView extends StatelessWidget {
       children: [
         FullScreenWidget(
           disposeLevel: DisposeLevel.low,
+          imageUrl: imageUrl ?? '',
           child: Hero(
             tag: image,
             child: ClipRRect(

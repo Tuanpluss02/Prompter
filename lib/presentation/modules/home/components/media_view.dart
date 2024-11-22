@@ -16,6 +16,7 @@ class MediaView extends StatelessWidget {
       ),
       child: images.length.isEqual(1)
           ? PostImageView(
+              imageUrl: images.first,
               image: NetworkImage(images.first),
             )
           : ListView.builder(
@@ -25,6 +26,7 @@ class MediaView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: PostImageView(
+                    imageUrl: images[index],
                     image: NetworkImage(images[index]),
                   ),
                 );
