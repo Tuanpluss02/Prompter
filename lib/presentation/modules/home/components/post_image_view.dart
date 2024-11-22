@@ -7,14 +7,13 @@ class PostImageView extends StatelessWidget {
   final ImageProvider<Object> image;
   final String? imageUrl;
   final ({bool showRemoveButton, Function() onTapRemove})? removeElevation;
-  const PostImageView({super.key, this.removeElevation, required this.image, this.imageUrl})
-      : assert(image is NetworkImage && imageUrl != null, 'imageUrl must be provided when image is NetworkImage');
+  const PostImageView({super.key, this.removeElevation, required this.image, this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        FullScreenWidget(
+        FullScreenImageView(
           disposeLevel: DisposeLevel.low,
           imageUrl: imageUrl ?? '',
           child: Hero(
@@ -29,7 +28,7 @@ class PostImageView extends StatelessWidget {
           visible: removeElevation?.showRemoveButton ?? false,
           child: Positioned(
             top: 5,
-            right: 20,
+            right: 5,
             child: ScaleButton(
               onTap: removeElevation?.onTapRemove ?? () {},
               child: Container(

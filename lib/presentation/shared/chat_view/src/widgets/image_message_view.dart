@@ -74,7 +74,7 @@ class ImageMessageView extends StatelessWidget {
                   borderRadius: imageMessageConfig?.borderRadius ?? BorderRadius.circular(14),
                   child: (() {
                     if (imageUrl.isUrl) {
-                      return FullScreenWidget(
+                      return FullScreenImageView(
                           imageUrl: imageUrl,
                           disposeLevel: DisposeLevel.medium,
                           child: Hero(

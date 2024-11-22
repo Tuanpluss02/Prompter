@@ -1,14 +1,14 @@
-import 'package:base/presentation/modules/home/comment/comment_view.dart';
-import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/modules/home/comment/comment_controller.dart';
+import 'package:base/presentation/modules/home/components/comment_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CommentSection extends GetView<HomeController> {
-  const CommentSection({super.key, required this.postId});
+class CommentSection extends GetView<CommentController> {
   final String postId;
+  const CommentSection({super.key, required this.postId});
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
+    return GetBuilder<CommentController>(
       id: 'comment_$postId',
       init: controller,
       initState: (_) async {

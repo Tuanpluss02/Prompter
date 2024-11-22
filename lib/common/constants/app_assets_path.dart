@@ -40,4 +40,5 @@ class SvgPath {
   static const icLink = '$_svgPath/ic_link.svg';
   static const icCopy = '$_svgPath/ic_copy.svg';
   static const icImageDownload = '$_svgPath/ic_image_download.svg';
+  static const icSend = '$_svgPath/ic_send.svg';
 }

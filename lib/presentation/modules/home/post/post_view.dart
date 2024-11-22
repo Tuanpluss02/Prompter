@@ -1,67 +1,25 @@
 import 'package:base/common/constants/app_assets_path.dart';
-import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_text_styles.dart';
+import 'package:base/common/constants/app_type.dart';
 import 'package:base/common/utils/extension.dart';
-import 'package:base/presentation/modules/home/comment/comment_section.dart';
 import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PostView extends GetView<HomeController> {
-  final PostNewsFeed news;
+  final NewsFeedPost news;
 
-  final bool isDetailView;
-  const PostView({super.key, required this.news, this.isDetailView = false});
+  const PostView({super.key, required this.news});
 
   @override
   Widget build(BuildContext context) {
-    return isDetailView
-        ? Scaffold(
-            backgroundColor: AppColors.backgroundColor,
-            body: SafeArea(
-              child: SmartRefresher(
-                controller: controller.postDetailRefreshController,
-                onRefresh: () {
-                  controller.getComments(news.post.id!);
-                  controller.postDetailRefreshController.refreshCompleted();
-                },
-                child: SingleChildScrollView(child: _buildMainView()),
-              ),
-            ),
-            appBar: AppBar(
-              title: Text('Post Detail'),
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-            ),
-            bottomNavigationBar: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(20),
-                border: Border(top: BorderSide(color: Colors.grey)),
-              ),
-              child: Text(
-                'Write a comment...',
-                style: AppTextStyles.s14w600.copyWith(color: Colors.black),
-              ),
-            ),
-          )
-        : GestureDetector(
-            onTap: () {
-              Get.to(() => PostView(news: news, isDetailView: true));
-            },
-            child: _buildMainView());
+    return _buildMainView();
   }
 
   _buildMainView() {
@@ -75,22 +33,6 @@ class PostView extends GetView<HomeController> {
         const SizedBox(height: 10),
         _buildPostReact(),
         Divider(),
-        if (isDetailView) ...[
-          const SizedBox(height: 10),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Comments',
-                style: AppTextStyles.s16w700,
-              ),
-            ),
-          ),
-          Divider(),
-          const SizedBox(height: 10),
-          CommentSection(postId: news.post.id!),
-        ],
       ],
     );
   }
@@ -136,7 +78,10 @@ class PostView extends GetView<HomeController> {
           ),
           SizedBox(width: 15),
           ScaleButton(
-            onTap: () {},
+            onTap: () => Get.toNamed(
+              AppRoutes.comment,
+              arguments: news,
+            ),
             child: GetBuilder<HomeController>(
               init: controller,
               id: news.post.id,

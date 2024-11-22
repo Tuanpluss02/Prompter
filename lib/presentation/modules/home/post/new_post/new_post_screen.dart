@@ -1,18 +1,15 @@
 import 'dart:io';
 
 import 'package:any_link_preview/any_link_preview.dart';
-import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
-import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/post_image_view.dart';
+import 'package:base/presentation/modules/home/components/post_input_action.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
-import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'new_post_controller.dart';
@@ -105,13 +102,16 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                 children: controller.postImages.asMap().entries.map((e) {
                   final index = e.key;
                   final image = File(e.value.path);
-                  return PostImageView(
-                    image: FileImage(image),
-                    removeElevation: (
-                      showRemoveButton: true,
-                      onTapRemove: () {
-                        controller.onRemoveImage(index);
-                      },
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: PostImageView(
+                      image: FileImage(image),
+                      removeElevation: (
+                        showRemoveButton: true,
+                        onTapRemove: () {
+                          controller.onRemoveImage(index);
+                        },
+                      ),
                     ),
                   );
                 }).toList(),
@@ -163,34 +163,11 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   _buildPostInputOption() {
     return Padding(
       padding: const EdgeInsets.only(left: 90),
-      child: Row(
-        children: [
-          ScaleButton(
-            onTap: controller.onSelectImage,
-            child: SvgPicture.asset(
-              SvgPath.icImage,
-              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-            ),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
-            child: SvgPicture.asset(
-              SvgPath.icLink,
-              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-            ),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
-            child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-          ),
-          SizedBox(width: 10),
-          ScaleButton(
-            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
-            child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-          ),
-        ],
+      child: PostInputAction(
+        onTapImage: controller.onSelectImage,
+        onTapLink: () {},
+        onTapMention: () {},
+        onTapHastag: () {},
       ),
     );
   }

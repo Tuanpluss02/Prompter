@@ -7,32 +7,13 @@ import 'package:flutter_svg/svg.dart';
 
 enum DisposeLevel { high, medium, low }
 
-class FullScreenPage extends StatefulWidget {
+class FullScreenImageView extends StatelessWidget {
   final Widget child;
   final String imageUrl;
   final Color backgroundColor;
   final bool backgroundIsTransparent;
   final DisposeLevel disposeLevel;
-  const FullScreenPage({
-    super.key,
-    required this.child,
-    required this.imageUrl,
-    this.backgroundColor = Colors.black,
-    this.backgroundIsTransparent = true,
-    this.disposeLevel = DisposeLevel.medium,
-  });
-
-  @override
-  State<FullScreenPage> createState() => _FullScreenPageState();
-}
-
-class FullScreenWidget extends StatelessWidget {
-  final Widget child;
-  final String imageUrl;
-  final Color backgroundColor;
-  final bool backgroundIsTransparent;
-  final DisposeLevel disposeLevel;
-  const FullScreenWidget({
+  const FullScreenImageView({
     super.key,
     required this.child,
     required this.imageUrl,
@@ -65,6 +46,25 @@ class FullScreenWidget extends StatelessWidget {
   }
 }
 
+class FullScreenPage extends StatefulWidget {
+  final Widget child;
+  final String imageUrl;
+  final Color backgroundColor;
+  final bool backgroundIsTransparent;
+  final DisposeLevel disposeLevel;
+  const FullScreenPage({
+    super.key,
+    required this.child,
+    required this.imageUrl,
+    this.backgroundColor = Colors.black,
+    this.backgroundIsTransparent = true,
+    this.disposeLevel = DisposeLevel.medium,
+  });
+
+  @override
+  State<FullScreenPage> createState() => _FullScreenPageState();
+}
+
 class _FullScreenPageState extends State<FullScreenPage> {
   double initialPositionY = 0;
 
@@ -87,28 +87,30 @@ class _FullScreenPageState extends State<FullScreenPage> {
           onVerticalDragStart: (details) => _startVerticalDrag(details),
           onVerticalDragUpdate: (details) => _whileVerticalDrag(details),
           onVerticalDragEnd: (details) => _endVerticalDrag(details),
-          onLongPress: () => showAppBottomSheet(
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Color(0xff363636),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  ImageUtils.saveImageToGallery(imageUrl: widget.imageUrl);
-                },
-                child: ListTile(
-                  trailing: SvgPicture.asset(SvgPath.icImageDownload),
-                  title: Text(
-                    'Download',
-                    style: AppTextStyles.s18w400,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          onLongPress: widget.imageUrl.isNotEmpty
+              ? () => showAppBottomSheet(
+                    child: Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Color(0xff363636),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          ImageUtils.saveImageToGallery(imageUrl: widget.imageUrl);
+                        },
+                        child: ListTile(
+                          trailing: SvgPicture.asset(SvgPath.icImageDownload),
+                          title: Text(
+                            'Download',
+                            style: AppTextStyles.s18w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+              : null,
           child: Container(
             color: widget.backgroundColor.withOpacity(opacity),
             constraints: BoxConstraints.expand(
