@@ -73,9 +73,6 @@ class NewPostController extends BaseController {
       textController.text = pageData.editPostPageData!.postNeedEdit.content ?? '';
       postImages.addAll(await ImageUtils.urlToXfile(pageData.editPostPageData!.postNeedEdit.images ?? []));
       postImages.refresh();
-    } else if (pageData.type == RouteNewPostType.comment) {
-      postImages.addAll(await ImageUtils.urlToXfile(pageData.commentPostPageData!.newsfeedPost.post.images ?? []));
-      postImages.refresh();
     }
   }
 }

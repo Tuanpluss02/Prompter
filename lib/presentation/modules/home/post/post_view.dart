@@ -2,13 +2,11 @@ import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
-import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/modules/home/comment/comment_section.dart';
 import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
-import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,10 +14,10 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PostView extends GetView<HomeController> {
-  const PostView({super.key, required this.news, this.isDetailView = false});
-
   final PostNewsFeed news;
+
   final bool isDetailView;
+  const PostView({super.key, required this.news, this.isDetailView = false});
 
   @override
   Widget build(BuildContext context) {
@@ -45,24 +43,17 @@ class PostView extends GetView<HomeController> {
                 },
               ),
             ),
-            bottomNavigationBar: ScaleButton(
-              onTap: () => Get.toNamed(AppRoutes.newPost,
-                  arguments: NewPostPageData(
-                    type: RouteNewPostType.comment,
-                    commentPostPageData: CommentPostPageData(newsfeedPost: news),
-                  )),
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border(top: BorderSide(color: Colors.grey)),
-                ),
-                child: Text(
-                  'Write a comment...',
-                  style: AppTextStyles.s14w600.copyWith(color: Colors.black),
-                ),
+            bottomNavigationBar: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(20),
+                border: Border(top: BorderSide(color: Colors.grey)),
+              ),
+              child: Text(
+                'Write a comment...',
+                style: AppTextStyles.s14w600.copyWith(color: Colors.black),
               ),
             ),
           )
@@ -104,6 +95,13 @@ class PostView extends GetView<HomeController> {
     );
   }
 
+  _buildPostAuthor() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: UserSection(user: news.author, timeAgo: news.post.createdAt),
+    );
+  }
+
   _buildPostMedia() {
     return Visibility(
       visible: (news.post.images?.isNotEmpty ?? false),
@@ -111,13 +109,6 @@ class PostView extends GetView<HomeController> {
         padding: const EdgeInsets.only(top: 10),
         child: MediaView(images: news.post.images ?? []),
       ),
-    );
-  }
-
-  _buildPostAuthor() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: UserSection(user: news.author, timeAgo: news.post.createdAt),
     );
   }
 

@@ -6,7 +6,6 @@ import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/post_image_view.dart';
-import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
@@ -50,7 +49,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: UserSection(
-              user: controller.pageData.type != RouteNewPostType.comment ? controller.appProvider.user.value : controller.pageData.commentPostPageData!.newsfeedPost.author,
+              user: controller.appProvider.user.value,
               showOptions: false,
             ),
           ),
@@ -95,7 +94,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
             ? PostImageView(
                 image: FileImage(File(controller.postImages.first.path)),
                 removeElevation: (
-                  showRemoveButton: controller.pageData.type != RouteNewPostType.comment,
+                  showRemoveButton: true,
                   onTapRemove: () {
                     controller.onRemoveImage(0);
                   },
@@ -109,7 +108,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                   return PostImageView(
                     image: FileImage(image),
                     removeElevation: (
-                      showRemoveButton: controller.pageData.type != RouteNewPostType.comment,
+                      showRemoveButton: true,
                       onTapRemove: () {
                         controller.onRemoveImage(index);
                       },
@@ -162,39 +161,36 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   }
 
   _buildPostInputOption() {
-    return Visibility(
-      visible: controller.pageData.type != RouteNewPostType.comment,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 90),
-        child: Row(
-          children: [
-            ScaleButton(
-              onTap: controller.onSelectImage,
-              child: SvgPicture.asset(
-                SvgPath.icImage,
-                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(left: 90),
+      child: Row(
+        children: [
+          ScaleButton(
+            onTap: controller.onSelectImage,
+            child: SvgPicture.asset(
+              SvgPath.icImage,
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
             ),
-            SizedBox(width: 10),
-            ScaleButton(
-              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
-              child: SvgPicture.asset(
-                SvgPath.icLink,
-                colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-              ),
+          ),
+          SizedBox(width: 10),
+          ScaleButton(
+            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.link),
+            child: SvgPicture.asset(
+              SvgPath.icLink,
+              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.srcIn),
             ),
-            SizedBox(width: 10),
-            ScaleButton(
-              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
-              child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-            ),
-            SizedBox(width: 10),
-            ScaleButton(
-              onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
-              child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
-            ),
-          ],
-        ),
+          ),
+          SizedBox(width: 10),
+          ScaleButton(
+            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.hastag),
+            child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+          ),
+          SizedBox(width: 10),
+          ScaleButton(
+            onTap: () => Get.toNamed(AppRoutes.newPost, arguments: NewPostAction.mention),
+            child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+          ),
+        ],
       ),
     );
   }
@@ -210,29 +206,19 @@ class NewPostScreen extends BaseScreen<NewPostController> {
   _buildPostTextEdit() {
     return Padding(
         padding: const EdgeInsets.only(left: 90),
-        child: () {
-          if (controller.pageData.type == RouteNewPostType.comment) {
-            return Visibility(
-              visible: controller.pageData.commentPostPageData!.newsfeedPost.post.content?.isNotEmpty ?? false,
-              child: TextContent(
-                content: controller.pageData.commentPostPageData!.newsfeedPost.post.content,
-              ),
-            );
-          }
-          return TextField(
-            controller: controller.textController,
-            maxLines: null,
-            maxLength: 5000,
-            cursorColor: Colors.white,
-            keyboardType: TextInputType.multiline,
-            style: AppTextStyles.s14w400.copyWith(color: Colors.white),
-            decoration: InputDecoration(
-              counterText: '',
-              hintText: 'What\'s news',
-              hintStyle: AppTextStyles.s14w600.copyWith(color: Colors.grey),
-              border: InputBorder.none,
-            ),
-          );
-        }());
+        child: TextField(
+          controller: controller.textController,
+          maxLines: null,
+          maxLength: 5000,
+          cursorColor: Colors.white,
+          keyboardType: TextInputType.multiline,
+          style: AppTextStyles.s14w400.copyWith(color: Colors.white),
+          decoration: InputDecoration(
+            counterText: '',
+            hintText: 'What\'s news',
+            hintStyle: AppTextStyles.s14w600.copyWith(color: Colors.grey),
+            border: InputBorder.none,
+          ),
+        ));
   }
 }
