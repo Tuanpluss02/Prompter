@@ -70,6 +70,7 @@ class PostService extends GetxService {
     List<CommentEntity> comments = [];
     for (final commentId in commentIds!) {
       final commentSnapshot = await _commentCollection.doc(commentId).get();
+      if (!commentSnapshot.exists) continue;
       comments.add(CommentEntity.fromJson(commentSnapshot.data()!));
     }
     comments.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
@@ -89,6 +90,12 @@ class PostService extends GetxService {
   Future<List<PostEntity>> getPostsByUserId(String userId) async {
     final postsSnapshot = await _postCollection.where('authorId', isEqualTo: userId).get();
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
+  }
+
+  Future<CommentEntity> updateComment(CommentEntity comment) async {
+    final commentRef = _commentCollection.doc(comment.id);
+    await commentRef.update(comment.toJson());
+    return await getCommentById(comment.id!);
   }
 
   // update comment like

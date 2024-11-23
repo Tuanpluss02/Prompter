@@ -89,11 +89,64 @@ class CommentScreen extends BaseScreen<CommentController> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildImagePreview(),
-          PostInputAction(
-            onTapImage: controller.onSelectImage,
-            onTapLink: () {},
-            onTapMention: () {},
-            onTapHastag: () {},
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PostInputAction(
+                onTapImage: controller.onSelectImage,
+                onTapLink: () {},
+                onTapMention: () {},
+                onTapHastag: () {},
+              ),
+              Obx(() => Visibility(
+                    visible: controller.commentIdEditing.isNotEmpty,
+                    child: Row(
+                      children: [
+                        Text('You are editing a comment', style: AppTextStyles.s11w600.copyWith(color: Colors.grey)),
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            shape: BoxShape.circle,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.commentTextController.clear();
+                              controller.userCommentImage.clear();
+                              controller.commentIdEditing.value = '';
+                            },
+                            child: Transform.rotate(
+                              angle: 45 * 3.1415926535897932 / 180,
+                              child: SvgPicture.asset(
+                                width: 10,
+                                SvgPath.icAdd,
+                                colorFilter: ColorFilter.mode(Colors.grey.shade400, BlendMode.srcIn),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))
+              // ListTile(
+              //   trailing: GestureDetector(
+              //     onTap: () {
+              //       controller.commentTextController.clear();
+              //       controller.userCommentImage.clear();
+              //       controller.commentIdEditing.value = '';
+              //     },
+              //     child: Text(
+              //       'Cancel',
+              //       style: AppTextStyles.s14w600.copyWith(color: Colors.grey),
+              //     ),
+              //   ),
+              //   title: Text(
+              //     'You are editing a comment',
+              //     style: AppTextStyles.s14w600.copyWith(color: Colors.grey),
+              //   ),
+              // ),
+            ],
           ),
           _buildCommentTextEdit(),
         ],
@@ -104,6 +157,7 @@ class CommentScreen extends BaseScreen<CommentController> {
   _buildCommentTextEdit() {
     return TextField(
       controller: controller.commentTextController,
+      focusNode: controller.commentFocusNode,
       maxLines: null,
       textAlign: TextAlign.start,
       maxLength: 1000,
@@ -112,7 +166,7 @@ class CommentScreen extends BaseScreen<CommentController> {
       style: AppTextStyles.s14w400.copyWith(color: Colors.white),
       decoration: InputDecoration(
         suffix: ScaleButton(
-          onTap: () => controller.addComment(),
+          onTap: () => controller.onSubmit(),
           child: SvgPicture.asset(
             SvgPath.icSend,
           ),

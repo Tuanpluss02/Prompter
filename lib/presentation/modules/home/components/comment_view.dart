@@ -6,6 +6,7 @@ import 'package:base/presentation/modules/home/comment/comment_controller.dart';
 import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
+import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,41 @@ class CommentView extends GetView<CommentController> {
               child: UserSection(
                 user: postComment.author,
                 timeAgo: postComment.comment.createdAt,
+                showOptions: controller.isCommentOwner(postComment),
+                onOptionsTap: () => showAppBottomSheet(
+                  child: Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Color(0xff363636),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => controller.onTapEditComment(postComment),
+                          child: ListTile(
+                            trailing: SvgPicture.asset(SvgPath.icEdit),
+                            title: Text(
+                              'Edit',
+                              style: AppTextStyles.s18w400,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: ListTile(
+                            trailing: SvgPicture.asset(SvgPath.icTrashbin),
+                            title: Text(
+                              'Delete',
+                              style: AppTextStyles.s18w400,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(
