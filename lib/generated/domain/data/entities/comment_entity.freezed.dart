@@ -150,11 +150,11 @@ class __$$CommentEntityImplCopyWithImpl<$Res>
           : authorId // ignore: cast_nullable_to_non_nullable
               as String?,
       images: freezed == images
-          ? _value._images
+          ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       likes: freezed == likes
-          ? _value._likes
+          ? _value.likes
           : likes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       content: freezed == content
@@ -176,12 +176,10 @@ class _$CommentEntityImpl implements _CommentEntity {
   const _$CommentEntityImpl(
       {this.id = '',
       this.authorId = '',
-      final List<String>? images = const <String>[],
-      final List<String>? likes = const <String>[],
+      this.images = const <String>[],
+      this.likes = const <String>[],
       this.content = '',
-      this.createdAt = null})
-      : _images = images,
-        _likes = likes;
+      this.createdAt = null});
 
   factory _$CommentEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentEntityImplFromJson(json);
@@ -192,28 +190,12 @@ class _$CommentEntityImpl implements _CommentEntity {
   @override
   @JsonKey()
   final String? authorId;
-  final List<String>? _images;
   @override
   @JsonKey()
-  List<String>? get images {
-    final value = _images;
-    if (value == null) return null;
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String>? _likes;
+  final List<String>? images;
   @override
   @JsonKey()
-  List<String>? get likes {
-    final value = _likes;
-    if (value == null) return null;
-    if (_likes is EqualUnmodifiableListView) return _likes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final List<String>? likes;
   @override
   @JsonKey()
   final String? content;
@@ -234,8 +216,8 @@ class _$CommentEntityImpl implements _CommentEntity {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.authorId, authorId) ||
                 other.authorId == authorId) &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
-            const DeepCollectionEquality().equals(other._likes, _likes) &&
+            const DeepCollectionEquality().equals(other.images, images) &&
+            const DeepCollectionEquality().equals(other.likes, likes) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -247,8 +229,8 @@ class _$CommentEntityImpl implements _CommentEntity {
       runtimeType,
       id,
       authorId,
-      const DeepCollectionEquality().hash(_images),
-      const DeepCollectionEquality().hash(_likes),
+      const DeepCollectionEquality().hash(images),
+      const DeepCollectionEquality().hash(likes),
       content,
       createdAt);
 

@@ -55,6 +55,11 @@ class PostService extends GetxService {
     await commentRef.delete();
   }
 
+  Future<void> deletePost(String postId) async {
+    final postRef = _postCollection.doc(postId);
+    await postRef.delete();
+  }
+
   Future<CommentEntity> getCommentById(String commentId) async {
     final commentSnapshot = await _commentCollection.doc(commentId).get();
     return CommentEntity.fromJson(commentSnapshot.data()!);
@@ -86,9 +91,19 @@ class PostService extends GetxService {
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
   }
 
-  Future<void> deletePost(String postId) async {
-    final postRef = _postCollection.doc(postId);
-    await postRef.delete();
+  // update comment like
+  Future<void> updateCommentLike(String userId, String commentId) async {
+    var comment = await getCommentById(commentId);
+    if (comment.likes?.contains(userId) ?? false) {
+      final index = comment.likes!.indexWhere((element) => element == userId);
+      comment.likes!.removeAt(index);
+    } else {
+      comment.likes!.add(userId);
+    }
+    final commentRef = _commentCollection.doc(commentId);
+    await commentRef.update({
+      'likes': comment.likes,
+    });
   }
 
   Future<PostEntity> updatePost(PostEntity post) async {

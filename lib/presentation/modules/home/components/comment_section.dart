@@ -9,13 +9,13 @@ class CommentSection extends GetView<CommentController> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CommentController>(
-      id: 'comment_$postId',
+      id: 'post_comment_$postId',
       init: controller,
       initState: (_) async {
         controller.commentList.clear();
         final comments = await controller.getComments(postId);
         controller.commentList.addAll(comments);
-        controller.update(['comment_$postId']);
+        controller.update(['post_comment_$postId']);
       },
       builder: (_) {
         return Visibility(

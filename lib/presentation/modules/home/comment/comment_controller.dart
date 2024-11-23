@@ -54,7 +54,7 @@ class CommentController extends BaseController {
     userCommentImage.clear();
     userCommentImage.refresh();
     commentList.insert(0, PostComment(comment: newComment, author: appProvider.user.value));
-    update(['comment_${newsFeedPost.post.id}', 'post_${newsFeedPost.post.id}']);
+    update(['post_comment_${newsFeedPost.post.id}', 'post_${newsFeedPost.post.id}']);
   }
 
   Future<List<PostComment>> getComments(String postId) async {
@@ -69,6 +69,18 @@ class CommentController extends BaseController {
 
   bool isCommentLiked(PostComment postComment) {
     return postComment.comment.likes?.contains(appProvider.user.value.id) ?? false;
+  }
+
+  Future<void> likeComment(PostComment postComment) async {
+    final isLiked = isCommentLiked(postComment);
+    final index = commentList.indexWhere((element) => element.comment.id == postComment.comment.id);
+    if (isLiked) {
+      commentList[index].comment.likes?.remove(appProvider.user.value.id);
+    } else {
+      commentList[index].comment.likes?.add(appProvider.user.value.id ?? '');
+    }
+    update(['comment_${postComment.comment.id!}']);
+    _postService.updateCommentLike(appProvider.user.value.id ?? '', postComment.comment.id ?? '');
   }
 
   onRemoveImage(int index) {

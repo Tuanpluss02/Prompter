@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part '../../../generated/domain/data/entities/comment_entity.freezed.dart';
 part '../../../generated/domain/data/entities/comment_entity.g.dart';
 
-@Freezed(fromJson: true, toJson: true)
+@Freezed(fromJson: true, toJson: true, makeCollectionsUnmodifiable: false)
 class CommentEntity with _$CommentEntity {
   @JsonSerializable()
   const factory CommentEntity({
