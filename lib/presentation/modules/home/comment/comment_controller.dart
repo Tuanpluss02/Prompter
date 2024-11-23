@@ -9,6 +9,7 @@ import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -97,6 +98,7 @@ class CommentController extends BaseController {
         comment = edittingComment.comment;
       }
       comment = comment.copyWith(
+        authorId: appProvider.user.value.id,
         content: commentTextController.text,
         images: imageUrls,
       );
@@ -104,13 +106,21 @@ class CommentController extends BaseController {
       return await _postService.updateComment(comment);
     }
 
-    final newComment = await CallApiWidget.showLoading(api: process());
+    final comment = await CallApiWidget.showLoading(api: process());
+
+    if (commentIdEditing.isEmpty) {
+      commentList.insert(0, PostComment(comment: comment, author: appProvider.user.value));
+    } else {
+      commentIdEditing.value = '';
+      commentList.firstWhere((element) => element.comment.id == comment.id).comment = comment;
+      update(['comment_${comment.id}']);
+    }
     commentTextController.clear();
-    commentIdEditing.value = '';
     userCommentImage.clear();
     userCommentImage.refresh();
-    commentList.insert(0, PostComment(comment: newComment, author: appProvider.user.value));
-    update(['post_comment_${newsFeedPost.post.id}', 'post_${newsFeedPost.post.id}']);
+    Get.find<HomeController>().updateCommentList(newsFeedPost.post, comment);
+    update(['post_comment_${newsFeedPost.post.id}']);
+    commentList.refresh();
   }
 
   onTapEditComment(PostComment postComment) async {

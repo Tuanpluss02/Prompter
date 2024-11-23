@@ -1,5 +1,6 @@
 import 'package:base/common/constants/app_type.dart';
 import 'package:base/common/utils/snackbar.dart';
+import 'package:base/domain/data/entities/comment_entity.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
@@ -85,6 +86,16 @@ class HomeController extends BaseController {
   void onRefresh() async {
     await getNewsFeed();
     newsFeedRefreshController.refreshCompleted();
+  }
+
+  updateCommentList(PostEntity post, CommentEntity comment, {bool isDeleteComment = false}) {
+    final index = newsFeed.indexWhere((element) => element.post.id == post.id);
+    if (isDeleteComment) {
+      newsFeed[index].post.comments?.remove(comment.id);
+    } else {
+      newsFeed[index].post.comments?.add(comment.id ?? '');
+    }
+    update(['post_${post.id!}']);
   }
 
   void updatePost(PostEntity postNeedEdit) {
