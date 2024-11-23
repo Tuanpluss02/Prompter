@@ -1,8 +1,12 @@
 import 'package:base/common/constants/app_type.dart';
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/shared/global/app_dialog.dart';
+import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -17,6 +21,33 @@ class HomeController extends BaseController {
     final author = await _userService.getUserById(post.authorId ?? '');
     newsFeed.insert(0, NewsFeedPost(post: post, author: author!));
     newsFeed.refresh();
+  }
+
+  void deletePost(String postId) async {
+    Get.back();
+    final isConfirmed = await Get.dialog<bool>(PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) => Get.back(result: false),
+      child: AppDialog(
+        title: 'Delete Post',
+        content: 'Are you sure to detele this post?',
+        primaryButtonText: 'Delete',
+        secondaryButtonText: 'Cancel',
+        onPrimaryButtonTap: () => Get.back(result: true),
+        onSecondaryButtonTap: () => Get.back(result: false),
+      ),
+    ));
+    if (isConfirmed != true) {
+      return;
+    }
+    Future<void> process() async {
+      await _postService.deletePost(postId);
+      newsFeed.removeWhere((element) => element.post.id == postId);
+    }
+
+    CallApiWidget.showLoading(api: process());
+    newsFeed.refresh();
+    showSnackBar(title: 'Post deleted successfully', type: SnackBarType.success);
   }
 
   getNewsFeed({bool mustRefresh = false}) async {

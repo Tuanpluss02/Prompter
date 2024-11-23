@@ -73,7 +73,7 @@ class PostView extends GetView<HomeController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () => controller.deletePost(news.post.id!),
                   child: ListTile(
                     trailing: SvgPicture.asset(SvgPath.icTrashbin),
                     title: Text(

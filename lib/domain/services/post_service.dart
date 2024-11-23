@@ -86,7 +86,7 @@ class PostService extends GetxService {
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
   }
 
-  Future<void> removePost(String postId) async {
+  Future<void> deletePost(String postId) async {
     final postRef = _postCollection.doc(postId);
     await postRef.delete();
   }
