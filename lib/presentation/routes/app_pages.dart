@@ -8,10 +8,12 @@ import 'package:base/presentation/modules/authentication/register/register_bindi
 import 'package:base/presentation/modules/authentication/register/register_screen.dart';
 import 'package:base/presentation/modules/authentication/reset_password/reset_password_binding.dart';
 import 'package:base/presentation/modules/authentication/reset_password/reset_password_screen.dart';
+import 'package:base/presentation/modules/home/comment/comment_binding.dart';
+import 'package:base/presentation/modules/home/comment/comment_screen.dart';
+import 'package:base/presentation/modules/home/post/new_post/new_post_binding.dart';
+import 'package:base/presentation/modules/home/post/new_post/new_post_screen.dart';
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_binding.dart';
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_screen.dart';
-import 'package:base/presentation/modules/post/new_post/new_post_binding.dart';
-import 'package:base/presentation/modules/post/new_post/new_post_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
 import 'package:get/get.dart';
@@ -62,6 +64,11 @@ class AppPages {
       name: AppRoutes.newPost,
       page: () => NewPostScreen(),
       binding: NewPostBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.comment,
+      page: () => CommentScreen(),
+      binding: CommentBinding(),
     )
   ];
 }

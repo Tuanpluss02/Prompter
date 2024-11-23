@@ -1,6 +1,6 @@
 import 'dart:math';
 
-String generateUniqueId({int length = 12}) {
+String generateUniqueId({int length = 24}) {
   const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   Random random = Random();
 

@@ -1,14 +1,14 @@
 import 'package:base/common/constants/app_enums.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/utils/generate_id.dart';
-import 'package:base/common/utils/save_to_gallery.dart';
+import 'package:base/common/utils/image_utils.dart';
 import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/repositories/gemini_repository.dart';
 import 'package:base/domain/repositories/huggingface_repository.dart';
 import 'package:base/domain/services/chat_service.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
-import 'package:chatview/chatview.dart';
+import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,12 +32,18 @@ class AiChatController extends BaseController {
   var chatViewState = ChatViewState.loading.obs;
   var selectedModel = GenerativeAiModel.gemini.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      initChatData(appProvider.user.value.id ?? 'User');
-    });
+  void addMessage(Message message) {
+    chatController.addMessage(message);
+    _chatService.saveMessage(message, appProvider.user.value.id ?? 'User');
+  }
+
+  Future<Uint8List?> generateImage(String prompt) async {
+    final result = await _huggingfaceRepository.generateImage(prompt, selectedModel.value);
+    if (result == null) {
+      showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
+      return null;
+    }
+    return result;
   }
 
   initChatData(String userId) async {
@@ -76,13 +82,27 @@ class AiChatController extends BaseController {
     chatViewState.value = ChatViewState.hasMessages;
   }
 
-  Future<Uint8List?> generateImage(String prompt) async {
-    final result = await _huggingfaceRepository.generateImage(prompt, selectedModel.value);
-    if (result == null) {
-      showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
-      return null;
+  @override
+  void onInit() {
+    super.onInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initChatData(appProvider.user.value.id ?? 'User');
+    });
+  }
+
+  onLongPressMessage(Message message) {
+    if (message.messageType == MessageType.text) {
+      Clipboard.setData(ClipboardData(text: message.message));
+      Fluttertoast.showToast(
+        msg: "Copied to clipboard",
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      ImageUtils.saveImageToGallery(imageUrl: message.message);
     }
-    return result;
   }
 
   void onReactionTap(Message message, String reaction) {
@@ -135,26 +155,6 @@ class AiChatController extends BaseController {
       );
       chatController.setTypingIndicator = false;
       addMessage(responseMessage);
-    }
-  }
-
-  void addMessage(Message message) {
-    chatController.addMessage(message);
-    _chatService.saveMessage(message, appProvider.user.value.id ?? 'User');
-  }
-
-  onLongPressMessage(Message message) {
-    if (message.messageType == MessageType.text) {
-      Clipboard.setData(ClipboardData(text: message.message));
-      Fluttertoast.showToast(
-        msg: "Copied to clipboard",
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 1,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-    } else {
-      saveImageToGallery(imageUrl: message.message);
     }
   }
 }

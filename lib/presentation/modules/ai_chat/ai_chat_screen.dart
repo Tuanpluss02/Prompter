@@ -4,8 +4,8 @@ import 'package:base/common/constants/app_enums.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
+import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
-import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +28,7 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         chatViewState: controller.chatViewState.value,
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
-          enableReplySnackBar: true,
+          enableReplySnackBar: false,
           enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: false,
@@ -110,23 +110,25 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         ),
         chatBubbleConfig: ChatBubbleConfiguration(
           outgoingChatBubbleConfig: ChatBubble(
+            borderRadius: BorderRadius.circular(16),
             linkPreviewConfig: LinkPreviewConfiguration(
               backgroundColor: theme.linkPreviewOutgoingChatColor,
-              bodyStyle: theme.outgoingChatLinkBodyStyle,
-              titleStyle: theme.outgoingChatLinkTitleStyle,
+              padding: EdgeInsets.zero,
+              linkStyle: AppTextStyles.s16w400,
+              titleStyle: AppTextStyles.s14w600,
+              bodyStyle: AppTextStyles.s12w400,
             ),
             receiptsWidgetConfig: const ReceiptsWidgetConfig(showReceiptsIn: ShowReceiptsIn.all),
             color: theme.outgoingChatBubbleColor,
           ),
           inComingChatBubbleConfig: ChatBubble(
+            borderRadius: BorderRadius.circular(16),
             linkPreviewConfig: LinkPreviewConfiguration(
-              linkStyle: TextStyle(
-                color: theme.inComingChatBubbleTextColor,
-                decoration: TextDecoration.underline,
-              ),
-              backgroundColor: theme.linkPreviewIncomingChatColor,
-              bodyStyle: theme.incomingChatLinkBodyStyle,
-              titleStyle: theme.incomingChatLinkTitleStyle?.copyWith(fontSize: 12),
+              backgroundColor: theme.linkPreviewOutgoingChatColor,
+              padding: EdgeInsets.zero,
+              linkStyle: AppTextStyles.s16w400,
+              titleStyle: AppTextStyles.s14w600,
+              bodyStyle: AppTextStyles.s12w400,
             ),
             textStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 16),
             senderNameTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor, fontSize: 12),
@@ -137,14 +139,6 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.replyPopupColor,
           buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
-          replyPopupBuilder: (message, sentByCurrentUser) => Container(
-              width: double.infinity,
-              height: 50,
-              color: theme.inComingChatBubbleColor,
-              child: GestureDetector(
-                onTap: () => controller.onLongPressMessage(message),
-                child: Center(child: Text(message.messageType == MessageType.text ? 'Copy' : 'Download', style: TextStyle(color: theme.inComingChatBubbleTextColor))),
-              )),
         ),
         reactionPopupConfig: ReactionPopupConfiguration(
           overrideUserReactionCallback: true,

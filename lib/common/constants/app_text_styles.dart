@@ -79,6 +79,19 @@ class AppTextStyles {
     fontSize: 16,
     fontWeight: FontWeight.w700,
   );
+  static TextStyle s18w300 = GoogleFonts.manrope(
+    fontSize: 18,
+    fontWeight: FontWeight.w300,
+  );
+
+  static TextStyle s18w400 = GoogleFonts.manrope(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle s18w500 = GoogleFonts.manrope(
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
 
   static TextStyle s18w600 = GoogleFonts.manrope(
     fontSize: 18,

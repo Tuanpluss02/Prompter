@@ -5,7 +5,12 @@ class ScaleButton extends StatefulWidget {
   final Widget child;
   final Function() onTap;
   final Duration duration;
-  const ScaleButton({super.key, required this.child, required this.onTap, this.duration = const Duration(milliseconds: 100)});
+  const ScaleButton({
+    super.key,
+    required this.child,
+    required this.onTap,
+    this.duration = const Duration(milliseconds: 50),
+  });
 
   @override
   State<ScaleButton> createState() {
@@ -19,37 +24,19 @@ class _ScaleButtonState extends State<ScaleButton> with SingleTickerProviderStat
   OverlayEntry? overlayEntry;
 
   @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: widget.duration,
-      vsync: this,
-    );
-
-    _animation = Tween<double>(begin: 1.0, end: 0.92).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut,
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _onTap(),
+      child: ScaleTransition(
+        scale: _animation,
+        child: Container(
+          color: Colors.transparent,
+          child: IgnorePointer(
+            child: widget.child,
+          ),
+        ),
       ),
     );
-
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse().then(
-          (value) {
-            widget.onTap.call();
-            removeHighlightOverlay();
-          },
-        );
-      }
-    });
-  }
-
-  removeHighlightOverlay() {
-    overlayEntry?.remove();
-    overlayEntry?.dispose();
-    overlayEntry = null;
   }
 
   createHighlightOverlay({
@@ -85,24 +72,42 @@ class _ScaleButtonState extends State<ScaleButton> with SingleTickerProviderStat
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 1.0, end: 0.92).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse().then(
+          (value) {
+            widget.onTap.call();
+            removeHighlightOverlay();
+          },
+        );
+      }
+    });
+  }
+
+  removeHighlightOverlay() {
+    overlayEntry?.remove();
+    overlayEntry?.dispose();
+    overlayEntry = null;
+  }
+
   void _onTap() {
     _controller.forward();
     createHighlightOverlay(context: context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _onTap(),
-      child: ScaleTransition(
-        scale: _animation,
-        child: Container(
-          color: Colors.transparent,
-          child: IgnorePointer(
-            child: widget.child,
-          ),
-        ),
-      ),
-    );
   }
 }

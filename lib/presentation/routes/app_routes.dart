@@ -14,4 +14,5 @@ class AppRoutes {
   static const resetPassword = '/reset';
   static const aiChat = '/ai-chat';
   static const newPost = '/new-post';
+  static const comment = '/comment';
 }

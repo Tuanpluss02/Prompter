@@ -12,6 +12,7 @@ class DependencyInjection {
     await Get.putAsync(() => AppStorage().sharedPreferences());
 
     Get.put(AuthService());
+
     Get.put(UserService());
 
     // app links handling
