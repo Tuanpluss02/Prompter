@@ -47,13 +47,11 @@ class NewPostController extends BaseController {
 
   onTapPost() async {
     if (textController.text.trim().isEmpty && postImages.isEmpty) {
+      showSnackBar(title: 'Please enter content or add image', type: SnackBarType.error);
       return;
     }
-    Future<PostEntity> process() async {
-      List<String> imageUrls = [];
-      if (postImages.isNotEmpty) {
-        imageUrls = await _cloudinaryService.uploadMultipleImages(postImages.map((e) => File(e.path)).toList());
-      }
+    Future<PostEntity> createPost() async {
+      List<String> imageUrls = await uploadImage();
       PostEntity post = PostEntity(
         content: textController.text.trim(),
         images: imageUrls,
@@ -62,10 +60,34 @@ class NewPostController extends BaseController {
       return await _postService.createPost(post);
     }
 
-    final newPost = await CallApiWidget.showLoading<PostEntity>(api: process());
-    Get.find<HomeController>().addNewPost(newPost);
-    showSnackBar(title: 'Post created successfully');
+    Future<PostEntity> updatePost() async {
+      List<String> imageUrls = await uploadImage();
+      PostEntity post = pageData.editPostPageData!.postNeedEdit;
+      post = post.copyWith(
+        content: textController.text.trim(),
+        images: imageUrls,
+      );
+      return await _postService.updatePost(post);
+    }
+
+    if (pageData.type == RouteNewPostType.edit) {
+      final edittedPost = await CallApiWidget.showLoading<PostEntity>(api: updatePost());
+      Get.find<HomeController>().updatePost(edittedPost);
+      showSnackBar(title: 'Post updated successfully');
+    } else {
+      final newPost = await CallApiWidget.showLoading<PostEntity>(api: createPost());
+      Get.find<HomeController>().addNewPost(newPost);
+      showSnackBar(title: 'Post created successfully');
+    }
     Get.until((route) => route.settings.name == AppRoutes.root);
+  }
+
+  Future<List<String>> uploadImage() async {
+    List<String> imageUrls = [];
+    if (postImages.isNotEmpty) {
+      imageUrls = await _cloudinaryService.uploadMultipleImages(postImages.map((e) => File(e.path)).toList());
+    }
+    return imageUrls;
   }
 
   _initData() async {

@@ -91,6 +91,12 @@ class PostService extends GetxService {
     await postRef.delete();
   }
 
+  Future<PostEntity> updatePost(PostEntity post) async {
+    final postRef = _postCollection.doc(post.id);
+    await postRef.update(post.toJson());
+    return await getPostById(post.id!);
+  }
+
   /// Like a post
   ///
   /// This method allows a user to like a post.

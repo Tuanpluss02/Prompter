@@ -41,7 +41,7 @@ class HomeController extends BaseController {
     } else {
       newsFeed[index].post.likes?.add(appProvider.user.value.id ?? '');
     }
-    update([postToLike.post.id!]);
+    update(['post_${postToLike.post.id!}']);
     _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
   }
 
@@ -54,5 +54,12 @@ class HomeController extends BaseController {
   void onRefresh() async {
     await getNewsFeed();
     newsFeedRefreshController.refreshCompleted();
+  }
+
+  void updatePost(PostEntity postNeedEdit) {
+    final index = newsFeed.indexWhere((element) => element.post.id == postNeedEdit.id);
+    newsFeed[index].post = postNeedEdit;
+    update(['post_${postNeedEdit.id!}']);
+    newsFeed.refresh();
   }
 }

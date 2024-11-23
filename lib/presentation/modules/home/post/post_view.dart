@@ -2,12 +2,14 @@ import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/constants/app_type.dart';
 import 'package:base/common/utils/extension.dart';
+import 'package:base/domain/data/page_data/new_post_page_data.dart';
 import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
+import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,7 @@ class PostView extends GetView<HomeController> {
 
   _buildMainView() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildPostAuthor(),
         const SizedBox(height: 10),
@@ -40,17 +42,68 @@ class PostView extends GetView<HomeController> {
   _buildPostAuthor() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: UserSection(user: news.author, timeAgo: news.post.createdAt),
+      child: UserSection(
+        user: news.author,
+        timeAgo: news.post.createdAt,
+        showOptions: news.author.id == controller.appProvider.user.value.id,
+        onOptionsTap: () => showAppBottomSheet(
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Color(0xff363636),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () => Get.toNamed(
+                    AppRoutes.newPost,
+                    arguments: NewPostPageData(
+                      type: RouteNewPostType.edit,
+                      editPostPageData: EditPostPageData(postNeedEdit: news.post),
+                    ),
+                  ),
+                  child: ListTile(
+                    trailing: SvgPicture.asset(SvgPath.icEdit),
+                    title: Text(
+                      'Edit',
+                      style: AppTextStyles.s18w400,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: ListTile(
+                    trailing: SvgPicture.asset(SvgPath.icTrashbin),
+                    title: Text(
+                      'Delete',
+                      style: AppTextStyles.s18w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
   _buildPostMedia() {
-    return Visibility(
-      visible: (news.post.images?.isNotEmpty ?? false),
-      child: Container(
-        padding: const EdgeInsets.only(top: 10),
-        child: MediaView(images: news.post.images ?? []),
-      ),
+    return GetBuilder<HomeController>(
+      id: 'post_${news.post.id}',
+      init: controller,
+      initState: (_) {},
+      builder: (_) {
+        return Visibility(
+          visible: (news.post.images?.isNotEmpty ?? false),
+          child: Container(
+            padding: const EdgeInsets.only(top: 10),
+            child: MediaView(images: news.post.images ?? []),
+          ),
+        );
+      },
     );
   }
 
@@ -108,15 +161,22 @@ class PostView extends GetView<HomeController> {
   }
 
   _buildPostText() {
-    return Visibility(
-      visible: (news.post.content?.isNotEmpty ?? false),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: TextContent(
-          content: news.post.content ?? '',
-          hasMedia: news.post.images?.isNotEmpty ?? false,
-        ),
-      ),
+    return GetBuilder<HomeController>(
+      init: controller,
+      id: 'post_${news.post.id}',
+      initState: (_) {},
+      builder: (_) {
+        return Visibility(
+          visible: (news.post.content?.isNotEmpty ?? false),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextContent(
+              content: news.post.content ?? '',
+              hasMedia: news.post.images?.isNotEmpty ?? false,
+            ),
+          ),
+        );
+      },
     );
   }
 }
