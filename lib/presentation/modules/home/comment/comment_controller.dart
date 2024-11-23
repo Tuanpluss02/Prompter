@@ -10,6 +10,7 @@ import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/shared/global/app_dialog.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -121,6 +122,31 @@ class CommentController extends BaseController {
     Get.find<HomeController>().updateCommentList(newsFeedPost.post, comment);
     update(['post_comment_${newsFeedPost.post.id}']);
     commentList.refresh();
+  }
+
+  void onTapDeleteComment(PostComment postComment) async {
+    Get.back();
+    final isConfirmed = await Get.dialog<bool>(AppDialog(
+      title: 'Delete Comment',
+      content: 'Are you sure to delete this comment?',
+      primaryButtonText: 'Delete',
+      secondaryButtonText: 'Cancel',
+      onPrimaryButtonTap: () => Get.back(result: true),
+      onSecondaryButtonTap: () => Get.back(result: false),
+    ));
+    if (isConfirmed != true) {
+      return;
+    }
+
+    Future<void> process() async {
+      Get.find<HomeController>().updateCommentList(newsFeedPost.post, postComment.comment, isDeleteComment: true);
+      commentList.removeWhere((element) => element.comment.id == postComment.comment.id);
+      _postService.deleteComment(newsFeedPost.post.id!, postComment.comment.id!);
+    }
+
+    await CallApiWidget.showLoading(api: process());
+    update(['post_comment_${newsFeedPost.post.id}']);
+    showSnackBar(title: 'Comment deleted successfully', type: SnackBarType.success);
   }
 
   onTapEditComment(PostComment postComment) async {

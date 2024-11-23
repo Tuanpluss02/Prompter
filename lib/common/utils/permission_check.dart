@@ -10,6 +10,7 @@ Future<bool> checkAndRequestPermission({required Permission permission}) async {
       return true;
     case PermissionStatus.denied:
       bool isGranted = await _showRequestPermissionDialog(permission.name);
+      await Future.delayed(Duration(milliseconds: 200));
       if (isGranted) {
         PermissionStatus newStatus = await Permission.storage.request();
         return newStatus.isGranted;
@@ -27,10 +28,10 @@ Future<bool> checkAndRequestPermission({required Permission permission}) async {
   return false;
 }
 
-Future<bool> _showRequestPermissionDialog(String permissionName) async {
+Future<bool> _showOpenSettingDialog(String permissionName) async {
   return Get.dialog<bool>(AppDialog(
     title: "Permission Required",
-    content: "You need to grant $permissionName permission to continue.",
+    content: "This app needs $permissionName permission to continue. You can grant the permission from the app settings.",
     primaryButtonText: "Allow",
     secondaryButtonText: "Deny",
     onPrimaryButtonTap: () => Get.back(result: true),
@@ -38,10 +39,10 @@ Future<bool> _showRequestPermissionDialog(String permissionName) async {
   )).then((value) => value ?? false);
 }
 
-Future<bool> _showOpenSettingDialog(String permissionName) async {
+Future<bool> _showRequestPermissionDialog(String permissionName) async {
   return Get.dialog<bool>(AppDialog(
     title: "Permission Required",
-    content: "This app needs $permissionName permission to continue. You can grant the permission from the app settings.",
+    content: "You need to grant $permissionName permission to continue.",
     primaryButtonText: "Allow",
     secondaryButtonText: "Deny",
     onPrimaryButtonTap: () => Get.back(result: true),

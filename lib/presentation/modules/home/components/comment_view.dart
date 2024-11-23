@@ -50,7 +50,7 @@ class CommentView extends GetView<CommentController> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () => controller.onTapDeleteComment(postComment),
                           child: ListTile(
                             trailing: SvgPicture.asset(SvgPath.icTrashbin),
                             title: Text(

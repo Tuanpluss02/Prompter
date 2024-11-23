@@ -129,23 +129,6 @@ class CommentScreen extends BaseScreen<CommentController> {
                       ],
                     ),
                   ))
-              // ListTile(
-              //   trailing: GestureDetector(
-              //     onTap: () {
-              //       controller.commentTextController.clear();
-              //       controller.userCommentImage.clear();
-              //       controller.commentIdEditing.value = '';
-              //     },
-              //     child: Text(
-              //       'Cancel',
-              //       style: AppTextStyles.s14w600.copyWith(color: Colors.grey),
-              //     ),
-              //   ),
-              //   title: Text(
-              //     'You are editing a comment',
-              //     style: AppTextStyles.s14w600.copyWith(color: Colors.grey),
-              //   ),
-              // ),
             ],
           ),
           _buildCommentTextEdit(),
