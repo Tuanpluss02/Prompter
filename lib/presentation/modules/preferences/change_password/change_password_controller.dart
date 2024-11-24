@@ -13,30 +13,7 @@ class ChangePasswordController extends BaseController {
   final FocusNode confirmPasswordFocus = FocusNode();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  @override
-  void onReady() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      currentPasswordFocus.requestFocus();
-    });
-    super.onReady();
-  }
-
   var obscureText = true.obs;
-
-  bool isUserLoggedInWithGoogle() {
-    return _authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false;
-  }
-
-  onSubmit() {
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
-    if (newPasswordController.text.trim() != confirmPasswordController.text.trim()) {
-      Get.snackbar('Fail', 'Passwords do not match');
-      return;
-    }
-    changePassword(currentPasswordController.text.trim(), newPasswordController.text.trim());
-  }
 
   changePassword(String currentPassword, String newPassword) async {
     final result = await _authService.changePassword(currentPassword, newPassword);
@@ -45,6 +22,32 @@ class ChangePasswordController extends BaseController {
     } else {
       Get.snackbar('Fail', result);
     }
+  }
+
+  bool isUserLoggedInWithGoogle() {
+    return _authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false;
+  }
+
+  @override
+  void onReady() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      currentPasswordFocus.requestFocus();
+    });
+    super.onReady();
+  }
+
+  onSubmit() {
+    if (isUserLoggedInWithGoogle()) {
+      return;
+    }
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+    if (newPasswordController.text.trim() != confirmPasswordController.text.trim()) {
+      Get.snackbar('Fail', 'Passwords do not match');
+      return;
+    }
+    changePassword(currentPasswordController.text.trim(), newPasswordController.text.trim());
   }
 
   void toggleObscureText() {

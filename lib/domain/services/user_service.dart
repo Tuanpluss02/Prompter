@@ -9,10 +9,14 @@ class UserService extends GetxService {
 
   DateTime get _createdTime => DateTime.now();
 
-  /// Initializes the UserService
-  /// This method is used to initialize the UserService and perform any necessary setup.
-  Future<UserService> init() async {
-    return this;
+  Future<bool> checkUserExists(String userId) async {
+    final userDoc = await _userCollection.doc(userId).get();
+    return userDoc.exists;
+  }
+
+  Future<bool> checkUsernameExists(String username) async {
+    final querySnapshot = await _userCollection.where('username', isEqualTo: username).get();
+    return querySnapshot.docs.isNotEmpty;
   }
 
   /// Creates a new user document in the Firestore collection
@@ -32,19 +36,6 @@ class UserService extends GetxService {
     await userRef.set(newUser.toJson());
   }
 
-  Future<UserEntity?> getUserById(String userId) async {
-    final userDoc = await _userCollection.doc(userId).get();
-    if (!userDoc.exists) {
-      return null;
-    }
-    return UserEntity.fromJson(userDoc.data()!);
-  }
-
-  Future<bool> checkUserExists(String userId) async {
-    final userDoc = await _userCollection.doc(userId).get();
-    return userDoc.exists;
-  }
-
   /// Follows a user
   /// [currentUserId] is the ID of the current user
   /// [targetUserId] is the ID of the user to be followed
@@ -62,5 +53,18 @@ class UserService extends GetxService {
       'followerId': _userCollection.doc(currentUserId),
       'createdAt': _createdTime,
     });
+  }
+
+  Future<UserEntity?> getUserById(String userId) async {
+    final userDoc = await _userCollection.doc(userId).get();
+    if (!userDoc.exists) {
+      return null;
+    }
+    return UserEntity.fromJson(userDoc.data()!);
+  }
+
+  Future<void> updateUser(UserEntity user) async {
+    final userRef = _userCollection.doc(user.id);
+    await userRef.update(user.toJson());
   }
 }

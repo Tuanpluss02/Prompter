@@ -34,6 +34,15 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
             children: [
               AppBackButton(margin: EdgeInsets.zero),
               SizedBox(height: 48),
+              Text(
+                'Change Your\nPassword',
+                style: GoogleFonts.manrope(
+                  color: Colors.white,
+                  fontSize: 38,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 20),
               if (controller.isUserLoggedInWithGoogle())
                 Column(
                   children: [
@@ -48,15 +57,6 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
                     SizedBox(height: 20),
                   ],
                 ),
-              Text(
-                'Change Your\nPassword',
-                style: GoogleFonts.manrope(
-                  color: Colors.white,
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20),
               Obx(() => AppTextField(
                     controller: controller.currentPasswordController,
                     focusNode: controller.currentPasswordFocus,
@@ -133,22 +133,25 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
 
   ScaleButton _buildSubmitButton() {
     return ScaleButton(
-        onTap: controller.onSubmit,
-        child: Container(
-            width: double.infinity,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Color(0XFF0677e8),
-              borderRadius: BorderRadius.circular(16),
+      onTap: controller.onSubmit,
+      child: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          color: controller.isUserLoggedInWithGoogle() ? Colors.grey : Color(0XFF0677e8),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Center(
+          child: Text(
+            'Change Password',
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-            child: Center(
-                child: Text(
-              'Change Password',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ))));
+          ),
+        ),
+      ),
+    );
   }
 }

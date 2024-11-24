@@ -17,6 +17,6 @@ class AppRoutes {
   static const comment = '/comment';
   static const preferences = '/preferences';
   static const splash = '/splash';
-  static const changeUserInfo = 'change-user-info';
-  static const changePassword = 'change-password';
+  static const changeUserInfo = '/change-user-info';
+  static const changePassword = '/change-password';
 }
