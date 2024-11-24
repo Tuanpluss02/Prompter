@@ -28,6 +28,9 @@ class RootController extends BaseController {
   ];
 
   Future<void> getCurrentUserData() async {
+    if (!appProvider.isSignedIn) {
+      return;
+    }
     UserEntity? userEntity = await _userService.getUserById(appProvider.currentUserId);
     if (userEntity != null) {
       appProvider.updateUserData(userEntity);

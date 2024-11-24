@@ -14,14 +14,18 @@ import 'package:base/presentation/modules/home/post/new_post/new_post_binding.da
 import 'package:base/presentation/modules/home/post/new_post/new_post_screen.dart';
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_binding.dart';
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_screen.dart';
+import 'package:base/presentation/modules/preferences/preferences_binding.dart';
+import 'package:base/presentation/modules/preferences/preferences_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
+import 'package:base/presentation/modules/splash/splash_binding.dart';
+import 'package:base/presentation/modules/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
 part 'app_routes.dart';
 
 class AppPages {
-  static String initial = AppRoutes.root;
+  static String initial = AppRoutes.splash;
 
   static final appRoutes = [
     GetPage(
@@ -69,6 +73,16 @@ class AppPages {
       name: AppRoutes.comment,
       page: () => CommentScreen(),
       binding: CommentBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.preferences,
+      page: () => PreferencesScreen(),
+      binding: PreferencesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.splash,
+      page: () => SplashScreen(),
+      binding: SplashBinding(),
     )
   ];
 }

@@ -15,4 +15,6 @@ class AppRoutes {
   static const aiChat = '/ai-chat';
   static const newPost = '/new-post';
   static const comment = '/comment';
+  static const preferences = '/preferences';
+  static const splash = '/splash';
 }

@@ -5,6 +5,7 @@ import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/account/lib/delete_account.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
@@ -24,60 +25,65 @@ class AccountScreen extends BaseScreen<AccountController> {
       child: CustomScrollView(controller: controller.scrollController, slivers: [
         _buildAppbar(),
         _buildUserInfo(),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            child: Text(
+              'Posts',
+              style: AppTextStyles.s16w700,
+            ),
+          ),
+        ),
         _buildUserPosts(),
       ]),
     );
   }
 
-  Obx _buildAppbar() {
-    return Obx(
-      () => SliverAppBar(
-        collapsedHeight: 80.0,
-        expandedHeight: 230.0,
-        leading: Visibility(
-          visible: !controller.isMyAccount,
-          child: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Get.back(),
+  _buildAppbar() {
+    return SliverAppBar(
+      collapsedHeight: 80.0,
+      expandedHeight: 230.0,
+      leading: Visibility(
+        visible: !controller.isMyAccount,
+        child: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Get.back(),
+        ),
+      ),
+      floating: false,
+      pinned: true,
+      actions: [
+        Visibility(
+          visible: !controller.isMyAccount && controller.isAppBarCollapsed.value,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: AppButton(
+              text: '+ Follow',
+              height: 30,
+              width: 80,
+              padding: EdgeInsets.all(4),
+              onTap: () {},
+            ),
           ),
         ),
-        floating: false,
-        pinned: true,
-        actions: controller.isAppBarCollapsed.value
-            ? [
-                Visibility(
-                  visible: !controller.isMyAccount,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: AppButton(
-                      text: '+ Follow',
-                      height: 30,
-                      width: 80,
-                      padding: EdgeInsets.all(4),
-                      onTap: () {},
-                    ),
-                  ),
-                ),
-                Visibility(
-                  visible: !controller.isMyAccount,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 25,
-                      ),
-                    ),
-                  ),
-                ),
-              ]
-            : null,
-        flexibleSpace: FlexibleSpaceBar(
-          title: _buildAvatarName(),
-          background: _buildBackgroundImage(),
+        Visibility(
+          visible: controller.isMyAccount,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: GestureDetector(
+              onTap: () => Get.toNamed(AppRoutes.preferences),
+              child: Icon(
+                Icons.menu,
+                color: Colors.white,
+                size: 25,
+              ),
+            ),
+          ),
         ),
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        title: _buildAvatarName(),
+        background: _buildBackgroundImage(),
       ),
     );
   }
