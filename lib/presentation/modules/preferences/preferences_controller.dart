@@ -15,6 +15,8 @@ class PreferencesController extends BaseController {
     (title: 'Password', subtitle: 'Change your password', svgPath: SvgPath.icEye, onTap: () => Get.toNamed(AppRoutes.changePassword)),
     (title: 'About', subtitle: 'About the app', svgPath: SvgPath.icBubble, onTap: () {}),
   ];
+
+
   onTapSignOut() async {
     final isConfirm = await Get.dialog<bool?>(AppDialog(
       title: 'Sign Out',

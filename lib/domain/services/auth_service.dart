@@ -65,6 +65,32 @@ class AuthService {
     }
   }
 
+  /// Change password
+  Future<String?> changePassword(String currentPassword, String newPassword) async {
+    try {
+      User? user = _firebaseInstance.currentUser;
+      if (user == null) {
+        return 'No user is currently signed in.';
+      }
+
+      // Reauthenticate the user
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: currentPassword,
+      );
+      await user.reauthenticateWithCredential(credential);
+
+      // Update the password
+      await user.updatePassword(newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.changePassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
   /// Sign in with email and password
   Future<({UserCredential? userCredential, String? error})> signInWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;

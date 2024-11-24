@@ -23,6 +23,10 @@ class ChangePasswordController extends BaseController {
 
   var obscureText = true.obs;
 
+  bool isUserLoggedInWithGoogle() {
+    return _authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false;
+  }
+
   onSubmit() {
     if (!formKey.currentState!.validate()) {
       return;
