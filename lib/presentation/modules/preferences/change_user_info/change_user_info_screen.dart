@@ -7,7 +7,6 @@ import 'package:base/common/utils/validator.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/account/lib/delete_account.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
-import 'package:base/presentation/shared/chat_view/src/extensions/extensions.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:extended_image/extended_image.dart';
@@ -68,7 +67,7 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
                         ),
                         child: Obx(() => ClipOval(
                                 child: Image(
-                              image: controller.avatar.value.isImageUrl ? ExtendedNetworkImageProvider(controller.avatar.value) : FileImage(File(controller.avatar.value)),
+                              image: controller.avatar.value.isURL ? ExtendedNetworkImageProvider(controller.avatar.value) : FileImage(File(controller.avatar.value)),
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
                             ))),
@@ -127,8 +126,8 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
                 ),
               ),
               SizedBox(height: 20),
-              _buildRemoveAccountButton(),
               _buildSubmitButton(),
+              _buildRemoveAccountButton(),
             ],
           ),
         ),

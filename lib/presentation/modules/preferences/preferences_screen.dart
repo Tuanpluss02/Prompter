@@ -23,47 +23,52 @@ class PreferencesScreen extends BaseScreen<PreferencesController> {
       children: [
         _buildAppbar(),
         SizedBox(height: 20),
-        ...controller.preferenceItems.map((item) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: ListTile(
-                onTap: item.onTap,
-                leading: SvgPicture.asset(
-                  item.svgPath,
-                  width: 30,
-                  colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),
-                ),
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title,
-                      style: AppTextStyles.s20w700,
-                    ),
-                    Text(
-                      item.subtitle,
-                      style: AppTextStyles.s12w500.copyWith(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )),
+        ..._buildActionList(),
         _buildLogoutButton(),
       ],
     );
   }
 
+  _buildActionList() {
+    return controller.preferenceItems.map((item) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: ListTile(
+            onTap: item.onTap,
+            leading: SvgPicture.asset(
+              item.svgPath,
+              width: 30,
+              colorFilter: ColorFilter.mode(AppColors.primaryColor, BlendMode.srcIn),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.title,
+                  style: AppTextStyles.s20w700,
+                ),
+                Text(
+                  item.subtitle,
+                  style: AppTextStyles.s12w500.copyWith(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
   Row _buildAppbar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AppBackButton(size: 40),
         Text(
           'Preferences',
           style: AppTextStyles.s28w700,
         ),
-        SizedBox(width: 20),
+        SizedBox(width: 40),
       ],
     );
   }

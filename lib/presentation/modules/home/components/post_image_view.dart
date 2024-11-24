@@ -17,7 +17,7 @@ class PostImageView extends StatelessWidget {
           disposeLevel: DisposeLevel.low,
           imageUrl: imageUrl ?? '',
           child: Hero(
-            tag: image,
+            tag: image.hashCode + DateTime.now().millisecondsSinceEpoch,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: AppImage(image: image),
