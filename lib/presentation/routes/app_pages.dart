@@ -16,6 +16,10 @@ import 'package:base/presentation/modules/photo_gallery/photo_gallery_binding.da
 import 'package:base/presentation/modules/photo_gallery/photo_gallery_screen.dart';
 import 'package:base/presentation/modules/preferences/preferences_binding.dart';
 import 'package:base/presentation/modules/preferences/preferences_screen.dart';
+import 'package:base/presentation/modules/preferences/change_user_info_binding.dart';
+import 'package:base/presentation/modules/preferences/change_user_info_screen.dart';
+import 'package:base/presentation/modules/preferences/change_password_binding.dart';
+import 'package:base/presentation/modules/preferences/change_password_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
 import 'package:base/presentation/modules/splash/splash_binding.dart';
@@ -78,6 +82,16 @@ class AppPages {
       name: AppRoutes.preferences,
       page: () => PreferencesScreen(),
       binding: PreferencesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.changeUserInfo,
+      page: () => ChangeUserInfoScreen(),
+      binding: ChangeUserInfoBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.changePassword,
+      page: () => ChangePasswordScreen(),
+      binding: ChangePasswordBinding(),
     ),
     GetPage(
       name: AppRoutes.splash,

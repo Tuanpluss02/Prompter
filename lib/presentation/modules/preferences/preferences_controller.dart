@@ -1,6 +1,7 @@
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_dialog.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +11,8 @@ class PreferencesController extends BaseController {
   final AuthService _authService = Get.find<AuthService>();
 
   final List<PreferenceItem> preferenceItems = [
-    (title: 'Account Information', subtitle: 'Change your account information', svgPath: SvgPath.icPersonFilled, onTap: () {}),
-    (title: 'Password', subtitle: 'Change your password', svgPath: SvgPath.icEye, onTap: () {}),
+    (title: 'Account Information', subtitle: 'Change your account information', svgPath: SvgPath.icPersonFilled, onTap: () => Get.toNamed(AppRoutes.changeUserInfo)),
+    (title: 'Password', subtitle: 'Change your password', svgPath: SvgPath.icEye, onTap: () => Get.toNamed(AppRoutes.changePassword)),
     (title: 'About', subtitle: 'About the app', svgPath: SvgPath.icBubble, onTap: () {}),
   ];
   onTapSignOut() async {
