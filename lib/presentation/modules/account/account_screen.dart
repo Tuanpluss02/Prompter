@@ -1,3 +1,4 @@
+import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
@@ -5,9 +6,12 @@ import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/routes/app_pages.dart';
+import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -96,17 +100,18 @@ class AccountScreen extends BaseScreen<AccountController> {
           width: 60.0,
           height: 60.0,
           decoration: BoxDecoration(
-            color: const Color(0xff7c94b6),
-            image: DecorationImage(
-              image: NetworkImage(AppStrings.defaultNetworkAvatar),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            shape: BoxShape.circle,
             border: Border.all(
               color: Colors.white,
               width: 1.0,
             ),
           ),
+          child: Obx(() => ClipOval(
+                  child: Image(
+                image: ExtendedNetworkImageProvider(controller.appProvider.user.value.profileImage ?? ''),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
+              ))),
         ),
         SizedBox(width: 10),
         Obx(() => Column(
@@ -167,8 +172,8 @@ class AccountScreen extends BaseScreen<AccountController> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          onTap: () {},
+        child: ScaleButton(
+          onTap: () => Get.toNamed(AppRoutes.changeUserInfo),
           child: Container(
             width: double.infinity,
             height: 40,
