@@ -5,7 +5,6 @@ import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'change_user_info_controller.dart';
@@ -14,13 +13,13 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
   const ChangeUserInfoScreen({super.key});
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
 
   @override
   Widget buildScreen(BuildContext context) {

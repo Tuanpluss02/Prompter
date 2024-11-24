@@ -14,13 +14,13 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
   const ChangePasswordScreen({super.key});
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -34,7 +34,7 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
             children: [
               AppBackButton(margin: EdgeInsets.zero),
               SizedBox(height: 48),
-              if (controller._authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false)
+              if (controller.isUserLoggedInWithGoogle())
                 Column(
                   children: [
                     Text(
@@ -76,7 +76,7 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
                       Icons.password_outlined,
                       color: Colors.white,
                     ),
-                    enabled: !(controller._authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false),
+                    enabled: !(controller.isUserLoggedInWithGoogle()),
                   )),
               SizedBox(height: 16),
               Obx(() => AppTextField(
@@ -98,7 +98,7 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
                       Icons.password_outlined,
                       color: Colors.white,
                     ),
-                    enabled: !(controller._authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false),
+                    enabled: !(controller.isUserLoggedInWithGoogle()),
                   )),
               SizedBox(height: 16),
               Obx(() => AppTextField(
@@ -120,7 +120,7 @@ class ChangePasswordScreen extends BaseScreen<ChangePasswordController> {
                       Icons.password_outlined,
                       color: Colors.white,
                     ),
-                    enabled: !(controller._authService.currentUser?.providerData.any((userInfo) => userInfo.providerId == 'google.com') ?? false),
+                    enabled: !(controller.isUserLoggedInWithGoogle()),
                   )),
               SizedBox(height: 20),
               _buildSubmitButton(),
