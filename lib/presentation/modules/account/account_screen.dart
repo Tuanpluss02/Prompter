@@ -4,6 +4,7 @@ import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/account/lib/delete_account.dart';
+import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:flutter/material.dart';
@@ -21,74 +22,63 @@ class AccountScreen extends BaseScreen<AccountController> {
       controller: controller.refreshController,
       onRefresh: controller.onRefresh,
       child: CustomScrollView(controller: controller.scrollController, slivers: [
-        Obx(
-          () => SliverAppBar(
-            collapsedHeight: 80.0,
-            expandedHeight: 230.0,
-            leading: Visibility(
-              visible: !controller.isMyAccount,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Get.back(),
-              ),
-            ),
-            floating: false,
-            pinned: true,
-            actions: controller.isAppBarCollapsed.value
-                ? [
-                    Visibility(
-                      visible: !controller.isMyAccount,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: AppButton(
-                          text: '+ Follow',
-                          height: 30,
-                          width: 80,
-                          padding: EdgeInsets.all(4),
-                          onTap: () {},
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: !controller.isMyAccount,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
-                : null,
-            flexibleSpace: FlexibleSpaceBar(
-              title: _buildAvatarName(),
-              background: _buildBackgroundImage(),
-            ),
+        _buildAppbar(),
+        _buildUserInfo(),
+        _buildUserPosts(),
+      ]),
+    );
+  }
+
+  Obx _buildAppbar() {
+    return Obx(
+      () => SliverAppBar(
+        collapsedHeight: 80.0,
+        expandedHeight: 230.0,
+        leading: Visibility(
+          visible: !controller.isMyAccount,
+          child: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Get.back(),
           ),
         ),
-        _buildUserInfo(),
-        SliverGrid.builder(
-          itemCount: 20,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 4, mainAxisSpacing: 4),
-          itemBuilder: (context, index) {
-            return Container(
-              height: 20,
-              width: 20,
-              color: Colors.red,
-              child: Center(
-                child: Text('Item $index'),
-              ),
-            );
-          },
-        )
-
-        // Expanded(child: _buildUserPostMedia()),
-      ]),
+        floating: false,
+        pinned: true,
+        actions: controller.isAppBarCollapsed.value
+            ? [
+                Visibility(
+                  visible: !controller.isMyAccount,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: AppButton(
+                      text: '+ Follow',
+                      height: 30,
+                      width: 80,
+                      padding: EdgeInsets.all(4),
+                      onTap: () {},
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: !controller.isMyAccount,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                    ),
+                  ),
+                ),
+              ]
+            : null,
+        flexibleSpace: FlexibleSpaceBar(
+          title: _buildAvatarName(),
+          background: _buildBackgroundImage(),
+        ),
+      ),
     );
   }
 
@@ -109,7 +99,7 @@ class AccountScreen extends BaseScreen<AccountController> {
             borderRadius: BorderRadius.all(Radius.circular(50.0)),
             border: Border.all(
               color: Colors.white,
-              width: 2.0,
+              width: 1.0,
             ),
           ),
         ),
@@ -119,11 +109,11 @@ class AccountScreen extends BaseScreen<AccountController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.appProvider.user.value.displayName ?? '',
+                  controller.userData.value.displayName ?? '',
                   style: AppTextStyles.s16w700,
                 ),
                 Text(
-                  '@${controller.appProvider.user.value.username}',
+                  '@${controller.userData.value.username}',
                   style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                 ),
               ],
@@ -202,9 +192,9 @@ class AccountScreen extends BaseScreen<AccountController> {
     return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
-          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
-          (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Following'),
+          (count: controller.userData.value.likeCount ?? 0, title: 'Likes'),
+          (count: controller.userData.value.followers?.length ?? 0, title: 'Followers'),
+          (count: controller.userData.value.followers?.length ?? 0, title: 'Following'),
         ].map((item) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
@@ -226,6 +216,28 @@ class AccountScreen extends BaseScreen<AccountController> {
         }).toList());
   }
 
+  ElevatedButton _buildRemoveAccountButton() {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+          context: Get.context!,
+          barrierColor: Colors.transparent,
+          builder: (_) {
+            return const AlertDialog(
+              backgroundColor: Colors.transparent,
+              content: Wrap(
+                children: [
+                  DeleteAccount(),
+                ],
+              ),
+            );
+          },
+        );
+      },
+      child: const Text("Show Delete Widget"),
+    );
+  }
+
   _buildUserInfo() {
     return SliverToBoxAdapter(
       child: Padding(
@@ -235,29 +247,25 @@ class AccountScreen extends BaseScreen<AccountController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildReach(),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: Get.context!,
-                  barrierColor: Colors.transparent,
-                  builder: (_) {
-                    return const AlertDialog(
-                      backgroundColor: Colors.transparent,
-                      content: Wrap(
-                        children: [
-                          DeleteAccount(),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              child: const Text("Show Delete Widget"),
-            ),
             _buildFollowButton(),
           ],
         ),
       ),
     );
+  }
+
+  Obx _buildUserPosts() {
+    return Obx(() => controller.userPosts.isNotEmpty
+        ? SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => PostView(news: controller.userPosts[index]),
+              childCount: controller.userPosts.length,
+            ),
+          )
+        : SliverFillRemaining(
+            child: Center(
+              child: Text('No post found'),
+            ),
+          ));
   }
 }
