@@ -109,7 +109,7 @@ class AccountScreen extends BaseScreen<AccountController> {
             ),
           ),
         ),
-        SizedBox(width: 20),
+        SizedBox(width: 10),
         Obx(() => Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

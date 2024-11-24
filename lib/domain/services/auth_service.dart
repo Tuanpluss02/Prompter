@@ -10,6 +10,61 @@ class AuthService {
   }
   AuthService._internal();
 
+  // Get current user
+  User? get currentUser {
+    return _firebaseInstance.currentUser;
+  }
+
+  // Get current user id
+  String? get currentUserId {
+    return _firebaseInstance.currentUser?.uid;
+  }
+
+  // Get user stream
+  Stream<User?> get user {
+    return _firebaseInstance.authStateChanges();
+  }
+
+  /// Forgot password
+  Future<String?> forgotPassword(String email) async {
+    try {
+      await _firebaseInstance.sendPasswordResetEmail(email: email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.forgotPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
+  /// Register with email and password
+  Future<({UserCredential? userCredential, String? error})> registerWithEmailAndPassword(String email, String password) async {
+    UserCredential? userCredential;
+    String? error;
+    try {
+      userCredential = await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      error = _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.registerWithEmailAndPassword', level: LogLevel.error);
+    }
+    return (userCredential: userCredential, error: error);
+  }
+
+  /// Reset password
+  Future<String?> resetPassword(String code, String newPassword) async {
+    try {
+      await _firebaseInstance.confirmPasswordReset(code: code, newPassword: newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return _getFirebaseExceptionMessage(e);
+    } catch (e) {
+      Log.console(e, where: 'AuthService.resetPassword', level: LogLevel.error);
+      return 'An error occurred. Please try again later.';
+    }
+  }
+
   /// Sign in with email and password
   Future<({UserCredential? userCredential, String? error})> signInWithEmailAndPassword(String email, String password) async {
     UserCredential? userCredential;
@@ -51,67 +106,12 @@ class AuthService {
     return (userCredential: userCredential, error: error);
   }
 
-  /// Register with email and password
-  Future<({UserCredential? userCredential, String? error})> registerWithEmailAndPassword(String email, String password) async {
-    UserCredential? userCredential;
-    String? error;
-    try {
-      userCredential = await _firebaseInstance.createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      error = _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      Log.console(e, where: 'AuthService.registerWithEmailAndPassword', level: LogLevel.error);
-    }
-    return (userCredential: userCredential, error: error);
-  }
-
   // Sign out
   Future<void> signOut() async {
     await Future.wait([
       GoogleSignIn().signOut(),
       _firebaseInstance.signOut(),
     ]);
-  }
-
-  /// Forgot password
-  Future<String?> forgotPassword(String email) async {
-    try {
-      await _firebaseInstance.sendPasswordResetEmail(email: email);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      return _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      Log.console(e, where: 'AuthService.forgotPassword', level: LogLevel.error);
-      return 'An error occurred. Please try again later.';
-    }
-  }
-
-  /// Reset password
-  Future<String?> resetPassword(String code, String newPassword) async {
-    try {
-      await _firebaseInstance.confirmPasswordReset(code: code, newPassword: newPassword);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      return _getFirebaseExceptionMessage(e);
-    } catch (e) {
-      Log.console(e, where: 'AuthService.resetPassword', level: LogLevel.error);
-      return 'An error occurred. Please try again later.';
-    }
-  }
-
-  // Get user stream
-  Stream<User?> get user {
-    return _firebaseInstance.authStateChanges();
-  }
-
-  // Get current user
-  User? get currentUser {
-    return _firebaseInstance.currentUser;
-  }
-
-  // Get current user id
-  String? get currentUserId {
-    return _firebaseInstance.currentUser?.uid;
   }
 
   /// Get the error message from the Firebase exception

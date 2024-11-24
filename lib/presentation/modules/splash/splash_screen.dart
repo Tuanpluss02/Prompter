@@ -20,8 +20,6 @@ class SplashScreen extends BaseScreen<SplashController> {
       ),
     );
 
-    // here's an interesting little trick, we can nest Animate to have
-    // effects that repeat and ones that only run once on the same item:
     title = title
         .animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
