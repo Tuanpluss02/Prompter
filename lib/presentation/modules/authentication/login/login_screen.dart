@@ -18,13 +18,13 @@ class LoginScreen extends BaseScreen<LoginController> {
   const LoginScreen({super.key});
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -50,7 +50,7 @@ class LoginScreen extends BaseScreen<LoginController> {
               AppTextField(
                 controller: controller.emailController,
                 focusNode: controller.emailFocus,
-                validator: emailValidator,
+                validator: usernameValidator,
                 hintText: 'Enter Your Email',
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icon(
@@ -102,47 +102,6 @@ class LoginScreen extends BaseScreen<LoginController> {
               _buildContinueGoogle()
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  ScaleButton _buildSubmitButton() {
-    return ScaleButton(
-        onTap: controller.onSubmit,
-        child: Container(
-            width: double.infinity,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Color(0XFF0677e8),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Center(
-                child: Text(
-              'Login',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ))));
-  }
-
-  Center _buildSignInText() {
-    return Center(
-      child: HighlightedText(
-        text: 'Don\'t have an account? Sign Up',
-        highlights: ['Sign Up'],
-        onTapHighlight: () => Get.toNamed(AppRoutes.register),
-        highlightStyle: GoogleFonts.manrope(
-          color: Color(0xFF0677e8),
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        normalTextStyle: GoogleFonts.manrope(
-          color: Color(0XFFacadb9),
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -211,5 +170,46 @@ class LoginScreen extends BaseScreen<LoginController> {
         ),
       ],
     );
+  }
+
+  Center _buildSignInText() {
+    return Center(
+      child: HighlightedText(
+        text: 'Don\'t have an account? Sign Up',
+        highlights: ['Sign Up'],
+        onTapHighlight: () => Get.toNamed(AppRoutes.register),
+        highlightStyle: GoogleFonts.manrope(
+          color: Color(0xFF0677e8),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        normalTextStyle: GoogleFonts.manrope(
+          color: Color(0XFFacadb9),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  ScaleButton _buildSubmitButton() {
+    return ScaleButton(
+        onTap: controller.onSubmit,
+        child: Container(
+            width: double.infinity,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Color(0XFF0677e8),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Center(
+                child: Text(
+              'Login',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ))));
   }
 }

@@ -14,11 +14,6 @@ class UserService extends GetxService {
     return userDoc.exists;
   }
 
-  Future<bool> checkUsernameExists(String username) async {
-    final querySnapshot = await _userCollection.where('username', isEqualTo: username).get();
-    return querySnapshot.docs.isNotEmpty;
-  }
-
   /// Creates a new user document in the Firestore collection
   /// [userId] is the unique identifier for the user
   /// [username] is the username of the user
@@ -61,6 +56,11 @@ class UserService extends GetxService {
       return null;
     }
     return UserEntity.fromJson(userDoc.data()!);
+  }
+
+  Future<bool> isUsernameExists(String username) async {
+    final querySnapshot = await _userCollection.where('username', isEqualTo: username).get();
+    return querySnapshot.docs.isNotEmpty;
   }
 
   Future<void> updateUser(UserEntity user) async {

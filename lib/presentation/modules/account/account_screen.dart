@@ -3,7 +3,6 @@ import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
-import 'package:base/presentation/modules/account/lib/delete_account.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
@@ -220,28 +219,6 @@ class AccountScreen extends BaseScreen<AccountController> {
             ),
           );
         }).toList());
-  }
-
-  ElevatedButton _buildRemoveAccountButton() {
-    return ElevatedButton(
-      onPressed: () {
-        showDialog(
-          context: Get.context!,
-          barrierColor: Colors.transparent,
-          builder: (_) {
-            return const AlertDialog(
-              backgroundColor: Colors.transparent,
-              content: Wrap(
-                children: [
-                  DeleteAccount(),
-                ],
-              ),
-            );
-          },
-        );
-      },
-      child: const Text("Show Delete Widget"),
-    );
   }
 
   _buildUserInfo() {
