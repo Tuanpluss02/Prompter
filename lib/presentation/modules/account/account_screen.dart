@@ -108,7 +108,7 @@ class AccountScreen extends BaseScreen<AccountController> {
           ),
           child: Obx(() => ClipOval(
                   child: Image(
-                image: ExtendedNetworkImageProvider(controller.appProvider.user.value.profileImage ?? ''),
+                image: ExtendedNetworkImageProvider(controller.userData.value.profileImage ?? ''),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
               ))),
