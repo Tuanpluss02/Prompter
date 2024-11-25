@@ -31,25 +31,6 @@ class UserService extends GetxService {
     await userRef.set(newUser.toJson());
   }
 
-  /// Follows a user
-  /// [currentUserId] is the ID of the current user
-  /// [targetUserId] is the ID of the user to be followed
-  Future<void> followUser(String currentUserId, String targetUserId) async {
-    final currentUserRef = _userCollection.doc(currentUserId).collection('following').doc(targetUserId);
-
-    final targetUserRef = _userCollection.doc(targetUserId).collection('followers').doc(currentUserId);
-
-    await currentUserRef.set({
-      'followingId': _userCollection.doc(targetUserId),
-      'createdAt': _createdTime,
-    });
-
-    await targetUserRef.set({
-      'followerId': _userCollection.doc(currentUserId),
-      'createdAt': _createdTime,
-    });
-  }
-
   Future<UserEntity?> getUserById(String userId) async {
     final userDoc = await _userCollection.doc(userId).get();
     if (!userDoc.exists) {
@@ -61,6 +42,26 @@ class UserService extends GetxService {
   Future<bool> isUsernameExists(String username) async {
     final querySnapshot = await _userCollection.where('username', isEqualTo: username).get();
     return querySnapshot.docs.isNotEmpty;
+  }
+
+  /// Follows a user
+  /// [currentUserId] is the ID of the current user
+  /// [targetUserId] is the ID of the user to be followed
+  Future<void> updateFollow(String currentUserId, String targetUserId) async {
+    final currentUser = await getUserById(currentUserId);
+    final targetUser = await getUserById(targetUserId);
+    if (currentUser == null || targetUser == null) {
+      return;
+    }
+    if (targetUser.followers!.contains(currentUserId)) {
+      targetUser.followers!.remove(currentUserId);
+      currentUser.following!.remove(targetUserId);
+    } else {
+      targetUser.followers!.add(currentUserId);
+      currentUser.following!.add(targetUserId);
+    }
+    await updateUser(targetUser);
+    await updateUser(currentUser);
   }
 
   Future<void> updateUser(UserEntity user) async {

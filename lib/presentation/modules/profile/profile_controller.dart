@@ -5,6 +5,7 @@ import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/profile/profile_binding.dart';
+import 'package:base/presentation/modules/root/root_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -21,6 +22,8 @@ class ProfileController extends BaseController {
   var userPosts = <NewsFeedPost>[].obs;
   var userData = UserEntity().obs;
   ProfileController({required this.pageData});
+
+  bool get isFollowing => userData.value.followers!.contains(appProvider.user.value.id!);
 
   @override
   void onInit() {
@@ -41,8 +44,18 @@ class ProfileController extends BaseController {
     refreshController.refreshCompleted();
   }
 
-  _initData() async {
+  ontTapFollow() async {
+    await _userService.updateFollow(appProvider.user.value.id!, userData.value.id!);
+    _getUserData();
+    Get.find<RootController>().getCurrentUserData();
+  }
+
+  _getUserData() async {
     userData.value = await _userService.getUserById(pageData.userId) ?? UserEntity();
+  }
+
+  _initData() async {
+    await _getUserData();
     List<PostEntity> posts = await _postService.getPostsByUserId(pageData.userId);
     List<NewsFeedPost> newsFeedPosts = [];
     for (PostEntity post in posts) {

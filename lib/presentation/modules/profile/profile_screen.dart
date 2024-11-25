@@ -144,7 +144,7 @@ class ProfileScreen extends BaseScreen<ProfileController> {
           ),
           child: Center(
             child: Text(
-              '+ Follow',
+              controller.isFollowing ? 'Following' : '+ Follow',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
