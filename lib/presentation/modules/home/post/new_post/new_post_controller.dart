@@ -21,6 +21,7 @@ class NewPostController extends BaseController {
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
   final PostService _postService = Get.find<PostService>();
   final TextEditingController textController = TextEditingController();
+  final FocusNode textFocus = FocusNode();
 
   final ImagePicker picker = ImagePicker();
   var postImages = <XFile>[].obs;
@@ -30,6 +31,15 @@ class NewPostController extends BaseController {
   void onReady() async {
     await _initData();
     super.onReady();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (pageData.type == RouteNewPostType.create) {
+        if (pageData.createNewPostPageData!.action == NewPostAction.image) {
+          onSelectImage();
+        } else {
+          textFocus.requestFocus();
+        }
+      }
+    });
   }
 
   onRemoveImage(int index) {

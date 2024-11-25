@@ -45,7 +45,7 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
                 'Change Your\nInformation',
                 style: GoogleFonts.manrope(
                   color: Colors.white,
-                  fontSize: 26,
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),
               ),

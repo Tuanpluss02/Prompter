@@ -21,6 +21,7 @@ class HomeScreen extends BaseScreen<HomeController> {
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
     return AppBar(
+      centerTitle: false,
       title: Text(AppStrings.appName.toUpperCase(), style: TextStyle(fontFamily: 'Larsseit', fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 5)),
       actions: [
         IconButton(

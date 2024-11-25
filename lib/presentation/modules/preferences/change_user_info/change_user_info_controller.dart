@@ -48,6 +48,14 @@ class ChangeUserInfoController extends BaseController {
   }
 
   void _updateUserInfo() async {
+    // if nothing changed
+    if (displayNameController.text.trim() == appProvider.user.value.displayName &&
+        usernameController.text.trim() == appProvider.user.value.username &&
+        avatar.value == appProvider.user.value.profileImage) {
+      Get.back();
+      return;
+    }
+
     final isUsernameExist = await _userService.isUsernameExists(usernameController.text.trim());
     if (usernameController.text.trim() != appProvider.user.value.username && isUsernameExist) {
       showSnackBar(title: 'Username already exists', type: SnackBarType.error);

@@ -184,6 +184,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
     return Padding(
         padding: const EdgeInsets.only(left: 90),
         child: TextField(
+          focusNode: controller.textFocus,
           controller: controller.textController,
           maxLines: null,
           maxLength: 5000,
