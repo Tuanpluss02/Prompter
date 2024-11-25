@@ -1,5 +1,4 @@
 import 'package:base/common/constants/app_type.dart';
-import 'package:base/common/utils/log.dart';
 import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/domain/services/post_service.dart';
@@ -15,14 +14,10 @@ class AccountController extends BaseController with GetTickerProviderStateMixin 
   final UserService _userService = Get.find<UserService>();
   final PostService _postService = Get.find<PostService>();
 
-  final String? userId;
   var isAppBarCollapsed = false.obs;
 
   var userPosts = <NewsFeedPost>[].obs;
   var userData = UserEntity().obs;
-  AccountController({this.userId});
-
-  bool get isMyAccount => userId == null;
 
   @override
   void onInit() {
@@ -44,8 +39,7 @@ class AccountController extends BaseController with GetTickerProviderStateMixin 
   }
 
   _initData() async {
-    Log.console('userId: ${this.userId}');
-    String userId = isMyAccount ? appProvider.currentUserId : this.userId!;
+    String userId = appProvider.currentUserId;
     userData.value = await _userService.getUserById(userId) ?? UserEntity();
     List<PostEntity> posts = await _postService.getPostsByUserId(userId);
     List<NewsFeedPost> newsFeedPosts = [];

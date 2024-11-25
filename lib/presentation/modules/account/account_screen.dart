@@ -7,7 +7,6 @@ import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
-import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -46,40 +45,17 @@ class AccountScreen extends BaseScreen<AccountController> {
     return SliverAppBar(
       collapsedHeight: 80.0,
       expandedHeight: 230.0,
-      leading: Visibility(
-        visible: !controller.isMyAccount,
-        child: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
-        ),
-      ),
       floating: false,
       pinned: true,
       actions: [
-        Visibility(
-          visible: !controller.isMyAccount && controller.isAppBarCollapsed.value,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: AppButton(
-              text: '+ Follow',
-              height: 30,
-              width: 80,
-              padding: EdgeInsets.all(4),
-              onTap: () {},
-            ),
-          ),
-        ),
-        Visibility(
-          visible: controller.isMyAccount,
-          child: Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: GestureDetector(
-              onTap: () => Get.toNamed(AppRoutes.preferences),
-              child: Icon(
-                Icons.menu,
-                color: Colors.white,
-                size: 25,
-              ),
+        Padding(
+          padding: const EdgeInsets.only(right: 12.0),
+          child: GestureDetector(
+            onTap: () => Get.toNamed(AppRoutes.preferences),
+            child: Icon(
+              Icons.menu,
+              color: Colors.white,
+              size: 25,
             ),
           ),
         ),
@@ -150,50 +126,27 @@ class AccountScreen extends BaseScreen<AccountController> {
   }
 
   _buildFollowButton() {
-    return Visibility(
-      visible: controller.userId != controller.appProvider.user.value.id,
-      replacement: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text(
-                '+ Follow',
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ScaleButton(
+        onTap: () => Get.toNamed(AppRoutes.changeUserInfo),
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.edit, color: Colors.white),
+              SizedBox(width: 8),
+              Text(
+                'Edit Profile',
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
-            ),
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ScaleButton(
-          onTap: () => Get.toNamed(AppRoutes.changeUserInfo),
-          child: Container(
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.edit, color: Colors.white),
-                SizedBox(width: 8),
-                Text(
-                  'Edit Profile',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ],
-            ),
+            ],
           ),
         ),
       ),

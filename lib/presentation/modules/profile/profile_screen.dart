@@ -134,7 +134,7 @@ class ProfileScreen extends BaseScreen<ProfileController> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {},
+        onTap: controller.onTapFollow,
         child: Container(
           width: double.infinity,
           height: 40,

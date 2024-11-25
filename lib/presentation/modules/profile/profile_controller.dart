@@ -44,7 +44,7 @@ class ProfileController extends BaseController {
     refreshController.refreshCompleted();
   }
 
-  ontTapFollow() async {
+  onTapFollow() async {
     await _userService.updateFollow(appProvider.user.value.id!, userData.value.id!);
     _getUserData();
     Get.find<RootController>().getCurrentUserData();
