@@ -22,7 +22,9 @@ class HomeController extends BaseController {
   addNewPost(PostEntity post) async {
     final author = await _userService.getUserById(post.authorId ?? '');
     newsFeed.insert(0, NewsFeedPost(post: post, author: author!));
+    Get.find<AccountController>().userPosts.insert(0, NewsFeedPost(post: post, author: author));
     newsFeed.refresh();
+    Get.find<AccountController>().userPosts.refresh();
   }
 
   void deletePost(String postId) async {
