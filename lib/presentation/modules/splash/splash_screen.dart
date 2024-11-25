@@ -1,3 +1,4 @@
+import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class SplashScreen extends BaseScreen<SplashController> {
 
     title = title
         .animate(onPlay: (controller) => controller.repeat())
-        .shimmer(duration: 1200.ms, color: const Color(0xFF80DDFF))
+        .shimmer(duration: 1200.ms, color: AppColors.primaryColor)
         .animate() // this wraps the previous Animate in another Animate
         .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
         .slide();
