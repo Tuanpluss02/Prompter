@@ -5,6 +5,7 @@ import 'package:base/domain/data/entities/post_entity.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/modules/account/account_controller.dart';
 import 'package:base/presentation/shared/global/app_dialog.dart';
 import 'package:base/presentation/shared/utils/call_api_widget.dart';
 import 'package:flutter/material.dart';
@@ -44,10 +45,12 @@ class HomeController extends BaseController {
     Future<void> process() async {
       await _postService.deletePost(postId);
       newsFeed.removeWhere((element) => element.post.id == postId);
+      Get.find<AccountController>().userPosts.removeWhere((element) => element.post.id == postId);
     }
 
     CallApiWidget.showLoading(api: process());
     newsFeed.refresh();
+    Get.find<AccountController>().userPosts.refresh();
     showSnackBar(title: 'Post deleted successfully', type: SnackBarType.success);
   }
 
