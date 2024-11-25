@@ -3,51 +3,50 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<bool> checkAndRequestPermission({required Permission permission}) async {
-  PermissionStatus status = await permission.status;
+  // final PermissionStatus status = await permission.status;
 
-  switch (status) {
+  final PermissionStatus tmpStatus = await permission.request();
+  switch (tmpStatus) {
     case PermissionStatus.granted:
+      // Have permission
       return true;
     case PermissionStatus.denied:
-      bool isGranted = await _showRequestPermissionDialog(permission.name);
-      await Future.delayed(Duration(milliseconds: 200));
-      if (isGranted) {
-        PermissionStatus newStatus = await Permission.storage.request();
-        return newStatus.isGranted;
-      }
-      break;
+    case PermissionStatus.restricted:
+      // Permission is restricted by the operating system and cannot be changed through normal settings
+      _showRequestPermissionDialog(permission.name);
+      return false;
     case PermissionStatus.permanentlyDenied:
-      bool isGranted = await _showOpenSettingDialog(permission.name);
-      if (isGranted) {
-        openAppSettings();
-      }
-      break;
+      // Permission is blocked and "Don't ask again" is selected, need to go to settings to enable it again
+      _showOpenSettingDialog(permission.name);
+      return false;
     default:
-      break;
+      return false;
   }
-  return false;
 }
 
-Future<bool> _showOpenSettingDialog(String permissionName) async {
-  return Get.dialog<bool>(AppDialog(
+Future<void> _showOpenSettingDialog(String permissionName) async {
+  Get.dialog(AppDialog(
     title: "Permission Required",
     content: "This app needs $permissionName permission to continue. You can grant the permission from the app settings.",
     primaryButtonText: "Allow",
     secondaryButtonText: "Deny",
-    onPrimaryButtonTap: () => Get.back(result: true),
-    onSecondaryButtonTap: () => Get.back(result: false),
-  )).then((value) => value ?? false);
+    onPrimaryButtonTap: () {
+      openAppSettings();
+      Get.back();
+    },
+    onSecondaryButtonTap: () => Get.back(),
+  ));
 }
 
-Future<bool> _showRequestPermissionDialog(String permissionName) async {
-  return Get.dialog<bool>(AppDialog(
+Future<void> _showRequestPermissionDialog(String permissionName) async {
+  Get.dialog(AppDialog(
     title: "Permission Required",
     content: "You need to grant $permissionName permission to continue.",
     primaryButtonText: "Allow",
     secondaryButtonText: "Deny",
     onPrimaryButtonTap: () => Get.back(result: true),
     onSecondaryButtonTap: () => Get.back(result: false),
-  )).then((value) => value ?? false);
+  ));
 }
 
 extension GetPermissionName on Permission {

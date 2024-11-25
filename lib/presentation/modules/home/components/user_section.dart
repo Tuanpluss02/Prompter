@@ -1,5 +1,4 @@
 import 'package:base/common/constants/app_assets_path.dart';
-import 'package:base/common/constants/app_strings.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
@@ -42,9 +41,9 @@ class UserSection extends StatelessWidget {
           ),
           child: ClipOval(
               child: Image(
-            image: ExtendedNetworkImageProvider(user.profileImage ?? AppStrings.defaultNetworkAvatar),
+            image: ExtendedNetworkImageProvider(user.profileImage ?? ''),
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icAttention),
+            errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
           )),
         ),
         SizedBox(width: 20),

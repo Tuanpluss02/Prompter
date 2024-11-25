@@ -13,13 +13,13 @@ class ForgotPasswordScreen extends BaseScreen<ForgotPasswordController> {
   const ForgotPasswordScreen({super.key});
 
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -45,7 +45,7 @@ class ForgotPasswordScreen extends BaseScreen<ForgotPasswordController> {
               AppTextField(
                 controller: controller.emailController,
                 focusNode: controller.emailFocus,
-                validator: emailValidator,
+                validator: usernameValidator,
                 hintText: 'Enter Your Email',
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icon(

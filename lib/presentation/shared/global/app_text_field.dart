@@ -3,21 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextField extends StatelessWidget {
-  const AppTextField({
-    super.key,
-    this.controller,
-    this.focusNode,
-    this.validator,
-    this.hintText,
-    this.keyboardType,
-    this.textInputAction,
-    this.obscureText,
-    this.readOnly,
-    this.enabled,
-    this.prefixIcon,
-    this.suffixIcon,
-  });
-
   final TextEditingController? controller;
 
   final FocusNode? focusNode;
@@ -36,9 +21,24 @@ class AppTextField extends StatelessWidget {
 
   final bool? readOnly;
 
-  final bool? enabled;
+  final bool enabled;
 
   final Widget? suffixIcon;
+
+  const AppTextField({
+    super.key,
+    this.controller,
+    this.focusNode,
+    this.validator,
+    this.hintText,
+    this.keyboardType,
+    this.textInputAction,
+    this.obscureText,
+    this.readOnly,
+    this.enabled = true,
+    this.prefixIcon,
+    this.suffixIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class AppTextField extends StatelessWidget {
       textInputAction: textInputAction,
       obscureText: obscureText ?? false,
       readOnly: readOnly ?? false,
-      enabled: enabled ?? true,
+      enabled: enabled,
       cursorColor: AppColors.textFieldCursorColor,
       cursorOpacityAnimates: true,
       style: GoogleFonts.manrope(
@@ -67,9 +67,18 @@ class AppTextField extends StatelessWidget {
         fillColor: AppColors.textFieldColor,
         filled: true,
         hintText: hintText,
-        hintStyle: GoogleFonts.poppins(
-          color: Colors.white,
-          fontSize: 16,
+        hintStyle: enabled
+            ? GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 16,
+              )
+            : GoogleFonts.poppins(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(16),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide.none,

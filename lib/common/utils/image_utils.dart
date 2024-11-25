@@ -17,16 +17,14 @@ class ImageUtils {
     return result;
   }
 
-  static Future<void> saveImageToClipboard({required String url}) async {
-    File file = await urlToCachePath(url);
-    if (file.existsSync()) {
-      await Clipboard.setData(ClipboardData(
-        text: "content:/${file.path}",
-      ));
-      Fluttertoast.showToast(msg: "Image copied to clipboard.");
-    } else {
-      Log.console("Failed to copy image to clipboard.");
+  static Future<XFile?> pickImageFromGallery() async {
+    bool hasPermission = await checkAndRequestPermission(permission: Permission.photos);
+    if (!hasPermission) {
+      return null;
     }
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    return pickedFile;
   }
 
   static Future<void> saveImageToGallery({required String imageUrl}) async {

@@ -16,13 +16,13 @@ import 'register_controller.dart';
 class RegisterScreen extends BaseScreen<RegisterController> {
   const RegisterScreen({super.key});
   @override
+  bool get resizeToAvoidBottomInset => true;
+
+  @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -62,7 +62,7 @@ class RegisterScreen extends BaseScreen<RegisterController> {
               AppTextField(
                 controller: controller.emailController,
                 focusNode: controller.emailFocus,
-                validator: emailValidator,
+                validator: usernameValidator,
                 hintText: 'Enter Your Email',
                 textInputAction: TextInputAction.next,
                 prefixIcon: Icon(
@@ -100,47 +100,6 @@ class RegisterScreen extends BaseScreen<RegisterController> {
               _buildContinueGoogle()
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  ScaleButton _buildSubmitButton() {
-    return ScaleButton(
-        onTap: controller.onSubmit,
-        child: Container(
-            width: double.infinity,
-            height: 60,
-            decoration: BoxDecoration(
-              color: Color(0XFF0677e8),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Center(
-                child: Text(
-              'Register',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ))));
-  }
-
-  Center _buildSignInText() {
-    return Center(
-      child: HighlightedText(
-        text: 'Already Have An Account? Sign In',
-        highlights: ['Sign In'],
-        onTapHighlight: () => Get.back(),
-        highlightStyle: GoogleFonts.manrope(
-          color: Color(0xFF0677e8),
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        normalTextStyle: GoogleFonts.manrope(
-          color: Color(0XFFacadb9),
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -209,5 +168,46 @@ class RegisterScreen extends BaseScreen<RegisterController> {
         ),
       ],
     );
+  }
+
+  Center _buildSignInText() {
+    return Center(
+      child: HighlightedText(
+        text: 'Already Have An Account? Sign In',
+        highlights: ['Sign In'],
+        onTapHighlight: () => Get.back(),
+        highlightStyle: GoogleFonts.manrope(
+          color: Color(0xFF0677e8),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        normalTextStyle: GoogleFonts.manrope(
+          color: Color(0XFFacadb9),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  ScaleButton _buildSubmitButton() {
+    return ScaleButton(
+        onTap: controller.onSubmit,
+        child: Container(
+            width: double.infinity,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Color(0XFF0677e8),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Center(
+                child: Text(
+              'Register',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ))));
   }
 }

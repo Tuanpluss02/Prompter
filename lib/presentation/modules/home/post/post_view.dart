@@ -7,6 +7,8 @@ import 'package:base/presentation/modules/home/components/media_view.dart';
 import 'package:base/presentation/modules/home/components/text_content.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
+import 'package:base/presentation/modules/profile/profile_binding.dart';
+import 'package:base/presentation/modules/root/root_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
@@ -42,47 +44,55 @@ class PostView extends GetView<HomeController> {
   _buildPostAuthor() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: UserSection(
-        user: news.author,
-        timeAgo: news.post.createdAt,
-        showOptions: news.author.id == controller.appProvider.user.value.id,
-        onOptionsTap: () => showAppBottomSheet(
-          child: Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Color(0xff363636),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () => Get.toNamed(
-                    AppRoutes.newPost,
-                    arguments: NewPostPageData(
-                      type: RouteNewPostType.edit,
-                      editPostPageData: EditPostPageData(postNeedEdit: news.post),
+      child: GestureDetector(
+        onTap: () => news.author.id != controller.appProvider.user.value.id
+            ? Get.toNamed(
+                AppRoutes.profile,
+                arguments: ProfilePageData(userId: news.author.id!),
+              )
+            : Get.find<RootController>().onNavItemTaped(4),
+        child: UserSection(
+          user: news.author,
+          timeAgo: news.post.createdAt,
+          showOptions: news.author.id == controller.appProvider.user.value.id,
+          onOptionsTap: () => showAppBottomSheet(
+            child: Container(
+              width: double.infinity,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Color(0xff363636),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => Get.toNamed(
+                      AppRoutes.newPost,
+                      arguments: NewPostPageData(
+                        type: RouteNewPostType.edit,
+                        editPostPageData: EditPostPageData(postNeedEdit: news.post),
+                      ),
+                    ),
+                    child: ListTile(
+                      trailing: SvgPicture.asset(SvgPath.icEdit),
+                      title: Text(
+                        'Edit',
+                        style: AppTextStyles.s18w400,
+                      ),
                     ),
                   ),
-                  child: ListTile(
-                    trailing: SvgPicture.asset(SvgPath.icEdit),
-                    title: Text(
-                      'Edit',
-                      style: AppTextStyles.s18w400,
+                  GestureDetector(
+                    onTap: () => controller.deletePost(news.post.id!),
+                    child: ListTile(
+                      trailing: SvgPicture.asset(SvgPath.icTrashbin),
+                      title: Text(
+                        'Delete',
+                        style: AppTextStyles.s18w400,
+                      ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => controller.deletePost(news.post.id!),
-                  child: ListTile(
-                    trailing: SvgPicture.asset(SvgPath.icTrashbin),
-                    title: Text(
-                      'Delete',
-                      style: AppTextStyles.s18w400,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -99,7 +109,7 @@ class PostView extends GetView<HomeController> {
         return Visibility(
           visible: (news.post.images?.isNotEmpty ?? false),
           child: Container(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 10, left: 8),
             child: MediaView(images: news.post.images ?? []),
           ),
         );

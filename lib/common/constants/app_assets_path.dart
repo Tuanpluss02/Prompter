@@ -43,4 +43,6 @@ class SvgPath {
   static const icSend = '$_svgPath/ic_send.svg';
   static const icEdit = '$_svgPath/ic_edit.svg';
   static const icTrashbin = '$_svgPath/ic_trashbin.svg';
+  static const icLogout = '$_svgPath/ic_logout.svg';
+  static const icEye = '$_svgPath/ic_eye.svg';
 }
