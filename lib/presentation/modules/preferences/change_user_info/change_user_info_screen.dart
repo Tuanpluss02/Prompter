@@ -5,7 +5,7 @@ import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/common/utils/validator.dart';
 import 'package:base/presentation/base/base_screen.dart';
-import 'package:base/presentation/modules/account/lib/delete_account.dart';
+import 'package:base/presentation/modules/preferences/change_user_info/components/delete_account.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';

@@ -1,9 +1,8 @@
-import 'package:base/presentation/modules/account/lib/components/gap.dart';
 import 'package:flutter/material.dart';
 
-import 'components/animated_border_painter.dart';
-import 'components/cancel_button_widget.dart';
-import 'components/progress_button.dart';
+import 'animated_border_painter.dart';
+import 'cancel_button_widget.dart';
+import 'progress_button.dart';
 
 class DeleteAccount extends StatefulWidget {
   const DeleteAccount({super.key});
@@ -54,20 +53,20 @@ class _DeleteAccountState extends State<DeleteAccount> with SingleTickerProvider
                               color: Colors.white,
                             ),
                           ),
-                          gapY(10),
+                          SizedBox(height: 10),
                           const Text(
                             "Delete Account",
                             style: TextStyle(
                               color: Colors.white,
                             ),
                           ),
-                          gapY(10),
+                          SizedBox(height: 10),
                           const Text(
                             "Are you sure you want to delete your account?",
                             style: TextStyle(color: Color(0xFF636363), fontSize: 12),
                             textAlign: TextAlign.center,
                           ),
-                          gapY(10),
+                          SizedBox(height: 10),
                           GestureDetector(
                             onTapDown: (_) {
                               _controller.forward();
@@ -100,7 +99,7 @@ class _DeleteAccountState extends State<DeleteAccount> with SingleTickerProvider
                     );
                   })),
         ),
-        gapY(10),
+        SizedBox(height: 10),
         const CancelButtonWidget()
       ],
     );

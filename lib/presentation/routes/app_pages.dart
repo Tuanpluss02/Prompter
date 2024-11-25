@@ -20,6 +20,8 @@ import 'package:base/presentation/modules/preferences/change_user_info/change_us
 import 'package:base/presentation/modules/preferences/change_user_info/change_user_info_screen.dart';
 import 'package:base/presentation/modules/preferences/preferences_binding.dart';
 import 'package:base/presentation/modules/preferences/preferences_screen.dart';
+import 'package:base/presentation/modules/profile/profile_binding.dart';
+import 'package:base/presentation/modules/profile/profile_screen.dart';
 import 'package:base/presentation/modules/root/root_binding.dart';
 import 'package:base/presentation/modules/root/root_screen.dart';
 import 'package:base/presentation/modules/splash/splash_binding.dart';
@@ -97,6 +99,11 @@ class AppPages {
       name: AppRoutes.splash,
       page: () => SplashScreen(),
       binding: SplashBinding(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileScreen(),
+      binding: ProfileBinding(),
+    ),
   ];
 }
