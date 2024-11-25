@@ -50,87 +50,92 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
                 ),
               ),
               SizedBox(height: 20),
-              Center(
-                child: GestureDetector(
-                  onTap: controller.onPickImage,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Obx(() => ClipOval(
-                                child: Image(
-                              image: controller.avatar.value.isURL ? ExtendedNetworkImageProvider(controller.avatar.value) : FileImage(File(controller.avatar.value)),
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
-                            ))),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              _buildChangeAvatar(),
               SizedBox(height: 20),
-              AppTextField(
-                controller: controller.displayNameController,
-                focusNode: controller.displayNameFocus,
-                validator: fullNameValidator,
-                hintText: 'Display Name',
-                textInputAction: TextInputAction.next,
-                prefixIcon: Icon(
-                  Icons.person_outline,
-                  color: Colors.white,
-                ),
-              ),
+              _buildDisplayNameTextField(),
               SizedBox(height: 16),
-              AppTextField(
-                controller: controller.usernameController,
-                focusNode: controller.usernameFocus,
-                validator: usernameValidator,
-                hintText: 'Username',
-                textInputAction: TextInputAction.done,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '@',
-                    style: GoogleFonts.manrope(
-                      color: Colors.white,
-                      fontSize: 22,
-                    ),
-                  ),
-                ),
-              ),
+              _buildUsernameTextField(),
+              SizedBox(height: 16),
+              _buildEmailTextField(),
               SizedBox(height: 20),
               _buildSubmitButton(),
               _buildRemoveAccountButton(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Center _buildChangeAvatar() {
+    return Center(
+      child: GestureDetector(
+        onTap: controller.onPickImage,
+        child: Stack(
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 1.0,
+                ),
+              ),
+              child: Obx(() => ClipOval(
+                      child: Image(
+                    image: controller.avatar.value.isURL ? ExtendedNetworkImageProvider(controller.avatar.value) : FileImage(File(controller.avatar.value)),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
+                  ))),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.primaryColor,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppTextField _buildDisplayNameTextField() {
+    return AppTextField(
+      controller: controller.displayNameController,
+      focusNode: controller.displayNameFocus,
+      validator: fullNameValidator,
+      hintText: 'Display Name',
+      textInputAction: TextInputAction.next,
+      prefixIcon: Icon(
+        Icons.person_outline,
+        color: Colors.white,
+      ),
+    );
+  }
+
+  AppTextField _buildEmailTextField() {
+    return AppTextField(
+      hintText: controller.appProvider.user.value.email,
+      enabled: false,
+      prefixIcon: Icon(
+        Icons.email_outlined,
+        color: Colors.grey,
       ),
     );
   }
@@ -201,6 +206,26 @@ class ChangeUserInfoScreen extends BaseScreen<ChangeUserInfoController> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  AppTextField _buildUsernameTextField() {
+    return AppTextField(
+      controller: controller.usernameController,
+      focusNode: controller.usernameFocus,
+      validator: usernameValidator,
+      hintText: 'Username',
+      textInputAction: TextInputAction.done,
+      prefixIcon: Padding(
+        padding: const EdgeInsets.only(left: 12.0, top: 8, bottom: 8),
+        child: Text(
+          '@',
+          style: GoogleFonts.manrope(
+            color: Colors.white,
+            fontSize: 22,
           ),
         ),
       ),
