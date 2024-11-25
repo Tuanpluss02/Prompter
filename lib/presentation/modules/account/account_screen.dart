@@ -84,9 +84,9 @@ class AccountScreen extends BaseScreen<AccountController> {
           ),
         ),
       ],
-      centerTitle: true,
+      centerTitle: false,
       flexibleSpace: FlexibleSpaceBar(
-        centerTitle: true,
+        centerTitle: false,
         title: _buildAvatarName(),
         background: _buildBackgroundImage(),
       ),

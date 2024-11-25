@@ -88,13 +88,16 @@ class NewPostScreen extends BaseScreen<NewPostController> {
           maxHeight: Get.width * 0.7,
         ),
         child: controller.postImages.length.isEqual(1)
-            ? PostImageView(
-                image: FileImage(File(controller.postImages.first.path)),
-                removeElevation: (
-                  showRemoveButton: true,
-                  onTapRemove: () {
-                    controller.onRemoveImage(0);
-                  },
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: PostImageView(
+                  image: FileImage(File(controller.postImages.first.path)),
+                  removeElevation: (
+                    showRemoveButton: true,
+                    onTapRemove: () {
+                      controller.onRemoveImage(0);
+                    },
+                  ),
                 ),
               )
             : ListView(
