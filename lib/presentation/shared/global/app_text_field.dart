@@ -25,6 +25,8 @@ class AppTextField extends StatelessWidget {
 
   final Widget? suffixIcon;
 
+  final TextStyle? hintStyle;
+
   const AppTextField({
     super.key,
     this.controller,
@@ -38,6 +40,7 @@ class AppTextField extends StatelessWidget {
     this.enabled = true,
     this.prefixIcon,
     this.suffixIcon,
+    this.hintStyle,
   });
 
   @override
@@ -68,10 +71,11 @@ class AppTextField extends StatelessWidget {
         filled: true,
         hintText: hintText,
         hintStyle: enabled
-            ? GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 16,
-              )
+            ? hintStyle ??
+                GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 16,
+                )
             : GoogleFonts.poppins(
                 color: Colors.grey,
                 fontSize: 16,
