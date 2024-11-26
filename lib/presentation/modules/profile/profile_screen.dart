@@ -143,9 +143,16 @@ class ProfileScreen extends BaseScreen<ProfileController> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
-            child: Text(
-              controller.isFollowing ? 'Following' : '+ Follow',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+            child: GetBuilder<ProfileController>(
+              init: controller,
+              id: 'reach_info',
+              initState: (_) {},
+              builder: (_) {
+                return Text(
+                  controller.isFollowing ? 'Following' : '+ Follow',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                );
+              },
             ),
           ),
         ),
@@ -153,32 +160,39 @@ class ProfileScreen extends BaseScreen<ProfileController> {
     );
   }
 
-  Row _buildReach() {
-    return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (count: controller.userData.value.likeCount ?? 0, title: 'Likes'),
-          (count: controller.userData.value.followers?.length ?? 0, title: 'Followers'),
-          (count: controller.userData.value.followers?.length ?? 0, title: 'Following'),
-        ].map((item) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text.rich(
-              TextSpan(
-                children: [
+  _buildReach() {
+    return GetBuilder<ProfileController>(
+      init: controller,
+      id: 'reach_info',
+      initState: (_) {},
+      builder: (_) {
+        return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              (count: controller.userData.value.likeCount ?? 0, title: 'Likes'),
+              (count: controller.userData.value.followers?.length ?? 0, title: 'Followers'),
+              (count: controller.userData.value.following?.length ?? 0, title: 'Following'),
+            ].map((item) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text.rich(
                   TextSpan(
-                    text: '${item.count.toShortString()} ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    children: [
+                      TextSpan(
+                        text: '${item.count.toShortString()} ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      TextSpan(
+                        text: item.title,
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
-                  TextSpan(
-                    text: item.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList());
+                ),
+              );
+            }).toList());
+      },
+    );
   }
 
   _buildUserInfo() {

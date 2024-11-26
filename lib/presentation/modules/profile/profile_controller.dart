@@ -5,7 +5,6 @@ import 'package:base/domain/services/post_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/profile/profile_binding.dart';
-import 'package:base/presentation/modules/root/root_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -45,9 +44,17 @@ class ProfileController extends BaseController {
   }
 
   onTapFollow() async {
-    await _userService.updateFollow(appProvider.user.value.id!, userData.value.id!);
-    _getUserData();
-    Get.find<RootController>().getCurrentUserData();
+    if (userData.value.followers!.contains(appProvider.user.value.id!)) {
+      userData.value.followers!.remove(appProvider.user.value.id!);
+      appProvider.user.value.following!.remove(userData.value.id!);
+    } else {
+      userData.value.followers!.add(appProvider.user.value.id!);
+      appProvider.user.value.following!.add(userData.value.id!);
+    }
+    await _userService.updateUser(appProvider.user.value);
+    await _userService.updateUser(userData.value);
+    update(['reach_info']);
+    Get.find<ProfileController>().update(['reach_info']);
   }
 
   _getUserData() async {
@@ -62,5 +69,6 @@ class ProfileController extends BaseController {
       newsFeedPosts.add(NewsFeedPost(author: userData.value, post: post));
     }
     userPosts.value = newsFeedPosts;
+    update(['reach_info']);
   }
 }

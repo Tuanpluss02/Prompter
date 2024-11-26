@@ -86,7 +86,7 @@ class AccountScreen extends BaseScreen<AccountController> {
           ),
           child: Obx(() => ClipOval(
                   child: Image(
-                image: ExtendedNetworkImageProvider(controller.userData.value.profileImage ?? ''),
+                image: ExtendedNetworkImageProvider(controller.appProvider.user.value.profileImage ?? ''),
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) => SvgPicture.asset(SvgPath.icPersonFilled),
               ))),
@@ -97,11 +97,11 @@ class AccountScreen extends BaseScreen<AccountController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.userData.value.displayName ?? '',
+                  controller.appProvider.user.value.displayName ?? '',
                   style: AppTextStyles.s16w700,
                 ),
                 Text(
-                  '@${controller.userData.value.username}',
+                  '@${controller.appProvider.user.value.username}',
                   style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                 ),
               ],
@@ -153,32 +153,39 @@ class AccountScreen extends BaseScreen<AccountController> {
     );
   }
 
-  Row _buildReach() {
-    return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (count: controller.userData.value.likeCount ?? 0, title: 'Likes'),
-          (count: controller.userData.value.followers?.length ?? 0, title: 'Followers'),
-          (count: controller.userData.value.followers?.length ?? 0, title: 'Following'),
-        ].map((item) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text.rich(
-              TextSpan(
-                children: [
+  _buildReach() {
+    return GetBuilder<AccountController>(
+      init: controller,
+      id: 'reach_info',
+      initState: (_) {},
+      builder: (_) {
+        return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
+              (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
+              (count: controller.appProvider.user.value.following?.length ?? 0, title: 'Following'),
+            ].map((item) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text.rich(
                   TextSpan(
-                    text: '${item.count.toShortString()} ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    children: [
+                      TextSpan(
+                        text: '${item.count.toShortString()} ',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      TextSpan(
+                        text: item.title,
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
                   ),
-                  TextSpan(
-                    text: item.title,
-                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList());
+                ),
+              );
+            }).toList());
+      },
+    );
   }
 
   _buildUserInfo() {
