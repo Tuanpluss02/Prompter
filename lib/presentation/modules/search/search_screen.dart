@@ -47,55 +47,67 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: CustomScrollView(
-          slivers: [
-            // SliverToBoxAdapter(
-            //   child:
-            // ),
-            SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverVisibility(
-                sliver: SliverToBoxAdapter(
-                  child: Obx(
-                    () => controller.searchUserResults.isEmpty
-                        ? SizedBox()
-                        : Text(
-                            'Users',
-                            style: AppTextStyles.s16w700,
-                          ),
+    return CustomScrollView(
+      slivers: [
+        // SliverToBoxAdapter(
+        //   child:
+        // ),
+        SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverVisibility(
+            sliver: SliverToBoxAdapter(
+              child: Obx(
+                () => controller.searchUserResults.isEmpty
+                    ? SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: Text(
+                          'Users',
+                          style: AppTextStyles.s16w700,
+                        ),
+                      ),
+              ),
+            ),
+            visible: controller.searchUserResults.isNotEmpty),
+        Obx(() => SliverList.builder(
+            itemCount: controller.searchUserResults.length,
+            itemBuilder: (context, index) {
+              final result = controller.searchUserResults[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                // Search result, can be user or post
+                child: UserSection(user: result, showOptions: false),
+              );
+            })),
+        SliverVisibility(
+            visible: controller.searchPostResults.isNotEmpty,
+            sliver: SliverToBoxAdapter(
+              child: Obx(
+                () => controller.searchPostResults.isEmpty
+                    ? SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: Text(
+                          'Posts',
+                          style: AppTextStyles.s16w700,
+                        ),
+                      ),
+              ),
+            )),
+        Obx(() => SliverList.builder(
+            itemCount: controller.searchPostResults.length,
+            itemBuilder: (context, index) {
+              final result = controller.searchPostResults[index];
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: PostView(news: result),
                   ),
-                ),
-                visible: controller.searchUserResults.isNotEmpty),
-            Obx(() => SliverList.builder(
-                itemCount: controller.searchUserResults.length,
-                itemBuilder: (context, index) {
-                  final result = controller.searchUserResults[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    // Search result, can be user or post
-                    child: UserSection(user: result, showOptions: false),
-                  );
-                })),
-            SliverVisibility(
-                sliver: SliverToBoxAdapter(
-                  child: Obx(
-                    () => controller.searchPostResults.isEmpty
-                        ? SizedBox()
-                        : Text(
-                            'Posts',
-                            style: AppTextStyles.s16w700,
-                          ),
-                  ),
-                ),
-                visible: controller.searchPostResults.isNotEmpty),
-            Obx(() => SliverList.builder(
-                itemCount: controller.searchPostResults.length,
-                itemBuilder: (context, index) {
-                  final result = controller.searchPostResults[index];
-                  return PostView(news: result);
-                })),
-          ],
-        ));
+                  Divider()
+                ],
+              );
+            })),
+      ],
+    );
   }
 }
