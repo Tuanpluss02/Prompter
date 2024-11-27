@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/constants/app_enums.dart';
 import 'package:base/common/constants/app_text_styles.dart';
@@ -7,6 +8,7 @@ import 'package:base/presentation/modules/ai_chat/components/chat_theme.dart';
 import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import 'ai_chat_controller.dart';
@@ -93,9 +95,10 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.backgroundColor,
         ),
         sendMessageConfig: SendMessageConfiguration(
+          sendButtonIcon: SvgPicture.asset(SvgPath.icSend),
           textFieldConfig: TextFieldConfiguration(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
             textStyle: TextStyle(color: theme.textFieldTextColor, fontSize: 16),
           ),
           allowRecordingVoice: false,

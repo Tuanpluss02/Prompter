@@ -1,14 +1,8 @@
 import 'dart:io' if (kIsWeb) 'dart:html';
 
+import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:base/presentation/shared/chat_view/src/extensions/extensions.dart';
-import 'package:base/presentation/shared/chat_view/src/models/config_models/message_configuration.dart';
-import 'package:base/presentation/shared/chat_view/src/models/config_models/send_message_configuration.dart';
-import 'package:base/presentation/shared/chat_view/src/models/data_models/chat_user.dart';
-import 'package:base/presentation/shared/chat_view/src/models/data_models/message.dart';
-import 'package:base/presentation/shared/chat_view/src/models/data_models/reply_message.dart';
 import 'package:base/presentation/shared/chat_view/src/utils/package_strings.dart';
-import 'package:base/presentation/shared/chat_view/src/values/enumeration.dart';
-import 'package:base/presentation/shared/chat_view/src/values/typedefs.dart';
 import 'package:base/presentation/shared/chat_view/src/widgets/chatui_textfield.dart';
 import 'package:base/presentation/shared/chat_view/src/widgets/reply_message_view.dart';
 import 'package:base/presentation/shared/chat_view/src/widgets/scroll_to_bottom_button.dart';
@@ -39,26 +33,29 @@ class SendMessageWidget extends StatefulWidget {
   /// Provides a callback for the view when replying to message
   final CustomViewForReplyMessage? replyMessageBuilder;
 
-  const SendMessageWidget({
-    super.key,
-    required this.onSendTap,
-    this.sendMessageConfig,
-    this.sendMessageBuilder,
-    this.onReplyCallback,
-    this.onReplyCloseCallback,
-    this.messageConfig,
-    this.replyMessageBuilder,
-  });
+  final ChatController? controller;
+
+  const SendMessageWidget(
+      {super.key,
+      required this.onSendTap,
+      this.sendMessageConfig,
+      this.sendMessageBuilder,
+      this.onReplyCallback,
+      this.onReplyCloseCallback,
+      this.messageConfig,
+      this.replyMessageBuilder,
+      this.controller});
 
   @override
   State<SendMessageWidget> createState() => SendMessageWidgetState();
 }
 
 class SendMessageWidgetState extends State<SendMessageWidget> {
-  final _textEditingController = TextEditingController();
+  late final TextEditingController _textEditingController;
   final ValueNotifier<ReplyMessage> _replyMessage = ValueNotifier(const ReplyMessage());
 
   final _focusNode = FocusNode();
+
   ChatUser? currentUser;
 
   ChatUser? get repliedUser => replyMessage.replyTo.isNotEmpty ? chatViewIW?.chatController.getUserFromId(replyMessage.replyTo) : null;
@@ -252,6 +249,12 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     _focusNode.dispose();
     _replyMessage.dispose();
     super.dispose();
+  }
+
+  @override
+  initState() {
+    super.initState();
+    _textEditingController = widget.controller?.textMessageController ?? TextEditingController();
   }
 
   void onCloseTap() {

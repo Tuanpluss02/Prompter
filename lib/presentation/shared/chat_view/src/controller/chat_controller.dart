@@ -11,6 +11,8 @@ class ChatController {
 
   ScrollController scrollController;
 
+  TextEditingController textMessageController;
+
   /// Allow user to show typing indicator defaults to false.
   final ValueNotifier<bool> _showTypingIndicator = ValueNotifier(false);
 
@@ -28,6 +30,7 @@ class ChatController {
 
   ChatController({
     required this.initialMessageList,
+    required this.textMessageController,
     required this.scrollController,
     required this.otherUsers,
     required this.currentUser,

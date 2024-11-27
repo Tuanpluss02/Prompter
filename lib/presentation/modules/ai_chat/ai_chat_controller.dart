@@ -22,6 +22,7 @@ class AiChatController extends BaseController {
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
   final ChatService _chatService = Get.find<ChatService>();
   late ChatController chatController = ChatController(
+      textMessageController: textMessageController,
       initialMessageList: [],
       currentUser: ChatUser(
           name: appProvider.user.value.username ?? 'User',
@@ -31,6 +32,7 @@ class AiChatController extends BaseController {
           defaultAvatarImage: AppStrings.defaultNetworkAvatar),
       otherUsers: [],
       scrollController: ScrollController());
+
   var chatViewState = ChatViewState.loading.obs;
   var selectedModel = GenerativeAiModel.gemini.obs;
 
@@ -66,6 +68,7 @@ class AiChatController extends BaseController {
     }
 
     chatController = ChatController(
+      textMessageController: textMessageController,
       initialMessageList: initialMessageList,
       currentUser: ChatUser(
           name: appProvider.user.value.username ?? 'User',

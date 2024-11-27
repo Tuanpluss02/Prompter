@@ -234,6 +234,7 @@ class _ChatViewState extends State<ChatView> with SingleTickerProviderStateMixin
                             if (featureActiveConfig.enableTextField)
                               SendMessageWidget(
                                 key: _sendMessageKey,
+                                controller: widget.chatController,
                                 sendMessageBuilder: widget.sendMessageBuilder,
                                 sendMessageConfig: widget.sendMessageConfig,
                                 onSendTap: (message, replyMessage, messageType) {

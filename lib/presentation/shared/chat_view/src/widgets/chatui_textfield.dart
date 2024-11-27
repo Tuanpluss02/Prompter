@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' show File, Platform;
 
 import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:base/common/constants/app_color.dart';
 import 'package:base/presentation/shared/chat_view/src/utils/constants/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,7 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
       margin: textFieldConfig?.margin,
       decoration: BoxDecoration(
         borderRadius: textFieldConfig?.borderRadius ?? BorderRadius.circular(textFieldBorderRadius),
+        color: AppColors.backgroundColor,
         // color: sendMessageConfig?.textFieldBackgroundColor ?? Colors.white,
       ),
       child: ValueListenableBuilder<bool>(
