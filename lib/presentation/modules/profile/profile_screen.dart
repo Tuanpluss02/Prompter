@@ -215,7 +215,15 @@ class ProfileScreen extends BaseScreen<ProfileController> {
     return Obx(() => controller.userPosts.isNotEmpty
         ? SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => PostView(news: controller.userPosts[index]),
+              (context, index) => Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: PostView(news: controller.userPosts[index]),
+                  ),
+                  Divider()
+                ],
+              ),
               childCount: controller.userPosts.length,
             ),
           )

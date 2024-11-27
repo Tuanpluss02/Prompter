@@ -58,7 +58,7 @@ class UserSection extends StatelessWidget {
               '@${user.username}',
               style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
             ),
-            additionalWidget ?? SizedBox(),
+            additionalWidget ?? SizedBox.shrink(),
           ],
         ),
         if (showOptions) ...[

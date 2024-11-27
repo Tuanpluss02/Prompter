@@ -4,7 +4,10 @@ import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
+import 'package:base/presentation/modules/profile/profile_binding.dart';
+import 'package:base/presentation/modules/root/root_controller.dart';
 import 'package:base/presentation/modules/search/search_controller.dart' as search_controller;
+import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,37 +18,6 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
 
   @override
   bool get wrapWithSafeArea => true;
-
-  // @override
-  // PreferredSizeWidget? buildAppBar(BuildContext context) {
-  //   return AppBar(
-  //     toolbarHeight: 120,
-  //     surfaceTintColor: Colors.transparent,
-  //     title: Column(
-  //       mainAxisAlignment: MainAxisAlignment.start,
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         Text(
-  //           'Search',
-  //           style: AppTextStyles.s28w500,
-  //         ),
-  //         SizedBox(height: 8),
-  //         AppTextField(
-  //           onFieldSubmitted: controller.onSearchChanged,
-  //           textInputAction: TextInputAction.search,
-  //           controller: controller.searchController,
-  //           prefixIcon: Padding(
-  //             padding: const EdgeInsets.all(12.0),
-  //             child: SvgPicture.asset(SvgPath.icSearchOutlined),
-  //           ),
-  //           hintText: 'Search for people, posts, and more',
-  //           hintStyle: AppTextStyles.s16w400.copyWith(color: Colors.grey),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   @override
   Widget buildScreen(BuildContext context) {
     return CustomScrollView(
@@ -69,11 +41,19 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
               final result = controller.searchUserResults[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                child: UserSection(
-                  user: result,
-                  additionalWidget: Text(
-                    '${result.postCount!.toShortString()} posts ${result.followers!.length.toShortString()} followers',
-                    style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                child: GestureDetector(
+                  onTap: () => result.id != controller.appProvider.user.value.id
+                      ? Get.toNamed(
+                          AppRoutes.profile,
+                          arguments: ProfilePageData(userId: result.id!),
+                        )
+                      : Get.find<RootController>().onNavItemTaped(4),
+                  child: UserSection(
+                    user: result,
+                    additionalWidget: Text(
+                      '${result.postCount!.toShortString()} posts ${result.followers!.length.toShortString()} followers',
+                      style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                    ),
                   ),
                 ),
               );
