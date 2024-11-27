@@ -5,22 +5,21 @@ import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class UserSection extends StatelessWidget {
   final UserEntity user;
 
-  final DateTime? timeAgo;
+  final Widget? additionalWidget;
   final Function()? onTap;
   final bool showOptions;
   final Function()? onOptionsTap;
   const UserSection({
     super.key,
     required this.user,
-    this.timeAgo,
     this.onTap,
-    this.showOptions = true,
+    this.showOptions = false,
     this.onOptionsTap,
+    this.additionalWidget,
   });
 
   @override
@@ -59,13 +58,7 @@ class UserSection extends StatelessWidget {
               '@${user.username}',
               style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
             ),
-            Visibility(
-              visible: timeAgo != null,
-              child: Text(
-                timeago.format(timeAgo ?? DateTime.now()),
-                style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
-              ),
-            ),
+            additionalWidget ?? SizedBox.shrink(),
           ],
         ),
         if (showOptions) ...[

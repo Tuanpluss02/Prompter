@@ -44,24 +44,13 @@ class UserService extends GetxService {
     return querySnapshot.docs.isNotEmpty;
   }
 
-  /// Follows a user
-  /// [currentUserId] is the ID of the current user
-  /// [targetUserId] is the ID of the user to be followed
-  Future<void> updateFollow(String currentUserId, String targetUserId) async {
-    final currentUser = await getUserById(currentUserId);
-    final targetUser = await getUserById(targetUserId);
-    if (currentUser == null || targetUser == null) {
-      return;
-    }
-    if (targetUser.followers!.contains(currentUserId)) {
-      targetUser.followers!.remove(currentUserId);
-      currentUser.following!.remove(targetUserId);
-    } else {
-      targetUser.followers!.add(currentUserId);
-      currentUser.following!.add(targetUserId);
-    }
-    await updateUser(targetUser);
-    await updateUser(currentUser);
+  Future<List<UserEntity>> searchUsers(String query) async {
+    final querySnapshot = await _userCollection
+        .where('displayName', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
+        .where('username', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
+        .limit(5)
+        .get();
+    return querySnapshot.docs.map((doc) => UserEntity.fromJson(doc.data())).toList();
   }
 
   Future<void> updateUser(UserEntity user) async {

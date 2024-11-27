@@ -6,7 +6,7 @@ import 'package:base/domain/data/entities/user_entity.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -76,7 +76,7 @@ class ChangeUserInfoController extends BaseController {
       appProvider.updateUserData(updatedUser);
     }
 
-    await CallApiWidget.showLoading(api: process());
+    await AppOverlay.showLoading(api: process());
     Get.back();
   }
 }

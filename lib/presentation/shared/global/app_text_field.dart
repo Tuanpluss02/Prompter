@@ -27,6 +27,10 @@ class AppTextField extends StatelessWidget {
 
   final TextStyle? hintStyle;
 
+  final Function(String)? onChanged;
+
+  final Function(String)? onFieldSubmitted;
+
   const AppTextField({
     super.key,
     this.controller,
@@ -41,12 +45,15 @@ class AppTextField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.hintStyle,
+    this.onChanged,
+    this.onFieldSubmitted,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onFieldSubmitted: onFieldSubmitted,
       focusNode: focusNode,
       validator: validator,
       keyboardType: keyboardType,
@@ -54,6 +61,7 @@ class AppTextField extends StatelessWidget {
       obscureText: obscureText ?? false,
       readOnly: readOnly ?? false,
       enabled: enabled,
+      onChanged: onChanged,
       cursorColor: AppColors.textFieldCursorColor,
       cursorOpacityAnimates: true,
       style: GoogleFonts.manrope(

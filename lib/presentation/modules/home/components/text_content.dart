@@ -1,20 +1,23 @@
 import 'package:base/common/constants/app_regex.dart';
 import 'package:base/common/utils/log.dart';
+import 'package:base/presentation/modules/root/root_controller.dart';
+import 'package:base/presentation/modules/search/search_controller.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide SearchController;
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TextContent extends StatelessWidget {
+  final String? content;
+
+  final bool hasMedia;
   const TextContent({
     super.key,
     this.content,
     this.hasMedia = false,
   });
-
-  final String? content;
-  final bool hasMedia;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,9 @@ class TextContent extends StatelessWidget {
             style: textStyle?.copyWith(color: Colors.blue),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Log.console('Hashtag tapped');
+                Get.find<SearchController>().textSearchController.text = text;
+                Get.find<SearchController>().onSearchChanged(text);
+                Get.find<RootController>().onNavItemTaped(1);
               },
           ),
         ),

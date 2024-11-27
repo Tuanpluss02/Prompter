@@ -92,6 +92,11 @@ class PostService extends GetxService {
     return postsSnapshot.docs.map((e) => PostEntity.fromJson(e.data())).toList();
   }
 
+  Future<List<PostEntity>> searchPosts(String query) async {
+    final querySnapshot = await _postCollection.where('content', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff').limit(10).get();
+    return querySnapshot.docs.map((doc) => PostEntity.fromJson(doc.data())).toList();
+  }
+
   Future<CommentEntity> updateComment(CommentEntity comment) async {
     final commentRef = _commentCollection.doc(comment.id);
     await commentRef.update(comment.toJson());

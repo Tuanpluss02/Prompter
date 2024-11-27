@@ -43,7 +43,15 @@ class HomeScreen extends BaseScreen<HomeController> {
           Obx(() => controller.newsFeed.isNotEmpty
               ? SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => PostView(news: controller.newsFeed[index]),
+                    (context, index) => Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: PostView(news: controller.newsFeed[index]),
+                        ),
+                        Divider(),
+                      ],
+                    ),
                     childCount: controller.newsFeed.length,
                   ),
                 )

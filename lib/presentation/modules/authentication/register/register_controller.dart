@@ -2,7 +2,7 @@ import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,7 +38,7 @@ class RegisterController extends BaseController {
   }
 
   void registerWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.showLoading(
+    final result = await AppOverlay.showLoading(
       api: _authService.registerWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {
