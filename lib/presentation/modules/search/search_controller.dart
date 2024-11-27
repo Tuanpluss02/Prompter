@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchController extends BaseController {
-  final TextEditingController searchController = TextEditingController();
+  final TextEditingController textSearchController = TextEditingController();
   final UserService _userService = UserService();
   final PostService _postService = PostService();
   final searchPostResults = <NewsFeedPost>[].obs;

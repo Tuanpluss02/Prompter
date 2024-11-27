@@ -48,6 +48,7 @@ class UserService extends GetxService {
     final querySnapshot = await _userCollection
         .where('displayName', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
         .where('username', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
+        .limit(5)
         .get();
     return querySnapshot.docs.map((doc) => UserEntity.fromJson(doc.data())).toList();
   }

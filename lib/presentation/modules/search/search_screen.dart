@@ -104,7 +104,7 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
           child: AppTextField(
             onFieldSubmitted: controller.onSearchChanged,
             textInputAction: TextInputAction.search,
-            controller: controller.searchController,
+            controller: controller.textSearchController,
             prefixIcon: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(SvgPath.icSearchOutlined),
@@ -124,5 +124,3 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
     );
   }
 }
-
-  //         SizedBox(height: 8),
