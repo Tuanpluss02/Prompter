@@ -28,10 +28,38 @@ class SearchController extends BaseController {
       final author = await _userService.getUserById(post.authorId!);
       searchPostResults.add(NewsFeedPost(author: author!, post: post));
     }
+    searchPostResults.sort((a, b) {
+      // Like count -> comment count -> time created
+      final aLikeCount = a.post.likes?.length ?? 0;
+      final bLikeCount = b.post.likes?.length ?? 0;
+      final aCommentCount = a.post.comments?.length ?? 0;
+      final bCommentCount = b.post.comments?.length ?? 0;
+      final aTime = a.post.createdAt ?? DateTime.now();
+      final bTime = b.post.createdAt ?? DateTime.now();
+      if (aLikeCount != bLikeCount) {
+        return bLikeCount.compareTo(aLikeCount);
+      } else if (aCommentCount != bCommentCount) {
+        return bCommentCount.compareTo(aCommentCount);
+      } else {
+        return bTime.compareTo(aTime);
+      }
+    });
   }
 
   Future<void> searchUsers(String query) async {
     final users = await _userService.searchUsers(query);
     searchUserResults.addAll(users);
+    searchUserResults.sort((a, b) {
+      // followers count -> posts count
+      final aPostsCount = a.postCount ?? 0;
+      final bPostsCount = b.postCount ?? 0;
+      final aFollowersCount = a.followers?.length ?? 0;
+      final bFollowersCount = b.followers?.length ?? 0;
+      if (aFollowersCount != bFollowersCount) {
+        return bFollowersCount.compareTo(aFollowersCount);
+      } else {
+        return bPostsCount.compareTo(aPostsCount);
+      }
+    });
   }
 }
