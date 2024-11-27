@@ -10,7 +10,7 @@ import 'package:base/domain/services/post_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -81,11 +81,11 @@ class NewPostController extends BaseController {
     }
 
     if (pageData.type == RouteNewPostType.edit) {
-      final edittedPost = await CallApiWidget.showLoading<PostEntity>(api: updatePost());
+      final edittedPost = await AppOverlay.showLoading<PostEntity>(api: updatePost());
       Get.find<HomeController>().updatePost(edittedPost);
       showSnackBar(title: 'Post updated successfully');
     } else {
-      final newPost = await CallApiWidget.showLoading<PostEntity>(api: createPost());
+      final newPost = await AppOverlay.showLoading<PostEntity>(api: createPost());
       Get.find<HomeController>().addNewPost(newPost);
       showSnackBar(title: 'Post created successfully');
     }

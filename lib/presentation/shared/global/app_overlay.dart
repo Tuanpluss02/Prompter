@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 
-class CallApiWidget {
+class AppOverlay {
   static OverlayEntry? overlayEntry;
   static createHighlightOverlay({
     required BuildContext context,

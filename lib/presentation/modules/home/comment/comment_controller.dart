@@ -11,7 +11,7 @@ import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
 import 'package:base/presentation/shared/global/app_dialog.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -107,7 +107,7 @@ class CommentController extends BaseController {
       return await _postService.updateComment(comment);
     }
 
-    final comment = await CallApiWidget.showLoading(api: process());
+    final comment = await AppOverlay.showLoading(api: process());
 
     if (commentIdEditing.isEmpty) {
       commentList.insert(0, PostComment(comment: comment, author: appProvider.user.value));
@@ -144,7 +144,7 @@ class CommentController extends BaseController {
       _postService.deleteComment(newsFeedPost.post.id!, postComment.comment.id!);
     }
 
-    await CallApiWidget.showLoading(api: process());
+    await AppOverlay.showLoading(api: process());
     update(['post_comment_${newsFeedPost.post.id}']);
     showSnackBar(title: 'Comment deleted successfully', type: SnackBarType.success);
   }
@@ -156,7 +156,7 @@ class CommentController extends BaseController {
       userCommentImage.addAll(await ImageUtils.urlToXfile(postComment.comment.images ?? []));
     }
 
-    await CallApiWidget.showLoading(api: loadData());
+    await AppOverlay.showLoading(api: loadData());
     commentIdEditing.value = postComment.comment.id ?? '';
     userCommentImage.refresh();
     commentFocusNode.requestFocus();

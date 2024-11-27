@@ -3,7 +3,7 @@ import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/routes/app_pages.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +16,8 @@ class LoginController extends BaseController {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  var obscureText = true.obs;
+
   @override
   void onReady() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -23,8 +25,6 @@ class LoginController extends BaseController {
     });
     super.onReady();
   }
-
-  var obscureText = true.obs;
 
   onSubmit() {
     if (!formKey.currentState!.validate()) {
@@ -34,7 +34,7 @@ class LoginController extends BaseController {
   }
 
   signInGoogle() async {
-    final result = await CallApiWidget.showLoading(
+    final result = await AppOverlay.showLoading(
       api: _authService.signInWithGoogle(),
     );
     if (result.error == null && result.userCredential == null) {
@@ -52,7 +52,7 @@ class LoginController extends BaseController {
   }
 
   signInWithEmailAndPassword(String email, String password) async {
-    final result = await CallApiWidget.showLoading(
+    final result = await AppOverlay.showLoading(
       api: _authService.signInWithEmailAndPassword(email, password),
     );
     if (result.error == null && result.userCredential == null) {

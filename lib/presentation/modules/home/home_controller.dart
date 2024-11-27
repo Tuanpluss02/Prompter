@@ -7,7 +7,7 @@ import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:base/presentation/modules/account/account_controller.dart';
 import 'package:base/presentation/shared/global/app_dialog.dart';
-import 'package:base/presentation/shared/utils/call_api_widget.dart';
+import 'package:base/presentation/shared/global/app_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -50,7 +50,7 @@ class HomeController extends BaseController {
       Get.find<AccountController>().userPosts.removeWhere((element) => element.post.id == postId);
     }
 
-    CallApiWidget.showLoading(api: process());
+    AppOverlay.showLoading(api: process());
     newsFeed.refresh();
     Get.find<AccountController>().userPosts.refresh();
     showSnackBar(title: 'Post deleted successfully', type: SnackBarType.success);
