@@ -36,63 +36,59 @@ class PostView extends GetView<HomeController> {
         _buildPostMedia(),
         const SizedBox(height: 10),
         _buildPostReact(),
-        Divider(),
       ],
     );
   }
 
   _buildPostAuthor() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: GestureDetector(
-        onTap: () => news.author.id != controller.appProvider.user.value.id
-            ? Get.toNamed(
-                AppRoutes.profile,
-                arguments: ProfilePageData(userId: news.author.id!),
-              )
-            : Get.find<RootController>().onNavItemTaped(4),
-        child: UserSection(
-          user: news.author,
-          timeAgo: news.post.createdAt,
-          showOptions: news.author.id == controller.appProvider.user.value.id,
-          onOptionsTap: () => showAppBottomSheet(
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Color(0xff363636),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.toNamed(
-                      AppRoutes.newPost,
-                      arguments: NewPostPageData(
-                        type: RouteNewPostType.edit,
-                        editPostPageData: EditPostPageData(postNeedEdit: news.post),
-                      ),
-                    ),
-                    child: ListTile(
-                      trailing: SvgPicture.asset(SvgPath.icEdit),
-                      title: Text(
-                        'Edit',
-                        style: AppTextStyles.s18w400,
-                      ),
+    return GestureDetector(
+      onTap: () => news.author.id != controller.appProvider.user.value.id
+          ? Get.toNamed(
+              AppRoutes.profile,
+              arguments: ProfilePageData(userId: news.author.id!),
+            )
+          : Get.find<RootController>().onNavItemTaped(4),
+      child: UserSection(
+        user: news.author,
+        timeAgo: news.post.createdAt,
+        showOptions: news.author.id == controller.appProvider.user.value.id,
+        onOptionsTap: () => showAppBottomSheet(
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              color: Color(0xff363636),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () => Get.toNamed(
+                    AppRoutes.newPost,
+                    arguments: NewPostPageData(
+                      type: RouteNewPostType.edit,
+                      editPostPageData: EditPostPageData(postNeedEdit: news.post),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => controller.deletePost(news.post.id!),
-                    child: ListTile(
-                      trailing: SvgPicture.asset(SvgPath.icTrashbin),
-                      title: Text(
-                        'Delete',
-                        style: AppTextStyles.s18w400,
-                      ),
+                  child: ListTile(
+                    trailing: SvgPicture.asset(SvgPath.icEdit),
+                    title: Text(
+                      'Edit',
+                      style: AppTextStyles.s18w400,
                     ),
                   ),
-                ],
-              ),
+                ),
+                GestureDetector(
+                  onTap: () => controller.deletePost(news.post.id!),
+                  child: ListTile(
+                    trailing: SvgPicture.asset(SvgPath.icTrashbin),
+                    title: Text(
+                      'Delete',
+                      style: AppTextStyles.s18w400,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -108,8 +104,8 @@ class PostView extends GetView<HomeController> {
       builder: (_) {
         return Visibility(
           visible: (news.post.images?.isNotEmpty ?? false),
-          child: Container(
-            padding: const EdgeInsets.only(top: 10, left: 8),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
             child: MediaView(images: news.post.images ?? []),
           ),
         );
@@ -118,55 +114,52 @@ class PostView extends GetView<HomeController> {
   }
 
   _buildPostReact() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          ScaleButton(
-            onTap: () => controller.likePost(news),
-            child: GetBuilder<HomeController>(
-              init: controller,
-              id: 'post_${news.post.id}',
-              initState: (_) {},
-              builder: (_) {
-                return Row(
-                  children: [
-                    SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
-                    const SizedBox(width: 5),
-                    Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-                  ],
-                );
-              },
-            ),
+    return Row(
+      children: [
+        ScaleButton(
+          onTap: () => controller.likePost(news),
+          child: GetBuilder<HomeController>(
+            init: controller,
+            id: 'post_${news.post.id}',
+            initState: (_) {},
+            builder: (_) {
+              return Row(
+                children: [
+                  SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
+                  const SizedBox(width: 5),
+                  Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                ],
+              );
+            },
           ),
-          SizedBox(width: 15),
-          ScaleButton(
-            onTap: () => Get.toNamed(
-              AppRoutes.comment,
-              arguments: news,
-            ),
-            child: GetBuilder<HomeController>(
-              init: controller,
-              id: 'post_${news.post.id}',
-              initState: (_) {},
-              builder: (_) {
-                return Row(
-                  children: [
-                    SvgPicture.asset(SvgPath.icComment),
-                    const SizedBox(width: 5),
-                    Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
-                  ],
-                );
-              },
-            ),
+        ),
+        SizedBox(width: 15),
+        ScaleButton(
+          onTap: () => Get.toNamed(
+            AppRoutes.comment,
+            arguments: news,
           ),
-          SizedBox(width: 15),
-          ScaleButton(
-            onTap: () {},
-            child: SvgPicture.asset(SvgPath.icShare),
+          child: GetBuilder<HomeController>(
+            init: controller,
+            id: 'post_${news.post.id}',
+            initState: (_) {},
+            builder: (_) {
+              return Row(
+                children: [
+                  SvgPicture.asset(SvgPath.icComment),
+                  const SizedBox(width: 5),
+                  Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                ],
+              );
+            },
           ),
-        ],
-      ),
+        ),
+        SizedBox(width: 15),
+        ScaleButton(
+          onTap: () {},
+          child: SvgPicture.asset(SvgPath.icShare),
+        ),
+      ],
     );
   }
 
@@ -178,12 +171,9 @@ class PostView extends GetView<HomeController> {
       builder: (_) {
         return Visibility(
           visible: (news.post.content?.isNotEmpty ?? false),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextContent(
-              content: news.post.content ?? '',
-              hasMedia: news.post.images?.isNotEmpty ?? false,
-            ),
+          child: TextContent(
+            content: news.post.content ?? '',
+            hasMedia: news.post.images?.isNotEmpty ?? false,
           ),
         );
       },

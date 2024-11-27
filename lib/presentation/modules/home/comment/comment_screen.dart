@@ -46,7 +46,11 @@ class CommentScreen extends BaseScreen<CommentController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PostView(news: controller.newsFeedPost),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: PostView(news: controller.newsFeedPost),
+              ),
+              Divider(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Text(
