@@ -25,8 +25,5 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
             child: CircularProgressIndicator(),
           );
         });
-    // return PhotoGalleryGrid(
-    //   aiImages: controller.aiImages,
-    // );
   }
 }
