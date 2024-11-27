@@ -1,4 +1,5 @@
 import 'package:base/presentation/base/base_screen.dart';
+import 'package:base/presentation/modules/photo_gallery/components/photo_gallery_grid.dart';
 import 'package:flutter/material.dart';
 
 import 'photo_gallery_controller.dart';
@@ -8,22 +9,14 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return ElevatedButton(onPressed: controller.initData2, child: Text('Click me'));
-    // return StreamBuilder(
-    //     stream: controller.aiImages.stream,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasData) {
-    //         return PhotoGalleryGrid(
-    //           aiImages: snapshot.data ?? [],
-    //         );
-    //       } else if (snapshot.hasError) {
-    //         return Center(
-    //           child: Text('Error: ${snapshot.error}'),
-    //         );
-    //       }
-    //       return const Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     });
+    return Visibility(
+      visible: controller.aiImages.isNotEmpty,
+      replacement: const Center(
+        child: Text('No images found'),
+      ),
+      child: PhotoGalleryGrid(
+        aiImages: controller.aiImages,
+      ),
+    );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:base/common/utils/app_haptics.dart';
-import 'package:base/domain/data/responses/ai_image_generated.dart';
+import 'package:base/domain/data/entities/ai_image_entity.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/app_loading_indicator.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/buttons.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/eight_way_swipe_detector.dart';
@@ -19,9 +19,9 @@ import 'package:sized_context/sized_context.dart';
 part '../widgets/_animated_cutout_overlay.dart';
 
 class PhotoGalleryGrid extends StatefulWidget {
-  const PhotoGalleryGrid({super.key, this.imageSize, required this.aiImages});
   final Size? imageSize;
-  final List<ImageList> aiImages;
+  final List<AiImageEntity> aiImages;
+  const PhotoGalleryGrid({super.key, this.imageSize, required this.aiImages});
 
   @override
   State<PhotoGalleryGrid> createState() => _PhotoGalleryGridState();
@@ -35,104 +35,11 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
   final double _scale = 1;
   bool _skipNextOffsetTween = false;
   late Duration swipeDuration = Duration(milliseconds: 600) * .4;
-  int get _imgCount => pow(_gridSize, 2).round();
-
   late final List<FocusNode> _focusNodes = List.generate(_imgCount, (index) => FocusNode());
 
   final bool useClipPathWorkAroundForWeb = kIsWeb;
 
-  @override
-  void initState() {
-    super.initState();
-    _focusNodes[_index].requestFocus();
-  }
-
-  void _setIndex(int value, {bool skipAnimation = false}) {
-    if (value < 0 || value >= _imgCount) return;
-    _skipNextOffsetTween = skipAnimation;
-    if (mounted) setState(() => _index = value);
-    _focusNodes[value].requestFocus();
-  }
-
-  /// Determine the required offset to show the current selected index.
-  /// index=0 is top-left, and the index=max is bottom-right.
-  Offset _calculateCurrentOffset(double padding, Size size) {
-    double halfCount = (_gridSize / 2).floorToDouble();
-    Size paddedImageSize = Size(size.width + padding, size.height + padding);
-    // Get the starting offset that would show the top-left image (index 0)
-    final originOffset = Offset(halfCount * paddedImageSize.width, halfCount * paddedImageSize.height);
-    // Add the offset for the row/col
-    int col = _index % _gridSize;
-    int row = (_index / _gridSize).floor();
-    final indexedOffset = Offset(-paddedImageSize.width * col, -paddedImageSize.height * row);
-    return originOffset + indexedOffset;
-  }
-
-  bool _handleKeyDown(KeyDownEvent event) {
-    final key = event.logicalKey;
-    Map<LogicalKeyboardKey, int> keyActions = {
-      LogicalKeyboardKey.arrowUp: -_gridSize,
-      LogicalKeyboardKey.arrowDown: _gridSize,
-      LogicalKeyboardKey.arrowRight: 1,
-      LogicalKeyboardKey.arrowLeft: -1,
-    };
-
-    // Apply key action, exit early if no action is defined
-    int? actionValue = keyActions[key];
-    if (actionValue == null) return false;
-    int newIndex = _index + actionValue;
-
-    // Block actions along edges of the grid
-    bool isRightSide = _index % _gridSize == _gridSize - 1;
-    bool isLeftSide = _index % _gridSize == 0;
-    bool outOfBounds = newIndex < 0 || newIndex >= _imgCount;
-    if ((isRightSide && key == LogicalKeyboardKey.arrowRight) || (isLeftSide && key == LogicalKeyboardKey.arrowLeft) || outOfBounds) {
-      return false;
-    }
-    _setIndex(newIndex);
-    return true;
-  }
-
-  /// Converts a swipe direction into a new index
-  void _handleSwipe(Offset dir) {
-    // Calculate new index, y swipes move by an entire row, x swipes move one index at a time
-    int newIndex = _index;
-    if (dir.dy != 0) newIndex += _gridSize * (dir.dy > 0 ? -1 : 1);
-    if (dir.dx != 0) newIndex += (dir.dx > 0 ? -1 : 1);
-    // After calculating new index, exit early if we don't like it...
-    if (newIndex < 0 || newIndex > _imgCount - 1) {
-      return; // keep the index in range
-    }
-    if (dir.dx < 0 && newIndex % _gridSize == 0) {
-      return; // prevent right-swipe when at right side
-    }
-    if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) {
-      return; // prevent left-swipe when at left side
-    }
-    _lastSwipeDir = dir;
-    AppHaptics.lightImpact();
-    _setIndex(newIndex);
-  }
-
-  Future<void> _handleImageTapped(int index, bool isSelected) async {
-    if (_index == index) {
-      int? newIndex = await AppLogic().showFullscreenDialogRoute(
-        context,
-        FullscreenUrlImgViewer(aiImages: widget.aiImages, index: _index),
-      );
-      if (newIndex != null) {
-        _setIndex(newIndex, skipAnimation: true);
-      }
-    } else {
-      _setIndex(index);
-    }
-  }
-
-  void _handleImageFocusChanged(int index, bool isFocused) {
-    if (isFocused) {
-      _setIndex(index);
-    }
-  }
+  int get _imgCount => pow(_gridSize, 2).round();
 
   @override
   Widget build(BuildContext context) {
@@ -195,13 +102,19 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _focusNodes[_index].requestFocus();
+  }
+
   Widget _buildImage(int index, Duration swipeDuration, Size imgSize) {
     /// Bind to collectibles.statesById because we might need to rebuild if a collectible is found.
     return FocusTraversalOrder(
       order: NumericFocusOrder(index.toDouble()),
       child: Builder(builder: (context) {
         bool isSelected = index == _index;
-        final imgUrl = widget.aiImages[index].defaultImage?.url ?? '';
+        final imgUrl = widget.aiImages[index].imageUrl ?? '';
 
         final photoWidget = TweenAnimationBuilder<double>(
           duration: Duration(milliseconds: 600),
@@ -253,5 +166,92 @@ class _PhotoGalleryGridState extends State<PhotoGalleryGrid> {
         );
       }),
     );
+  }
+
+  /// Determine the required offset to show the current selected index.
+  /// index=0 is top-left, and the index=max is bottom-right.
+  Offset _calculateCurrentOffset(double padding, Size size) {
+    double halfCount = (_gridSize / 2).floorToDouble();
+    Size paddedImageSize = Size(size.width + padding, size.height + padding);
+    // Get the starting offset that would show the top-left image (index 0)
+    final originOffset = Offset(halfCount * paddedImageSize.width, halfCount * paddedImageSize.height);
+    // Add the offset for the row/col
+    int col = _index % _gridSize;
+    int row = (_index / _gridSize).floor();
+    final indexedOffset = Offset(-paddedImageSize.width * col, -paddedImageSize.height * row);
+    return originOffset + indexedOffset;
+  }
+
+  void _handleImageFocusChanged(int index, bool isFocused) {
+    if (isFocused) {
+      _setIndex(index);
+    }
+  }
+
+  Future<void> _handleImageTapped(int index, bool isSelected) async {
+    if (_index == index) {
+      int? newIndex = await AppLogic().showFullscreenDialogRoute(
+        context,
+        FullscreenUrlImgViewer(aiImages: widget.aiImages, index: _index),
+      );
+      if (newIndex != null) {
+        _setIndex(newIndex, skipAnimation: true);
+      }
+    } else {
+      _setIndex(index);
+    }
+  }
+
+  bool _handleKeyDown(KeyDownEvent event) {
+    final key = event.logicalKey;
+    Map<LogicalKeyboardKey, int> keyActions = {
+      LogicalKeyboardKey.arrowUp: -_gridSize,
+      LogicalKeyboardKey.arrowDown: _gridSize,
+      LogicalKeyboardKey.arrowRight: 1,
+      LogicalKeyboardKey.arrowLeft: -1,
+    };
+
+    // Apply key action, exit early if no action is defined
+    int? actionValue = keyActions[key];
+    if (actionValue == null) return false;
+    int newIndex = _index + actionValue;
+
+    // Block actions along edges of the grid
+    bool isRightSide = _index % _gridSize == _gridSize - 1;
+    bool isLeftSide = _index % _gridSize == 0;
+    bool outOfBounds = newIndex < 0 || newIndex >= _imgCount;
+    if ((isRightSide && key == LogicalKeyboardKey.arrowRight) || (isLeftSide && key == LogicalKeyboardKey.arrowLeft) || outOfBounds) {
+      return false;
+    }
+    _setIndex(newIndex);
+    return true;
+  }
+
+  /// Converts a swipe direction into a new index
+  void _handleSwipe(Offset dir) {
+    // Calculate new index, y swipes move by an entire row, x swipes move one index at a time
+    int newIndex = _index;
+    if (dir.dy != 0) newIndex += _gridSize * (dir.dy > 0 ? -1 : 1);
+    if (dir.dx != 0) newIndex += (dir.dx > 0 ? -1 : 1);
+    // After calculating new index, exit early if we don't like it...
+    if (newIndex < 0 || newIndex > _imgCount - 1) {
+      return; // keep the index in range
+    }
+    if (dir.dx < 0 && newIndex % _gridSize == 0) {
+      return; // prevent right-swipe when at right side
+    }
+    if (dir.dx > 0 && newIndex % _gridSize == _gridSize - 1) {
+      return; // prevent left-swipe when at left side
+    }
+    _lastSwipeDir = dir;
+    AppHaptics.lightImpact();
+    _setIndex(newIndex);
+  }
+
+  void _setIndex(int value, {bool skipAnimation = false}) {
+    if (value < 0 || value >= _imgCount) return;
+    _skipNextOffsetTween = skipAnimation;
+    if (mounted) setState(() => _index = value);
+    _focusNodes[value].requestFocus();
   }
 }

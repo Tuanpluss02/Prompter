@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_color.dart';
 import 'package:base/common/utils/app_haptics.dart';
-import 'package:base/domain/data/responses/ai_image_generated.dart';
+import 'package:base/domain/data/entities/ai_image_entity.dart';
 import 'package:base/presentation/modules/ai_chat/ai_chat_binding.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/routes/app_pages.dart';
@@ -18,7 +18,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FullscreenUrlImgViewer extends StatefulWidget {
   static const double imageScale = 2.5;
-  final List<ImageList> aiImages;
+  final List<AiImageEntity> aiImages;
   final int index;
 
   const FullscreenUrlImgViewer({super.key, required this.aiImages, this.index = 0});
@@ -293,7 +293,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
 }
 
 class _Viewer extends StatefulWidget {
-  final ImageList ins;
+  final AiImageEntity ins;
 
   final ValueNotifier<bool> isZoomed;
   const _Viewer(this.ins, this.isZoomed);
@@ -315,10 +315,10 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
         minScale: 1,
         maxScale: 5,
         child: Hero(
-          tag: widget.ins.defaultImage?.url ?? '',
+          tag: widget.ins.imageUrl ?? '',
           child: AppImage(
             image: NetworkImage(
-              widget.ins.defaultImage?.url ?? '',
+              widget.ins.imageUrl ?? '',
             ),
             fit: BoxFit.contain,
             scale: FullscreenUrlImgViewer.imageScale,

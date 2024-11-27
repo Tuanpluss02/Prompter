@@ -2,10 +2,9 @@
   "dart.lineLength": 200,
   "dart.previewFlutterUiGuides": true,
   "editor.codeActionsOnSave": {
-    "source": "always",
-    "source.fixAll": "always",
-    "source.organizeImports": "always",
-    "source.sortImports": "always"
+    "source.fixAll": "always"
+    // "source.organizeImports": "always",
+    // "source.sortImports": "always"
   },
   "editor.formatOnSave": true,
   "editor.formatOnType": true

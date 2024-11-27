@@ -8,12 +8,13 @@ final class AiImageAPIPath {
   static const String ciciBaseUrl = 'https://www.ciciai.com';
   static const String ciciSkillPackEndpoint = '/samantha/skill/pack';
   static const String civitBaseUrl = 'https://civitai.com';
+  static String civitImageUrl(String urlId, String id) => 'https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/$urlId/$id.jpeg';
 }
 
 class AiImageRepository extends BaseRepository {
   AiImageRepository() : super(baseUrl: '');
 
-  Future<ApiResult> getCiCiAiImages() async {
+  Future<ApiResult> getCiCiAiImages() {
     Map<String, String> headers = {
       'accept': 'application/json, text/plain, */*',
       'accept-language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -61,6 +62,45 @@ class AiImageRepository extends BaseRepository {
           AiImageAPIPath.ciciBaseUrl + AiImageAPIPath.ciciSkillPackEndpoint,
           data: json.encode(data),
           queryParameters: queryParameters,
+          options: Options(
+            headers: headers,
+          ),
+        ));
+  }
+
+  Future<ApiResult> getCivitAiDetail(int id) {
+    var headers = {
+      'accept': '*/*',
+      'accept-language': 'vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7',
+      'content-type': 'application/json',
+      'cookie':
+          '__stripe_mid=a76f7de3-7479-44c7-bc71-478b2c37b9b5e3e512; __Host-next-auth.csrf-token=ea166ad23cdbaf573847a76957b542a8b2b359e9f8bd6ea7b60d033ca90bf41a%7C040a2aff17b31d4273a9fce808f70e03d6163f88d4e60c9cdff0f58c6e52d132; __Secure-next-auth.callback-url=https%3A%2F%2Fcivitai.com; ref_landing_page=%2F; __Secure-civitai-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..a0syKaquukkujGn0.gHeuj53dehN5Dxppgjn8S4n5Mw29yX30HoDcUfsupewA1VPb-udBw9Ope4bfVv0ilrbk1LJi9RC9V4RvdttkxnBOGBtI6BC_tJ4ZFYic3QRbhQdkW3ttsEjLlD7uwBxk1UD8zeY3puihE0L5II1YV7wTbm32PiuESaPNsWtq8PLYgrEQ0MXQeO_R5n2nRPaInIK6xaJLMZ2ywjpfu2SefbZ4WKgRatVw8KROPv36ELInc_417UN1feVzqjip8rW__hAUUSawx48KRslIoqX-5Axvr9QR-Urbt8o75QWxwzJVtTUVKbgnCoeLlYxAhgr9V06zpMj3Fih9Lkea5RMroM54WSAHCbSh9UKCSFrYfpPgLc5qaQ32Xn-KnSfo1g4-Fj5MClJwgPTNpIyvjE4xL7lwoHdJGeBNrAJJjJUrpsu4_BzRbLVs3YlmBQihi-mQlvYkWk1N9vrWwLcWtcGzOd-qPKdmV-RtAUMBApNgej2McGe7q40JhqNIOzNxxiw_KOY8_xFbHQfZpK5nKRlG5rXAmeoMsLpaJfP-7ILfbgKvw3XmDM7WLkl6_gRGXoHSWx4_x05Nx5g7c1LrelxLmqX8BvuOQ9aB_iDC9rrOcecZgD898ZgF1cTxdNnWU93W7h04FHbeebRDPfrYGDTtGadfoUSBHOftBoi65cBPp79-my2LJevFo0cIrhXmU2S-0SPJJ1qoTPS6fk7yjPE-lOYDpFV47K82AL36PRxkCdLXuM-xRJLikOgoHKiIZuncrVycx_tN9bBZUrOrzLgD9-UbBIq_L9cSnNE2abgzoBVKXrwwCwh_odlbNwU5EdAeAp3ua3qJYAReFi9uTzI9acF7HyyjjddjmfHoUT65S1tIxCpmEXVkWl9CwQDN9yaPCvFVq80pirK7RG8dNzQRoptuOjdV-TVvCV-Sk3J0QoWGTyQkKMoLFNF-afIVZBb1AwxPpeoQTXbvqA._bGw45yQ7etq5vIT97EOOg; __Secure-civitai-token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..46AMQRb4vKHzc5D1.31nER56ltzt5BzpX6x_jn1pMXQyQXhgrhlPeYZsiCf7Np5xFZhGXyH3lFCS2hELc3q8MLcnLnHge1DvHNpTJKShVWEa5Yaaxh9mOkTuoRzUWUdBBAqfeTiye-lTVXtgx6cznf2c2yD1FBnn7B6rnneh_XT0UnZi7phWZhXE_9UhynsjELN-1pxF9av3-WZYZ27oYZDah1i_E22TFWlyTDA6bAsqh-8mm0eeUTH3wVVlqjQlJuRjdE_draSUJhGIqlr82u6v-bKtCiHxJAsZPxpFLRxsvUD2Z_A7xSsVusGDylSbqbHLYjdbpZWxsig-xGNAwgcKuf61ig1U_F2Llnj19t7ei2oFkbhghR4R94n8VGg5jlHWCueb3aii9E6qS5vDCXAordapzaIp7WT0LBumTQqWXg8vIFasoORVQ6igJsEKJU4gq5YAdb4wq7o9dbxE78xTjdcYefSevmBFpI08pTQXjzSOh3ZSsdoJq3g4DCCZ_WW_qKmeIB-8GbOaE4KrdhyrukIrRKOmlkaUA3i3fjKRH4eLWdfbhLwhLQCaZGLVZBrTSg8i8Hk0AaQGTJ7YdEtx7ZT_n93Ay1V8rAcvtRjjDJZ1dfHhikA3P0zK_w4ospywhustUO8yw2XN1JmXjASsgxdM06vIVbT6RAX1Y543PlQwv3rKiEXgT4UHA3B2P7EeQ2vvvAKR5dgEQjOajEeVyzoekFSG6OOc5bj2KmpJdizGTlIRJ5s37fGa7JCK887v1U88uh6bF648dyw3bzaYCrspju8MMY9SXulyAP7MdA58JrJ5YneKvNkkebmZ7dVU_CP69C2mpCso0cc1t174NUBA7WWx5y19v4D4U5LBM_oTuO1mZ1PkNgi9iFoAI6pLRN6RZdmNfgOY2nuJixKIMchsUjlbND2261np7drjwgFa3yeEnPP-WDlZESpmkTDeS-2fcL6uNCO_djF--2s17RnlRkA.GlpWJgY5r0x1hCPY6pAAAA',
+      'priority': 'u=1, i',
+      'referer': 'https://civitai.com/images/41336897',
+      'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"macOS"',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      'x-client': 'web',
+      'x-client-date': '1732697475290',
+      'x-client-version': '5.0.310',
+      'x-fingerprint': '94430791b589557338ff622a98d080075e0e16e435093f68357f8d23a0cac822e51e778f4d295ed7f086586a40abbf6e'
+    };
+    Map<String, dynamic> params(int id) => {
+          "input": {
+            "json": {
+              "id": id,
+              "authed": true,
+            }
+          }
+        };
+    final encodedParams = params(id).map((key, value) => MapEntry(key, jsonEncode(value)));
+    return handleApiRequestCustomResponse(() => dioClient.get(
+          '${AiImageAPIPath.civitBaseUrl}/api/trpc/image.getGenerationData',
+          queryParameters: encodedParams,
           options: Options(
             headers: headers,
           ),
