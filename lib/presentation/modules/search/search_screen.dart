@@ -5,6 +5,7 @@ import 'package:base/presentation/modules/search/search_controller.dart' as sear
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class SearchScreen extends BaseScreen<search_controller.SearchController> {
   const SearchScreen({super.key});
@@ -30,6 +31,8 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
       child: Column(
         children: [
           AppTextField(
+            controller: controller.searchController,
+            onChanged: controller.onSearchChanged,
             prefixIcon: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(SvgPath.icSearchOutlined),
@@ -39,15 +42,19 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
           ),
           SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-                itemCount: 20,
+            child: Obx(() => ListView.builder(
+                itemCount: controller.searchResults.length,
                 itemBuilder: (context, index) {
+                  final result = controller.searchResults[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     // Search result, can be user or post
-                    child: SizedBox(),
+                    child: ListTile(
+                      title: Text(result is UserEntity ? result.displayName ?? '' : (result as PostEntity).content ?? ''),
+                      subtitle: Text(result is UserEntity ? result.username ?? '' : (result as PostEntity).authorId ?? ''),
+                    ),
                   );
-                }),
+                })),
           ),
         ],
       ),

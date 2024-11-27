@@ -136,4 +136,12 @@ class PostService extends GetxService {
       'likes': post.likes,
     });
   }
+
+  Future<List<PostEntity>> searchPosts(String query) async {
+    final querySnapshot = await _postCollection
+        .where('content', isGreaterThanOrEqualTo: query)
+        .where('content', isLessThanOrEqualTo: query + '\uf8ff')
+        .get();
+    return querySnapshot.docs.map((doc) => PostEntity.fromJson(doc.data())).toList();
+  }
 }

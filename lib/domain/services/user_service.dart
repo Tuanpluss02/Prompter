@@ -68,4 +68,12 @@ class UserService extends GetxService {
     final userRef = _userCollection.doc(user.id);
     await userRef.update(user.toJson());
   }
+
+  Future<List<UserEntity>> searchUsers(String query) async {
+    final querySnapshot = await _userCollection
+        .where('displayName', isGreaterThanOrEqualTo: query)
+        .where('displayName', isLessThanOrEqualTo: query + '\uf8ff')
+        .get();
+    return querySnapshot.docs.map((doc) => UserEntity.fromJson(doc.data())).toList();
+  }
 }
