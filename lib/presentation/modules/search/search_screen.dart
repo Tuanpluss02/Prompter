@@ -1,5 +1,6 @@
 import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_text_styles.dart';
+import 'package:base/common/utils/extension.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
@@ -75,7 +76,13 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 // Search result, can be user or post
-                child: UserSection(user: result, showOptions: false),
+                child: UserSection(
+                  user: result,
+                  additionalWidget: Text(
+                    '${result.postCount!.toShortString()} posts ${result.followers!.length.toShortString()} followers',
+                    style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                  ),
+                ),
               );
             })),
         SliverVisibility(

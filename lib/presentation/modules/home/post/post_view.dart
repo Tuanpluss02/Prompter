@@ -15,6 +15,7 @@ import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostView extends GetView<HomeController> {
   final NewsFeedPost news;
@@ -50,7 +51,10 @@ class PostView extends GetView<HomeController> {
           : Get.find<RootController>().onNavItemTaped(4),
       child: UserSection(
         user: news.author,
-        timeAgo: news.post.createdAt,
+        additionalWidget: Text(
+          timeago.format(news.post.createdAt ?? DateTime.now()),
+          style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+        ),
         showOptions: news.author.id == controller.appProvider.user.value.id,
         onOptionsTap: () => showAppBottomSheet(
           child: Container(

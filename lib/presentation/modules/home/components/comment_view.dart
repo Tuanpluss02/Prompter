@@ -10,6 +10,7 @@ import 'package:base/presentation/shared/global/app_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class CommentView extends GetView<CommentController> {
   final PostComment postComment;
@@ -27,7 +28,10 @@ class CommentView extends GetView<CommentController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: UserSection(
                 user: postComment.author,
-                timeAgo: postComment.comment.createdAt,
+                additionalWidget: Text(
+                  timeago.format(postComment.comment.createdAt ?? DateTime.now()),
+                  style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
+                ),
                 showOptions: controller.isCommentOwner(postComment),
                 onOptionsTap: () => showAppBottomSheet(
                   child: Container(
