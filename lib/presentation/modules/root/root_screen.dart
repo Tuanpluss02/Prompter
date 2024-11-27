@@ -7,12 +7,6 @@ import 'package:get/get.dart';
 
 import 'root_controller.dart';
 
-typedef NavigationBarItem = ({
-  String unSelectedSvg,
-  String selectedSvg,
-  bool isMiddleButton,
-});
-
 const List<NavigationBarItem> navigationBarItems = <NavigationBarItem>[
   (selectedSvg: SvgPath.icHomeFilled, unSelectedSvg: SvgPath.icHomeOutlined, isMiddleButton: false),
   (selectedSvg: SvgPath.icSearchFilled, unSelectedSvg: SvgPath.icSearchOutlined, isMiddleButton: false),
@@ -21,25 +15,23 @@ const List<NavigationBarItem> navigationBarItems = <NavigationBarItem>[
   (selectedSvg: SvgPath.icPersonFilled, unSelectedSvg: SvgPath.icPersonOutlined, isMiddleButton: false),
 ];
 
+typedef NavigationBarItem = ({
+  String unSelectedSvg,
+  String selectedSvg,
+  bool isMiddleButton,
+});
+
 class RootScreen extends BaseScreen<RootController> {
   const RootScreen({super.key});
+
+  @override
+  bool get resizeToAvoidBottomInset => true;
 
   @override
   Color? get screenBackgroundColor => AppColors.backgroundColor;
 
   @override
   bool get wrapWithSafeArea => true;
-
-  @override
-  bool get resizeToAvoidBottomInset => true;
-
-  @override
-  Widget buildScreen(BuildContext context) {
-    return Obx(() => IndexedStack(
-          index: controller.currentIndex.value > 2 ? controller.currentIndex.value - 1 : controller.currentIndex.value,
-          children: controller.screens,
-        ));
-  }
 
   @override
   Widget? buildBottomNavigationBar(BuildContext context) {
@@ -71,6 +63,14 @@ class RootScreen extends BaseScreen<RootController> {
         ));
   }
 
+  @override
+  Widget buildScreen(BuildContext context) {
+    return Obx(() => IndexedStack(
+          index: controller.currentIndex.value > 2 ? controller.currentIndex.value - 1 : controller.currentIndex.value,
+          children: controller.screens,
+        ));
+  }
+
   Widget _buildAddButton() {
     return Container(
       width: 50.0,
@@ -90,7 +90,8 @@ class RootScreen extends BaseScreen<RootController> {
       ),
       child: GestureDetector(
         child: SvgPicture.asset(
-          SvgPath.icAdd,
+          SvgPath.icPen,
+          colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
         ),
         onTap: () => controller.onNavItemTaped(2),
       ),
