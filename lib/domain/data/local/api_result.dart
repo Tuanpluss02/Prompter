@@ -7,8 +7,8 @@ part '../../../generated/domain/data/local/api_result.freezed.dart';
 
 @freezed
 abstract class ApiResult with _$ApiResult {
-  const factory ApiResult.success(BaseResponse data) = Success;
-  const factory ApiResult.successWWithCustomResponse(dynamic data) = SuccessResponse;
-
   const factory ApiResult.failure(NetworkExceptions error) = Failure;
+  const factory ApiResult.success(BaseResponse data) = Success;
+
+  const factory ApiResult.successCustomResponse(dynamic data) = SuccessResponse;
 }

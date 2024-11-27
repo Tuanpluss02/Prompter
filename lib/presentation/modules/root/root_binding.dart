@@ -1,4 +1,4 @@
-import 'package:base/domain/repositories/cici_repository.dart';
+import 'package:base/domain/repositories/ai_image_repository.dart';
 import 'package:base/domain/services/post_service.dart';
 import 'package:base/presentation/modules/account/account_controller.dart';
 import 'package:base/presentation/modules/home/home_controller.dart';
@@ -14,7 +14,7 @@ class RootBinding extends Bindings {
     Get.lazyPut(() => PostService());
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => SearchController());
-    Get.lazyPut(() => CiciRepository());
+    Get.lazyPut(() => AiImageRepository());
     Get.lazyPut(() => PhotoGalleryController());
     Get.lazyPut(() => AccountController());
     Get.lazyPut(() => RootController());
