@@ -9,10 +9,17 @@ import 'ai_chat_controller.dart';
 class AiChatBinding extends Bindings {
   @override
   void dependencies() {
+    var args = Get.arguments;
     Get.lazyPut(() => ChatService());
     Get.lazyPut(() => CloudinaryService());
     Get.lazyPut(() => HuggingfaceRepository());
     Get.lazyPut(() => GeminiRepository());
-    Get.lazyPut(() => AiChatController());
+    Get.lazyPut(() => AiChatController(pageData: args));
   }
+}
+
+class AiChatPageData {
+  final String? prompt;
+
+  AiChatPageData({this.prompt});
 }

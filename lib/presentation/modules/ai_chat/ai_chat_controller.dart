@@ -8,6 +8,7 @@ import 'package:base/domain/repositories/huggingface_repository.dart';
 import 'package:base/domain/services/chat_service.dart';
 import 'package:base/domain/services/cloudinary_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/modules/ai_chat/ai_chat_binding.dart';
 import 'package:base/presentation/shared/chat_view/chatview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AiChatController extends BaseController {
+  final AiChatPageData? pageData;
   final HuggingfaceRepository _huggingfaceRepository = Get.find<HuggingfaceRepository>();
   final GeminiRepository _geminiRepository = Get.find<GeminiRepository>();
   final CloudinaryService _cloudinaryService = Get.find<CloudinaryService>();
@@ -31,6 +33,9 @@ class AiChatController extends BaseController {
       scrollController: ScrollController());
   var chatViewState = ChatViewState.loading.obs;
   var selectedModel = GenerativeAiModel.gemini.obs;
+
+  final TextEditingController textMessageController = TextEditingController();
+  AiChatController({this.pageData});
 
   void addMessage(Message message) {
     chatController.addMessage(message);
@@ -109,6 +114,14 @@ class AiChatController extends BaseController {
     chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
     final messageJustReacted = message.copyWith(reaction: Reaction(reactions: [reaction], reactedUserIds: [chatController.currentUser.id]));
     _chatService.updateMessage(messageJustReacted, appProvider.user.value.id ?? 'User');
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    if (pageData != null) {
+      textMessageController.text = pageData?.prompt ?? '';
+    }
   }
 
   void onTapSend(String message, ReplyMessage replyMessage, MessageType messageType) async {

@@ -7,20 +7,27 @@ import 'package:get/get.dart';
 
 class PhotoGalleryController extends BaseController {
   final CiciRepository _ciciRepository = Get.find<CiciRepository>();
+  var aiImages = <ImageList>[].obs;
 
-  Future<List<ImageList>> initData() async {
+  void initData() async {
     final result = await _ciciRepository.getAiImages();
-    List<ImageList> aiImages = <ImageList>[];
+    // List<ImageList> aiImages = <ImageList>[];
     result.whenOrNull(
       success: (res) {
         AiImageGenerated aiImageGenerated = AiImageGenerated.fromJson(res.data);
-        aiImages = aiImageGenerated.image?.template!.imageList ?? [];
+        aiImages.value = aiImageGenerated.image?.template!.imageList ?? [];
+        aiImages.refresh();
       },
       failure: (error) {
         final String errorMessage = NetworkExceptions.getErrorMessage(error);
         showSnackBar(title: errorMessage, type: SnackBarType.error);
       },
     );
-    return aiImages;
+  }
+
+  @override
+  void onInit() {
+    initData();
+    super.onInit();
   }
 }
