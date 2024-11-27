@@ -142,11 +142,13 @@ class AiChatController extends BaseController {
       Uint8List? img = await generateImage(message);
       if (img == null) {
         showSnackBar(title: 'Generate image failed', type: SnackBarType.error);
+        chatController.setTypingIndicator = false;
         return;
       }
       final response = await _cloudinaryService.uploadImage(img);
       if (response == null) {
         showSnackBar(title: 'Upload image failed', type: SnackBarType.error);
+        chatController.setTypingIndicator = false;
         return;
       }
 

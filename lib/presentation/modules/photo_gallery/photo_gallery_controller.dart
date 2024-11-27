@@ -21,7 +21,7 @@ class PhotoGalleryController extends BaseController {
   final AiImageRepository _aiImageRepository = Get.find<AiImageRepository>();
   var aiImages = <AiImageEntity>[].obs;
 
-  void initData() async {
+  Future<void> fetchDataCici() async {
     final result = await _aiImageRepository.getCiCiAiImages();
     result.whenOrNull(
       success: (res) {
@@ -44,9 +44,9 @@ class PhotoGalleryController extends BaseController {
     );
   }
 
-  void initData2() async {
+  Future<void> fetchDataCivitAI() async {
     final ApiResult result = await _aiImageRepository.getCivitAiImages();
-    result.whenOrNull(
+    await result.whenOrNull(
       successCustomResponse: (res) async {
         final civitAiResult = CivitAiResponse.fromJson(res);
         civitAiResult.result?.data?.json?.items?.forEach((element) async {
@@ -94,10 +94,16 @@ class PhotoGalleryController extends BaseController {
     );
   }
 
+  _initData() async {
+    aiImages.clear();
+    // await fetchDataCici();
+    await fetchDataCivitAI();
+    aiImages.refresh();
+  }
+
   @override
   void onInit() {
-    // initData();
-    initData2();
     super.onInit();
+    _initData();
   }
 }

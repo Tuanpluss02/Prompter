@@ -80,7 +80,9 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                           children: [
                             _buildTools(),
                             SizedBox(height: 10),
-                            _buildDescription(),
+                            _buildPositivePrompt(),
+                            SizedBox(height: 10),
+                            _buildNegativePrompt(),
                           ],
                         ),
                       ),
@@ -185,7 +187,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     }
   }
 
-  _buildDescription() {
+  _buildPositivePrompt() {
     return Container(
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -232,6 +234,53 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     );
   }
 
+  _buildNegativePrompt() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Color(0x8024262B),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
+              SizedBox(width: 5),
+              Text('Negative Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
+                  Fluttertoast.showToast(
+                    msg: "Copied to clipboard",
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                },
+                child: Icon(
+                  Icons.copy,
+                  color: Color(0xffc1c2c5),
+                  size: 20,
+                ),
+              )
+            ],
+          ),
+          SizedBox(height: 10),
+          ValueListenableBuilder(
+              valueListenable: _currentPage,
+              builder: (context, value, child) {
+                return SelectableText(widget.aiImages[_currentPage.value].negativePrompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
+              }),
+        ],
+      ),
+    );
+  }
+
   _buildTools() {
     return Container(
       padding: const EdgeInsets.all(8),
@@ -247,7 +296,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
             children: [
               SvgPicture.asset(SvgPath.icBubble, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
               SizedBox(width: 5),
-              Text('Tools', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+              Text('Model', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
             ],
           ),
           SizedBox(height: 10),
@@ -259,7 +308,7 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
               border: Border.all(color: Color.fromARGB(20, 113, 194, 25), width: 1),
             ),
             child: Text(
-              'CiciAI'.toUpperCase(),
+              widget.aiImages[_currentPage.value].model ?? "",
               style: GoogleFonts.poppins(color: Color(0xffA5D8FF), fontWeight: FontWeight.bold, fontSize: 13),
             ),
           )
