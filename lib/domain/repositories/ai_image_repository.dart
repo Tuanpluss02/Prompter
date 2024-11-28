@@ -17,7 +17,8 @@ final class AiImageAPIPath {
 
 class AiImageRepository extends BaseRepository {
   AiImageRepository() : super(baseUrl: '');
-
+  static String? civitCursor;
+  static int seaArtPage = 1;
   Future<ApiResult> getCiCiAiImages() {
     Map<String, String> headers = {
       'accept': 'application/json, text/plain, */*',
@@ -142,7 +143,7 @@ class AiImageRepository extends BaseRepository {
           "useIndex": true,
           "browsingLevel": 1,
           "include": ["cosmetics"],
-          "cursor": null,
+          "cursor": civitCursor,
           "authed": true,
         },
         "meta": {
@@ -187,7 +188,7 @@ class AiImageRepository extends BaseRepository {
     };
     var data = json.encode({
       "tag": "landscape",
-      "page": 1,
+      "page": seaArtPage,
       "page_size": 50,
       "order_by": "hot",
       "content_type": [1],

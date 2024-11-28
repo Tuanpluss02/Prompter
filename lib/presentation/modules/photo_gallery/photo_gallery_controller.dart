@@ -20,7 +20,43 @@ class CivitDetail {
 
 class PhotoGalleryController extends BaseController {
   final AiImageRepository _aiImageRepository = Get.find<AiImageRepository>();
-  var aiImages = <AiImageEntity>[].obs;
+  final RxList<AiImageEntity> _allAiImages = <AiImageEntity>[].obs;
+  final RxList<AiImageEntity> aiImages = <AiImageEntity>[].obs;
+  int _currentPage = 0;
+  final int _pageSize = 25;
+
+  void _loadPage() {
+    final startIndex = _currentPage * _pageSize;
+    final endIndex = startIndex + _pageSize;
+    aiImages.value = _allAiImages.sublist(startIndex, endIndex.clamp(0, _allAiImages.length));
+    aiImages.refresh();
+  }
+
+  Future<void> _fetchAllData({bool isFirstTime = false}) async {
+    _allAiImages.clear();
+    await fetchSeaArtImages();
+    if (isFirstTime) await fetchDataCici();
+    await fetchDataCivitAI();
+    _currentPage = 0;
+    _loadPage();
+  }
+
+  void refreshData() async {
+    isLoading.value = true;
+    if (_currentPage * _pageSize + _pageSize < _allAiImages.length) {
+      _loadPage();
+      _currentPage++;
+    } else {
+      await _fetchAllData();
+    }
+    isLoading.value = false;
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    _fetchAllData(isFirstTime: true);
+  }
 
   Future<void> fetchDataCici() async {
     final result = await _aiImageRepository.getCiCiAiImages();
@@ -28,7 +64,7 @@ class PhotoGalleryController extends BaseController {
       success: (res) {
         CiciResponse aiImageGenerated = CiciResponse.fromJson(res.data);
         aiImageGenerated.image?.template?.imageList?.forEach((element) {
-          aiImages.add(
+          _allAiImages.add(
             AiImageEntity(
               id: element.id.toString(),
               imageUrl: element.defaultImage?.url.toString(),
@@ -55,7 +91,7 @@ class PhotoGalleryController extends BaseController {
           if (detail == null) {
             return;
           }
-          aiImages.add(
+          _allAiImages.add(
             AiImageEntity(
               id: element.id.toString(),
               imageUrl: AiImageAPIPath.civitImageUrl(element.url.toString(), element.id.toString()),
@@ -65,6 +101,7 @@ class PhotoGalleryController extends BaseController {
             ),
           );
         });
+        AiImageRepository.civitCursor = civitAiResult.result?.data?.json?.nextCursor;
       },
       failure: (error) {
         final String errorMessage = NetworkExceptions.getErrorMessage(error);
@@ -101,7 +138,7 @@ class PhotoGalleryController extends BaseController {
       successCustomResponse: (res) {
         final seaArtResponse = SeaArtResponse.fromJson(res);
         seaArtResponse.data?.items?.forEach((element) {
-          aiImages.add(
+          _allAiImages.add(
             AiImageEntity(
               id: element.id.toString(),
               imageUrl: element.cover.toString(),
@@ -110,27 +147,12 @@ class PhotoGalleryController extends BaseController {
             ),
           );
         });
+        AiImageRepository.seaArtPage++;
       },
       failure: (error) {
         final String errorMessage = NetworkExceptions.getErrorMessage(error);
         showSnackBar(title: errorMessage, type: SnackBarType.error);
       },
     );
-  }
-
-  _initData() async {
-    aiImages.clear();
-    await fetchSeaArtImages();
-    if (aiImages.length < 25) {
-      await fetchDataCici();
-      await fetchDataCivitAI();
-    }
-    aiImages.refresh();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-    _initData();
   }
 }

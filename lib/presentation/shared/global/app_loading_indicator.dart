@@ -9,7 +9,6 @@ class AppLoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = (value == null || value! < .05) ? null : value;
-
     return SizedBox(
       width: 40,
       height: 40,

@@ -190,95 +190,101 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
   }
 
   _buildPositivePrompt() {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: Color(0x8024262B),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
-              SizedBox(width: 5),
-              Text('Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
-                  Fluttertoast.showToast(
-                    msg: "Copied to clipboard",
-                    toastLength: Toast.LENGTH_SHORT,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                },
-                child: Icon(
-                  Icons.copy,
-                  color: Color(0xffc1c2c5),
-                  size: 20,
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          ValueListenableBuilder(
-              valueListenable: _currentPage,
-              builder: (context, value, child) {
-                return SelectableText(widget.aiImages[_currentPage.value].prompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
-              }),
-        ],
+    return Visibility(
+      visible: widget.aiImages[_currentPage.value].prompt != null && widget.aiImages[_currentPage.value].prompt!.isNotEmpty,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Color(0x8024262B),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
+                SizedBox(width: 5),
+                Text('Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
+                    Fluttertoast.showToast(
+                      msg: "Copied to clipboard",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
+                  child: Icon(
+                    Icons.copy,
+                    color: Color(0xffc1c2c5),
+                    size: 20,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            ValueListenableBuilder(
+                valueListenable: _currentPage,
+                builder: (context, value, child) {
+                  return SelectableText(widget.aiImages[_currentPage.value].prompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
+                }),
+          ],
+        ),
       ),
     );
   }
 
   _buildNegativePrompt() {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: Color(0x8024262B),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
-              SizedBox(width: 5),
-              Text('Negative Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
-                  Fluttertoast.showToast(
-                    msg: "Copied to clipboard",
-                    toastLength: Toast.LENGTH_SHORT,
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                },
-                child: Icon(
-                  Icons.copy,
-                  color: Color(0xffc1c2c5),
-                  size: 20,
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          ValueListenableBuilder(
-              valueListenable: _currentPage,
-              builder: (context, value, child) {
-                return SelectableText(widget.aiImages[_currentPage.value].negativePrompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
-              }),
-        ],
+    return Visibility(
+      visible: widget.aiImages[_currentPage.value].negativePrompt != null && widget.aiImages[_currentPage.value].negativePrompt!.isNotEmpty,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: Color(0x8024262B),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SvgPicture.asset(SvgPath.icinputing, colorFilter: const ColorFilter.mode(Color(0xffc1c2c5), BlendMode.srcIn)),
+                SizedBox(width: 5),
+                Text('Negative Prompt', style: GoogleFonts.manrope(color: Color(0xffc1c2c5), fontSize: 20)),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: widget.aiImages[_currentPage.value].prompt ?? ''));
+                    Fluttertoast.showToast(
+                      msg: "Copied to clipboard",
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  },
+                  child: Icon(
+                    Icons.copy,
+                    color: Color(0xffc1c2c5),
+                    size: 20,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            ValueListenableBuilder(
+                valueListenable: _currentPage,
+                builder: (context, value, child) {
+                  return SelectableText(widget.aiImages[_currentPage.value].negativePrompt ?? "", style: GoogleFonts.manrope(color: Colors.white, fontSize: 16));
+                }),
+          ],
+        ),
       ),
     );
   }

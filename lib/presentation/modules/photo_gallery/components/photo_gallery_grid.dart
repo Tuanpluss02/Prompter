@@ -3,12 +3,12 @@ import 'dart:math';
 
 import 'package:base/common/utils/app_haptics.dart';
 import 'package:base/domain/data/entities/ai_image_entity.dart';
-import 'package:base/presentation/modules/photo_gallery/widgets/app_loading_indicator.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/buttons.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/eight_way_swipe_detector.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_url_img_viewer.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/unsplash_photo.dart';
+import 'package:base/presentation/shared/global/app_loading_indicator.dart';
 import 'package:base/presentation/shared/global/app_logic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
