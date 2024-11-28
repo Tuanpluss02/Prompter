@@ -5,6 +5,7 @@ import 'package:base/domain/data/local/network_exceptions.dart';
 import 'package:base/domain/data/responses/cici_response.dart';
 import 'package:base/domain/data/responses/civit_detail_response.dart';
 import 'package:base/domain/data/responses/civit_response.dart';
+import 'package:base/domain/data/responses/seaart_response.dart';
 import 'package:base/domain/repositories/ai_image_repository.dart';
 import 'package:base/presentation/base/base_controller.dart';
 import 'package:get/get.dart';
@@ -94,10 +95,34 @@ class PhotoGalleryController extends BaseController {
     );
   }
 
+  Future<void> fetchSeaArtImages() async {
+    final ApiResult apiResult = await _aiImageRepository.getSeaArtImages();
+    apiResult.whenOrNull(
+      successCustomResponse: (res) {
+        final seaArtResponse = SeaArtResponse.fromJson(res);
+        seaArtResponse.data?.items?.forEach((element) {
+          aiImages.add(
+            AiImageEntity(
+              id: element.id.toString(),
+              imageUrl: element.cover.toString(),
+              prompt: element.prompt,
+              model: 'SeaArt',
+            ),
+          );
+        });
+      },
+      failure: (error) {
+        final String errorMessage = NetworkExceptions.getErrorMessage(error);
+        showSnackBar(title: errorMessage, type: SnackBarType.error);
+      },
+    );
+  }
+
   _initData() async {
     aiImages.clear();
-    await fetchDataCici();
+    await fetchSeaArtImages();
     if (aiImages.length < 25) {
+      await fetchDataCici();
       await fetchDataCivitAI();
     }
     aiImages.refresh();

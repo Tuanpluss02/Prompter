@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AnimatedCustomRotation extends StatefulWidget {
-  const AnimatedCustomRotation({
+class CustomAnimatedRotation extends StatefulWidget {
+  const CustomAnimatedRotation({
     super.key,
     required this.child,
     this.isRotating = true,
@@ -15,10 +15,10 @@ class AnimatedCustomRotation extends StatefulWidget {
   final Duration duration;
 
   @override
-  State<AnimatedCustomRotation> createState() => _AnimatedCustomRotationState();
+  State<CustomAnimatedRotation> createState() => _CustomAnimatedRotationState();
 }
 
-class _AnimatedCustomRotationState extends State<AnimatedCustomRotation> with SingleTickerProviderStateMixin {
+class _CustomAnimatedRotationState extends State<CustomAnimatedRotation> with SingleTickerProviderStateMixin {
   late AnimationController refreshAnimation;
   late Animation<double> curvedAnimation;
 
@@ -41,7 +41,7 @@ class _AnimatedCustomRotationState extends State<AnimatedCustomRotation> with Si
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedCustomRotation oldWidget) {
+  void didUpdateWidget(covariant CustomAnimatedRotation oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.curve != oldWidget.curve) {

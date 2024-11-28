@@ -8,7 +8,11 @@ final class AiImageAPIPath {
   static const String ciciBaseUrl = 'https://www.ciciai.com';
   static const String ciciSkillPackEndpoint = '/samantha/skill/pack';
   static const String civitBaseUrl = 'https://civitai.com';
+  static const String civitGetImageEndpoint = '/api/trpc/image.getInfinite';
+  static const String civitGetDetailEndpoint = '/api/trpc/image.getGenerationData';
   static String civitImageUrl(String urlId, String id) => 'https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/$urlId/$id.jpeg';
+  static const String seaArtBaseUrl = 'https://www.seaart.ai';
+  static const String seaArtExploreEndpoint = '/api/v1/square/tag/explore';
 }
 
 class AiImageRepository extends BaseRepository {
@@ -99,7 +103,7 @@ class AiImageRepository extends BaseRepository {
         };
     final encodedParams = params(id).map((key, value) => MapEntry(key, jsonEncode(value)));
     return handleApiRequestCustomResponse(() => dioClient.get(
-          '${AiImageAPIPath.civitBaseUrl}/api/trpc/image.getGenerationData',
+          AiImageAPIPath.civitBaseUrl + AiImageAPIPath.civitGetDetailEndpoint,
           queryParameters: encodedParams,
           options: Options(
             headers: headers,
@@ -150,8 +154,53 @@ class AiImageRepository extends BaseRepository {
     };
     final encodedParams = params.map((key, value) => MapEntry(key, jsonEncode(value)));
     return handleApiRequestCustomResponse(() => dioClient.get(
-          '${AiImageAPIPath.civitBaseUrl}/api/trpc/image.getInfinite',
+          AiImageAPIPath.civitBaseUrl + AiImageAPIPath.civitGetImageEndpoint,
           queryParameters: encodedParams,
+          options: Options(
+            headers: headers,
+          ),
+        ));
+  }
+
+  Future<ApiResult> getSeaArtImages() {
+    var headers = {
+      'accept': 'application/json, text/plain, */*',
+      'accept-language': 'en',
+      'content-type': 'application/json',
+      'cookie': 'deviceId=00da29c4-aad9-4b2c-b802-9e8d201faf10; enable_tavern_visitor=2; browserId=5c4a033b9c0ae3061e925693d3c193d9; enable_tavern_user=; pageId=e3670511-0dfe-44bc-bd8e-2eab39d18719',
+      'origin': 'https://www.seaart.ai',
+      'priority': 'u=1, i',
+      'referer': 'https://www.seaart.ai/tagInfo/landscape',
+      'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"macOS"',
+      'sec-fetch-dest': 'empty',
+      'sec-fetch-mode': 'cors',
+      'sec-fetch-site': 'same-origin',
+      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      'x-app-id': 'web_global_seaart',
+      'x-browser-id': '5c4a033b9c0ae3061e925693d3c193d9',
+      'x-device-id': '00da29c4-aad9-4b2c-b802-9e8d201faf10',
+      'x-page-id': 'e3670511-0dfe-44bc-bd8e-2eab39d18719',
+      'x-platform': 'web',
+      'x-request-id': '83f287dc-4e8b-4093-a421-9992cefa5f77'
+    };
+    var data = json.encode({
+      "tag": "landscape",
+      "page": 1,
+      "page_size": 50,
+      "order_by": "hot",
+      "content_type": [1],
+      "window_code": "square:tag:detail:explore",
+      "time_from": 1732173891517,
+      "time_to": 1732778691517,
+      "is_dft": 1,
+      "offset": 1732778691111,
+      "nodes_type": []
+    });
+    return handleApiRequestCustomResponse(() => dioClient.post(
+          '${AiImageAPIPath.seaArtBaseUrl}${AiImageAPIPath.seaArtExploreEndpoint}',
+          data: data,
           options: Options(
             headers: headers,
           ),

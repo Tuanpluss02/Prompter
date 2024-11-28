@@ -29,7 +29,7 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
-        child: Obx(() => AnimatedCustomRotation(
+        child: Obx(() => CustomAnimatedRotation(
               curve: Curves.fastEaseInToSlowEaseOut,
               duration: Duration(milliseconds: 700),
               isRotating: controller.isLoading.value,
