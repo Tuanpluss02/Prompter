@@ -1,6 +1,7 @@
 import 'package:base/common/constants/app_color.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/photo_gallery/components/photo_gallery_grid.dart';
+import 'package:base/presentation/shared/animated/animated_rotation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,18 +13,10 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
   @override
   FloatingActionButtonLocation? get floatingActionButtonLocation => FloatingActionButtonLocation.endDocked;
 
-  // @override
-  // Widget? buildFloatingActionButton() {
-  //   return Container(
-  //     margin: const EdgeInsets.only(bottom: 20),
-  //     padding: const EdgeInsets.all(10),
-  //     decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
-  //     child: const Icon(Icons.refresh, color: Colors.white),
-  //   );
-  // }
-  // @override
-  void onFloatingActionButtonPressed() {
-    // controller.refreshImages();
+  void onFloatingActionButtonPressed() async {
+    controller.isLoading.value = true;
+    await Future.delayed(const Duration(seconds: 2));
+    controller.isLoading.value = false;
   }
 
   @override
@@ -32,14 +25,16 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
       onTap: () {
         onFloatingActionButtonPressed();
       },
-      child: RotationTransition(
-        turns: const AlwaysStoppedAnimation(1),
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 20),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
-          child: const Icon(Icons.refresh, color: Colors.white),
-        ),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
+        child: Obx(() => AnimatedCustomRotation(
+              curve: Curves.fastEaseInToSlowEaseOut,
+              duration: Duration(milliseconds: 700),
+              isRotating: controller.isLoading.value,
+              child: const Icon(Icons.refresh, color: Colors.white),
+            )),
       ),
     );
   }
