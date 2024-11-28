@@ -18,93 +18,41 @@ Map<String, dynamic> _$CivitAiResponseToJson(CivitAiResponse instance) =>
       'result': instance.result,
     };
 
-CosmeticCosmetic _$CosmeticCosmeticFromJson(Map<String, dynamic> json) =>
-    CosmeticCosmetic(
-      id: (json['id'] as num?)?.toInt(),
+Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       data: json['data'] == null
           ? null
-          : FluffyData.fromJson(json['data'] as Map<String, dynamic>),
-      type: $enumDecodeNullable(_$CosmeticTypeEnumMap, json['type']),
-      source: $enumDecodeNullable(_$SourceEnumMap, json['source']),
-      name: json['name'] as String?,
+          : ResultData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CosmeticCosmeticToJson(CosmeticCosmetic instance) =>
-    <String, dynamic>{
-      'id': instance.id,
+Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'data': instance.data,
-      'type': _$CosmeticTypeEnumMap[instance.type],
-      'source': _$SourceEnumMap[instance.source],
-      'name': instance.name,
     };
 
-const _$CosmeticTypeEnumMap = {
-  CosmeticType.BADGE: 'Badge',
-  CosmeticType.NAME_PLATE: 'NamePlate',
-  CosmeticType.PROFILE_BACKGROUND: 'ProfileBackground',
-  CosmeticType.PROFILE_DECORATION: 'ProfileDecoration',
-};
-
-const _$SourceEnumMap = {
-  Source.CLAIM: 'Claim',
-  Source.EVENT: 'Event',
-  Source.MEMBERSHIP: 'Membership',
-  Source.PURCHASE: 'Purchase',
-  Source.TROPHY: 'Trophy',
-};
-
-CosmeticElement _$CosmeticElementFromJson(Map<String, dynamic> json) =>
-    CosmeticElement(
-      data: json['data'],
-      cosmetic: json['cosmetic'] == null
+ResultData _$ResultDataFromJson(Map<String, dynamic> json) => ResultData(
+      json: json['json'] == null
           ? null
-          : CosmeticCosmetic.fromJson(json['cosmetic'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$CosmeticElementToJson(CosmeticElement instance) =>
-    <String, dynamic>{
-      'data': instance.data,
-      'cosmetic': instance.cosmetic,
-    };
-
-FluffyData _$FluffyDataFromJson(Map<String, dynamic> json) => FluffyData(
-      url: json['url'] as String?,
-      type: json['type'] as String?,
-      offset: $enumDecodeNullable(_$OffsetEnumMap, json['offset']),
-      animated: json['animated'] as bool?,
-      variant: json['variant'] as String?,
-      gradient: json['gradient'] == null
+          : Json.fromJson(json['json'] as Map<String, dynamic>),
+      meta: json['meta'] == null
           ? null
-          : Gradient.fromJson(json['gradient'] as Map<String, dynamic>),
+          : Meta.fromJson(json['meta'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$FluffyDataToJson(FluffyData instance) =>
+Map<String, dynamic> _$ResultDataToJson(ResultData instance) =>
     <String, dynamic>{
-      'url': instance.url,
-      'type': instance.type,
-      'offset': _$OffsetEnumMap[instance.offset],
-      'animated': instance.animated,
-      'variant': instance.variant,
-      'gradient': instance.gradient,
+      'json': instance.json,
+      'meta': instance.meta,
     };
 
-const _$OffsetEnumMap = {
-  Offset.THE_20: '20%',
-  Offset.THE_25: '25%',
-  Offset.THE_27: '27%',
-  Offset.THE_30: '30%',
-};
-
-Gradient _$GradientFromJson(Map<String, dynamic> json) => Gradient(
-      to: json['to'] as String?,
-      deg: (json['deg'] as num?)?.toInt(),
-      from: json['from'] as String?,
+Json _$JsonFromJson(Map<String, dynamic> json) => Json(
+      nextCursor: json['nextCursor'] as String?,
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$GradientToJson(Gradient instance) => <String, dynamic>{
-      'to': instance.to,
-      'deg': instance.deg,
-      'from': instance.from,
+Map<String, dynamic> _$JsonToJson(Json instance) => <String, dynamic>{
+      'nextCursor': instance.nextCursor,
+      'items': instance.items,
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
@@ -121,7 +69,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       sortAt: json['sortAt'] == null
           ? null
           : DateTime.parse(json['sortAt'] as String),
-      type: $enumDecodeNullable(_$ItemTypeEnumMap, json['type']),
+      type: json['type'] as String?,
       userId: (json['userId'] as num?)?.toInt(),
       needsReview: json['needsReview'],
       hasMeta: json['hasMeta'] as bool?,
@@ -131,7 +79,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       commentCount: (json['commentCount'] as num?)?.toInt(),
       collectedCount: (json['collectedCount'] as num?)?.toInt(),
       combinedNsfwLevel: (json['combinedNsfwLevel'] as num?)?.toInt(),
-      baseModel: $enumDecodeNullable(_$BaseModelEnumMap, json['baseModel']),
+      baseModel: json['baseModel'] as String?,
       modelVersionIds: (json['modelVersionIds'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
@@ -166,13 +114,12 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       cosmetic: json['cosmetic'] == null
           ? null
           : ItemCosmetic.fromJson(json['cosmetic'] as Map<String, dynamic>),
-      availability:
-          $enumDecodeNullable(_$AvailabilityEnumMap, json['availability']),
+      availability: json['availability'] as String?,
       tags: json['tags'] as List<dynamic>?,
       name: json['name'],
       scannedAt: json['scannedAt'],
       mimeType: json['mimeType'],
-      ingestion: $enumDecodeNullable(_$IngestionEnumMap, json['ingestion']),
+      ingestion: json['ingestion'] as String?,
       postTitle: json['postTitle'],
       meta: json['meta'],
     );
@@ -189,7 +136,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'hash': instance.hash,
       'hideMeta': instance.hideMeta,
       'sortAt': instance.sortAt?.toIso8601String(),
-      'type': _$ItemTypeEnumMap[instance.type],
+      'type': instance.type,
       'userId': instance.userId,
       'needsReview': instance.needsReview,
       'hasMeta': instance.hasMeta,
@@ -199,7 +146,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'commentCount': instance.commentCount,
       'collectedCount': instance.collectedCount,
       'combinedNsfwLevel': instance.combinedNsfwLevel,
-      'baseModel': _$BaseModelEnumMap[instance.baseModel],
+      'baseModel': instance.baseModel,
       'modelVersionIds': instance.modelVersionIds,
       'toolIds': instance.toolIds,
       'techniqueIds': instance.techniqueIds,
@@ -214,34 +161,15 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'user': instance.user,
       'reactions': instance.reactions,
       'cosmetic': instance.cosmetic,
-      'availability': _$AvailabilityEnumMap[instance.availability],
+      'availability': instance.availability,
       'tags': instance.tags,
       'name': instance.name,
       'scannedAt': instance.scannedAt,
       'mimeType': instance.mimeType,
-      'ingestion': _$IngestionEnumMap[instance.ingestion],
+      'ingestion': instance.ingestion,
       'postTitle': instance.postTitle,
       'meta': instance.meta,
     };
-
-const _$ItemTypeEnumMap = {
-  ItemType.IMAGE: 'image',
-};
-
-const _$BaseModelEnumMap = {
-  BaseModel.EMPTY: '',
-  BaseModel.FLUX_1_D: 'Flux.1 D',
-  BaseModel.ILLUSTRIOUS: 'Illustrious',
-  BaseModel.SD_35_LARGE: 'SD 3.5 Large',
-};
-
-const _$AvailabilityEnumMap = {
-  Availability.PUBLIC: 'Public',
-};
-
-const _$IngestionEnumMap = {
-  Ingestion.SCANNED: 'Scanned',
-};
 
 ItemCosmetic _$ItemCosmeticFromJson(Map<String, dynamic> json) => ItemCosmetic(
       id: (json['id'] as num?)?.toInt(),
@@ -264,45 +192,6 @@ Map<String, dynamic> _$ItemCosmeticToJson(ItemCosmetic instance) =>
       'cachedAt': instance.cachedAt?.toIso8601String(),
     };
 
-Json _$JsonFromJson(Map<String, dynamic> json) => Json(
-      nextCursor: json['nextCursor'] as String?,
-      items: (json['items'] as List<dynamic>?)
-          ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$JsonToJson(Json instance) => <String, dynamic>{
-      'nextCursor': instance.nextCursor,
-      'items': instance.items,
-    };
-
-Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
-      values: (json['values'] as Map<String, dynamic>?)?.map(
-        (k, e) =>
-            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
-      ),
-      referentialEqualities:
-          (json['referentialEqualities'] as Map<String, dynamic>?)?.map(
-        (k, e) =>
-            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
-      ),
-    );
-
-Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
-      'values': instance.values,
-      'referentialEqualities': instance.referentialEqualities,
-    };
-
-Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
-      width: (json['width'] as num?)?.toInt(),
-      height: (json['height'] as num?)?.toInt(),
-    );
-
-Map<String, dynamic> _$MetadataToJson(Metadata instance) => <String, dynamic>{
-      'width': instance.width,
-      'height': instance.height,
-    };
-
 PurpleData _$PurpleDataFromJson(Map<String, dynamic> json) => PurpleData(
       glow: json['glow'] as bool?,
       cssFrame: json['cssFrame'] as String?,
@@ -314,29 +203,14 @@ Map<String, dynamic> _$PurpleDataToJson(PurpleData instance) =>
       'cssFrame': instance.cssFrame,
     };
 
-Result _$ResultFromJson(Map<String, dynamic> json) => Result(
-      data: json['data'] == null
-          ? null
-          : ResultData.fromJson(json['data'] as Map<String, dynamic>),
+Metadata _$MetadataFromJson(Map<String, dynamic> json) => Metadata(
+      width: (json['width'] as num?)?.toInt(),
+      height: (json['height'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
-      'data': instance.data,
-    };
-
-ResultData _$ResultDataFromJson(Map<String, dynamic> json) => ResultData(
-      json: json['json'] == null
-          ? null
-          : Json.fromJson(json['json'] as Map<String, dynamic>),
-      meta: json['meta'] == null
-          ? null
-          : Meta.fromJson(json['meta'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$ResultDataToJson(ResultData instance) =>
-    <String, dynamic>{
-      'json': instance.json,
-      'meta': instance.meta,
+Map<String, dynamic> _$MetadataToJson(Metadata instance) => <String, dynamic>{
+      'width': instance.width,
+      'height': instance.height,
     };
 
 Stats _$StatsFromJson(Map<String, dynamic> json) => Stats(
@@ -382,4 +256,88 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'deletedAt': instance.deletedAt,
       'cosmetics': instance.cosmetics,
       'profilePicture': instance.profilePicture,
+    };
+
+CosmeticElement _$CosmeticElementFromJson(Map<String, dynamic> json) =>
+    CosmeticElement(
+      data: json['data'],
+      cosmetic: json['cosmetic'] == null
+          ? null
+          : CosmeticCosmetic.fromJson(json['cosmetic'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CosmeticElementToJson(CosmeticElement instance) =>
+    <String, dynamic>{
+      'data': instance.data,
+      'cosmetic': instance.cosmetic,
+    };
+
+CosmeticCosmetic _$CosmeticCosmeticFromJson(Map<String, dynamic> json) =>
+    CosmeticCosmetic(
+      id: (json['id'] as num?)?.toInt(),
+      data: json['data'] == null
+          ? null
+          : FluffyData.fromJson(json['data'] as Map<String, dynamic>),
+      type: json['type'] as String?,
+      source: json['source'] as String?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$CosmeticCosmeticToJson(CosmeticCosmetic instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'data': instance.data,
+      'type': instance.type,
+      'source': instance.source,
+      'name': instance.name,
+    };
+
+FluffyData _$FluffyDataFromJson(Map<String, dynamic> json) => FluffyData(
+      url: json['url'] as String?,
+      type: json['type'] as String?,
+      offset: json['offset'] as String?,
+      animated: json['animated'] as bool?,
+      variant: json['variant'] as String?,
+      gradient: json['gradient'] == null
+          ? null
+          : Gradient.fromJson(json['gradient'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$FluffyDataToJson(FluffyData instance) =>
+    <String, dynamic>{
+      'url': instance.url,
+      'type': instance.type,
+      'offset': instance.offset,
+      'animated': instance.animated,
+      'variant': instance.variant,
+      'gradient': instance.gradient,
+    };
+
+Gradient _$GradientFromJson(Map<String, dynamic> json) => Gradient(
+      to: json['to'] as String?,
+      deg: (json['deg'] as num?)?.toInt(),
+      from: json['from'] as String?,
+    );
+
+Map<String, dynamic> _$GradientToJson(Gradient instance) => <String, dynamic>{
+      'to': instance.to,
+      'deg': instance.deg,
+      'from': instance.from,
+    };
+
+Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
+      values: (json['values'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+      referentialEqualities:
+          (json['referentialEqualities'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
+    );
+
+Map<String, dynamic> _$MetaToJson(Meta instance) => <String, dynamic>{
+      'values': instance.values,
+      'referentialEqualities': instance.referentialEqualities,
     };

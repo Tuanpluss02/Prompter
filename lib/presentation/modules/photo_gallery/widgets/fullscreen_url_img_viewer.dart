@@ -58,8 +58,10 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && context.mounted) {
-          _handleBackPressed();
+        if (!didPop) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _handleBackPressed();
+          });
         }
       },
       child: FullscreenKeyboardListener(

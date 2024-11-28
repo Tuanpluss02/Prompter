@@ -96,14 +96,16 @@ class PhotoGalleryController extends BaseController {
 
   _initData() async {
     aiImages.clear();
-    // await fetchDataCici();
-    await fetchDataCivitAI();
+    await fetchDataCici();
+    if (aiImages.length < 25) {
+      await fetchDataCivitAI();
+    }
     aiImages.refresh();
   }
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     _initData();
   }
 }

@@ -1,45 +1,6 @@
-// ignore_for_file: constant_identifier_names
-
-import 'dart:convert';
-
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '../../../generated/domain/data/responses/civit_response.g.dart';
-
-final availabilityValues = EnumValues({"Public": Availability.PUBLIC});
-
-final baseModelValues = EnumValues({"": BaseModel.EMPTY, "Flux.1 D": BaseModel.FLUX_1_D, "Illustrious": BaseModel.ILLUSTRIOUS, "SD 3.5 Large": BaseModel.SD_35_LARGE});
-
-final cosmeticTypeValues =
-    EnumValues({"Badge": CosmeticType.BADGE, "NamePlate": CosmeticType.NAME_PLATE, "ProfileBackground": CosmeticType.PROFILE_BACKGROUND, "ProfileDecoration": CosmeticType.PROFILE_DECORATION});
-
-final ingestionValues = EnumValues({"Scanned": Ingestion.SCANNED});
-
-final itemTypeValues = EnumValues({"image": ItemType.IMAGE});
-
-final offsetValues = EnumValues({"20%": Offset.THE_20, "25%": Offset.THE_25, "27%": Offset.THE_27, "30%": Offset.THE_30});
-
-final sourceValues = EnumValues({"Claim": Source.CLAIM, "Event": Source.EVENT, "Membership": Source.MEMBERSHIP, "Purchase": Source.PURCHASE, "Trophy": Source.TROPHY});
-
-CivitAiResponse civitAiResultFromJson(String str) => CivitAiResponse.fromJson(json.decode(str));
-
-String civitAiResultToJson(CivitAiResponse data) => json.encode(data.toJson());
-
-enum Availability {
-  @JsonValue("Public")
-  PUBLIC
-}
-
-enum BaseModel {
-  @JsonValue("")
-  EMPTY,
-  @JsonValue("Flux.1 D")
-  FLUX_1_D,
-  @JsonValue("Illustrious")
-  ILLUSTRIOUS,
-  @JsonValue("SD 3.5 Large")
-  SD_35_LARGE
-}
 
 @JsonSerializable()
 class CivitAiResponse {
@@ -56,123 +17,51 @@ class CivitAiResponse {
 }
 
 @JsonSerializable()
-class CosmeticCosmetic {
-  @JsonKey(name: "id")
-  final int? id;
+class Result {
   @JsonKey(name: "data")
-  final FluffyData? data;
-  @JsonKey(name: "type")
-  final CosmeticType? type;
-  @JsonKey(name: "source")
-  final Source? source;
-  @JsonKey(name: "name")
-  final String? name;
+  final ResultData? data;
 
-  CosmeticCosmetic({
-    this.id,
+  Result({
     this.data,
-    this.type,
-    this.source,
-    this.name,
   });
 
-  factory CosmeticCosmetic.fromJson(Map<String, dynamic> json) => _$CosmeticCosmeticFromJson(json);
+  factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CosmeticCosmeticToJson(this);
+  Map<String, dynamic> toJson() => _$ResultToJson(this);
 }
 
 @JsonSerializable()
-class CosmeticElement {
-  @JsonKey(name: "data")
-  final dynamic data;
-  @JsonKey(name: "cosmetic")
-  final CosmeticCosmetic? cosmetic;
+class ResultData {
+  @JsonKey(name: "json")
+  final Json? json;
+  @JsonKey(name: "meta")
+  final Meta? meta;
 
-  CosmeticElement({
-    this.data,
-    this.cosmetic,
+  ResultData({
+    this.json,
+    this.meta,
   });
 
-  factory CosmeticElement.fromJson(Map<String, dynamic> json) => _$CosmeticElementFromJson(json);
+  factory ResultData.fromJson(Map<String, dynamic> json) => _$ResultDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CosmeticElementToJson(this);
-}
-
-enum CosmeticType {
-  @JsonValue("Badge")
-  BADGE,
-  @JsonValue("NamePlate")
-  NAME_PLATE,
-  @JsonValue("ProfileBackground")
-  PROFILE_BACKGROUND,
-  @JsonValue("ProfileDecoration")
-  PROFILE_DECORATION
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
+  Map<String, dynamic> toJson() => _$ResultDataToJson(this);
 }
 
 @JsonSerializable()
-class FluffyData {
-  @JsonKey(name: "url")
-  final String? url;
-  @JsonKey(name: "type")
-  final String? type;
-  @JsonKey(name: "offset")
-  final Offset? offset;
-  @JsonKey(name: "animated")
-  final bool? animated;
-  @JsonKey(name: "variant")
-  final String? variant;
-  @JsonKey(name: "gradient")
-  final Gradient? gradient;
+class Json {
+  @JsonKey(name: "nextCursor")
+  final String? nextCursor;
+  @JsonKey(name: "items")
+  final List<Item>? items;
 
-  FluffyData({
-    this.url,
-    this.type,
-    this.offset,
-    this.animated,
-    this.variant,
-    this.gradient,
+  Json({
+    this.nextCursor,
+    this.items,
   });
 
-  factory FluffyData.fromJson(Map<String, dynamic> json) => _$FluffyDataFromJson(json);
+  factory Json.fromJson(Map<String, dynamic> json) => _$JsonFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FluffyDataToJson(this);
-}
-
-@JsonSerializable()
-class Gradient {
-  @JsonKey(name: "to")
-  final String? to;
-  @JsonKey(name: "deg")
-  final int? deg;
-  @JsonKey(name: "from")
-  final String? from;
-
-  Gradient({
-    this.to,
-    this.deg,
-    this.from,
-  });
-
-  factory Gradient.fromJson(Map<String, dynamic> json) => _$GradientFromJson(json);
-
-  Map<String, dynamic> toJson() => _$GradientToJson(this);
-}
-
-enum Ingestion {
-  @JsonValue("Scanned")
-  SCANNED
+  Map<String, dynamic> toJson() => _$JsonToJson(this);
 }
 
 @JsonSerializable()
@@ -200,7 +89,7 @@ class Item {
   @JsonKey(name: "sortAt")
   final DateTime? sortAt;
   @JsonKey(name: "type")
-  final ItemType? type;
+  final String? type;
   @JsonKey(name: "userId")
   final int? userId;
   @JsonKey(name: "needsReview")
@@ -220,7 +109,7 @@ class Item {
   @JsonKey(name: "combinedNsfwLevel")
   final int? combinedNsfwLevel;
   @JsonKey(name: "baseModel")
-  final BaseModel? baseModel;
+  final String? baseModel;
   @JsonKey(name: "modelVersionIds")
   final List<int>? modelVersionIds;
   @JsonKey(name: "toolIds")
@@ -250,7 +139,7 @@ class Item {
   @JsonKey(name: "cosmetic")
   final ItemCosmetic? cosmetic;
   @JsonKey(name: "availability")
-  final Availability? availability;
+  final String? availability;
   @JsonKey(name: "tags")
   final List<dynamic>? tags;
   @JsonKey(name: "name")
@@ -260,7 +149,7 @@ class Item {
   @JsonKey(name: "mimeType")
   final dynamic mimeType;
   @JsonKey(name: "ingestion")
-  final Ingestion? ingestion;
+  final String? ingestion;
   @JsonKey(name: "postTitle")
   final dynamic postTitle;
   @JsonKey(name: "meta")
@@ -344,73 +233,6 @@ class ItemCosmetic {
   Map<String, dynamic> toJson() => _$ItemCosmeticToJson(this);
 }
 
-enum ItemType {
-  @JsonValue("image")
-  IMAGE
-}
-
-@JsonSerializable()
-class Json {
-  @JsonKey(name: "nextCursor")
-  final String? nextCursor;
-  @JsonKey(name: "items")
-  final List<Item>? items;
-
-  Json({
-    this.nextCursor,
-    this.items,
-  });
-
-  factory Json.fromJson(Map<String, dynamic> json) => _$JsonFromJson(json);
-
-  Map<String, dynamic> toJson() => _$JsonToJson(this);
-}
-
-@JsonSerializable()
-class Meta {
-  @JsonKey(name: "values")
-  final Map<String, List<String>>? values;
-  @JsonKey(name: "referentialEqualities")
-  final Map<String, List<String>>? referentialEqualities;
-
-  Meta({
-    this.values,
-    this.referentialEqualities,
-  });
-
-  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MetaToJson(this);
-}
-
-@JsonSerializable()
-class Metadata {
-  @JsonKey(name: "width")
-  final int? width;
-  @JsonKey(name: "height")
-  final int? height;
-
-  Metadata({
-    this.width,
-    this.height,
-  });
-
-  factory Metadata.fromJson(Map<String, dynamic> json) => _$MetadataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MetadataToJson(this);
-}
-
-enum Offset {
-  @JsonValue("20%")
-  THE_20,
-  @JsonValue("25%")
-  THE_25,
-  @JsonValue("27%")
-  THE_27,
-  @JsonValue("30%")
-  THE_30
-}
-
 @JsonSerializable()
 class PurpleData {
   @JsonKey(name: "glow")
@@ -429,47 +251,20 @@ class PurpleData {
 }
 
 @JsonSerializable()
-class Result {
-  @JsonKey(name: "data")
-  final ResultData? data;
+class Metadata {
+  @JsonKey(name: "width")
+  final int? width;
+  @JsonKey(name: "height")
+  final int? height;
 
-  Result({
-    this.data,
+  Metadata({
+    this.width,
+    this.height,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
+  factory Metadata.fromJson(Map<String, dynamic> json) => _$MetadataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ResultToJson(this);
-}
-
-@JsonSerializable()
-class ResultData {
-  @JsonKey(name: "json")
-  final Json? json;
-  @JsonKey(name: "meta")
-  final Meta? meta;
-
-  ResultData({
-    this.json,
-    this.meta,
-  });
-
-  factory ResultData.fromJson(Map<String, dynamic> json) => _$ResultDataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ResultDataToJson(this);
-}
-
-enum Source {
-  @JsonValue("Claim")
-  CLAIM,
-  @JsonValue("Event")
-  EVENT,
-  @JsonValue("Membership")
-  MEMBERSHIP,
-  @JsonValue("Purchase")
-  PURCHASE,
-  @JsonValue("Trophy")
-  TROPHY
+  Map<String, dynamic> toJson() => _$MetadataToJson(this);
 }
 
 @JsonSerializable()
@@ -537,4 +332,113 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+}
+
+@JsonSerializable()
+class CosmeticElement {
+  @JsonKey(name: "data")
+  final dynamic data;
+  @JsonKey(name: "cosmetic")
+  final CosmeticCosmetic? cosmetic;
+
+  CosmeticElement({
+    this.data,
+    this.cosmetic,
+  });
+
+  factory CosmeticElement.fromJson(Map<String, dynamic> json) => _$CosmeticElementFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CosmeticElementToJson(this);
+}
+
+@JsonSerializable()
+class CosmeticCosmetic {
+  @JsonKey(name: "id")
+  final int? id;
+  @JsonKey(name: "data")
+  final FluffyData? data;
+  @JsonKey(name: "type")
+  final String? type;
+  @JsonKey(name: "source")
+  final String? source;
+  @JsonKey(name: "name")
+  final String? name;
+
+  CosmeticCosmetic({
+    this.id,
+    this.data,
+    this.type,
+    this.source,
+    this.name,
+  });
+
+  factory CosmeticCosmetic.fromJson(Map<String, dynamic> json) => _$CosmeticCosmeticFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CosmeticCosmeticToJson(this);
+}
+
+@JsonSerializable()
+class FluffyData {
+  @JsonKey(name: "url")
+  final String? url;
+  @JsonKey(name: "type")
+  final String? type;
+  @JsonKey(name: "offset")
+  final String? offset;
+  @JsonKey(name: "animated")
+  final bool? animated;
+  @JsonKey(name: "variant")
+  final String? variant;
+  @JsonKey(name: "gradient")
+  final Gradient? gradient;
+
+  FluffyData({
+    this.url,
+    this.type,
+    this.offset,
+    this.animated,
+    this.variant,
+    this.gradient,
+  });
+
+  factory FluffyData.fromJson(Map<String, dynamic> json) => _$FluffyDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FluffyDataToJson(this);
+}
+
+@JsonSerializable()
+class Gradient {
+  @JsonKey(name: "to")
+  final String? to;
+  @JsonKey(name: "deg")
+  final int? deg;
+  @JsonKey(name: "from")
+  final String? from;
+
+  Gradient({
+    this.to,
+    this.deg,
+    this.from,
+  });
+
+  factory Gradient.fromJson(Map<String, dynamic> json) => _$GradientFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GradientToJson(this);
+}
+
+@JsonSerializable()
+class Meta {
+  @JsonKey(name: "values")
+  final Map<String, List<String>>? values;
+  @JsonKey(name: "referentialEqualities")
+  final Map<String, List<String>>? referentialEqualities;
+
+  Meta({
+    this.values,
+    this.referentialEqualities,
+  });
+
+  factory Meta.fromJson(Map<String, dynamic> json) => _$MetaFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MetaToJson(this);
 }
