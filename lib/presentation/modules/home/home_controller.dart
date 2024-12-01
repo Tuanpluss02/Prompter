@@ -78,6 +78,12 @@ class HomeController extends BaseController {
     } else {
       newsFeed[index].post.likes?.add(appProvider.user.value.id ?? '');
     }
+    if (postToLike.author.id == appProvider.user.value.id) {
+      int userIndex = Get.find<AccountController>().userPosts.indexWhere((element) => element.post.id == postToLike.post.id);
+      if (userIndex != -1) {
+        Get.find<AccountController>().userPosts[userIndex].post = Get.find<AccountController>().userPosts[userIndex].post.copyWith(likes: newsFeed[index].post.likes);
+      }
+    }
     update(['post_${postToLike.post.id!}']);
     _postService.updatePostLike(appProvider.user.value.id ?? '', postToLike.post.id ?? '');
   }

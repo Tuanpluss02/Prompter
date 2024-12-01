@@ -4,13 +4,13 @@ class CustomAnimatedRotation extends StatefulWidget {
   const CustomAnimatedRotation({
     super.key,
     required this.child,
-    this.isRotating = true,
+    required this.controller,
     this.curve = Curves.linear,
     this.duration = const Duration(milliseconds: 500),
   });
 
   final Widget child;
-  final bool isRotating;
+  final CustomAnimatedRotationController controller;
   final Curve curve;
   final Duration duration;
 
@@ -19,51 +19,29 @@ class CustomAnimatedRotation extends StatefulWidget {
 }
 
 class _CustomAnimatedRotationState extends State<CustomAnimatedRotation> with SingleTickerProviderStateMixin {
-  late AnimationController refreshAnimation;
-  late Animation<double> curvedAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _curvedAnimation;
 
   @override
   void initState() {
     super.initState();
-    refreshAnimation = AnimationController(
+    _animationController = AnimationController(
       duration: widget.duration,
       vsync: this,
     );
 
-    curvedAnimation = CurvedAnimation(
-      parent: refreshAnimation,
+    _curvedAnimation = CurvedAnimation(
+      parent: _animationController,
       curve: widget.curve,
     );
 
-    if (widget.isRotating) {
-      refreshAnimation.repeat();
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant CustomAnimatedRotation oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.curve != oldWidget.curve) {
-      curvedAnimation = CurvedAnimation(
-        parent: refreshAnimation,
-        curve: widget.curve,
-      );
-    }
-
-    if (widget.isRotating != oldWidget.isRotating) {
-      if (widget.isRotating) {
-        refreshAnimation.repeat();
-      } else {
-        refreshAnimation.stop();
-      }
-    }
+    widget.controller.attach(_animationController);
   }
 
   @override
   Widget build(BuildContext context) {
     return RotationTransition(
-      turns: curvedAnimation,
+      turns: _curvedAnimation,
       alignment: Alignment.center,
       child: widget.child,
     );
@@ -71,7 +49,28 @@ class _CustomAnimatedRotationState extends State<CustomAnimatedRotation> with Si
 
   @override
   void dispose() {
-    refreshAnimation.dispose();
+    widget.controller.dispose();
+    _animationController.dispose();
     super.dispose();
+  }
+}
+
+class CustomAnimatedRotationController {
+  late AnimationController _controller;
+
+  void attach(AnimationController controller) {
+    _controller = controller;
+  }
+
+  void start() {
+    _controller.repeat();
+  }
+
+  void stop() {
+    _controller.stop();
+  }
+
+  void dispose() {
+    _controller.dispose();
   }
 }

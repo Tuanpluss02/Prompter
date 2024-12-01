@@ -19,16 +19,15 @@ class PhotoGalleryScreen extends BaseScreen<PhotoGalleryController> {
     return GestureDetector(
       onTap: () => controller.refreshData(),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
-        child: Obx(() => CustomAnimatedRotation(
-              curve: Curves.fastEaseInToSlowEaseOut,
-              duration: Duration(milliseconds: 700),
-              isRotating: controller.isLoading.value,
-              child: const Icon(Icons.refresh, color: Colors.white),
-            )),
-      ),
+          margin: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryColor),
+          child: CustomAnimatedRotation(
+            controller: controller.refreshController,
+            curve: Curves.fastEaseInToSlowEaseOut,
+            duration: Duration(milliseconds: 700),
+            child: const Icon(Icons.refresh, color: Colors.white),
+          )),
     );
   }
 

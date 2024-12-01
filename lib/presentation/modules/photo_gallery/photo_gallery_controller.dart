@@ -8,6 +8,7 @@ import 'package:base/domain/data/responses/civit_response.dart';
 import 'package:base/domain/data/responses/seaart_response.dart';
 import 'package:base/domain/repositories/ai_image_repository.dart';
 import 'package:base/presentation/base/base_controller.dart';
+import 'package:base/presentation/shared/animated/animated_rotation.dart';
 import 'package:get/get.dart';
 
 class CivitDetail {
@@ -22,6 +23,7 @@ class PhotoGalleryController extends BaseController {
   final AiImageRepository _aiImageRepository = Get.find<AiImageRepository>();
   final RxList<AiImageEntity> _allAiImages = <AiImageEntity>[].obs;
   final RxList<AiImageEntity> aiImages = <AiImageEntity>[].obs;
+  final CustomAnimatedRotationController refreshController = CustomAnimatedRotationController();
   int _currentPage = 0;
   final int _pageSize = 25;
 
@@ -42,14 +44,14 @@ class PhotoGalleryController extends BaseController {
   }
 
   void refreshData() async {
-    isLoading.value = true;
-    if (_currentPage * _pageSize + _pageSize < _allAiImages.length) {
-      _loadPage();
+    refreshController.start();
+    if (_currentPage * _pageSize + _pageSize <= _allAiImages.length) {
       _currentPage++;
+      _loadPage();
     } else {
       await _fetchAllData();
     }
-    isLoading.value = false;
+    refreshController.stop();
   }
 
   @override
