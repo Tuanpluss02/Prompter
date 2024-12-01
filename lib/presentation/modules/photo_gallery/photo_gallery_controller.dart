@@ -27,9 +27,13 @@ class PhotoGalleryController extends BaseController {
   int _currentPage = 0;
   final int _pageSize = 25;
 
-  void _loadPage() {
+  Future<void> _loadPage() async {
     final startIndex = _currentPage * _pageSize;
     final endIndex = startIndex + _pageSize;
+    if (endIndex > _allAiImages.length) {
+      await fetchSeaArtImages();
+      return;
+    }
     aiImages.value = _allAiImages.sublist(startIndex, endIndex.clamp(0, _allAiImages.length));
     aiImages.refresh();
   }
@@ -45,11 +49,15 @@ class PhotoGalleryController extends BaseController {
 
   void refreshData() async {
     refreshController.start();
+    Stopwatch stopwatch = Stopwatch()..start();
     if (_currentPage * _pageSize + _pageSize <= _allAiImages.length) {
       _currentPage++;
-      _loadPage();
+      await _loadPage();
     } else {
       await _fetchAllData();
+    }
+    if (stopwatch.elapsedMilliseconds < 500) {
+      await Future.delayed(Duration(milliseconds: 500 - stopwatch.elapsedMilliseconds));
     }
     refreshController.stop();
   }
