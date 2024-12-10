@@ -14,12 +14,9 @@ class UserEntity with _$UserEntity {
     @Default('') String? username,
     @Default('') String? email,
     @Default('') String? profileImage,
-    @Default('') String? bio,
     @Default(<String>[]) List<String>? followers,
     @Default(<String>[]) List<String>? following,
     @Default(null) DateTime? createdAt,
-    @Default(0) int? postCount,
-    @Default(0) int? likeCount,
   }) = _UserEntity;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) => _$UserEntityFromJson(json);

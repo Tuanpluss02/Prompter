@@ -51,7 +51,7 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
                   child: UserSection(
                     user: result,
                     additionalWidget: Text(
-                      '${result.postCount!.toShortString()} posts ${result.followers!.length.toShortString()} followers',
+                      '${result.followers!.length.toShortString()} followers',
                       style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                     ),
                   ),

@@ -50,16 +50,9 @@ class SearchController extends BaseController {
     final users = await _userService.searchUsers(query);
     searchUserResults.addAll(users);
     searchUserResults.sort((a, b) {
-      // followers count -> posts count
-      final aPostsCount = a.postCount ?? 0;
-      final bPostsCount = b.postCount ?? 0;
       final aFollowersCount = a.followers?.length ?? 0;
       final bFollowersCount = b.followers?.length ?? 0;
-      if (aFollowersCount != bFollowersCount) {
-        return bFollowersCount.compareTo(aFollowersCount);
-      } else {
-        return bPostsCount.compareTo(aPostsCount);
-      }
+      return bFollowersCount.compareTo(aFollowersCount);
     });
   }
 }

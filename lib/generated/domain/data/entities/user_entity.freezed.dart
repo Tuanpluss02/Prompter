@@ -25,12 +25,9 @@ mixin _$UserEntity {
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get profileImage => throw _privateConstructorUsedError;
-  String? get bio => throw _privateConstructorUsedError;
   List<String>? get followers => throw _privateConstructorUsedError;
   List<String>? get following => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  int? get postCount => throw _privateConstructorUsedError;
-  int? get likeCount => throw _privateConstructorUsedError;
 
   /// Serializes this UserEntity to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,12 +51,9 @@ abstract class $UserEntityCopyWith<$Res> {
       String? username,
       String? email,
       String? profileImage,
-      String? bio,
       List<String>? followers,
       List<String>? following,
-      DateTime? createdAt,
-      int? postCount,
-      int? likeCount});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -82,12 +76,9 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
-    Object? bio = freezed,
     Object? followers = freezed,
     Object? following = freezed,
     Object? createdAt = freezed,
-    Object? postCount = freezed,
-    Object? likeCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -110,10 +101,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
       followers: freezed == followers
           ? _value.followers
           : followers // ignore: cast_nullable_to_non_nullable
@@ -126,14 +113,6 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      postCount: freezed == postCount
-          ? _value.postCount
-          : postCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
     ) as $Val);
   }
 }
@@ -152,12 +131,9 @@ abstract class _$$UserEntityImplCopyWith<$Res>
       String? username,
       String? email,
       String? profileImage,
-      String? bio,
       List<String>? followers,
       List<String>? following,
-      DateTime? createdAt,
-      int? postCount,
-      int? likeCount});
+      DateTime? createdAt});
 }
 
 /// @nodoc
@@ -178,12 +154,9 @@ class __$$UserEntityImplCopyWithImpl<$Res>
     Object? username = freezed,
     Object? email = freezed,
     Object? profileImage = freezed,
-    Object? bio = freezed,
     Object? followers = freezed,
     Object? following = freezed,
     Object? createdAt = freezed,
-    Object? postCount = freezed,
-    Object? likeCount = freezed,
   }) {
     return _then(_$UserEntityImpl(
       id: freezed == id
@@ -206,10 +179,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.profileImage
           : profileImage // ignore: cast_nullable_to_non_nullable
               as String?,
-      bio: freezed == bio
-          ? _value.bio
-          : bio // ignore: cast_nullable_to_non_nullable
-              as String?,
       followers: freezed == followers
           ? _value.followers
           : followers // ignore: cast_nullable_to_non_nullable
@@ -222,14 +191,6 @@ class __$$UserEntityImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      postCount: freezed == postCount
-          ? _value.postCount
-          : postCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      likeCount: freezed == likeCount
-          ? _value.likeCount
-          : likeCount // ignore: cast_nullable_to_non_nullable
-              as int?,
     ));
   }
 }
@@ -244,12 +205,9 @@ class _$UserEntityImpl implements _UserEntity {
       this.username = '',
       this.email = '',
       this.profileImage = '',
-      this.bio = '',
       this.followers = const <String>[],
       this.following = const <String>[],
-      this.createdAt = null,
-      this.postCount = 0,
-      this.likeCount = 0});
+      this.createdAt = null});
 
   factory _$UserEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserEntityImplFromJson(json);
@@ -271,9 +229,6 @@ class _$UserEntityImpl implements _UserEntity {
   final String? profileImage;
   @override
   @JsonKey()
-  final String? bio;
-  @override
-  @JsonKey()
   final List<String>? followers;
   @override
   @JsonKey()
@@ -281,16 +236,10 @@ class _$UserEntityImpl implements _UserEntity {
   @override
   @JsonKey()
   final DateTime? createdAt;
-  @override
-  @JsonKey()
-  final int? postCount;
-  @override
-  @JsonKey()
-  final int? likeCount;
 
   @override
   String toString() {
-    return 'UserEntity(id: $id, displayName: $displayName, username: $username, email: $email, profileImage: $profileImage, bio: $bio, followers: $followers, following: $following, createdAt: $createdAt, postCount: $postCount, likeCount: $likeCount)';
+    return 'UserEntity(id: $id, displayName: $displayName, username: $username, email: $email, profileImage: $profileImage, followers: $followers, following: $following, createdAt: $createdAt)';
   }
 
   @override
@@ -306,15 +255,10 @@ class _$UserEntityImpl implements _UserEntity {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.profileImage, profileImage) ||
                 other.profileImage == profileImage) &&
-            (identical(other.bio, bio) || other.bio == bio) &&
             const DeepCollectionEquality().equals(other.followers, followers) &&
             const DeepCollectionEquality().equals(other.following, following) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.postCount, postCount) ||
-                other.postCount == postCount) &&
-            (identical(other.likeCount, likeCount) ||
-                other.likeCount == likeCount));
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -326,12 +270,9 @@ class _$UserEntityImpl implements _UserEntity {
       username,
       email,
       profileImage,
-      bio,
       const DeepCollectionEquality().hash(followers),
       const DeepCollectionEquality().hash(following),
-      createdAt,
-      postCount,
-      likeCount);
+      createdAt);
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.
@@ -356,12 +297,9 @@ abstract class _UserEntity implements UserEntity {
       final String? username,
       final String? email,
       final String? profileImage,
-      final String? bio,
       final List<String>? followers,
       final List<String>? following,
-      final DateTime? createdAt,
-      final int? postCount,
-      final int? likeCount}) = _$UserEntityImpl;
+      final DateTime? createdAt}) = _$UserEntityImpl;
 
   factory _UserEntity.fromJson(Map<String, dynamic> json) =
       _$UserEntityImpl.fromJson;
@@ -377,17 +315,11 @@ abstract class _UserEntity implements UserEntity {
   @override
   String? get profileImage;
   @override
-  String? get bio;
-  @override
   List<String>? get followers;
   @override
   List<String>? get following;
   @override
   DateTime? get createdAt;
-  @override
-  int? get postCount;
-  @override
-  int? get likeCount;
 
   /// Create a copy of UserEntity
   /// with the given fields replaced by the non-null parameter values.

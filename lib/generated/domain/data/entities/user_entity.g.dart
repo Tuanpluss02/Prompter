@@ -13,7 +13,6 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       username: json['username'] as String? ?? '',
       email: json['email'] as String? ?? '',
       profileImage: json['profileImage'] as String? ?? '',
-      bio: json['bio'] as String? ?? '',
       followers: (json['followers'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -25,8 +24,6 @@ _$UserEntityImpl _$$UserEntityImplFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      postCount: (json['postCount'] as num?)?.toInt() ?? 0,
-      likeCount: (json['likeCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
@@ -36,10 +33,7 @@ Map<String, dynamic> _$$UserEntityImplToJson(_$UserEntityImpl instance) =>
       'username': instance.username,
       'email': instance.email,
       'profileImage': instance.profileImage,
-      'bio': instance.bio,
       'followers': instance.followers,
       'following': instance.following,
       'createdAt': instance.createdAt?.toIso8601String(),
-      'postCount': instance.postCount,
-      'likeCount': instance.likeCount,
     };

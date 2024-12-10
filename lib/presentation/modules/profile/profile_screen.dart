@@ -169,7 +169,6 @@ class ProfileScreen extends BaseScreen<ProfileController> {
         return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              (count: controller.userData.value.likeCount ?? 0, title: 'Likes'),
               (count: controller.userData.value.followers?.length ?? 0, title: 'Followers'),
               (count: controller.userData.value.following?.length ?? 0, title: 'Following'),
             ].map((item) {

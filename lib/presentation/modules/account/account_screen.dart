@@ -162,7 +162,6 @@ class AccountScreen extends BaseScreen<AccountController> {
         return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              (count: controller.appProvider.user.value.likeCount ?? 0, title: 'Likes'),
               (count: controller.appProvider.user.value.followers?.length ?? 0, title: 'Followers'),
               (count: controller.appProvider.user.value.following?.length ?? 0, title: 'Following'),
             ].map((item) {
