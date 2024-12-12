@@ -1,3 +1,4 @@
+import 'package:base/common/utils/snackbar.dart';
 import 'package:base/domain/services/auth_service.dart';
 import 'package:base/domain/services/user_service.dart';
 import 'package:base/presentation/base/base_controller.dart';
@@ -37,6 +38,24 @@ class RegisterController extends BaseController {
     registerWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
   }
 
+  continueGoogle() async {
+    final result = await AppOverlay.showLoading(
+      api: _authService.signInWithGoogle(),
+    );
+    if (result.error == null && result.userCredential == null) {
+      return;
+    }
+    if (result.error != null) {
+      showSnackBar(title: result.error!, type: SnackBarType.error);
+      return;
+    }
+    final isExists = await _userService.checkUserExists(result.userCredential!.user!.uid);
+    if (!isExists) {
+      _userService.createUser(result.userCredential!);
+    }
+    Get.offAllNamed(AppRoutes.root);
+  }
+
   void registerWithEmailAndPassword(String email, String password) async {
     final result = await AppOverlay.showLoading(
       api: _authService.registerWithEmailAndPassword(email, password),
@@ -48,6 +67,7 @@ class RegisterController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
+    await result.userCredential!.user!.updateDisplayName(fullNameController.text.trim());
     await _userService.createUser(result.userCredential!);
     Get.offAllNamed(AppRoutes.root);
   }

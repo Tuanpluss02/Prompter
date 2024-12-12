@@ -46,13 +46,6 @@ class _CustomAnimatedRotationState extends State<CustomAnimatedRotation> with Si
       child: widget.child,
     );
   }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    _animationController.dispose();
-    super.dispose();
-  }
 }
 
 class CustomAnimatedRotationController {

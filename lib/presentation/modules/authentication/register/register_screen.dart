@@ -107,7 +107,7 @@ class RegisterScreen extends BaseScreen<RegisterController> {
 
   ScaleButton _buildContinueGoogle() {
     return ScaleButton(
-      onTap: () {},
+      onTap: controller.continueGoogle,
       child: Container(
         width: double.infinity,
         height: 60,
