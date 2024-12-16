@@ -14,6 +14,11 @@ class UserService extends GetxService {
     return userDoc.exists;
   }
 
+  Future<void> updateUser(UserEntity user) async {
+    final userRef = _userCollection.doc(user.id);
+    await userRef.update(user.toJson());
+  }
+
   /// Creates a new user document in the Firestore collection
   /// [userId] is the unique identifier for the user
   /// [username] is the username of the user
@@ -51,10 +56,5 @@ class UserService extends GetxService {
         .limit(5)
         .get();
     return querySnapshot.docs.map((doc) => UserEntity.fromJson(doc.data())).toList();
-  }
-
-  Future<void> updateUser(UserEntity user) async {
-    final userRef = _userCollection.doc(user.id);
-    await userRef.update(user.toJson());
   }
 }

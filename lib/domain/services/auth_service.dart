@@ -5,9 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
   static final FirebaseAuth _firebaseInstance = FirebaseAuth.instance;
   static final AuthService _authService = AuthService._internal();
-  factory AuthService() {
-    return _authService;
-  }
+  factory AuthService() => _authService;
+
   AuthService._internal();
 
   // Get current user

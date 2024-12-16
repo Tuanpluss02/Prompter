@@ -4,7 +4,6 @@ import 'package:base/common/utils/validator.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/animated/animated_scale_button.dart';
-import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:base/presentation/shared/utils/highlighted_text.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class LoginScreen extends BaseScreen<LoginController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppBackButton(margin: EdgeInsets.zero),
+              // AppBackButton(margin: EdgeInsets.zero),
               SizedBox(height: 48),
               Text(
                 'Login Your\nAccount',
