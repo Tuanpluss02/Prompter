@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:any_link_preview/any_link_preview.dart';
 import 'package:base/common/constants/app_text_styles.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/components/post_image_view.dart';
 import 'package:base/presentation/modules/home/components/post_input_action.dart';
 import 'package:base/presentation/modules/home/components/user_section.dart';
-import 'package:base/presentation/shared/animated/animated_scale_button.dart';
 import 'package:base/presentation/shared/global/app_back_button.dart';
 import 'package:base/presentation/shared/global/app_button.dart';
 import 'package:flutter/material.dart';
@@ -119,46 +117,6 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                   );
                 }).toList(),
               ),
-      ),
-    );
-  }
-
-  _buildLinkPreview() {
-    return Visibility(
-      visible: !controller.hideLinkPreview.value,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Stack(
-          children: [
-            AnyLinkPreview(
-              link: "https://facebook.com/",
-              removeElevation: true,
-            ),
-            Positioned(
-              top: 10,
-              right: 10,
-              child: ScaleButton(
-                onTap: () {
-                  controller.hideLinkPreview.value = true;
-                },
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  // padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.clear,
-                    color: Colors.white,
-                    // size: 25,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

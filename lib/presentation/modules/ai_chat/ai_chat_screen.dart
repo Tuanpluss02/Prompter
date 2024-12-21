@@ -31,9 +31,11 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         onSendTap: controller.onTapSend,
         featureActiveConfig: const FeatureActiveConfig(
           enableReplySnackBar: false,
+          enableReactionPopup: false,
           enableSwipeToReply: false,
           lastSeenAgoBuilderVisibility: true,
           receiptsBuilderVisibility: false,
+          enableDoubleTapToLike: false,
           enableScrollToBottomButton: true,
           enableCurrentUserProfileAvatar: true,
         ),
@@ -142,40 +144,23 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           backgroundColor: theme.replyPopupColor,
           buttonTextStyle: TextStyle(color: theme.replyPopupButtonColor, fontSize: 12),
           topBorderColor: theme.replyPopupTopBorderColor,
-        ),
-        reactionPopupConfig: ReactionPopupConfiguration(
-          overrideUserReactionCallback: true,
-          shadow: BoxShadow(
-            color: Colors.black54,
-            blurRadius: 20,
-          ),
-          userReactionCallback: controller.onReactionTap,
-          backgroundColor: theme.reactionPopupColor,
+          replyPopupBuilder: (Message message, bool isOutgoing) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: theme.replyPopupColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Copy', style: TextStyle(color: theme.replyPopupButtonColor)),
+                ],
+              ),
+            );
+          },
         ),
         messageConfig: MessageConfiguration(
-          messageReactionConfig: MessageReactionConfiguration(
-            backgroundColor: theme.messageReactionBackGroundColor,
-            borderColor: theme.messageReactionBackGroundColor,
-            reactedUserCountTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
-            reactionCountTextStyle: TextStyle(color: theme.inComingChatBubbleTextColor),
-            reactionsBottomSheetConfig: ReactionsBottomSheetConfiguration(
-              backgroundColor: theme.backgroundColor,
-              reactedUserTextStyle: TextStyle(
-                color: theme.inComingChatBubbleTextColor,
-              ),
-              reactionWidgetDecoration: BoxDecoration(
-                color: theme.inComingChatBubbleColor,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: const Offset(0, 20),
-                    blurRadius: 40,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
           imageMessageConfig: ImageMessageConfiguration(
             hideShareIcon: true,
             height: 300,

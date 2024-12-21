@@ -113,12 +113,6 @@ class AiChatController extends BaseController {
     }
   }
 
-  void onReactionTap(Message message, String reaction) {
-    chatController.setReaction(emoji: reaction, messageId: message.id, userId: chatController.currentUser.id);
-    final messageJustReacted = message.copyWith(reaction: Reaction(reactions: [reaction], reactedUserIds: [chatController.currentUser.id]));
-    _chatService.updateMessage(messageJustReacted, appProvider.user.value.id ?? 'User');
-  }
-
   @override
   void onReady() {
     super.onReady();

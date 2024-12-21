@@ -80,7 +80,7 @@ class TextMessageView extends StatelessWidget {
                   linkPreviewConfig: _linkPreviewConfig,
                   url: textMessage,
                 )
-              : Text(
+              : SelectableText(
                   textMessage,
                   style: _textStyle ??
                       textTheme.bodyMedium!.copyWith(

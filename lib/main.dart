@@ -31,6 +31,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(statusBarColor: Colors.black.withValues(alpha: 0.7), statusBarIconBrightness: Platform.isAndroid ? Brightness.dark : null),
   );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
