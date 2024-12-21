@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 /// Defines the type of snackbar to be displayed.
-enum SnackBarType { error, success }
+enum SnackBarType { error, success, info }
 
 /// Displays a customized snackbar with the given title and message.
 ///
@@ -85,30 +85,10 @@ Widget _buildSnackbarContent(SnackBarType type, String title, String? message) {
         const SizedBox(width: 12),
         // Title and message column
         Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title
-              Visibility(
-                visible: title.isNotEmpty,
-                child: AutoSizeText(
-                  title,
-                  maxLines: 2,
-                  style: AppTextStyles.s14w800.copyWith(color: color),
-                ),
-              ),
-              // Message
-              Visibility(
-                visible: message == null || message.isNotEmpty,
-                child: AutoSizeText(
-                  message ?? '',
-                  style: AppTextStyles.s12w500.copyWith(color: const Color(0xFF99909B)),
-                  maxLines: 2,
-                ),
-              ),
-            ],
+          child: AutoSizeText(
+            title,
+            maxLines: 2,
+            style: AppTextStyles.s14w800.copyWith(color: color),
           ),
         ),
       ],

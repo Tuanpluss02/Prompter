@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "467739299542",
+    "firebase_url": "https://prompter-32d5d-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "prompter-32d5d",
     "storage_bucket": "prompter-32d5d.firebasestorage.app"
   },
@@ -14,43 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "467739299542-6gfb2c07g9rs7bt0bvd48ncnkc7turpb.apps.googleusercontent.com",
+          "client_id": "467739299542-lhi6irgm648efkqjk4fim7ahku5jr19i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.stormx.prompter",
-            "certificate_hash": "a67fb86a5323698abc6fe6e6fb5ca9fcab8fd909"
-          }
-        },
-        {
-          "client_id": "467739299542-8eitlulmt8bulr9sc4cabqi16l298flt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stormx.prompter",
-            "certificate_hash": "2740a06090e92788a6e32fc1f876762436c0e56f"
-          }
-        },
-        {
-          "client_id": "467739299542-dsnb3928cucqutaqp7hu9picq2864d4d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stormx.prompter",
-            "certificate_hash": "6c5a4f8d0d79843d22399674c4340402690f4c85"
-          }
-        },
-        {
-          "client_id": "467739299542-epfnaibajpau8j0d97irub2ijhjadln6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stormx.prompter",
-            "certificate_hash": "7fe656c5ff8cca86d1251a58fa19821bde3fe61c"
-          }
-        },
-        {
-          "client_id": "467739299542-nsdfsubba84kbhvkcj9n3d9gqnij5cbr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.stormx.prompter",
-            "certificate_hash": "adc32835d5b931302add8cbc41284f6c3b2b9dd5"
+            "certificate_hash": "77eeaf673ccef808d6cb64e2fa39a44b9e31fb40"
           }
         },
         {

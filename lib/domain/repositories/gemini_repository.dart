@@ -5,7 +5,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiRepository {
   final model = GenerativeModel(
-    model: 'gemini-1.5-pro-002',
+    model: 'gemini-1.5-flash-8b',
     apiKey: AppStrings.geminiApiKey,
     generationConfig: GenerationConfig(
       temperature: 2,
@@ -96,9 +96,13 @@ You communicate with users in their language but always provide prompts in Engli
   );
 
   Future<String?> chatGemini(String prompt, List<String> history) async {
-    final chat = model.startChat(history: history.map((e) => Content.text(e)).toList());
-    final content = Content.text(prompt);
-    final response = await chat.sendMessage(content);
-    return jsonDecode(response.text ?? '')['data'];
+    try {
+      final chat = model.startChat(history: history.map((e) => Content.text(e)).toList());
+      final content = Content.text(prompt);
+      final response = await chat.sendMessage(content);
+      return jsonDecode(response.text ?? '')['data'];
+    } catch (_) {
+      return null;
+    }
   }
 }

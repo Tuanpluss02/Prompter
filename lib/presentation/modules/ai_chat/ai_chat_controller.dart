@@ -158,9 +158,14 @@ class AiChatController extends BaseController {
     } else {
       final previousGeminiMessages = chatController.initialMessageList.where((element) => element.sentBy == selectedModel.value.modelId).map((e) => e.message).toList();
       final geminiResponse = await _geminiRepository.chatGemini(message, previousGeminiMessages);
+      if (geminiResponse == null) {
+        showSnackBar(title: 'Something went wrong, please try again', type: SnackBarType.error);
+        chatController.setTypingIndicator = false;
+        return;
+      }
       final responseMessage = Message(
         id: generateUniqueId(),
-        message: geminiResponse ?? 'Sorry, I cannot understand your question',
+        message: geminiResponse,
         sentBy: selectedModel.value.modelId,
         createdAt: DateTime.now(),
         messageType: MessageType.text,

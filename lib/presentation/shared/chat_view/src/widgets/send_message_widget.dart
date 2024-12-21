@@ -129,7 +129,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                           key: chatViewIW?.chatTextFieldViewKey,
                           padding: EdgeInsets.fromLTRB(
                             bottomPadding4,
-                            bottomPadding4,
+                            0,
                             bottomPadding4,
                             _bottomPadding,
                           ),
@@ -155,7 +155,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                           ),
                                           padding: const EdgeInsets.fromLTRB(
                                             leftPadding,
-                                            leftPadding,
+                                            0,
                                             leftPadding,
                                             30,
                                           ),
@@ -215,13 +215,18 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                 },
                                 valueListenable: _replyMessage,
                               ),
-                              ChatUITextField(
-                                focusNode: _focusNode,
-                                textEditingController: _textEditingController,
-                                onPressed: _onPressed,
-                                sendMessageConfig: widget.sendMessageConfig,
-                                onRecordingComplete: _onRecordingComplete,
-                                onImageSelected: _onImageSelected,
+                              Column(
+                                children: [
+                                  widget.messageConfig?.onTopTextFieldWidget != null ? widget.messageConfig!.onTopTextFieldWidget! : const SizedBox.shrink(),
+                                  ChatUITextField(
+                                    focusNode: _focusNode,
+                                    textEditingController: _textEditingController,
+                                    onPressed: _onPressed,
+                                    sendMessageConfig: widget.sendMessageConfig,
+                                    onRecordingComplete: _onRecordingComplete,
+                                    onImageSelected: _onImageSelected,
+                                  ),
+                                ],
                               )
                             ],
                           ),

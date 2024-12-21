@@ -126,6 +126,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       error = _getFirebaseExceptionMessage(e);
     } catch (e) {
+      error = 'An error occurred. Please try again later.';
       Log.console(e, where: 'AuthService.signInWithGoogle', level: LogLevel.error);
     }
     return (userCredential: userCredential, error: error);

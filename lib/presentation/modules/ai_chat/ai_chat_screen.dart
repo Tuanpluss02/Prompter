@@ -65,24 +65,14 @@ class AiChatScreen extends BaseScreen<AiChatController> {
         appBar: Container(
             color: AppColors.backgroundColor,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppBackButton(size: 40, margin: const EdgeInsets.only(left: 16)),
-                const SizedBox(width: 16),
-                SizedBox(
-                  width: Get.width * 0.6,
-                  child: CustomDropdown<String>(
-                      maxlines: 2,
-                      initialItem: controller.selectedModel.value.displayName,
-                      onChanged: (String? newValue) {
-                        controller.selectedModel.value = GenerativeAiModel.values.firstWhere((element) => element.displayName == newValue);
-                      },
-                      items: GenerativeAiModel.values.map((e) => e.displayName).toList(),
-                      decoration: CustomDropdownDecoration(
-                        headerStyle: AppTextStyles.s20w700,
-                        closedFillColor: Colors.transparent,
-                        expandedFillColor: AppColors.backgroundColor,
-                      )),
+                Text(
+                  'AI Chat',
+                  style: AppTextStyles.s24w800.copyWith(color: theme.chatHeaderColor),
                 ),
+                const SizedBox(width: 40),
               ],
             )),
         chatBackgroundConfig: ChatBackgroundConfiguration(
@@ -161,6 +151,50 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           },
         ),
         messageConfig: MessageConfiguration(
+          onTopTextFieldWidget: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: theme.backgroundColor,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(16),
+                topLeft: Radius.circular(16),
+              ),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  'You are chatting with ',
+                  style: TextStyle(
+                    color: theme.textFieldTextColor,
+                    fontSize: 14,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      color: theme.textFieldBackgroundColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: CustomDropdown<String>(
+                        maxlines: 1,
+                        overlayHeight: 20,
+                        initialItem: controller.selectedModel.value.displayName,
+                        onChanged: (String? newValue) {
+                          controller.selectedModel.value = GenerativeAiModel.values.firstWhere((element) => element.displayName == newValue);
+                        },
+                        items: GenerativeAiModel.values.map((e) => e.displayName).toList(),
+                        decoration: CustomDropdownDecoration(
+                          headerStyle: TextStyle(color: theme.textFieldTextColor, fontSize: 12),
+                          listItemStyle: TextStyle(color: theme.textFieldTextColor, fontSize: 12),
+                          closedFillColor: Colors.transparent,
+                          expandedFillColor: AppColors.backgroundColor,
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          ),
           imageMessageConfig: ImageMessageConfiguration(
             hideShareIcon: true,
             height: 300,

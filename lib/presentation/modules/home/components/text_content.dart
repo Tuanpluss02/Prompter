@@ -22,6 +22,7 @@ class TextContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReadMoreText(
+      trimExpandedText: ' show less',
       content ?? '',
       trimMode: TrimMode.Line,
       trimLines: hasMedia ? 3 : 5,

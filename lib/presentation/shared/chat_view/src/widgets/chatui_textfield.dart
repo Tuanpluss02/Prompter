@@ -86,7 +86,6 @@ class _ChatUITextFieldState extends State<ChatUITextField> {
       padding: textFieldConfig?.padding ?? const EdgeInsets.symmetric(horizontal: 6),
       margin: textFieldConfig?.margin,
       decoration: BoxDecoration(
-        borderRadius: textFieldConfig?.borderRadius ?? BorderRadius.circular(textFieldBorderRadius),
         color: AppColors.backgroundColor,
         // color: sendMessageConfig?.textFieldBackgroundColor ?? Colors.white,
       ),
