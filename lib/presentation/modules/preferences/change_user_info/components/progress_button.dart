@@ -10,7 +10,7 @@ class ProgressButton extends StatelessWidget {
     return Container(
       height: size.height,
       width: size.width,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red[800]!.withOpacity(0.3)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.red[800]!.withValues(alpha: 0.3)),
       child: Stack(
         children: <Widget>[
           ClipRRect(

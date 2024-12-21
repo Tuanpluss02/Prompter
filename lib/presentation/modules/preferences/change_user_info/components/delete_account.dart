@@ -33,7 +33,7 @@ class _DeleteAccountState extends State<DeleteAccount> with SingleTickerProvider
                           gradient: LinearGradient(
                             colors: [
                               const Color(0xFF1E1E1E),
-                              Color.lerp(const Color(0xFF1E1E1E), Colors.red[800]!.withOpacity(0.2), progress)!,
+                              Color.lerp(const Color(0xFF1E1E1E), Colors.red[800]!.withValues(alpha: 0.2), progress)!,
                             ],
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,

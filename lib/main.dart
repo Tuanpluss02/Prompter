@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:base/common/app_links/app_links_handler.dart';
 import 'package:base/common/config/app_binding.dart';
 import 'package:base/common/config/app_theme.dart';
 import 'package:base/dependency_injection.dart';
@@ -30,7 +29,7 @@ void main() async {
   );
   await DependencyInjection.init();
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(statusBarColor: Colors.black.withOpacity(0.7), statusBarIconBrightness: Platform.isAndroid ? Brightness.dark : null),
+    SystemUiOverlayStyle(statusBarColor: Colors.black.withValues(alpha: 0.7), statusBarIconBrightness: Platform.isAndroid ? Brightness.dark : null),
   );
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -59,20 +58,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AppLinksHandler _appLinksHandler = Get.find<AppLinksHandler>();
-
-  @override
-  void initState() {
-    super.initState();
-    _appLinksHandler.registerListener();
-  }
-
-  @override
-  void dispose() {
-    _appLinksHandler.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

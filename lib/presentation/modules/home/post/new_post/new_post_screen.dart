@@ -146,7 +146,7 @@ class NewPostScreen extends BaseScreen<NewPostController> {
                   height: 25,
                   // padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(

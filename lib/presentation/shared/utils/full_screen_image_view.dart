@@ -30,7 +30,7 @@ class FullScreenImageView extends StatelessWidget {
             context,
             PageRouteBuilder(
                 opaque: false,
-                barrierColor: backgroundIsTransparent ? Colors.white.withOpacity(0) : backgroundColor,
+                barrierColor: backgroundIsTransparent ? Colors.white.withValues(alpha: 0) : backgroundColor,
                 pageBuilder: (BuildContext context, _, __) {
                   return FullScreenPage(
                     imageUrl: imageUrl,
@@ -112,7 +112,7 @@ class _FullScreenPageState extends State<FullScreenPage> {
                   )
               : null,
           child: Container(
-            color: widget.backgroundColor.withOpacity(opacity),
+            color: widget.backgroundColor.withValues(alpha: opacity),
             constraints: BoxConstraints.expand(
               height: MediaQuery.of(context).size.height,
             ),

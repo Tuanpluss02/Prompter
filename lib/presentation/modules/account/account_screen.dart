@@ -118,7 +118,7 @@ class AccountScreen extends BaseScreen<AccountController> {
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment(0, 0), end: Alignment.bottomCenter, colors: [
             Colors.transparent,
-            Colors.black.withOpacity(0.9),
+            Colors.black.withValues(alpha: 0.9),
           ])),
         ),
       ],

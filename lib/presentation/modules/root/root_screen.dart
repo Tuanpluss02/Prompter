@@ -81,7 +81,7 @@ class RootScreen extends BaseScreen<RootController> {
         color: Color(0xff0677e8),
         boxShadow: [
           BoxShadow(
-            color: Color(0xff0677e8).withOpacity(0.2),
+            color: Color(0xff0677e8).withValues(alpha: 0.2),
             spreadRadius: 15,
             blurRadius: 20,
             offset: Offset(0, 1),
