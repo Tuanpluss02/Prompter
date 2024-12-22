@@ -15,16 +15,19 @@ class MediaView extends StatelessWidget {
         maxHeight: maxHeight ?? Get.width * 0.7,
       ),
       child: images.length.isEqual(1)
-          ? PostImageView(
-              imageUrl: images.first,
-              image: NetworkImage(images.first),
+          ? Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: PostImageView(
+                imageUrl: images.first,
+                image: NetworkImage(images.first),
+              ),
             )
           : ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: images.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.only(right: 12),
+                  padding: EdgeInsets.only(right: 12, left: index == 0 ? 20 : 0),
                   child: PostImageView(
                     imageUrl: images[index],
                     image: NetworkImage(images[index]),

@@ -31,12 +31,21 @@ class PostView extends GetView<HomeController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildPostAuthor(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildPostAuthor(),
+        ),
         const SizedBox(height: 10),
-        _buildPostText(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildPostText(),
+        ),
         _buildPostMedia(),
         const SizedBox(height: 10),
-        _buildPostReact(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: _buildPostReact(),
+        ),
       ],
     );
   }

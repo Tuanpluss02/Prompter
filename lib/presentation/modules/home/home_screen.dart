@@ -45,10 +45,7 @@ class HomeScreen extends BaseScreen<HomeController> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: PostView(news: controller.newsFeed[index]),
-                        ),
+                        PostView(news: controller.newsFeed[index]),
                         Divider(),
                       ],
                     ),
