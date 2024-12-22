@@ -216,11 +216,8 @@ class ProfileScreen extends BaseScreen<ProfileController> {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: PostView(news: controller.userPosts[index]),
-                  ),
-                  Divider()
+                  PostView(news: controller.userPosts[index]),
+                  Divider(),
                 ],
               ),
               childCount: controller.userPosts.length,

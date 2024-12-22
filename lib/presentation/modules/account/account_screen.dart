@@ -209,10 +209,7 @@ class AccountScreen extends BaseScreen<AccountController> {
             delegate: SliverChildBuilderDelegate(
               (context, index) => Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: PostView(news: controller.userPosts[index]),
-                  ),
+                  PostView(news: controller.userPosts[index]),
                   Divider(),
                 ],
               ),

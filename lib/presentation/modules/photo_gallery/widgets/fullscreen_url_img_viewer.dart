@@ -8,6 +8,7 @@ import 'package:base/presentation/modules/ai_chat/ai_chat_binding.dart';
 import 'package:base/presentation/modules/photo_gallery/widgets/fullscreen_keyboard_listener.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_image.dart';
+import 'package:base/presentation/shared/utils/full_screen_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -74,9 +75,10 @@ class _FullscreenUrlImgViewerState extends State<FullscreenUrlImgViewer> {
                 Positioned.fill(
                     child: Column(
                   children: [
-                    Expanded(child: content),
+                    Expanded(flex: 3, child: content),
                     SizedBox(height: 10),
                     Expanded(
+                      flex: 1,
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
@@ -364,22 +366,27 @@ class _ViewerState extends State<_Viewer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onDoubleTap: _handleDoubleTap,
-      child: InteractiveViewer(
-        transformationController: _controller,
-        onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
-        minScale: 1,
-        maxScale: 5,
-        child: Hero(
-          tag: widget.ins.imageUrl ?? '',
-          child: AppImage(
-            image: NetworkImage(
-              widget.ins.imageUrl ?? '',
+    return FullScreenImageView(
+      imageUrl: widget.ins.imageUrl ?? '',
+      backgroundIsTransparent: true,
+      disposeLevel: DisposeLevel.medium,
+      child: GestureDetector(
+        onDoubleTap: _handleDoubleTap,
+        child: InteractiveViewer(
+          transformationController: _controller,
+          onInteractionEnd: (_) => widget.isZoomed.value = _controller.value.getMaxScaleOnAxis() > 1,
+          minScale: 1,
+          maxScale: 5,
+          child: Hero(
+            tag: widget.ins.imageUrl ?? '',
+            child: AppImage(
+              image: NetworkImage(
+                widget.ins.imageUrl ?? '',
+              ),
+              fit: BoxFit.contain,
+              scale: FullscreenUrlImgViewer.imageScale,
+              progress: true,
             ),
-            fit: BoxFit.contain,
-            scale: FullscreenUrlImgViewer.imageScale,
-            progress: true,
           ),
         ),
       ),
