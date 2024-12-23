@@ -6,7 +6,8 @@ import 'package:base/presentation/modules/home/components/user_section.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/modules/profile/profile_binding.dart';
 import 'package:base/presentation/modules/root/root_controller.dart';
-import 'package:base/presentation/modules/search/search_controller.dart' as search_controller;
+import 'package:base/presentation/modules/search/search_controller.dart'
+    as search_controller;
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:base/presentation/shared/global/app_text_field.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,8 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
         Obx(() => SliverVisibility(
             sliver: SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Users',
                   style: AppTextStyles.s16w700,
@@ -40,7 +42,8 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
             itemBuilder: (context, index) {
               final result = controller.searchUserResults[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: GestureDetector(
                   onTap: () => result.id != controller.appProvider.user.value.id
                       ? Get.toNamed(
@@ -62,7 +65,8 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
             visible: controller.searchPostResults.isNotEmpty,
             sliver: SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Posts',
                   style: AppTextStyles.s16w700,
@@ -75,11 +79,8 @@ class SearchScreen extends BaseScreen<search_controller.SearchController> {
               final result = controller.searchPostResults[index];
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: PostView(news: result),
-                  ),
-                  Divider()
+                  PostView(news: result),
+                  Divider(),
                 ],
               );
             })),

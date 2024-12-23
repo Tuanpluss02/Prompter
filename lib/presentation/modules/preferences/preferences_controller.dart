@@ -31,7 +31,7 @@ class PreferencesController extends BaseController {
     ),
     (
       title: 'About',
-      subtitle: 'About the app',
+      subtitle: 'About Prompter',
       svgPath: SvgPath.icBubble,
       onTap: () => Get.to(() => AboutTheApp())
     ),

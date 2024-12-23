@@ -32,18 +32,18 @@ class PostView extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: _buildPostAuthor(),
         ),
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: _buildPostText(),
         ),
         _buildPostMedia(),
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: _buildPostReact(),
         ),
       ],
@@ -80,7 +80,8 @@ class PostView extends GetView<HomeController> {
                     AppRoutes.newPost,
                     arguments: NewPostPageData(
                       type: RouteNewPostType.edit,
-                      editPostPageData: EditPostPageData(postNeedEdit: news.post),
+                      editPostPageData:
+                          EditPostPageData(postNeedEdit: news.post),
                     ),
                   ),
                   child: ListTile(
@@ -138,9 +139,12 @@ class PostView extends GetView<HomeController> {
             builder: (_) {
               return Row(
                 children: [
-                  SvgPicture.asset(controller.isPostLiked(news) ? SvgPath.icHeartFilled : SvgPath.icHeart),
+                  SvgPicture.asset(controller.isPostLiked(news)
+                      ? SvgPath.icHeartFilled
+                      : SvgPath.icHeart),
                   const SizedBox(width: 5),
-                  Text(news.post.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                  Text(news.post.likes?.length.toShortString() ?? '',
+                      style: AppTextStyles.s14w600),
                 ],
               );
             },
@@ -161,7 +165,8 @@ class PostView extends GetView<HomeController> {
                 children: [
                   SvgPicture.asset(SvgPath.icComment),
                   const SizedBox(width: 5),
-                  Text(news.post.comments?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                  Text(news.post.comments?.length.toShortString() ?? '',
+                      style: AppTextStyles.s14w600),
                 ],
               );
             },

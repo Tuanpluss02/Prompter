@@ -1,9 +1,11 @@
+import 'package:base/common/constants/app_assets_path.dart';
 import 'package:base/common/constants/app_strings.dart';
 import 'package:base/presentation/base/base_screen.dart';
 import 'package:base/presentation/modules/home/post/post_view.dart';
 import 'package:base/presentation/modules/home/post/whats_news_section.dart';
 import 'package:base/presentation/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -22,10 +24,21 @@ class HomeScreen extends BaseScreen<HomeController> {
   PreferredSizeWidget? buildAppBar(BuildContext context) {
     return AppBar(
       centerTitle: false,
-      title: Text(AppStrings.appName.toUpperCase(), style: TextStyle(fontFamily: 'Larsseit', fontSize: 24, fontWeight: FontWeight.bold, letterSpacing: 5)),
+      title: Text(
+        AppStrings.appName.toUpperCase(),
+        style: TextStyle(
+          fontFamily: 'Larsseit',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 5,
+        ),
+      ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.settings),
+          icon: SvgPicture.asset(
+            SvgPath.icSettings,
+            colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
           onPressed: () => Get.toNamed(AppRoutes.preferences),
         ),
       ],

@@ -16,7 +16,7 @@ class MediaView extends StatelessWidget {
       ),
       child: images.length.isEqual(1)
           ? Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 12, right: 12),
               child: PostImageView(
                 imageUrl: images.first,
                 image: NetworkImage(images.first),
@@ -27,7 +27,8 @@ class MediaView extends StatelessWidget {
               itemCount: images.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.only(right: 12, left: index == 0 ? 20 : 0),
+                  padding:
+                      EdgeInsets.only(right: 12, left: index == 0 ? 12 : 0),
                   child: PostImageView(
                     imageUrl: images[index],
                     image: NetworkImage(images[index]),
