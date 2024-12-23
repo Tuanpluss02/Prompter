@@ -6,7 +6,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiRepository {
   final model = GenerativeModel(
-    model: 'gemini-1.5-flash-8b',
+    model: 'gemini-1.5-pro',
     apiKey: AppStrings.geminiApiKey,
     generationConfig: GenerationConfig(
       temperature: 2,
@@ -93,7 +93,8 @@ You are Prompter Assistant - a specialized guide for crafting and refining promp
 
   Future<String?> chatGemini(String prompt, List<String> history) async {
     try {
-      final chat = model.startChat(history: history.map((e) => Content.text(e)).toList());
+      final chat = model.startChat(
+          history: history.map((e) => Content.text(e)).toList());
       final content = Content.text(prompt);
       final response = await chat.sendMessage(content);
       return jsonDecode(response.text ?? '')['data'];

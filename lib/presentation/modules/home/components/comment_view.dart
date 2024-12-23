@@ -25,11 +25,12 @@ class CommentView extends GetView<CommentController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: UserSection(
                 user: postComment.author,
                 additionalWidget: Text(
-                  timeago.format(postComment.comment.createdAt ?? DateTime.now()),
+                  timeago
+                      .format(postComment.comment.createdAt ?? DateTime.now()),
                   style: AppTextStyles.s12w400.copyWith(color: Colors.grey),
                 ),
                 showOptions: controller.isCommentOwner(postComment),
@@ -54,7 +55,8 @@ class CommentView extends GetView<CommentController> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => controller.onTapDeleteComment(postComment),
+                          onTap: () =>
+                              controller.onTapDeleteComment(postComment),
                           child: ListTile(
                             trailing: SvgPicture.asset(SvgPath.icTrashbin),
                             title: Text(
@@ -70,7 +72,7 @@ class CommentView extends GetView<CommentController> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               child: Visibility(
                 visible: postComment.comment.content?.isNotEmpty ?? false,
                 child: TextContent(
@@ -88,14 +90,19 @@ class CommentView extends GetView<CommentController> {
             ),
             SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 12),
               child: GestureDetector(
                 onTap: () => controller.likeComment(postComment),
                 child: Row(
                   children: [
-                    SvgPicture.asset(Get.find<CommentController>().isCommentLiked(postComment) ? SvgPath.icHeartFilled : SvgPath.icHeart),
+                    SvgPicture.asset(Get.find<CommentController>()
+                            .isCommentLiked(postComment)
+                        ? SvgPath.icHeartFilled
+                        : SvgPath.icHeart),
                     const SizedBox(width: 5),
-                    Text(postComment.comment.likes?.length.toShortString() ?? '', style: AppTextStyles.s14w600),
+                    Text(
+                        postComment.comment.likes?.length.toShortString() ?? '',
+                        style: AppTextStyles.s14w600),
                   ],
                 ),
               ),

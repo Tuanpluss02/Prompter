@@ -47,4 +47,5 @@ class SvgPath {
   static const icEye = '$_svgPath/ic_eye.svg';
   static const icPen = '$_svgPath/ic_pen.svg';
   static const icRefresh = '$_svgPath/ic_refresh.svg';
+  static const icSettings = '$_svgPath/ic_settings.svg';
 }

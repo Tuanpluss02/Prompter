@@ -30,7 +30,8 @@ class CommentScreen extends BaseScreen<CommentController> {
   PreferredSizeWidget? buildAppBar(BuildContext context) => _buildAppBar();
 
   @override
-  Widget? buildBottomNavigationBar(BuildContext context) => _buildCommentAction(context);
+  Widget? buildBottomNavigationBar(BuildContext context) =>
+      _buildCommentAction(context);
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -46,13 +47,11 @@ class CommentScreen extends BaseScreen<CommentController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: PostView(news: controller.newsFeedPost),
-              ),
+              PostView(news: controller.newsFeedPost),
               Divider(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                 child: Text(
                   'Comments',
                   style: AppTextStyles.s16w600,
@@ -85,7 +84,8 @@ class CommentScreen extends BaseScreen<CommentController> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
         color: AppColors.dialogBackgroundColor,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -106,7 +106,9 @@ class CommentScreen extends BaseScreen<CommentController> {
                     visible: controller.commentIdEditing.isNotEmpty,
                     child: Row(
                       children: [
-                        Text('You are editing a comment', style: AppTextStyles.s11w600.copyWith(color: Colors.grey)),
+                        Text('You are editing a comment',
+                            style: AppTextStyles.s11w600
+                                .copyWith(color: Colors.grey)),
                         Container(
                           margin: const EdgeInsets.only(left: 10),
                           padding: const EdgeInsets.all(5),
@@ -125,7 +127,8 @@ class CommentScreen extends BaseScreen<CommentController> {
                               child: SvgPicture.asset(
                                 width: 10,
                                 SvgPath.icAdd,
-                                colorFilter: ColorFilter.mode(Colors.grey.shade400, BlendMode.srcIn),
+                                colorFilter: ColorFilter.mode(
+                                    Colors.grey.shade400, BlendMode.srcIn),
                               ),
                             ),
                           ),

@@ -21,7 +21,8 @@ class WhatsNewsSection extends GetView<HomeController> {
           AppRoutes.newPost,
           arguments: NewPostPageData(
             type: RouteNewPostType.create,
-            createNewPostPageData: CreateNewPostPageData(action: NewPostAction.text),
+            createNewPostPageData:
+                CreateNewPostPageData(action: NewPostAction.text),
           ),
         ),
         child: Column(
@@ -29,7 +30,7 @@ class WhatsNewsSection extends GetView<HomeController> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Obx(() => UserSection(
                     user: controller.appProvider.user.value,
                     showOptions: false,
@@ -45,7 +46,7 @@ class WhatsNewsSection extends GetView<HomeController> {
 
   Padding _buildPostAction() {
     return Padding(
-      padding: const EdgeInsets.only(left: 90),
+      padding: const EdgeInsets.only(left: 82),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +72,8 @@ class WhatsNewsSection extends GetView<HomeController> {
             AppRoutes.newPost,
             arguments: NewPostPageData(
               type: RouteNewPostType.create,
-              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.image),
+              createNewPostPageData:
+                  CreateNewPostPageData(action: NewPostAction.image),
             ),
           ),
           child: SvgPicture.asset(
@@ -85,7 +87,8 @@ class WhatsNewsSection extends GetView<HomeController> {
             AppRoutes.newPost,
             arguments: NewPostPageData(
               type: RouteNewPostType.create,
-              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.link),
+              createNewPostPageData:
+                  CreateNewPostPageData(action: NewPostAction.link),
             ),
           ),
           child: SvgPicture.asset(
@@ -99,10 +102,12 @@ class WhatsNewsSection extends GetView<HomeController> {
             AppRoutes.newPost,
             arguments: NewPostPageData(
               type: RouteNewPostType.create,
-              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.hastag),
+              createNewPostPageData:
+                  CreateNewPostPageData(action: NewPostAction.hastag),
             ),
           ),
-          child: Text('#', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+          child: Text('#',
+              style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
         ),
         SizedBox(width: 10),
         ScaleButton(
@@ -110,10 +115,12 @@ class WhatsNewsSection extends GetView<HomeController> {
             AppRoutes.newPost,
             arguments: NewPostPageData(
               type: RouteNewPostType.create,
-              createNewPostPageData: CreateNewPostPageData(action: NewPostAction.mention),
+              createNewPostPageData:
+                  CreateNewPostPageData(action: NewPostAction.mention),
             ),
           ),
-          child: Text('@', style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
+          child: Text('@',
+              style: AppTextStyles.s22w400.copyWith(color: Colors.grey)),
         ),
       ],
     );
