@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class UserService extends GetxService {
-  final _userCollection = FirebaseFirestore.instance.collection(FirebaseCollectionKeys.usersCollection);
+  final _userCollection = FirebaseFirestore.instance
+      .collection(FirebaseCollectionKeys.usersCollection);
 
   DateTime get _createdTime => DateTime.now();
 
@@ -23,11 +24,11 @@ class UserService extends GetxService {
   /// [userId] is the unique identifier for the user
   /// [username] is the username of the user
   /// [email] is the email address of the user
-  Future<void> createUser(UserCredential user) async {
+  Future<void> createUser(UserCredential user, {String? displayName}) async {
     final userRef = _userCollection.doc(user.user!.uid);
     final UserEntity newUser = UserEntity(
       id: user.user?.uid,
-      displayName: user.user?.displayName,
+      displayName: displayName ?? user.user?.displayName,
       username: user.user?.email?.split('@')[0],
       email: user.user?.email,
       profileImage: user.user?.photoURL,
@@ -45,16 +46,18 @@ class UserService extends GetxService {
   }
 
   Future<bool> isUsernameExists(String username) async {
-    final querySnapshot = await _userCollection.where('username', isEqualTo: username).get();
+    final querySnapshot =
+        await _userCollection.where('username', isEqualTo: username).get();
     return querySnapshot.docs.isNotEmpty;
   }
 
   Future<List<UserEntity>> searchUsers(String query) async {
     final querySnapshot = await _userCollection
-        .where('displayName', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
-        .where('username', isGreaterThanOrEqualTo: query, isLessThanOrEqualTo: '$query\uf8ff')
+        .where('username', isEqualTo: query)
         .limit(5)
         .get();
-    return querySnapshot.docs.map((doc) => UserEntity.fromJson(doc.data())).toList();
+    return querySnapshot.docs
+        .map((doc) => UserEntity.fromJson(doc.data()))
+        .toList();
   }
 }
