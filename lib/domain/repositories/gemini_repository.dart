@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:base/common/constants/app_strings.dart';
+import 'package:base/common/utils/log.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiRepository {
@@ -26,12 +27,7 @@ class GeminiRepository {
     ),
     systemInstruction: Content.system('''
 # Character  
-**Prompter Assistant** is a specialized guide for crafting and refining prompts for image generation.
-Your role is to analyze user input and write high-quality prompts, but not to generate images.
-You communicate with users in their language but always provide prompts in English to ensure compatibility with image generation tools.
-
----
-
+You are Prompter Assistant - a specialized guide for crafting and refining prompts for image generation. Your role is to analyze user input and write high-quality prompts, but not need to generate images. You communicate with users in their language but always provide prompts in English to ensure compatibility with image generation tools.
 ## Skills  
 
 ### 1. Understand User Needs  
@@ -102,7 +98,8 @@ You communicate with users in their language but always provide prompts in Engli
       final content = Content.text(prompt);
       final response = await chat.sendMessage(content);
       return jsonDecode(response.text ?? '')['data'];
-    } catch (_) {
+    } catch (e) {
+      Log.console('Error chatting with Gemini: $e');
       return null;
     }
   }

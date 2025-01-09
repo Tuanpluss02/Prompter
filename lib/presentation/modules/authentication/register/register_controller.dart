@@ -35,7 +35,8 @@ class RegisterController extends BaseController {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    registerWithEmailAndPassword(emailController.text.trim(), passwordController.text.trim());
+    registerWithEmailAndPassword(
+        emailController.text.trim(), passwordController.text.trim());
   }
 
   continueGoogle() async {
@@ -49,7 +50,8 @@ class RegisterController extends BaseController {
       showSnackBar(title: result.error!, type: SnackBarType.error);
       return;
     }
-    final isExists = await _userService.checkUserExists(result.userCredential!.user!.uid);
+    final isExists =
+        await _userService.checkUserExists(result.userCredential!.user!.uid);
     if (!isExists) {
       _userService.createUser(result.userCredential!);
     }
@@ -67,8 +69,10 @@ class RegisterController extends BaseController {
       Get.snackbar('Fail', result.error!);
       return;
     }
-    await result.userCredential!.user!.updateDisplayName(fullNameController.text.trim());
-    await _userService.createUser(result.userCredential!);
+    await result.userCredential!.user!
+        .updateDisplayName(fullNameController.text.trim());
+    await _userService.createUser(result.userCredential!,
+        displayName: fullNameController.text.trim());
     Get.offAllNamed(AppRoutes.root);
   }
 
