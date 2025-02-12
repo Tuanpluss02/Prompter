@@ -24,7 +24,7 @@ class SplashScreen extends BaseScreen<SplashController> {
     title = title
         .animate(onPlay: (controller) => controller.repeat())
         .shimmer(duration: 1200.ms, color: AppColors.primaryColor)
-        .animate() // this wraps the previous Animate in another Animate
+        .animate()
         .fadeIn(duration: 1200.ms, curve: Curves.easeOutQuad)
         .slide();
     return Scaffold(

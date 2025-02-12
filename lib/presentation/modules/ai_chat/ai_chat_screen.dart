@@ -55,7 +55,6 @@ class AiChatScreen extends BaseScreen<AiChatController> {
           loadingWidgetConfig: ChatViewStateWidgetConfiguration(
             loadingIndicatorColor: theme.outgoingChatBubbleColor,
           ),
-          onReloadButtonTap: () {},
         ),
         typeIndicatorConfig: TypeIndicatorConfiguration(
           indicatorSize: 5,
